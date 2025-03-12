@@ -1,0 +1,63 @@
+/* stylelint-disable color-no-hex */
+/* stylelint-disable custom-property-empty-line-before */
+
+$width-reference: 1440;
+$width-reference-m: 393;
+$rem-reference: 1px;
+
+@mixin variables {
+  /* UNITS */
+  --vw: 100vw;
+  --vh: 100vh;
+  --ivh: 100vh;
+  --rem: 1px;
+
+  /* COLORS */
+  --color-black: #0A0A0A;
+  --color-medium-grey: #B2B2B2;
+  --color-divider: #E6E6E6;;
+  --color-white: #F5F5F5;
+  --color-overlay: rgb(245 245 245 / 80%);
+  --color-hover: #666666;
+
+  /* SHORTCUTS */
+  --color-main: var(--color-black);
+  --color-background: var(--color-white);
+
+  /* GAP */
+  --gap-s: #{rem(8)};
+  --gap: #{rem(10)};
+
+  /* GRID */
+  --grid-margin: #{rem(30)};
+  --grid-gutter: #{rem(20)};
+  --grid-column: #{computeGridColumn(12, true)};
+
+  /* SIZES */
+  --border-size: #{rem(.5)};
+  --border-radius: #{rem(3)};
+  --inner-border-radius: #{rem(1)};
+  --viewport-inset: var(--grid-gutter);
+
+  /* HEADER */
+
+  /* SIZES */
+  --width-reference: #{$width-reference};
+
+  @include tablet-portrait {
+    /* SIZES */
+    --width-reference: #{$width-reference-m};
+
+    /* GRID */
+    --grid-margin: #{rem(20)};
+    --grid-gutter: #{rem(10)};
+    --grid-column: #{computeGridColumn(8, true)};
+  }
+}
+
+/* EXPORT */
+/* stylelint-disable */
+:export {
+  widthReference: $width-reference;
+  widthReferenceM: $width-reference-m;
+}

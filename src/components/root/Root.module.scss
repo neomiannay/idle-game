@@ -1,0 +1,17 @@
+.wrapper {
+  height: var(--ivh);
+}
+
+.buttons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@include tablet-portrait {
+  .wrapper {
+    width: grid(6);
+    border-color: blue;
+  }
+}

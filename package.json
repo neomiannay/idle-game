@@ -1,0 +1,47 @@
+{
+  "name": "idle-game",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.19",
+    "bowser": "^2.11.0",
+    "classnames": "^2.5.1",
+    "lodash-es": "^4.17.21",
+    "motion": "^12.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^20",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^8",
+    "eslint-config-next": "^14.2.14",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-config-standard-jsx": "^11.0.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "glob": "^11.0.0",
+    "globals": "^16.0.0",
+    "sass": "^1.75.0",
+    "stylelint": "^16.9.0",
+    "stylelint-config-css-modules": "^4.4.0",
+    "stylelint-config-idiomatic-order": "^10.0.0",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "stylelint-prettier": "^5.0.2",
+    "typescript": "^5",
+    "vite": "^6.2.1",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

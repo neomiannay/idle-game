@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-css-modules",
+    "stylelint-config-idiomatic-order"
+  ],
+  "rules": {
+    "value-keyword-case": null,
+    "at-rule-empty-line-before": null,
+    "at-rule-no-unknown": null,
+    "block-no-empty": null,
+    "color-no-hex": true,
+    "declaration-block-no-redundant-longhand-properties": true,
+    "declaration-empty-line-before": "never",
+    "function-name-case": null,
+    "scss/function-no-unknown": null,
+    "function-url-quotes": "never",
+    "no-descending-specificity": null,
+    "no-empty-source": null,
+    "no-invalid-position-at-import-rule": null,
+    "selector-class-pattern": null
+  }
+}

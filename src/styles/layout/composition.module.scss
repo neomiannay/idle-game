@@ -1,0 +1,7 @@
+@import 'src/styles/layout/styling.module.scss';
+
+@each $name in $styles {
+  .#{$name} {
+    @extend %#{$name};
+  }
+}

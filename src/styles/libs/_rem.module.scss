@@ -1,0 +1,11 @@
+@use 'sass:math';
+
+@function rem($pixel) {
+  @return math.div(strip-unit($pixel), strip-unit($rem-reference)) * 1rem;
+}
+
+@function liquid($pixel) {
+  @return calc(
+    #{$pixel} / var(--width-reference) * 100vw
+  );
+}

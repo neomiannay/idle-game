@@ -1,0 +1,9 @@
+{
+  "button": {
+    "cueillir": "cueillir",
+    "reset": "reset"
+  },
+  "units": {
+    "fleurs": "fleurs"
+  }
+}
