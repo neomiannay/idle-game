@@ -1,12 +1,12 @@
 import path from 'path'
 
 import { globSync } from 'glob'
-import { SassPreprocessorOptions } from 'vite';
+import { SassPreprocessorOptions } from 'vite'
 
 const sassOptions: SassPreprocessorOptions = {
   api: 'modern-compiler',
   silenceDeprecations: ['legacy-js-api', 'import'],
-  additionalData(source, filename) {
+  additionalData (source, filename) {
     const relativePath = path.relative(path.resolve(), filename)
     let prepend = ''
     if (~relativePath.indexOf('/libs/')) return prepend + source
@@ -21,7 +21,7 @@ const sassOptions: SassPreprocessorOptions = {
     const split = source.split(/(@use.*;)/g)
     split.splice(split.length - 1, 0, prepend)
     return split.join('\n')
-  },
+  }
 }
 
 export default sassOptions
