@@ -6,8 +6,6 @@ import useRefState from 'hooks/useRefState'
 import useObjectMotionValue, { ObjectMotionValue } from 'hooks/useObjectMotionValue'
 import useMotionState from 'hooks/useMotionState'
 
-import mqSizes from 'styles/libs/_mq.module.scss'
-
 import { BaseProviderProps } from './GlobalProvider'
 
 type ViewportSize = {
@@ -39,6 +37,13 @@ type ViewportContextType = {
 
 export const ViewportContext = createContext<ViewportContextType | null>(null)
 
+const mqSizes = {
+  tabletMaxWidth: "1024",
+  tabletPortraitMaxWidth: "900",
+  phoneMaxWidth: "740",
+  phonePortraitMaxWidth: "420",
+}
+
 let context: ViewportContextType | null = null
 
 const mqReferences = reduce(mqSizes, (memo, size, k) => {
@@ -47,7 +52,7 @@ const mqReferences = reduce(mqSizes, (memo, size, k) => {
   return memo
 }, {} as any)
 
-export const ViewportProvider = ({ children } : BaseProviderProps) => {
+export const ViewportProvider = ({ children }: BaseProviderProps) => {
   const [reference, setViewportReference, referenceRef] = useRefState<HTMLElement | null>(null)
   const sizes = useObjectMotionValue<ViewportSize>({
     width: 1440,
@@ -114,13 +119,13 @@ export const ViewportProvider = ({ children } : BaseProviderProps) => {
     })
   })
 
-  const mq = useMotionState(sizes.width, (width:number) => mapValues(mqReferences, (size) => width < size) as ViewportMediaQueries, true)
+  const mq = useMotionState(sizes.width, (width: number) => mapValues(mqReferences, (size) => width < size) as ViewportMediaQueries, true)
 
   context = { mq, sizes, setViewportReference, offsetTop }
 
   return (
-    <ViewportContext.Provider value={ context }>
-      { children }
+    <ViewportContext.Provider value={context}>
+      {children}
     </ViewportContext.Provider>
   )
 }
