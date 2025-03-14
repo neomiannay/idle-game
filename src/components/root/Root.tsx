@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
 
-import classNames from 'classnames'
 import { useL10n } from 'provider/L10nProvider'
 import Count from 'components/count/Count'
 import Button from 'components/button/Button'
+import classNames from 'classnames'
 import useGameState from 'store/gameState'
 
 import styles from './Root.module.scss'
