@@ -27,13 +27,7 @@ const sassOptions: SassPreprocessorOptions = {
         .replace(/\\/g, "/"),
     );
 
-    const fonts = globSync(
-      path
-        .resolve(path.resolve(), "./src/styles/fonts/**/*.scss")
-        .replace(/\\/g, "/"),
-    );
-
-    const files = [...cores, ...libs, ...layout, ...fonts];
+    const files = [...cores, ...libs, ...layout];
 
     files.forEach(
       (file) => (prepend += '@import "' + file.replace(/\\/g, "/") + '"; \n'),
