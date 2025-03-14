@@ -1,9 +1,12 @@
 {
-  "button": {
-    "cueillir": "cueillir",
-    "reset": "reset"
+  "BUTTONS": {
+    "COLLECT": "Cueillir",
+    "RESET": "Réinitialiser"
   },
-  "units": {
-    "fleurs": "fleurs"
+  "UNITS": {
+    "FLOWERS": "Fleurs",
+    "COMPOSITIONS": "Compositions",
+    "POTS": "Pots",
+    "PEPETTES": "Pépettes"
   }
 }
