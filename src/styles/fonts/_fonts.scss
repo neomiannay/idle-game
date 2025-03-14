@@ -1,8 +1,6 @@
 @font-face {
   font-family: $main-fontname;
-  src: url('/fonts/PPFormulaVariable.woff2') format('woff2-variations'),
-       url('/fonts/PPFormulaVariable.woff2') format('woff2'),
-        url('/fonts/PPFormulaVariable.woff') format('woff');
+  src: url('/fonts/PPFormula-Variable.woff2') format('woff2-variations');
   font-weight: 100 800;
   font-style: normal;
   font-display: swap;
