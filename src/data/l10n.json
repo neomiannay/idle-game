@@ -1,12 +1,12 @@
 {
   "BUTTONS": {
-    "COLLECT": "Cueillir",
-    "RESET": "Réinitialiser"
+    "ACTIVATE": "Active",
+    "HOLD": "Maintiens",
+    "SPREAD": "Répands"
   },
   "UNITS": {
-    "FLOWERS": "Fleurs",
-    "COMPOSITIONS": "Compositions",
-    "POTS": "Pots",
-    "PEPETTES": "Pépettes"
+    "ACTIVE": "Actif",
+    "EXCIPIENT": "Excipient",
+    "COMPLEX": "Complexe"
   }
 }

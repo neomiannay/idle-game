@@ -9,9 +9,10 @@ type GameState = {
 }
 
 const useGameState = create<GameState>((set) => {
+  console.log(units(set))
+
   return {
     count: JSON.parse(localStorage.getItem('game-store') || '{}').count || 0,
-    ...units(set),
     increment: () => set((state) => ({ count: state.count + 1 })),
     reset: () => set({ count: 0 })
   }

@@ -1,0 +1,34 @@
+{
+ "upgrades": {
+    "actif": [
+      {
+        "id": "lvl1",
+        "unitId": "actif",
+        "name": "UPGRADES.LEVEL1",
+        "valueByAction": 2,
+        "apparitionCondition": {
+          "unitId": "actif",
+          "value": 100
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 250
+        }
+      },
+      {
+        "id": "lvl2",
+        "unitId": "actif",
+        "name": "UPGRADES.LEVEL2",
+        "valueByAction": 8,
+        "apparitionCondition": {
+          "unitId": "action",
+          "value": 200
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 1000
+        }
+      }
+    ]
+  }
+}

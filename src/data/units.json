@@ -1,0 +1,70 @@
+{
+  "units": [
+    {
+      "id": "actif",
+      "count": 0,
+      "name": "UNITS.ACTIVE",
+      "action": {
+        "valueByAction": 1,
+        "name": "BUTTONS.ACTIVATE",
+        "gesture": "click",
+        "duration": null,
+        "animationDirection": null
+      },
+      "apparitionCondition": {
+        "unitId": "actif",
+        "value": 0
+      },
+      "cost": {
+        "unitId": "actif",
+        "value": 0
+      },
+      "items": null,
+      "upgrades": null
+    },
+    {
+      "id": "excipient",
+      "count": 0,
+      "name": "UNITS.EXCIPIENT",
+      "action": {
+        "valueByAction": 1,
+        "name": "BUTTONS.HOLD",
+        "gesture": "hold",
+        "duration": 5000,
+        "animationDirection": "up"
+      },
+      "apparitionCondition": {
+        "unitId": "actif",
+        "value": 1000
+      },
+      "cost": {
+        "unitId": "actif",
+        "value": 10
+      },
+      "items": null,
+      "upgrades": null
+    },
+    {
+      "id": "complexe",
+      "count": 0,
+      "name": "UNITS.COMPLEX",
+      "action": {
+        "valueByAction": 1,
+        "name": "BUTTONS.SPREAD",
+        "gesture": "click",
+        "duration": 0,
+        "animationDirection": null
+      },
+      "apparitionCondition": {
+        "unitId": "excipient",
+        "value": 10
+      },
+      "cost": {
+        "unitId": "excipient",
+        "value": 50
+      },
+      "items": null,
+      "upgrades": null
+    }
+  ]
+}

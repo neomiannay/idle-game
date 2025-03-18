@@ -1,0 +1,48 @@
+{
+  "items": {
+    "actif": [
+      {
+        "id": "ami",
+        "unitId": "actif",
+        "name": "ITEMS.FRIEND",
+        "unitByTime": 1,
+        "apparitionCondition": {
+          "unitId": "actif",
+          "value": 10
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 100
+        }
+      },
+      {
+        "id": "stagiaire",
+        "unitId": "actif",
+        "name": "ITEMS.TRAINEE",
+        "unitByTime": 30,
+        "apparitionCondition": {
+          "unitId": "excipient",
+          "value": 10
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 500
+        }
+      },
+      {
+        "id": "alternant",
+        "unitId": "actif",
+        "name": "ITEMS.APPRENTICE",
+        "unitByTime": 100,
+        "apparitionCondition": {
+          "unitId": "complexe",
+          "value": 1
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 1000
+        }
+      }
+    ]
+  }
+}
