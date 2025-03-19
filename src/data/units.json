@@ -1,7 +1,8 @@
 {
   "units": [
     {
-      "id": "actif",
+      "_type": "unit",
+      "_id": "actif",
       "count": 0,
       "name": "UNITS.ACTIVE",
       "action": {
@@ -23,7 +24,8 @@
       "upgrades": null
     },
     {
-      "id": "excipient",
+      "_type": "unit",
+      "_id": "excipient",
       "count": 0,
       "name": "UNITS.EXCIPIENT",
       "action": {
@@ -45,7 +47,8 @@
       "upgrades": null
     },
     {
-      "id": "complexe",
+      "_type": "unit",
+      "_id": "complexe",
       "count": 0,
       "name": "UNITS.COMPLEX",
       "action": {

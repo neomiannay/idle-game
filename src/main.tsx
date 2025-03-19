@@ -1,8 +1,9 @@
 import * as React from 'react'
 
+import './styles/globals.scss'
+
 import { createRoot } from 'react-dom/client'
 
-import './styles/globals.scss'
 import Root from './components/root/Root'
 import { GlobalProvider } from './provider/GlobalProvider'
 

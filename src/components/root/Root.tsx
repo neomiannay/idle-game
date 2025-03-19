@@ -1,9 +1,8 @@
 import React, { memo } from 'react'
 
 import { useL10n } from 'provider/L10nProvider'
-import Count from 'components/count/Count'
 import classNames from 'classnames'
-import useGameState from 'store/gameState'
+import useUnitsStore from 'store/useUnitsStore'
 
 import styles from './Root.module.scss'
 
@@ -14,12 +13,17 @@ type RootProps = {
 function Root ({ className, ...props }: RootProps) {
   const l10n = useL10n()
 
-  const { count } = useGameState()
+  const { units } = useUnitsStore()
+
+  console.log('🚀🚀 Root', units)
+
   // const data = useMemo(() => units, [])
+
+  // console.log(getUnit('actif'))
 
   return (
     <main className={ classNames(styles.wrapper, className) }>
-      <Count count={ count } unit='🌸' />
+      { /* <Count count={ getUnit('actif')?.count } unit='🌸' /> */ }
       <div className={ styles.buttons }>
         { /* <Button title={ l10n('BUTTONS.COLLECT') } onClick={ increment } />
         <Button title={ l10n('BUTTONS.RESET') } onClick={ reset } /> */ }

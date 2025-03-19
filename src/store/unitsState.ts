@@ -1,4 +1,4 @@
-import values from 'data/values.json'
+import values from 'data/units.json'
 
 export type Unit = {
   id: string;
@@ -23,7 +23,7 @@ export type Unit = {
   };
 };
 
-export const UNITS_VALUES = values.units as Unit[]
+export const UNITS_VALUES = values.units as any[]
 export default (set: any) => {
   const unitsObject: Record<string, Unit & { increment: () => void }> = {}
 
