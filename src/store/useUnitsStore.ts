@@ -20,28 +20,11 @@ const getStoredValue = <T>(key: string, defaultValue: T): T => {
   }
 }
 
-const getSavedUnits = (): Record<string, Unit> => {
-  try {
-    const savedData = localStorage.getItem(storeKey)
-    if (!savedData) return {}
-
-    const parsed = JSON.parse(savedData)
-    return parsed.units || {}
-  } catch (error) {
-    console.error('Error while parsing localStorage data:', error)
-    return {}
-  }
-}
-
 const initializeUnit = (unitData: Unit): Unit => {
   const storedUnits = getStoredValue<Record<string, Unit>>('units', {})
   const storedUnit = storedUnits[unitData._id]
 
-  console.log('unitData', { ...unitData })
-
   if (!storedUnit) return { ...unitData }
-
-  console.log('omg on update !!!')
 
   return {
     ...unitData,
@@ -58,12 +41,9 @@ const initializeUnit = (unitData: Unit): Unit => {
 
 const initialUnits = unitsData.units.reduce<Record<string, Unit>>((acc, unit) => {
   acc[unit._id] = initializeUnit(unit as Unit)
-  console.log('acc', acc)
 
   return acc
 }, {})
-
-console.log('initialUnits', initialUnits)
 
 const useUnitsStore = create<UnitsState>((set, get) => ({
   units: initialUnits,

@@ -53,10 +53,10 @@ export function GameManagerProvider ({ children }: { children: React.ReactNode }
     const interval = setInterval(() => {
       const currentState = useUnitsStore.getState()
       localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState))
-      // console.log('🚨 GameManagerProvider: auto save done')
+      console.log('🚨 GameManagerProvider: auto save done')
     }, SAVE_INTERVAL)
 
-    // console.log('🚨 GameManagerProvider: auto save activated')
+    console.log('🚨 GameManagerProvider: auto save activated')
 
     return () => clearInterval(interval)
   }, [isLoaded])
@@ -68,7 +68,7 @@ export function GameManagerProvider ({ children }: { children: React.ReactNode }
     const handleBeforeUnload = () => {
       const currentState = useUnitsStore.getState()
       localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState))
-      // console.log('🚨 GameManagerProvider: save before unload')
+      console.log('🚨 GameManagerProvider: save before unload')
     }
 
     window.addEventListener('beforeunload', handleBeforeUnload)

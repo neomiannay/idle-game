@@ -1,0 +1,7 @@
+.wrapper {
+  border: 1px solid hotpink;
+  display: flex;
+  flex-direction: column;
+  gap: rem(10);
+  width: grid(3, 0);
+}
