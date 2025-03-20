@@ -7,11 +7,11 @@ import styles from './Count.module.scss'
 
 type CountProps = {
   className?: string
-  count: number
   unit: string
+  count: number
 }
 
-const Count = ({ className, count, unit, ...props }: CountProps) => {
+const Count = ({ className, unit, count, ...props }: CountProps) => {
   const l10n = useL10n()
 
   return (

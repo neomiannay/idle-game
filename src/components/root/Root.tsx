@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo } from 'react'
 
 import classNames from 'classnames'
 import useUnitsStore from 'store/useUnitsStore'
@@ -11,14 +11,14 @@ type RootProps = {
 };
 
 function Root ({ className, ...props }: RootProps) {
-  const { units } = useUnitsStore() // change to getAllUnitsId
+  const unitsId = useUnitsStore(state => state.getAllUnitsId)
 
-  const unitsArray = useMemo(() => Object.values(units), [units])
+  const unitsIdArr = unitsId()
 
   return (
     <main className={ classNames(styles.wrapper, className) }>
-      { unitsArray.map(unit => (
-        <Section key={ unit._id } unitId={ unit._id } />
+      { unitsIdArr.map(unitId => (
+        <Section key={ unitId } unitId={ unitId } />
       )) }
     </main>
   )

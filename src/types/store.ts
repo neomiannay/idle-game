@@ -45,6 +45,7 @@ export interface UnitsState {
   units: Record<string, Unit>;
 
   getUnit: (unitId: string) => Unit;
+  getAllUnitsId: () => string[];
   updateUnitCount: (unitId: string, amount: number) => void;
 
   updateValueByAction: (unitId: string, newValue: number) => void;

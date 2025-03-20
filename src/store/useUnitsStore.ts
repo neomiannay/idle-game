@@ -48,6 +48,7 @@ const initialUnits = unitsData.units.reduce<Record<string, Unit>>((acc, unit) =>
 const useUnitsStore = create<UnitsState>((set, get) => ({
   units: initialUnits,
   getUnit: (unitId: string) => get().units[unitId],
+  getAllUnitsId: () => Object.keys(get().units),
   updateUnitCount: (unitId: string, amount: number) => {
     set((state: any) => ({
       units: {

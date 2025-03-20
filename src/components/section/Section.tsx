@@ -13,16 +13,21 @@ type SectionProps = {
 }
 
 const Section = ({ className, unitId }: SectionProps) => {
-  const { getUnit, updateUnitCount } = useUnitsStore()
+  const unit = useUnitsStore(state => state.units[unitId])
+  const performAction = useUnitsStore(state => state.performAction)
 
-  const { name, action } = getUnit(unitId)
+  if (!unit) return null
 
-  console.log(unitId)
+  const { count, name, action } = unit
+
+  const handleClick = () => {
+    performAction(unitId)
+  }
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
-      <Count count={ getUnit(unitId).count } unit={ name } />
-      <Button title={ action.name } onClick={ () => updateUnitCount(unitId, action.valueByAction) } />
+      <Count unit={ name } count={ count } />
+      <Button title={ action.name } onClick={ handleClick } />
     </div>
   )
 }
