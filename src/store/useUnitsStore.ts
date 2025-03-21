@@ -132,9 +132,33 @@ const useUnitsStore = create<UnitsState>((set, get) => ({
       }
     })
   },
+  canBuyUnitSelector: (unitId: string) => {
+    return (state: UnitsState) => {
+      const unitToBuy = state.units[unitId]
+      if (!unitToBuy || !unitToBuy.cost) return true
+
+      if (unitToBuy.cost.value === 0) return true
+
+      const { unitId: costUnitId, value: costValue } = unitToBuy.cost
+      const costUnit = state.units[costUnitId]
+
+      if (!costUnit) return false
+
+      return costUnit.count >= costValue
+    }
+  },
   performAction: (unitId: string) => {
     const unit = get().units[unitId]
     if (!unit) return
+
+    if (unit.cost && unit.cost.value > 0) {
+      const canBuy = get().canBuyUnitSelector(unitId)(get())
+
+      if (!canBuy) return
+
+      const { unitId: costUnitId, value: costValue } = unit.cost
+      get().updateUnitCount(costUnitId, -costValue)
+    }
 
     get().updateUnitCount(unitId, unit.action.valueByAction)
   },

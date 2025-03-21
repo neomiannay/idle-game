@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 
 import useUnitsStore from 'store/useUnitsStore'
 
+import { BaseProviderProps } from './GlobalProvider'
+
 const STORAGE_KEY = import.meta.env.VITE_LOCAL_STORAGE_KEY
 const SAVE_INTERVAL = 5000
 
-export function GameManagerProvider ({ children }: { children: React.ReactNode }) {
+export function GameManagerProvider ({ children }: BaseProviderProps) {
   const [isLoaded, setIsLoaded] = useState(false)
 
   // Restauration des données sauvegardées

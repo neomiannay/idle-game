@@ -38,10 +38,10 @@ type ViewportContextType = {
 export const ViewportContext = createContext<ViewportContextType | null>(null)
 
 const mqSizes = {
-  tabletMaxWidth: "1024",
-  tabletPortraitMaxWidth: "900",
-  phoneMaxWidth: "740",
-  phonePortraitMaxWidth: "420",
+  tabletMaxWidth: '1024',
+  tabletPortraitMaxWidth: '900',
+  phoneMaxWidth: '740',
+  phonePortraitMaxWidth: '420'
 }
 
 let context: ViewportContextType | null = null
@@ -124,8 +124,8 @@ export const ViewportProvider = ({ children }: BaseProviderProps) => {
   context = { mq, sizes, setViewportReference, offsetTop }
 
   return (
-    <ViewportContext.Provider value={context}>
-      {children}
+    <ViewportContext.Provider value={ context }>
+      { children }
     </ViewportContext.Provider>
   )
 }

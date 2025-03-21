@@ -13,6 +13,10 @@ export interface Item {
   cost: BaseValue;
 }
 
+export interface ItemsData {
+  [category: string]: Item[];
+}
+
 export interface Upgrade {
   _type: string;
   _id: string;
@@ -54,6 +58,8 @@ export interface UnitsState {
   addItem: (unitId: string, item: Item) => void;
   addUpgrade: (unitId: string, upgrade: Upgrade) => void;
 
+  canBuyUnitSelector: (unitId: string) => (state: UnitsState) => boolean;
   performAction: (unitId: string) => void;
+
   resetStore: () => void;
 }

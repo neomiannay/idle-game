@@ -8,15 +8,20 @@ import styles from './Button.module.scss'
 type ButtonProps = {
   className?: string
   title: string
+  disabled?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button = ({ className, title, ...props }: ButtonProps) => {
+const Button = ({ className, title, disabled, ...props }: ButtonProps) => {
   const l10n = useL10n()
 
-  console.log('🔘 Button rendered')
+  console.log('🔘 ' + l10n(title) + ' Button rendered')
 
   return (
-    <button className={ classNames(styles.wrapper, className) } { ...props }>
+    <button
+      className={ classNames(styles.wrapper, className, {
+        [styles.disabled]: disabled
+      }) } { ...props }
+    >
       { l10n(title) }
     </button>
   )

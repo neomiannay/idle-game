@@ -3,3 +3,7 @@
   margin: 0 auto;
 }
 
+.disabled {
+  color: var(--color-grey);
+  cursor: not-allowed;
+}

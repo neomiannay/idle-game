@@ -15,19 +15,29 @@ type SectionProps = {
 const Section = ({ className, unitId }: SectionProps) => {
   const unit = useUnitsStore(state => state.units[unitId])
   const performAction = useUnitsStore(state => state.performAction)
+  const canBuy = useUnitsStore(state => state.canBuyUnitSelector(unitId)(state))
 
   if (!unit) return null
 
-  const { count, name, action } = unit
+  const { count, name, action, cost } = unit
 
   const handleClick = () => {
     performAction(unitId)
   }
 
+  let costText = ''
+  if (cost && cost.value > 0)
+    costText = `${cost.value} ${cost.unitId}`
+
   return (
     <div className={ classNames(styles.wrapper, className) }>
       <Count unit={ name } count={ count } />
-      <Button title={ action.name } onClick={ handleClick } />
+      <Button
+        title={ action.name }
+        onClick={ handleClick }
+        disabled={ !canBuy }
+      />
+      <span>{ costText }</span>
     </div>
   )
 }
