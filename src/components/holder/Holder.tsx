@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, memo, useRef } from 'react'
+import { ButtonHTMLAttributes, memo, RefObject, useRef } from 'react'
 
 import classNames from 'classnames'
 import { useL10n } from 'provider/L10nProvider'
@@ -74,7 +74,11 @@ const Holder = ({
         </div>
       </button>
 
-      <Cursor title='BUTTONS.HOLD' parent={ buttonRef } />
+      <Cursor
+        title='BUTTONS.HOLD'
+        disabled={ !!disabled }
+        parent={ buttonRef as RefObject<HTMLElement> }
+      />
     </>
   )
 }
