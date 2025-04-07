@@ -4,6 +4,7 @@ import { L10nProvider } from './L10nProvider'
 import { ViewportProvider } from './ViewportProvider'
 import { GameManagerProvider } from './GameManagerProvider'
 import { ItemsProvider } from './ItemsProvider'
+import { UpgradesProvider } from './UpgradesProvider'
 
 type GlobalContextType = {
   loading: boolean
@@ -20,7 +21,7 @@ let context: GlobalContextType
 export const GlobalProvider = ({ children }: BaseProviderProps) => {
   const [loading, setLoading] = useState<boolean>(true)
 
-  const providers = [ViewportProvider, L10nProvider, GameManagerProvider, ItemsProvider]
+  const providers = [ViewportProvider, L10nProvider, GameManagerProvider, ItemsProvider, UpgradesProvider]
 
   context = {
     loading,

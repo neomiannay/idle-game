@@ -8,5 +8,13 @@
     "ACTIVE": "Actif",
     "EXCIPIENT": "Excipient",
     "COMPLEX": "Complexe"
+  },
+  "UPGRADES": {
+    "LVL1_ACTIVATE": "Panier",
+    "LVL2_ACTIVATE": "Brouette",
+    "LVL1_HOLD": "Atelier",
+    "LVL2_HOLD": "Machinerie",
+    "LVL1_SPREAD": "Empoteur",
+    "LVL2_SPREAD": "Empoteur fou"
   }
 }

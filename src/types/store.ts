@@ -27,6 +27,10 @@ export interface Upgrade {
   cost: BaseValue;
 }
 
+export interface UpgradesData {
+  [category: string]: Upgrade[];
+}
+
 export interface Unit {
   _type: string;
   _id: string;

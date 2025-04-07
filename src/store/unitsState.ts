@@ -29,6 +29,7 @@ export default (set: any) => {
 
   UNITS_VALUES.forEach((unit: Unit) => {
     unitsObject[unit.id] = {
+      ...unit,
       increment: () => set((state: any) => ({
         count: unit.id === 'flower' ? state.count + 1 : state.count
       }))

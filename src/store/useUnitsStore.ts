@@ -1,5 +1,6 @@
 import { Unit, UnitsState, Upgrade, Item } from 'types/store'
 import { create } from 'zustand'
+import upgradeAlreadyPurshased from 'utils/upgradeAlreadyPurshased'
 
 import unitsData from 'data/units.json'
 
@@ -117,8 +118,7 @@ const useUnitsStore = create<UnitsState>((set, get) => ({
 
       const currentUpgrades = unit.upgrades || []
 
-      // Vérifier si l'upgrade existe déjà
-      const upgradeExists = currentUpgrades.some(existingUpgrade => existingUpgrade._id === upgrade._id)
+      const upgradeExists = upgradeAlreadyPurshased(currentUpgrades, upgrade)
       if (upgradeExists) return state
 
       return {
@@ -164,7 +164,10 @@ const useUnitsStore = create<UnitsState>((set, get) => ({
   },
   resetStore: () => {
     set({
-      units: initialUnits
+      units: unitsData.units.reduce<Record<string, Unit>>((acc, unit) => {
+        acc[unit._id] = unit as Unit
+        return acc
+      }, {})
     })
   }
 }))

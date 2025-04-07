@@ -1,34 +1,88 @@
 {
- "upgrades": {
+  "upgrades": {
     "actif": [
       {
         "_type": "upgrade",
         "_id": "lvl1",
+        "level": 1,
         "unitId": "actif",
-        "name": "UPGRADES.LEVEL1",
+        "name": "UPGRADES.LVL1_ACTIVATE",
         "valueByAction": 2,
         "apparitionCondition": {
           "unitId": "actif",
-          "value": 100
+          "value": 10
         },
         "cost": {
           "unitId": "actif",
-          "value": 250
+          "value": 5
         }
       },
       {
         "_type": "upgrade",
         "_id": "lvl2",
+        "level": 2,
         "unitId": "actif",
-        "name": "UPGRADES.LEVEL2",
+        "name": "UPGRADES.LVL2_ACTIVATE",
         "valueByAction": 8,
         "apparitionCondition": {
-          "unitId": "action",
-          "value": 200
+          "unitId": "actif",
+          "value": 20
         },
         "cost": {
           "unitId": "actif",
-          "value": 1000
+          "value": 7
+        }
+      }
+    ],
+    "excipient": [
+      {
+        "_type": "upgrade",
+        "_id": "excipient_speed1",
+        "level": 1,
+        "unitId": "excipient",
+        "name": "UPGRADES.LVL1_HOLD",
+        "valueByAction": 2,
+        "apparitionCondition": {
+          "unitId": "excipient",
+          "value": 5
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 100
+        }
+      },
+      {
+        "_type": "upgrade",
+        "_id": "excipient_value1",
+        "level": 2,
+        "unitId": "excipient",
+        "name": "UPGRADES.LVL2_HOLD",
+        "valueByAction": 8,
+        "apparitionCondition": {
+          "unitId": "excipient",
+          "value": 10
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 750
+        }
+      }
+    ],
+    "complexe": [
+      {
+        "_type": "upgrade",
+        "_id": "complexe_value1",
+        "level": 1,
+        "unitId": "complexe",
+        "name": "UPGRADES.LVL1_SPREAD",
+        "valueByAction": 2,
+        "apparitionCondition": {
+          "unitId": "complexe",
+          "value": 5
+        },
+        "cost": {
+          "unitId": "excipient",
+          "value": 20
         }
       }
     ]

@@ -54,7 +54,7 @@
       "action": {
         "valueByAction": 1,
         "name": "BUTTONS.SPREAD",
-        "gesture": "click",
+        "gesture": "doubleClick",
         "duration": 0,
         "animationDirection": null
       },

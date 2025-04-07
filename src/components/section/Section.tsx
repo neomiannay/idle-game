@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import Count from 'components/count/Count'
 import useUnitsStore from 'store/useUnitsStore'
 import Button from 'components/button/Button'
+import UpgradesContainer from 'components/upgradesContainer/UpgradesContainer'
 
 import styles from './Section.module.scss'
 
@@ -38,6 +39,7 @@ const Section = ({ className, unitId }: SectionProps) => {
         disabled={ !canBuy }
       />
       <span>{ costText }</span>
+      <UpgradesContainer unitId={ unitId } />
     </div>
   )
 }
