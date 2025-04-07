@@ -11,6 +11,7 @@ type HolderProps = {
   title: string;
   disabled?: boolean;
   duration?: number;
+  onHold?: Function
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Holder = ({
@@ -18,12 +19,14 @@ const Holder = ({
   title,
   disabled,
   duration = 1000,
+  onHold,
   ...props
 }: HolderProps) => {
   const l10n = useL10n()
   const ref = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   let animation: Animation | undefined
+
   const handleMouseDown = () => {
     if (disabled) return
 
@@ -39,6 +42,7 @@ const Holder = ({
         duration: 150,
         easing: 'ease-in-out'
       })
+      if (onHold) onHold()
     }
   }
 

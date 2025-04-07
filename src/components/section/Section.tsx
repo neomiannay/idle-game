@@ -58,7 +58,7 @@ const Section = ({
   return (
     <div className={ classNames(styles.wrapper, className) }>
       <Count unit={ name } count={ count } />
-      <Holder title={ action.name } onClick={ handleClick } disabled={ !canBuy } />
+      <Holder title={ action.name } onHold={ handleClick } disabled={ !canBuy } />
       <span>{ costText }</span>
       <b>
         <button onClick={ handleReset }>Reset</button>
