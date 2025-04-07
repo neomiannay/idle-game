@@ -1,0 +1,24 @@
+.wrapper {
+  @include apply(action2);
+  margin: 0 auto;
+  position: relative;
+  color: var(--color-divider);
+}
+
+.mask,
+.mask__wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.mask__wrapper {
+  height: 0;
+  color: var(--color-black);
+}
+
+.disabled {
+  color: var(--color-grey);
+  cursor: not-allowed;
+}

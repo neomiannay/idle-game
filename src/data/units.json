@@ -30,7 +30,7 @@
       "name": "UNITS.EXCIPIENT",
       "action": {
         "valueByAction": 1,
-        "name": "BUTTONS.HOLD",
+        "name": "BUTTONS.STABILIZE",
         "gesture": "hold",
         "duration": 5000,
         "animationDirection": "up"

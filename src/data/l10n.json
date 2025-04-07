@@ -1,8 +1,9 @@
 {
   "BUTTONS": {
     "ACTIVATE": "Active",
-    "HOLD": "Maintiens",
-    "SPREAD": "Répands"
+    "STABILIZE": "Stabilise",
+    "SPREAD": "Répands",
+    "HOLD": "Maintiens"
   },
   "UNITS": {
     "ACTIVE": "Actif",

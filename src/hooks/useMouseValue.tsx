@@ -1,11 +1,11 @@
-import { MutableRefObject, useEffect } from 'react'
+import { RefObject, useEffect } from 'react'
 
-import { useViewportContext } from 'src/provider/ViewportProvider'
+import { useViewportContext } from 'provider/ViewportProvider'
 
 import useObjectMotionValue from './useObjectMotionValue'
 
 type MouseValueProps = {
-  ref?: MutableRefObject<HTMLElement | null>
+  ref?: RefObject<any>
   absolute?: boolean
 }
 
