@@ -3,9 +3,10 @@
     "actif": [
       {
         "_type": "item",
-        "_id": "ami",
+        "_id": "actifFriend",
         "unitId": "actif",
         "name": "ITEMS.FRIEND",
+        "count": 0,
         "unitByTime": 1,
         "apparitionCondition": {
           "unitId": "actif",
@@ -18,13 +19,14 @@
       },
       {
         "_type": "item",
-        "_id": "stagiaire",
+        "_id": "actifTrainee",
         "unitId": "actif",
+        "count": 0,
         "name": "ITEMS.TRAINEE",
         "unitByTime": 30,
         "apparitionCondition": {
           "unitId": "excipient",
-          "value": 10
+          "value": 1
         },
         "cost": {
           "unitId": "actif",
@@ -33,8 +35,9 @@
       },
       {
         "_type": "item",
-        "id": "alternant",
+        "id": "actifApprentice",
         "unitId": "actif",
+        "count": 0,
         "name": "ITEMS.APPRENTICE",
         "unitByTime": 100,
         "apparitionCondition": {
@@ -43,6 +46,56 @@
         },
         "cost": {
           "unitId": "actif",
+          "value": 1000
+        }
+      }
+    ],
+    "excipient": [
+      {
+        "_type": "item",
+        "_id": "excipientFriend",
+        "unitId": "excipient",
+        "name": "ITEMS.FRIEND",
+        "count": 0,
+        "unitByTime": 1,
+        "apparitionCondition": {
+          "unitId": "excipient",
+          "value": 1
+        },
+        "cost": {
+          "unitId": "excipient",
+          "value": 100
+        }
+      },
+      {
+        "_type": "item",
+        "_id": "excipientTrainee",
+        "unitId": "excipient",
+        "count": 0,
+        "name": "ITEMS.TRAINEE",
+        "unitByTime": 30,
+        "apparitionCondition": {
+          "unitId": "excipient",
+          "value": 3
+        },
+        "cost": {
+          "unitId": "excipient",
+          "value": 500
+        }
+      },
+      {
+        "_type": "item",
+        "id": "excipientApprentice",
+        "unitId": "excipient",
+        "count": 0,
+        "name": "ITEMS.APPRENTICE",
+        "unitByTime": 100,
+        "apparitionCondition": {
+          "unitId": "complexe",
+          "value": 1
+        },
+        "cost": {
+          "unitId": "excipient",
           "value": 1000
         }
       }

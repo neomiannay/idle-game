@@ -8,6 +8,7 @@ export interface Item {
   _id: string;
   unitId: string;
   name: string;
+  count: number;
   unitByTime: number;
   apparitionCondition: BaseValue,
   cost: BaseValue;
@@ -41,6 +42,8 @@ export interface Unit {
   },
   apparitionCondition: BaseValue,
   cost: BaseValue,
+  isForceUnlocked?: boolean;
+  wasVisibleBefore?: boolean;
   items: Item[] | null;
   upgrades: Upgrade[] | null;
 }
@@ -50,12 +53,16 @@ export interface UnitsState {
 
   getUnit: (unitId: string) => Unit;
   getAllUnitsId: () => string[];
+  getActiveItemsByUnit: (unitId: string) => Record<string, Item[]>;
+
   updateUnitCount: (unitId: string, amount: number) => void;
 
   updateValueByAction: (unitId: string, newValue: number) => void;
   updateActionDuration: (unitId: string, duration: number) => void;
 
-  addItem: (unitId: string, item: Item) => void;
+  buyItem: (unitId: string, item: Item) => void;
+  resetItems: (unitId: string) => void;
+
   addUpgrade: (unitId: string, upgrade: Upgrade) => void;
 
   canBuyUnitSelector: (unitId: string) => (state: UnitsState) => boolean;

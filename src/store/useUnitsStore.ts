@@ -49,6 +49,16 @@ const useUnitsStore = create<UnitsState>((set, get) => ({
   units: initialUnits,
   getUnit: (unitId: string) => get().units[unitId],
   getAllUnitsId: () => Object.keys(get().units),
+  getActiveItemsByUnit: (unitId: string) => {
+    const unit = get().units[unitId]
+    if (!unit) return {} as Record<string, Item[]>
+    if (!unit.items) return {} as Record<string, Item[]>
+    return unit.items.reduce<Record<string, Item[]>>((acc, item) => {
+      if (!acc[item.unitId]) acc[item.unitId] = []
+      acc[item.unitId].push(item)
+      return acc
+    }, {})
+  },
   updateUnitCount: (unitId: string, amount: number) => {
     set((state: any) => ({
       units: {
@@ -88,23 +98,42 @@ const useUnitsStore = create<UnitsState>((set, get) => ({
       }
     }))
   },
-  addItem: (unitId: string, item: Item) => {
+  buyItem: (unitId: string, item: Item) => {
+    // if the item already exists, update the count by 1
     set((state) => {
       const unit = state.units[unitId]
       if (!unit) return state
 
-      const currentItems = unit.items || []
+      const items = unit.items || []
+      const itemIndex = items.findIndex(i => i._id === item._id)
 
-      // Vérifier si l'item existe déjà
-      const itemExists = currentItems.some(existingItem => existingItem._id === item._id)
-      if (itemExists) return state
+      if (itemIndex !== -1)
+        items[itemIndex].count++
+      else
+        items.push({ ...item, count: 1 })
 
       return {
         units: {
           ...state.units,
           [unitId]: {
             ...unit,
-            items: [...currentItems, item]
+            items
+          }
+        }
+      }
+    })
+  },
+  resetItems: (unitId: string) => {
+    set((state) => {
+      const unit = state.units[unitId]
+      if (!unit) return state
+
+      return {
+        units: {
+          ...state.units,
+          [unitId]: {
+            ...unit,
+            items: null
           }
         }
       }
@@ -164,7 +193,10 @@ const useUnitsStore = create<UnitsState>((set, get) => ({
   },
   resetStore: () => {
     set({
-      units: initialUnits
+      units: unitsData.units.reduce<Record<string, Unit>>((acc, unit) => {
+        acc[unit._id] = { ...unit }
+        return acc
+      }, {})
     })
   }
 }))

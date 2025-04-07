@@ -14,7 +14,7 @@ type ButtonProps = {
 const Button = ({ className, title, disabled, ...props }: ButtonProps) => {
   const l10n = useL10n()
 
-  console.log('🔘 ' + l10n(title) + ' Button rendered')
+  // console.log('🔘 ' + l10n(title) + ' Button rendered')
 
   return (
     <button

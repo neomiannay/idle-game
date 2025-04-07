@@ -37,7 +37,7 @@
       },
       "apparitionCondition": {
         "unitId": "actif",
-        "value": 1000
+        "value": 20
       },
       "cost": {
         "unitId": "actif",
@@ -60,11 +60,11 @@
       },
       "apparitionCondition": {
         "unitId": "excipient",
-        "value": 10
+        "value": 2
       },
       "cost": {
         "unitId": "excipient",
-        "value": 30
+        "value": 10
       },
       "items": null,
       "upgrades": null

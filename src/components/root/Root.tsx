@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import classNames from 'classnames'
 import useUnitsStore from 'store/useUnitsStore'
 import Section from 'components/section/Section'
-import { useItemsContext } from 'provider/ItemsProvider'
+import { useVisibility } from 'provider/VisibilityProvider'
 
 import styles from './Root.module.scss'
 
@@ -12,17 +12,23 @@ type RootProps = {
 };
 
 function Root ({ className, ...props }: RootProps) {
-  const { getItemsByUnit } = useItemsContext()
   const unitsId = useUnitsStore(state => state.getAllUnitsId)
+  const resetStore = useUnitsStore(state => state.resetStore)
 
-  const unitsIdArr = unitsId()
+  // const unitsIdArr = unitsId()
 
-  console.log(getItemsByUnit('actif'))
+  const { visibleEntities } = useVisibility()
 
   return (
     <main className={ classNames(styles.wrapper, className) }>
-      { unitsIdArr.map(unitId => (
-        <Section key={ unitId } unitId={ unitId } />
+      <button onClick={ resetStore }>Reset</button>
+      { visibleEntities.units.map(unitId => (
+        <Section
+          key={ unitId }
+          unitId={ unitId }
+          visibleItems={ visibleEntities.items[unitId] || [] }
+          visibleUpgrades={ visibleEntities.upgrades[unitId] || [] }
+        />
       )) }
     </main>
   )
