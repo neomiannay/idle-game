@@ -118,3 +118,17 @@ $styles: ();
     text-transform: uppercase;
   }
 }
+
+%modale {
+  @include rule {
+    backdrop-filter: blur(2px);
+    background-color: #15151550;
+    pointer-events: all;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}

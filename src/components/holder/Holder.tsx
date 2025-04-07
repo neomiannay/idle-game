@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes, memo, RefObject, useRef } from 'react'
 
 import classNames from 'classnames'
 import { useL10n } from 'provider/L10nProvider'
+import { useDialogsContext } from 'provider/DialogsProvider'
 import Cursor from 'components/cursor/Cursor'
 
 import styles from './Holder.module.scss'
@@ -23,6 +24,7 @@ const Holder = ({
   ...props
 }: HolderProps) => {
   const l10n = useL10n()
+  const { openDialog } = useDialogsContext()
   const ref = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   let animation: Animation | undefined
@@ -37,6 +39,12 @@ const Holder = ({
     })
     animation!.onfinish = () => {
       console.log('Hold finished !')
+
+      openDialog({
+        id: `holder-${title}-${Date.now()}`,
+        type: 'default'
+      })
+
       animation = ref.current?.animate([{ height: '95%' }, { height: '20%' }], {
         // 20% / 95% because of the font gaps
         duration: 150,

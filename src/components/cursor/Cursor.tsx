@@ -51,31 +51,27 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
     mouse.y.on('change', (value) => handlePositionChange('y', value))
   }, [mouse.x, mouse.y, handlePositionChange])
 
-  const animateCursor = useCallback(
-    (to: number, onFinish?: () => void) => {
-      if (animationRef.current) animationRef.current.cancel()
-      if (!ref.current || disabled) return
+  const animateCursor = useCallback((to: number, onFinish?: () => void) => {
+    if (animationRef.current) animationRef.current.cancel()
+    if (!ref.current || disabled) return
 
-      const opacity = parseFloat(getComputedStyle(ref.current).opacity) || 0
-      animationRef.current = ref.current.animate(
-        [{ opacity }, { opacity: to }],
-        {
-          delay: opacity > to ? 500 : 200,
-          duration: 250,
-          easing: 'ease-in-out'
-        }
-      )
+    const opacity = parseFloat(getComputedStyle(ref.current).opacity) || 0
+    animationRef.current = ref.current.animate([{ opacity }, { opacity: to }], {
+      delay: opacity > to ? 500 : 200,
+      duration: 250,
+      easing: 'ease-in-out'
+    })
 
-      if (animationRef.current && onFinish)
-        animationRef.current.onfinish = onFinish
-    },
-    []
-  )
+    if (animationRef.current && onFinish)
+      animationRef.current.onfinish = onFinish
+  }, [])
 
   useEffect(() => {
     if (!parent.current) return
 
-    const handleMouseEnter = () => {
+    const handleMouseMove = () => {
+      if (!hasStart.current.x || !hasStart.current.x || insideRef.current) return
+
       insideRef.current = true
       animateCursor(1, () => {
         activeRef.current = true
@@ -85,6 +81,7 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
 
     const handleMouseLeave = () => {
       insideRef.current = false
+
       animateCursor(0, () => {
         activeRef.current = false
         hasStart.current = { x: false, y: false }
@@ -93,17 +90,18 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
     }
 
     const element = parent.current
-    element.addEventListener('mouseenter', handleMouseEnter)
+    element.addEventListener('mousemove', handleMouseMove)
     element.addEventListener('mouseleave', handleMouseLeave)
 
     return () => {
-      element.removeEventListener('mouseenter', handleMouseEnter)
+      element.removeEventListener('mousemove', handleMouseMove)
       element.removeEventListener('mouseleave', handleMouseLeave)
     }
   }, [parent, animateCursor])
 
   useAnimationFrame(() => {
-    if (!hasStart.current.x || !hasStart.current.y || !ref.current || disabled) return
+    if (!hasStart.current.x || !hasStart.current.y || !ref.current || disabled)
+      return
 
     const mouseX = Math.round(mouse.x.get())
     const mouseY = Math.round(mouse.y.get())
@@ -115,14 +113,6 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
 
     ref.current.style.top = `${springYValue}px`
     ref.current.style.left = `${springXValue}px`
-
-    if (activeRef.current && unchangedRef.current > 10 && insideRef.current) {
-      animateCursor(0, () => {
-        activeRef.current = false
-        if (ref.current) ref.current.style.opacity = '0'
-        unchangedRef.current = 0
-      })
-    }
   })
 
   return (
