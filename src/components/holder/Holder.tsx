@@ -1,9 +1,8 @@
-import { ButtonHTMLAttributes, memo, RefObject, useRef, useState } from 'react'
+import { ButtonHTMLAttributes, memo, RefObject, useRef } from 'react'
 
 import classNames from 'classnames'
 import { useL10n } from 'provider/L10nProvider'
 import Tooltip from 'components/tooltip/Tooltip'
-import Modal from 'components/modal/Modal'
 
 import styles from './Holder.module.scss'
 
@@ -27,8 +26,6 @@ const Holder = ({
   const ref = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  const [isOpen, setIsOpen] = useState(false)
-
   let animation: Animation | undefined
 
   const handleMouseDown = () => {
@@ -40,8 +37,6 @@ const Holder = ({
       easing: 'ease-in-out'
     })
     animation!.onfinish = () => {
-      setIsOpen(true)
-
       animation = ref.current?.animate([{ height: '95%' }, { height: '20%' }], {
         // 20% / 95% because of the font gaps
         duration: 150,
@@ -88,16 +83,6 @@ const Holder = ({
         disabled={ !!disabled }
         parent={ buttonRef as RefObject<HTMLElement> }
       />
-
-      { isOpen.toString() }
-      <Modal
-        open={ isOpen }
-        onClose={ () => setIsOpen(false) }
-      >
-        <div>
-          test
-        </div>
-      </Modal>
     </>
   )
 }
