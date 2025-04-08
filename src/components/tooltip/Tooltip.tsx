@@ -4,15 +4,15 @@ import useMouseValue from 'hooks/useMouseValue'
 import { useL10n } from 'provider/L10nProvider'
 import { useSpring, useMotionValue, useAnimationFrame } from 'motion/react'
 
-import styles from './Cursor.module.scss'
+import styles from './Tooltip.module.scss'
 
-interface CursorProps {
+interface TooltipProps {
   title: string;
   disabled: boolean;
   parent: RefObject<HTMLElement>;
 }
 
-const Cursor = ({ title, disabled, parent }: CursorProps) => {
+const Tooltip = ({ title, disabled, parent }: TooltipProps) => {
   const mouse = useMouseValue({ absolute: true, ref: parent })
   const l10n = useL10n()
   const ttl = l10n(title)
@@ -51,7 +51,7 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
     mouse.y.on('change', (value) => handlePositionChange('y', value))
   }, [mouse.x, mouse.y, handlePositionChange])
 
-  const animateCursor = useCallback((to: number, onFinish?: () => void) => {
+  const animateTooltip = useCallback((to: number, onFinish?: () => void) => {
     if (animationRef.current) animationRef.current.cancel()
     if (!ref.current || disabled) return
 
@@ -73,7 +73,7 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
       if (!hasStart.current.x || !hasStart.current.x || insideRef.current) return
 
       insideRef.current = true
-      animateCursor(1, () => {
+      animateTooltip(1, () => {
         activeRef.current = true
         if (ref.current) ref.current.style.opacity = '1'
       })
@@ -82,7 +82,7 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
     const handleMouseLeave = () => {
       insideRef.current = false
 
-      animateCursor(0, () => {
+      animateTooltip(0, () => {
         activeRef.current = false
         hasStart.current = { x: false, y: false }
         if (ref.current) ref.current.style.opacity = '0'
@@ -97,7 +97,7 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
       element.removeEventListener('mousemove', handleMouseMove)
       element.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [parent, animateCursor])
+  }, [parent, animateTooltip])
 
   useAnimationFrame(() => {
     if (!hasStart.current.x || !hasStart.current.y || !ref.current || disabled)
@@ -122,4 +122,4 @@ const Cursor = ({ title, disabled, parent }: CursorProps) => {
   )
 }
 
-export default memo(Cursor)
+export default memo(Tooltip)
