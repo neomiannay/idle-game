@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 
 const useRequestAnimationFrame = (callback: Function) => {
-  const requestRef = useRef<number>()
-  const previousTimeRef = useRef<number>()
+  const requestRef = useRef<number>(0)
+  const previousTimeRef = useRef<number>(0)
 
   const animate = (time: number) => {
     if (previousTimeRef.current !== undefined) {

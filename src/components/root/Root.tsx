@@ -1,35 +1,47 @@
 import React, { memo } from 'react'
 
 import classNames from 'classnames'
-import useUnitsStore from 'store/useUnitsStore'
+import { useGameProviderContext } from 'provider/GameProvider'
 import Section from 'components/section/Section'
-import { useVisibility } from 'provider/VisibilityProvider'
+import Shop from 'components/shop/Shop' // Import the new Shop component
+import { useIterationContext } from 'provider/IterationProvider'
+import Meta from 'components/meta/Meta'
 
 import styles from './Root.module.scss'
 
 type RootProps = {
-  className?: string;
-};
+  className?: string
+}
 
-function Root ({ className, ...props }: RootProps) {
-  const unitsId = useUnitsStore(state => state.getAllUnitsId)
-  const resetStore = useUnitsStore(state => state.resetStore)
+function Root ({ className }: RootProps) {
+  const { canDisplayUnit, units } = useGameProviderContext()
+  const { isPaused, togglePause, loading } = useIterationContext()
 
-  // const unitsIdArr = unitsId()
-
-  const { visibleEntities } = useVisibility()
+  const unitIds = Object.keys(units)
 
   return (
-    <main className={ classNames(styles.wrapper, className) }>
-      <button onClick={ resetStore }>Reset</button>
-      { visibleEntities.units.map(unitId => (
-        <Section
-          key={ unitId }
-          unitId={ unitId }
-          visibleItems={ visibleEntities.items[unitId] || [] }
-          visibleUpgrades={ visibleEntities.upgrades[unitId] || [] }
-        />
-      )) }
+    <main className={ classNames(styles.wrapper, {
+      [styles.loading]: loading
+    }) }
+    >
+      <Meta />
+      <div className={ styles.gameLayout }>
+        { unitIds.map((unitId) => (
+          canDisplayUnit(unitId) && (
+            <Section key={ unitId } unitId={ unitId } />
+          )
+        )) }
+        <button
+          className={ classNames(styles.pauseButton, {
+            [styles.paused]: isPaused
+          }) }
+          onClick={ togglePause }
+        >
+          { isPaused ? 'Paused' : 'Running' }
+        </button>
+      </div>
+
+      <Shop />
     </main>
   )
 }

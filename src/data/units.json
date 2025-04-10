@@ -30,25 +30,25 @@
       "name": "UNITS.EXCIPIENT",
       "action": {
         "valueByAction": 1,
-        "name": "BUTTONS.STABILIZE",
+        "name": "BUTTONS.HOLD",
         "gesture": "hold",
         "duration": 5000,
         "animationDirection": "up"
       },
       "apparitionCondition": {
         "unitId": "actif",
-        "value": 20
+        "value": 10
       },
       "cost": {
         "unitId": "actif",
-        "value": 10
+        "value": 5
       },
       "items": null,
       "upgrades": null
     },
     {
       "_type": "unit",
-      "_id": "complexe",
+      "_id": "complex",
       "count": 0,
       "name": "UNITS.COMPLEX",
       "action": {
@@ -60,7 +60,7 @@
       },
       "apparitionCondition": {
         "unitId": "excipient",
-        "value": 2
+        "value": 3
       },
       "cost": {
         "unitId": "excipient",

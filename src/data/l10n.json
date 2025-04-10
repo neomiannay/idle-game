@@ -1,13 +1,30 @@
 {
+  "meta": {
+    "title": "🦈 👞 Tralalero Tralala",
+    "description": "Trallallero Trallalla, porco dio e porco Allah"
+  },
   "BUTTONS": {
     "ACTIVATE": "Active",
-    "STABILIZE": "Stabilise",
-    "SPREAD": "Répands",
-    "HOLD": "Maintiens"
+    "HOLD": "Maintiens",
+    "SPREAD": "Répands"
   },
   "UNITS": {
     "ACTIVE": "Actif",
     "EXCIPIENT": "Excipient",
     "COMPLEX": "Complexe"
+  },
+  "ITEMS": {
+    "FRIEND": "Ami",
+    "TRAINEE": "Stagiaire",
+    "APPRENTICE": "Apprenti"
+  },
+  "ACTIONS": {
+    "BUY": "Acheter"
+  },
+  "UPGRADES": {
+    "LEVEL1": "Niveau 1",
+    "LEVEL2": "Niveau 2",
+    "LEVEL3": "Niveau 3",
+    "LEVEL4": "Niveau 4"
   }
 }

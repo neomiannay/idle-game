@@ -9,7 +9,7 @@
         "valueByAction": 2,
         "apparitionCondition": {
           "unitId": "actif",
-          "value": 100
+          "value": 20
         },
         "cost": {
           "unitId": "actif",
@@ -23,8 +23,8 @@
         "name": "UPGRADES.LEVEL2",
         "valueByAction": 8,
         "apparitionCondition": {
-          "unitId": "action",
-          "value": 200
+          "unitId": "actif",
+          "value": 50
         },
         "cost": {
           "unitId": "actif",

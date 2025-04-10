@@ -3,100 +3,47 @@
     "actif": [
       {
         "_type": "item",
-        "_id": "actifFriend",
+        "_id": "ami",
         "unitId": "actif",
         "name": "ITEMS.FRIEND",
-        "count": 0,
         "unitByTime": 1,
+        "apparitionCondition": {
+          "unitId": "actif",
+          "value": 5
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 5
+        }
+      },
+      {
+        "_type": "item",
+        "_id": "stagiaire",
+        "unitId": "actif",
+        "name": "ITEMS.TRAINEE",
+        "unitByTime": 30,
         "apparitionCondition": {
           "unitId": "actif",
           "value": 10
         },
         "cost": {
           "unitId": "actif",
-          "value": 100
+          "value": 10
         }
       },
       {
         "_type": "item",
-        "_id": "actifTrainee",
+        "id": "apprenti",
         "unitId": "actif",
-        "count": 0,
-        "name": "ITEMS.TRAINEE",
-        "unitByTime": 30,
-        "apparitionCondition": {
-          "unitId": "excipient",
-          "value": 1
-        },
-        "cost": {
-          "unitId": "actif",
-          "value": 500
-        }
-      },
-      {
-        "_type": "item",
-        "id": "actifApprentice",
-        "unitId": "actif",
-        "count": 0,
         "name": "ITEMS.APPRENTICE",
         "unitByTime": 100,
         "apparitionCondition": {
-          "unitId": "complexe",
-          "value": 1
+          "unitId": "actif",
+          "value": 15
         },
         "cost": {
           "unitId": "actif",
-          "value": 1000
-        }
-      }
-    ],
-    "excipient": [
-      {
-        "_type": "item",
-        "_id": "excipientFriend",
-        "unitId": "excipient",
-        "name": "ITEMS.FRIEND",
-        "count": 0,
-        "unitByTime": 1,
-        "apparitionCondition": {
-          "unitId": "excipient",
-          "value": 1
-        },
-        "cost": {
-          "unitId": "excipient",
-          "value": 100
-        }
-      },
-      {
-        "_type": "item",
-        "_id": "excipientTrainee",
-        "unitId": "excipient",
-        "count": 0,
-        "name": "ITEMS.TRAINEE",
-        "unitByTime": 30,
-        "apparitionCondition": {
-          "unitId": "excipient",
-          "value": 3
-        },
-        "cost": {
-          "unitId": "excipient",
-          "value": 500
-        }
-      },
-      {
-        "_type": "item",
-        "id": "excipientApprentice",
-        "unitId": "excipient",
-        "count": 0,
-        "name": "ITEMS.APPRENTICE",
-        "unitByTime": 100,
-        "apparitionCondition": {
-          "unitId": "complexe",
-          "value": 1
-        },
-        "cost": {
-          "unitId": "excipient",
-          "value": 1000
+          "value": 15
         }
       }
     ]

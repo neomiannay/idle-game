@@ -1,13 +1,10 @@
-import React, { createContext, useState, useContext, PropsWithChildren, SetStateAction, Dispatch, useMemo } from 'react'
-
-import itemsJson from 'data/items.json'
-import upgradesJson from 'data/upgrades.json'
+import React, { createContext, useState, useContext, PropsWithChildren, SetStateAction, Dispatch } from 'react'
 
 import { L10nProvider } from './L10nProvider'
 import { ViewportProvider } from './ViewportProvider'
-import { GameManagerProvider } from './GameManagerProvider'
-import { ItemsProvider } from './ItemsProvider'
-import { VisibilityProvider } from './VisibilityProvider'
+import { GameProvider } from './GameProvider'
+import { IterationProvider } from './IterationProvider'
+import { InventoryProvider } from './InventoryProvider'
 
 type GlobalContextType = {
   loading: boolean
@@ -24,22 +21,13 @@ let context: GlobalContextType
 export const GlobalProvider = ({ children }: BaseProviderProps) => {
   const [loading, setLoading] = useState<boolean>(true)
 
-  const itemsData = useMemo(() => itemsJson.items, [])
-  const upgradesData = useMemo(() => upgradesJson.upgrades, [])
-
   const providers = [
     ViewportProvider,
     L10nProvider,
-    GameManagerProvider,
-    ItemsProvider,
-    () => (
-      <VisibilityProvider
-        items={ itemsData }
-        upgrades={ upgradesData }
-      >
-        { children }
-      </VisibilityProvider>
-    )
+    GameProvider,
+    InventoryProvider,
+    IterationProvider
+    // ItemsProvider
   ]
 
   context = {

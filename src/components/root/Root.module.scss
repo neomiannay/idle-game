@@ -1,6 +1,10 @@
 .wrapper {
   height: var(--ivh);
   display: flex; // TODO : remove this
+
+  &.loading {
+    background-color: hotpink;
+  }
 }
 
 .buttons {
@@ -8,6 +12,24 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.pauseButton {
+  position: absolute;
+  top: rem(20);
+  right: rem(20);
+  border: 1px solid hotpink;
+  padding: rem(4);
+
+  &.paused {
+    background-color: rgb(255, 0, 0);
+    color: white;
+  }
+}
+
+.gameLayout {
+  display: flex;
+  margin-top: 15%;
 }
 
 @include tablet-portrait {
