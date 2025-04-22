@@ -56,7 +56,7 @@ $styles: ();
   @include rule {
     font-size: rem(96);
     font-stretch: normal;
-    font-variation-settings: 'wght' 800, 'wdth' 0, "ital" 1;
+    font-variation-settings: 'wght' 800, 'wdth' 0, 'ital' 1;
     letter-spacing: 0.02em;
     line-height: 1.08;
     text-transform: uppercase;
@@ -80,10 +80,20 @@ $styles: ();
   @include rule {
     font-size: rem(32);
     font-stretch: normal;
-    font-variation-settings: 'wght' 500, 'wdth' 0, "ital" 0;
+    font-variation-settings: 'wght' 500, 'wdth' 0, 'ital' 0;
     letter-spacing: 0.02em;
     line-height: 1.08;
-    text-transform: uppercase;
+  }
+}
+
+%count-production {
+  @include rule {
+    font-size: rem(16);
+    font-stretch: normal;
+    font-style: italic;
+    font-variation-settings: 'wght' 200, 'wdth'20, 'ital' 0;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
   }
 }
 
@@ -91,7 +101,7 @@ $styles: ();
   @include rule {
     font-size: rem(56);
     font-stretch: normal;
-    font-variation-settings: 'wght' 800, 'wdth' 20, "ital" 100;
+    font-variation-settings: 'wght' 800, 'wdth' 20, 'ital' 100;
     letter-spacing: 0.02em;
     line-height: 1.08;
     text-transform: uppercase;
@@ -102,7 +112,7 @@ $styles: ();
   @include rule {
     font-size: rem(56);
     font-stretch: normal;
-    font-variation-settings: 'wght' 800, 'wdth' 0, "ital" 0;
+    font-variation-settings: 'wght' 800, 'wdth' 0, 'ital' 0;
     letter-spacing: 0.02em;
     line-height: 1.08;
     text-transform: uppercase;
