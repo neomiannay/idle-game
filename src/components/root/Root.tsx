@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import Shop from 'components/shop/Shop' // Import the new Shop component
 import { useIterationContext } from 'provider/IterationProvider'
 import Meta from 'components/meta/Meta'
+import Header from 'components/header/Header'
 import Sections from 'components/sections/Sections'
 
 import styles from './Root.module.scss'
@@ -21,6 +22,7 @@ function Root ({ className }: RootProps) {
     }) }
     >
       <Meta />
+      <Header />
       <Sections className={ styles.sections } />
       <button
         className={ classNames(styles.pauseButton, {
