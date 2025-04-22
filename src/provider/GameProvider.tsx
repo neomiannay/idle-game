@@ -33,27 +33,31 @@ export function GameProvider ({ children }: BaseProviderProps) {
 
   // Initialize motion values for units
   const actifUnit = useUnitMotionValue(0)
-  const excipientUnit = useUnitMotionValue(0)
   const complexUnit = useUnitMotionValue(0)
+  const saleUnit = useUnitMotionValue(0)
   const benefitsUnit = useUnitMotionValue(0)
+  const reputationUnit = useUnitMotionValue(0)
 
   // Purchase conditions
   const canBuyActif = true
-  const canBuyExcipient = useMotionState(actifUnit.value, () => actifUnit.get() >= 5)
-  const canBuyComplex = useMotionState(excipientUnit.value, () => excipientUnit.get() >= 10)
+  const canBuyComplex = useMotionState(actifUnit.value, () => actifUnit.get() >= 10)
+  const canBuySale = useMotionState(complexUnit.value, () => complexUnit.get() >= 1)
   const canBuyWithBenefits = useMotionState(benefitsUnit.value, () => benefitsUnit.get() >= 10) // 10 = how much benefits you need to fund a project/mini-game
+  const canBuyWithReputation = useMotionState(reputationUnit.value, () => reputationUnit.get() >= 10) // 10 = how much reputation you need to fund a project/mini-game
 
   // Display conditions
   const canDisplayActif = true
-  const [displayExcipient, setDisplayExcipient] = useState(false)
   const [displayComplex, setDisplayComplex] = useState(false)
+  const [displaySale, setDisplaySale] = useState(false)
   const [displayBenefits, setDisplayBenefits] = useState(false)
+  const [displayReputation, setDisplayReputation] = useState(false)
 
   const updateDisplayConditions = useCallback(() => {
-    setDisplayExcipient(actifUnit.getTotal() >= 5)
-    setDisplayComplex(excipientUnit.getTotal() >= 10)
-    setDisplayBenefits(complexUnit.getTotal() >= 1)
-  }, [actifUnit, excipientUnit, complexUnit])
+    setDisplayComplex(actifUnit.getTotal() >= 10)
+    setDisplaySale(complexUnit.getTotal() >= 5)
+    setDisplayBenefits(saleUnit.getTotal() > 0)
+    setDisplayReputation(reputationUnit.getTotal() > 0)
+  }, [actifUnit, complexUnit, saleUnit, reputationUnit])
 
   // Define the units
   const units: Record<string, GameUnit> = {
@@ -65,16 +69,6 @@ export function GameProvider ({ children }: BaseProviderProps) {
       displayCondition: canDisplayActif,
       purchaseCondition: canBuyActif
     },
-    excipient: {
-      id: 'excipient',
-      rawValue: excipientUnit,
-      motionValue: excipientUnit.value,
-      totalMotionValue: excipientUnit.total,
-      displayCondition: displayExcipient,
-      purchaseCondition: canBuyExcipient,
-      costUnitId: 'actif',
-      costAmount: 5
-    },
     complex: {
       id: 'complex',
       rawValue: complexUnit,
@@ -82,8 +76,18 @@ export function GameProvider ({ children }: BaseProviderProps) {
       totalMotionValue: complexUnit.total,
       displayCondition: displayComplex,
       purchaseCondition: canBuyComplex,
-      costUnitId: 'excipient',
+      costUnitId: 'actif',
       costAmount: 10
+    },
+    sale: {
+      id: 'sale',
+      rawValue: saleUnit,
+      motionValue: saleUnit.value,
+      totalMotionValue: saleUnit.total,
+      displayCondition: displaySale,
+      purchaseCondition: canBuySale,
+      costUnitId: 'complex',
+      costAmount: 1
     },
     benefits: {
       id: 'benefits',
@@ -92,13 +96,23 @@ export function GameProvider ({ children }: BaseProviderProps) {
       totalMotionValue: benefitsUnit.total,
       displayCondition: displayBenefits,
       purchaseCondition: canBuyWithBenefits
+    },
+    reputation: {
+      id: 'reputation',
+      rawValue: reputationUnit,
+      motionValue: reputationUnit.value,
+      totalMotionValue: reputationUnit.total,
+      displayCondition: displayReputation,
+      purchaseCondition: canBuyWithReputation
     }
   }
 
   const totalUnits = {
     actif: actifUnit.total,
-    excipient: excipientUnit.total,
-    complex: complexUnit.total
+    complex: complexUnit.total,
+    sale: saleUnit.total,
+    benefit: benefitsUnit.total,
+    reputationUnit: reputationUnit.total
   }
 
   const getUnit = useCallback((unitId: string): GameUnit | null => {
@@ -127,7 +141,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
 
     const multiplier = currentUnitMultiplierGetter(unitId)
     unit.rawValue.add(1 * multiplier)
-    if (unit.id === 'complex') {
+    if (unit.id === 'sale') {
       const benefitsUnit = getUnit('benefits')
       const productionCost = getPrice('production').motionValue.get()
       const sellingCost = getPrice('selling').motionValue.get()

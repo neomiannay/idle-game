@@ -1,8 +1,4 @@
 .wrapper {
-  height: var(--ivh);
-  display: flex; // TODO : remove this
-  flex-direction: column;
-
   &.loading {
     background-color: hotpink;
   }

@@ -5,13 +5,15 @@
   },
   "BUTTONS": {
     "ACTIVATE": "Active",
-    "HOLD": "Maintiens",
+    "PRODUCE": "Produis",
     "SPREAD": "Répands"
   },
   "UNITS": {
     "ACTIVE": "Actif",
-    "EXCIPIENT": "Excipient",
-    "COMPLEX": "Complexe"
+    "COMPLEX": "Complexe",
+    "SALE": "Vente",
+    "MONEY": "Pépette",
+    "REPUTATION": "Réputation"
   },
   "ITEMS": {
     "FRIEND": "Ami",

@@ -79,7 +79,7 @@ const Holder = ({
       </button>
 
       <Cursor
-        title='BUTTONS.HOLD'
+        title='BUTTONS.PRODUCE'
         disabled={ !!disabled }
         parent={ buttonRef as RefObject<HTMLElement> }
       />

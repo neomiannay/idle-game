@@ -13,7 +13,9 @@ type SectionsProps = PropsWithChildren<{
 const Sections = ({ className, ...props } : SectionsProps) => {
   const { canDisplayUnit, units } = useGameProviderContext()
 
-  const unitIds = Object.keys(units)
+  const unitIds = Object.keys(units).filter(
+    (unitId) => unitId !== 'benefits' && unitId !== 'reputation'
+  )
 
   return (
     <div className={ classNames(styles.wrapper, className) } { ...props }>

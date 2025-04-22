@@ -2,7 +2,8 @@
   border: 1px solid blue;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: grid(11, 0);
-  margin: var(--header-height) grid(2, 2) auto;
+  margin: var(--header-height) auto;
+  padding-bottom: rem(300); // todo: remove later
 }

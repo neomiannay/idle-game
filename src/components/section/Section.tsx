@@ -42,13 +42,13 @@ const Section = ({ className, unitId }: SectionProps) => {
 
   let actionName = 'Buy'
   if (unitId === 'actif') actionName = 'BUTTONS.ACTIVATE'
-  else if (unitId === 'excipient') actionName = 'BUTTONS.HOLD'
-  else if (unitId === 'complex') actionName = 'BUTTONS.SPREAD'
+  else if (unitId === 'complex') actionName = 'BUTTONS.PRODUCE'
+  else if (unitId === 'sale') actionName = 'BUTTONS.SPREAD'
 
   let unitName = unitId
   if (unitId === 'actif') unitName = 'UNITS.ACTIVE'
-  else if (unitId === 'excipient') unitName = 'UNITS.EXCIPIENT'
   else if (unitId === 'complex') unitName = 'UNITS.COMPLEX'
+  else if (unitId === 'sale') unitName = 'UNITS.SALE'
 
   const handleClick = () => {
     buyUnit(unitId)

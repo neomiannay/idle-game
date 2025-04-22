@@ -30,8 +30,6 @@ const Shop = ({ className }: ShopProps) => {
 
   return (
     <aside className={ classNames(styles.wrapper, className) }>
-      <h2 className={ styles.title }>Upgrades Shop</h2>
-
       { unitIds.map(unitId => {
         if (!canDisplayUnit(unitId)) return null
 
@@ -40,8 +38,8 @@ const Shop = ({ className }: ShopProps) => {
 
         let unitName = unitId.toUpperCase()
         if (unitId === 'actif') unitName = 'UNITS.ACTIVE'
-        else if (unitId === 'excipient') unitName = 'UNITS.EXCIPIENT'
         else if (unitId === 'complex') unitName = 'UNITS.COMPLEX'
+        else if (unitId === 'sale') unitName = 'UNITS.SALE'
 
         return (
           <div key={ unitId } className={ styles.unitSection }>

@@ -1,8 +1,9 @@
 .wrapper {
   position: fixed;
-  top: rem(80);
-  right: var(--grid-gutter);
-  width: grid(3, 0);
+  bottom: rem(10);
+  left: 50%;
+  transform: translateX(-50%);
+  width: grid(10, 0);
   background-color: var(--color-background);
   border-radius: rem(8);
   padding: var(--gap);
@@ -30,7 +31,6 @@
 
 .upgradeCards {
   display: flex;
-  flex-direction: column;
   gap: var(--gap);
 }
 
