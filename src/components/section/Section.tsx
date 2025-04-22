@@ -45,7 +45,7 @@ const Section = ({ className, unitId }: SectionProps) => {
   else if (unitId === 'excipient') actionName = 'BUTTONS.HOLD'
   else if (unitId === 'complex') actionName = 'BUTTONS.SPREAD'
 
-  let unitName = unitId.toUpperCase()
+  let unitName = unitId
   if (unitId === 'actif') unitName = 'UNITS.ACTIVE'
   else if (unitId === 'excipient') unitName = 'UNITS.EXCIPIENT'
   else if (unitId === 'complex') unitName = 'UNITS.COMPLEX'
@@ -78,31 +78,25 @@ const Section = ({ className, unitId }: SectionProps) => {
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
-      <div className={ styles.unitSection }>
-        <Count unit={ unitName } count={ formattedCount } />
-        <Button
-          title={ actionName }
-          onClick={ handleClick }
-          disabled={ !canBuy }
-        />
-        <span>{ costText }</span>
-
-        { productionPerSecond > 0 && (
-          <div className={ styles.production }>
-            +{ productionPerSecond.toFixed(1) }/sec
-          </div>
-        ) }
-        { unitMultiplier > 1 && (
-          <div className={ styles.multiplier }>
-            x{ unitMultiplier.toFixed(2) }
-          </div>
-        ) }
+      <div className={ styles.stepWrapper }>
+        <div className={ styles.stepCounter }>
+          <Count unit={ unitName } count={ formattedCount } />
+          { productionPerSecond > 0 && (
+            <span className={ styles.production }>
+              [{ productionPerSecond.toFixed(1) }/s]
+            </span>
+          ) }
+        </div>
       </div>
+      <Button
+        title={ actionName }
+        onClick={ handleClick }
+        disabled={ !canBuy }
+      />
 
       { /* Purchased Upgrades Display */ }
       { Object.keys(upgrades).length > 0 && (
         <div className={ styles.purchasedUpgradesSection }>
-          <h3>Active Upgrades</h3>
           <div className={ styles.purchasedUpgradesList }>
             { Object.entries(upgrades).map(([upgradeId, upgrade]) => {
               const isPurchased = getUpgradeCount(unitId, upgradeId) > 0

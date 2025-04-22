@@ -1,8 +1,24 @@
 .wrapper {
-  border: 1px solid hotpink;
   display: flex;
   flex-direction: column;
-  gap: rem(10);
+  align-items: center;
+  gap: rem(32);
   width: grid(3, 0);
+}
+
+.stepWrapper {
+  display: flex;
+}
+
+.stepCounter {
+  border: 1px solid purple;
+  display: flex;
+  flex-direction: column;
+  padding: var(--grid-gutter);
+}
+
+.production {
+  @include apply(count-production);
+  margin: 0 auto;
 }
 

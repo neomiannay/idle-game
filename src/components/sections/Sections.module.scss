@@ -1,0 +1,8 @@
+.wrapper {
+  border: 1px solid blue;
+
+  display: flex;
+  justify-content: space-between;
+  width: grid(11, 0);
+  margin: var(--header-height) grid(2, 2) auto;
+}

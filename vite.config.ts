@@ -19,6 +19,10 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: sassOptions
+    },
+    modules: {
+      localsConvention: 'camelCaseOnly',
+      generateScopedName: '[name]_[local]_[hash:base64:5]'
     }
   }
 })

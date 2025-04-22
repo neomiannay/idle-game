@@ -1,7 +1,7 @@
 /* stylelint-disable color-no-hex */
 /* stylelint-disable custom-property-empty-line-before */
 
-$width-reference: 1440;
+$width-reference: 1512;
 $width-reference-m: 393;
 $rem-reference: 1px;
 
@@ -29,9 +29,9 @@ $rem-reference: 1px;
   --gap: #{rem(10)};
 
   /* GRID */
-  --grid-margin: #{rem(30)};
-  --grid-gutter: #{rem(20)};
-  --grid-column: #{computeGridColumn(12, true)};
+  --grid-margin: #{rem(16)};
+  --grid-gutter: #{rem(16)};
+  --grid-column: #{computeGridColumn(15, true)};
 
   /* SIZES */
   --border-size: #{rem(.5)};
@@ -40,6 +40,7 @@ $rem-reference: 1px;
   --viewport-inset: var(--grid-gutter);
 
   /* HEADER */
+  --header-height: #{rem(254)};
 
   /* SIZES */
   --width-reference: #{$width-reference};
