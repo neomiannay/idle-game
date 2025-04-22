@@ -7,6 +7,7 @@ import { GameUnit } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
 
 import { BaseProviderProps } from './GlobalProvider'
+import { usePricesContext } from './PricesProvider'
 
 export type UnitMultiplierGetter = (unitId: string) => number;
 
@@ -28,25 +29,31 @@ export const GameProviderContext = createContext<GameProviderType | null>(null)
 let currentUnitMultiplierGetter: UnitMultiplierGetter = defaultUnitMultiplier
 
 export function GameProvider ({ children }: BaseProviderProps) {
+  const { getPrice } = usePricesContext()
+
   // Initialize motion values for units
   const actifUnit = useUnitMotionValue(0)
   const excipientUnit = useUnitMotionValue(0)
   const complexUnit = useUnitMotionValue(0)
+  const benefitsUnit = useUnitMotionValue(0)
 
   // Purchase conditions
   const canBuyActif = true
   const canBuyExcipient = useMotionState(actifUnit.value, () => actifUnit.get() >= 5)
   const canBuyComplex = useMotionState(excipientUnit.value, () => excipientUnit.get() >= 10)
+  const canBuyWithBenefits = useMotionState(benefitsUnit.value, () => benefitsUnit.get() >= 10) // 10 = how much benefits you need to fund a project/mini-game
 
   // Display conditions
   const canDisplayActif = true
   const [displayExcipient, setDisplayExcipient] = useState(false)
   const [displayComplex, setDisplayComplex] = useState(false)
+  const [displayBenefits, setDisplayBenefits] = useState(false)
 
   const updateDisplayConditions = useCallback(() => {
     setDisplayExcipient(actifUnit.getTotal() >= 5)
     setDisplayComplex(excipientUnit.getTotal() >= 10)
-  }, [actifUnit, excipientUnit])
+    setDisplayBenefits(complexUnit.getTotal() >= 1)
+  }, [actifUnit, excipientUnit, complexUnit])
 
   // Define the units
   const units: Record<string, GameUnit> = {
@@ -77,6 +84,14 @@ export function GameProvider ({ children }: BaseProviderProps) {
       purchaseCondition: canBuyComplex,
       costUnitId: 'excipient',
       costAmount: 10
+    },
+    benefits: {
+      id: 'benefits',
+      rawValue: benefitsUnit,
+      motionValue: benefitsUnit.value,
+      totalMotionValue: benefitsUnit.total,
+      displayCondition: displayBenefits,
+      purchaseCondition: canBuyWithBenefits
     }
   }
 
@@ -112,6 +127,12 @@ export function GameProvider ({ children }: BaseProviderProps) {
 
     const multiplier = currentUnitMultiplierGetter(unitId)
     unit.rawValue.add(1 * multiplier)
+    if (unit.id === 'complex') {
+      const benefitsUnit = getUnit('benefits')
+      const productionCost = getPrice('production').motionValue.get()
+      const sellingCost = getPrice('selling').motionValue.get()
+      benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
+    }
   }, [getUnit])
 
   const setUnitMultiplierGetter = useCallback((getter: UnitMultiplierGetter) => {

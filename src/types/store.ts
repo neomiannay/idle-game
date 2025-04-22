@@ -12,6 +12,13 @@ export interface GameUnit {
   costAmount?: number
 }
 
+export interface GamePrice {
+  id: string
+  rawValue: UnitMotionValueResult
+  motionValue: MotionValue<number>
+  totalMotionValue: MotionValue<number>
+}
+
 export interface ItemType {
   _type: 'item'
   _id: string

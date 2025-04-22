@@ -6,6 +6,7 @@ import Section from 'components/section/Section'
 import Shop from 'components/shop/Shop' // Import the new Shop component
 import { useIterationContext } from 'provider/IterationProvider'
 import Meta from 'components/meta/Meta'
+import Header from 'components/header/Header'
 
 import styles from './Root.module.scss'
 
@@ -25,12 +26,15 @@ function Root ({ className }: RootProps) {
     }) }
     >
       <Meta />
+      <Header />
       <div className={ styles.gameLayout }>
-        { unitIds.map((unitId) => (
-          canDisplayUnit(unitId) && (
-            <Section key={ unitId } unitId={ unitId } />
-          )
-        )) }
+        { unitIds
+          .filter((unitId) => unitId !== 'benefits')
+          .map((unitId) => (
+            canDisplayUnit(unitId) && (
+              <Section key={ unitId } unitId={ unitId } />
+            )
+          )) }
         <button
           className={ classNames(styles.pauseButton, {
             [styles.paused]: isPaused

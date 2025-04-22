@@ -26,5 +26,9 @@
     "LEVEL2": "Niveau 2",
     "LEVEL3": "Niveau 3",
     "LEVEL4": "Niveau 4"
+  },
+  "PRICES": {
+    "PRODUCTION": "Coût de fabrication",
+    "SELLING": "Prix de vente"
   }
 }
