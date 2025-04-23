@@ -1,0 +1,19 @@
+.wrapper {
+	@include apply(action2);
+	margin: 0 auto;
+	cursor: pointer;
+	user-select: none;
+}
+
+.disabled {
+	color: var(--color-disabled);
+	cursor: not-allowed;
+}
+
+.startColor {
+}
+
+.endColor {
+	 color: #818181;
+	 position: absolute;
+}

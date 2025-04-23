@@ -22,6 +22,7 @@ type GameProviderType = {
   buyUnit: (unitId: string, multiplierGetter?: UnitMultiplierGetter) => void
   setUnitMultiplierGetter: (getter: UnitMultiplierGetter) => void
   updateDisplayConditions: () => void
+  updateUnitDuration: (unitId: string) => void
 }
 
 export const GameProviderContext = createContext<GameProviderType | null>(null)
@@ -52,6 +53,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
   const [displayBenefits, setDisplayBenefits] = useState(false)
   const [displayReputation, setDisplayReputation] = useState(false)
 
+  const complexDuration = useUnitMotionValue(5000)
+
   const updateDisplayConditions = useCallback(() => {
     setDisplayComplex(actifUnit.getTotal() >= 10)
     setDisplaySale(complexUnit.getTotal() >= 5)
@@ -77,7 +80,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
       displayCondition: displayComplex,
       purchaseCondition: canBuyComplex,
       costUnitId: 'actif',
-      costAmount: 10
+      costAmount: 10,
+      duration: complexDuration.value
     },
     sale: {
       id: 'sale',
@@ -153,6 +157,18 @@ export function GameProvider ({ children }: BaseProviderProps) {
     currentUnitMultiplierGetter = getter
   }, [])
 
+  const updateUnitDuration = useCallback((unitId: string) => {
+    const unit = getUnit(unitId)
+
+    if (unit && unitId === 'complex') {
+      if (unit.costUnitId && unit.costAmount) {
+        const costUnit = getUnit(unit.costUnitId)
+        if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+      }
+      complexDuration.subtract(500)
+    }
+  }, [])
+
   const contextValue = {
     units,
     totalUnits,
@@ -161,7 +177,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
     canBuyUnit,
     buyUnit,
     setUnitMultiplierGetter,
-    updateDisplayConditions
+    updateDisplayConditions,
+    updateUnitDuration
   }
 
   return (

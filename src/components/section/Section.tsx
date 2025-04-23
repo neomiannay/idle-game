@@ -7,6 +7,7 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { useL10n } from 'provider/L10nProvider'
+import HoldButton from 'components/holdButton/HoldButton'
 
 import styles from './Section.module.scss'
 
@@ -17,7 +18,7 @@ type SectionProps = {
 
 const Section = ({ className, unitId }: SectionProps) => {
   const l10n = useL10n()
-  const { getUnit, canBuyUnit, buyUnit } = useGameProviderContext()
+  const { getUnit, canBuyUnit, buyUnit, updateUnitDuration } = useGameProviderContext()
   const {
     getElementsForUnit,
     getItemCount,
@@ -54,6 +55,11 @@ const Section = ({ className, unitId }: SectionProps) => {
     buyUnit(unitId)
   }
 
+  const improveTime = () => {
+    if (!canPurchaseTime(10, 'actif')) return
+    updateUnitDuration('complex')
+  }
+
   // Function to check if previous item has been purchased
   const canPurchaseItemSequentially = (itemId: string) => {
     const itemIds = Object.keys(items)
@@ -72,9 +78,31 @@ const Section = ({ className, unitId }: SectionProps) => {
 
   let costText = ''
   if (unit.costAmount && unit.costAmount > 0 && unit.costUnitId)
-    costText = `${unit.costAmount} ${unit.costUnitId}`
+    costText = `${unit.costAmount} (${unit.costUnitId})`
 
   const formattedCount = count
+
+  let formattedSeconds = ''
+  let duration = 0
+  const complexDuration = unit.duration
+  if (complexDuration && unitId === 'complex') {
+    duration = useMotionState(complexDuration, (value) => value)
+
+    const seconds = duration / 1000
+    formattedSeconds = seconds.toFixed(1)
+  }
+
+  const checkPurchaseRequirement = (unitsNeeded: number, rawValue: number) => {
+    return rawValue >= unitsNeeded
+  }
+
+  const canPurchaseTime = (unitsNeeded: number, unitId: string) => {
+    if (duration <= 500) return false
+    const unit = getUnit(unitId)
+    if (!unit) return false
+
+    return checkPurchaseRequirement(unitsNeeded, unit.rawValue.get())
+  }
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
@@ -88,11 +116,46 @@ const Section = ({ className, unitId }: SectionProps) => {
           ) }
         </div>
       </div>
-      <Button
-        title={ actionName }
-        onClick={ handleClick }
-        disabled={ !canBuy }
-      />
+      { unitId === 'complex'
+        ? (
+          <>
+            <HoldButton label='BUTTONS.PRODUCE' />
+            <div className={ styles.perfWrapper }>
+              <div className={ styles.perf }>
+                <div className={ styles.perfBox }>
+                  <p className={ styles.perfTitle }>Durée d'exécution</p>
+                  <span className={ styles.perfValue }>{ formattedSeconds } s</span>
+                </div>
+                <button
+                  className={ classNames(styles.improvePerf, {
+                    [styles.disabled]: !canPurchaseTime(10, 'actif')
+                  }) } onClick={ improveTime }
+                >
+                  <p>-0.5 s</p>
+                  <p>{ unit.costAmount } <span>({ unit.costUnitId })</span></p>
+                </button>
+              </div>
+              <div className={ styles.perf }>
+                <div className={ styles.perfBox }>
+                  <p className={ styles.perfTitle }>Quantité exécutée
+                  </p>
+                  <span className={ styles.perfValue }>1</span>
+                </div>
+                <button className={ styles.improvePerf }>
+                  <p>+1</p>
+                  <p>{ unit.costAmount } <span>({ unit.costUnitId })</span></p>
+                </button>
+              </div>
+            </div>
+          </>
+          )
+        : (
+          <Button
+            title={ actionName }
+            onClick={ handleClick }
+            disabled={ !canBuy }
+          />
+          ) }
 
       { /* Purchased Upgrades Display */ }
       { Object.keys(upgrades).length > 0 && (

@@ -10,6 +10,7 @@ export interface GameUnit {
   purchaseCondition: boolean
   costUnitId?: string
   costAmount?: number
+  duration?: MotionValue<number>
 }
 
 export interface GamePrice {

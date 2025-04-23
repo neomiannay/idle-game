@@ -6,6 +6,11 @@
   width: grid(3, 0);
 }
 
+.disabled {
+  color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
 .stepWrapper {
   display: flex;
 }
@@ -20,5 +25,47 @@
 .production {
   @include apply(count-production);
   margin: 0 auto;
+}
+
+.perfWrapper {
+  display: flex;
+  gap: rem(20);
+}
+
+.perfBox {
+  width: rem(124);
+  background-color: #FCFCFC;
+  padding: rem(12);
+
+  .perfTitle {
+    font-size: rem(10);
+    font-variation-settings: "wght" 800, "wdth" 100, "ital" 100;
+    width: rem(54);
+    color: #A78D7E;
+  }
+
+  .perfValue {
+    font-size: rem(24);
+    font-variation-settings: "wght" 800, "wdth" 50, "ital" 100;
+    color: #635042;
+  }
+}
+
+.improvePerf {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: rem(10) rem(8);
+  background-color: #ebebeb;
+
+  p {
+    margin: 0;
+    font-size: rem(10);
+    font-variation-settings: "wght" 600, "wdth" 50, "ital" 100;
+  }
+
+  span {
+    font-variation-settings: "wght" 400, "wdth" 10, "ital" 100;
+  }
 }
 

@@ -53,12 +53,21 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     return {
       lastPlayedTime: Date.now(),
       units: Object.entries(units).reduce((acc, [unitId, unit]) => {
-        acc[unitId] = {
+        const unitData: {
+          motionValue: number,
+          totalMotionValue: number,
+          duration?: number
+        } = {
           motionValue: unit.motionValue.get(),
           totalMotionValue: unit.totalMotionValue.get()
         }
+
+        if (unit.duration)
+          unitData.duration = unit.duration.get()
+
+        acc[unitId] = unitData
         return acc
-      }, {} as Record<string, { motionValue: number, totalMotionValue: number }>),
+      }, {} as Record<string, { motionValue: number, totalMotionValue: number, duration?: number }>),
       upgrades: Object.keys(units).reduce((acc, unitId) => {
         const unitUpgrades = getElementsForUnit(unitId, 'upgrade')
         if (Object.keys(unitUpgrades).length > 0) {
@@ -92,9 +101,13 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         if (typeof value === 'object' && value !== null && 'motionValue' in value && 'totalMotionValue' in value) {
           const motionVal = floor(Number(value.motionValue), 0)
           const totalVal = floor(Number(value.totalMotionValue), 0)
-
           unit.motionValue.set(motionVal)
           unit.totalMotionValue.set(totalVal)
+
+          if ('duration' in value && unit.duration && typeof unit.duration.set === 'function') {
+            const durationVal = floor(Number(value.duration), 0)
+            unit.duration.set(durationVal)
+          }
         } else {
           // Rétrocompatibilité avec l'ancien format
           const roundedValue = floor(Number(value), 0)
