@@ -1,5 +1,6 @@
 .wrapper {
   @include apply(action2);
+  user-select: none;
   margin: 0 auto;
   position: relative;
   color: var(--color-divider);
