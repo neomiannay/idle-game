@@ -11,6 +11,7 @@ export interface GameUnit {
   costUnitId?: string
   costAmount?: number
   duration?: MotionValue<number>
+  valueByAction?: MotionValue<number>
 }
 
 export interface GamePrice {

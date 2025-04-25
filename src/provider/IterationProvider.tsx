@@ -56,7 +56,8 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         const unitData: {
           motionValue: number,
           totalMotionValue: number,
-          duration?: number
+          duration?: number,
+          valueByAction?: number
         } = {
           motionValue: unit.motionValue.get(),
           totalMotionValue: unit.totalMotionValue.get()
@@ -64,6 +65,9 @@ export function IterationProvider ({ children }: BaseProviderProps) {
 
         if (unit.duration)
           unitData.duration = unit.duration.get()
+
+        if (unit.valueByAction)
+          unitData.valueByAction = unit.valueByAction.get()
 
         acc[unitId] = unitData
         return acc
@@ -107,6 +111,11 @@ export function IterationProvider ({ children }: BaseProviderProps) {
           if ('duration' in value && unit.duration && typeof unit.duration.set === 'function') {
             const durationVal = floor(Number(value.duration), 0)
             unit.duration.set(durationVal)
+          }
+
+          if ('valueByAction' in value && unit.valueByAction && typeof unit.valueByAction.set === 'function') {
+            const actionVal = floor(Number(value.valueByAction), 0)
+            unit.valueByAction.set(actionVal)
           }
         } else {
           // Rétrocompatibilité avec l'ancien format

@@ -23,6 +23,7 @@ type GameProviderType = {
   setUnitMultiplierGetter: (getter: UnitMultiplierGetter) => void
   updateDisplayConditions: () => void
   updateUnitDuration: (unitId: string) => void
+  updateValueByAction: (unitId: string) => void
 }
 
 export const GameProviderContext = createContext<GameProviderType | null>(null)
@@ -54,6 +55,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
   const [displayReputation, setDisplayReputation] = useState(false)
 
   const complexDuration = useUnitMotionValue(5000)
+  const valueByAction = useUnitMotionValue(1)
 
   const updateDisplayConditions = useCallback(() => {
     setDisplayComplex(actifUnit.getTotal() >= 10)
@@ -81,7 +83,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
       purchaseCondition: canBuyComplex,
       costUnitId: 'actif',
       costAmount: 10,
-      duration: complexDuration.value
+      duration: complexDuration.value,
+      valueByAction: valueByAction.value
     },
     sale: {
       id: 'sale',
@@ -143,7 +146,11 @@ export function GameProvider ({ children }: BaseProviderProps) {
       if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
     }
 
-    const multiplier = currentUnitMultiplierGetter(unitId)
+    let multiplier = currentUnitMultiplierGetter(unitId)
+
+    if (unit.id === 'complex' && unit.valueByAction)
+      multiplier = unit.valueByAction.get()
+
     unit.rawValue.add(1 * multiplier)
     if (unit.id === 'sale') {
       const benefitsUnit = getUnit('benefits')
@@ -169,6 +176,18 @@ export function GameProvider ({ children }: BaseProviderProps) {
     }
   }, [])
 
+  const updateValueByAction = useCallback((unitId: string) => {
+    const unit = getUnit(unitId)
+
+    if (unit && unitId === 'complex') {
+      if (unit.costUnitId && unit.costAmount) {
+        const costUnit = getUnit(unit.costUnitId)
+        if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+      }
+      valueByAction.add(1)
+    }
+  }, [])
+
   const contextValue = {
     units,
     totalUnits,
@@ -178,7 +197,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
     buyUnit,
     setUnitMultiplierGetter,
     updateDisplayConditions,
-    updateUnitDuration
+    updateUnitDuration,
+    updateValueByAction
   }
 
   return (

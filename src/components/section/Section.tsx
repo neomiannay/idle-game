@@ -18,7 +18,7 @@ type SectionProps = {
 
 const Section = ({ className, unitId }: SectionProps) => {
   const l10n = useL10n()
-  const { getUnit, canBuyUnit, buyUnit, updateUnitDuration } = useGameProviderContext()
+  const { getUnit, canBuyUnit, buyUnit, updateUnitDuration, updateValueByAction } = useGameProviderContext()
   const {
     getElementsForUnit,
     getItemCount,
@@ -60,6 +60,11 @@ const Section = ({ className, unitId }: SectionProps) => {
     updateUnitDuration('complex')
   }
 
+  const improveValueByAction = (newValue: number, unitId: string, requiredUnitId: string) => {
+    if (!canPurchaseQuantity(newValue, requiredUnitId)) return
+    updateValueByAction(unitId)
+  }
+
   // Function to check if previous item has been purchased
   const canPurchaseItemSequentially = (itemId: string) => {
     const itemIds = Object.keys(items)
@@ -92,6 +97,11 @@ const Section = ({ className, unitId }: SectionProps) => {
     formattedSeconds = seconds.toFixed(1)
   }
 
+  let quantity = 1
+  const valueByAction = unit.valueByAction
+  if (valueByAction && unitId === 'complex')
+    quantity = useMotionState(valueByAction, (value) => value)
+
   const checkPurchaseRequirement = (unitsNeeded: number, rawValue: number) => {
     return rawValue >= unitsNeeded
   }
@@ -99,6 +109,13 @@ const Section = ({ className, unitId }: SectionProps) => {
   const canPurchaseTime = (unitsNeeded: number, unitId: string) => {
     if (duration <= 500) return false
     const unit = getUnit(unitId)
+    if (!unit) return false
+
+    return checkPurchaseRequirement(unitsNeeded, unit.rawValue.get())
+  }
+
+  const canPurchaseQuantity = (unitsNeeded: number, requiredUnitId: string) => {
+    const unit = getUnit(requiredUnitId)
     if (!unit) return false
 
     return checkPurchaseRequirement(unitsNeeded, unit.rawValue.get())
@@ -139,9 +156,13 @@ const Section = ({ className, unitId }: SectionProps) => {
                 <div className={ styles.perfBox }>
                   <p className={ styles.perfTitle }>Quantité exécutée
                   </p>
-                  <span className={ styles.perfValue }>1</span>
+                  <span className={ styles.perfValue }>{ quantity }</span>
                 </div>
-                <button className={ styles.improvePerf }>
+                <button
+                  className={ classNames(styles.improvePerf, {
+                    [styles.disabled]: !canPurchaseQuantity(10, 'actif')
+                  }) } onClick={ () => improveValueByAction(10, 'complex', 'actif') }
+                >
                   <p>+1</p>
                   <p>{ unit.costAmount } <span>({ unit.costUnitId })</span></p>
                 </button>

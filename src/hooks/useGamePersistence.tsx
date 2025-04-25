@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 
 type GameState = {
-  units: Record<string, { motionValue: number, totalMotionValue: number, duration?: number }>
+  units: Record<string, { motionValue: number, totalMotionValue: number, duration?: number, valueByAction?: number }>
   items?: Record<string, Record<string, number>>
   upgrades?: Record<string, Record<string, boolean>>
   lastPlayedTime: number
