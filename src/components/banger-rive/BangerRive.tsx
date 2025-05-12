@@ -4,31 +4,47 @@ import { Alignment, Event, Fit, RiveProps } from 'rive-react'
 import { Layout, EventType, useRive } from '@rive-app/react-canvas'
 
 type BangerRiveProps = {
+  id?: string;
   onEvent?: (event: Event) => void;
   onStateChange?: (event: Event) => void;
   autoplay?: boolean;
   animations?: RiveProps['animations'];
+  save?: boolean;
+  stateMachine?: string;
 } & RiveProps;
 
 const DEFAULT_PROPS: Partial<BangerRiveProps> = {
+  stateMachine: 'StateMachine',
   layout: new Layout({ fit: Fit.Contain, alignment: Alignment.TopCenter }),
-  autoplay: true
+  autoplay: true,
+  save: true
 }
 
+/**
+ * Banger Rive Component
+ * @param {BangerRiveProps} props - The props for the Banger Rive component
+ * @returns {React.ReactNode} The Banger Rive component
+ */
 function BangerRive ({
+  id,
   onEvent,
   onStateChange,
   animations,
+  save,
+  stateMachine,
   ...props
 }: BangerRiveProps) {
   const { RiveComponent, rive } = useRive({ ...DEFAULT_PROPS, ...props })
 
+  stateMachine ??= DEFAULT_PROPS.stateMachine ?? ''
+  id ??= props.src
+  save ??= DEFAULT_PROPS.save
+  const storageKey = `rive-${id}`
+  let animationName: string | undefined
+
   // Handlers
   const handleStateChange = useCallback((e: Event) => onStateChange?.(e), [onStateChange])
   const handleEvent = useCallback((e: Event) => onEvent?.(e), [onEvent])
-  // const handleDance = () => useStateMachineInput(rive, 'StateMachine', animations?.[0])?.fire()
-
-  console.log('animations', animations)
 
   useEffect(() => {
     if (!rive) return
@@ -48,11 +64,22 @@ function BangerRive ({
   useEffect(() => {
     if (!animations || !rive) return
 
-    // We can't use hooks inside useEffect, so we need to get the input directly from rive
-    const stateMachine = rive.stateMachineInputs('StateMachine')
-    const danceInput = stateMachine?.find(input => input.name === animations[0])
-    if (danceInput) danceInput.fire()
+    const inputList = rive.stateMachineInputs(stateMachine)
+    animationName = animations[0]
+    const input = inputList?.find(input => input.name === animationName)
+    input?.fire()
   }, [animations, rive])
+
+  setTimeout(() => {
+    // Get the current animation position
+    console.log(rive)
+    console.log(rive?.frameTime)
+
+    rive?.setNumberStateAtPath('StateMachine.Timeline', 12, 'StateMachine.Timeline')
+
+    // Save the current animation position to localStorage
+    localStorage.setItem(storageKey, rive?.frameTime.toString() ?? '0')
+  }, 3000)
 
   return <RiveComponent />
 }

@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 
 import classNames from 'classnames'
 import Count from 'components/count/Count'
@@ -8,17 +8,24 @@ import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { useL10n } from 'provider/L10nProvider'
 import HoldButton from 'components/holdButton/HoldButton'
+import BangerRive from 'components/banger-rive/BangerRive'
 
 import styles from './Section.module.scss'
 
 type SectionProps = {
-  className?: string
-  unitId: string
-}
+  className?: string;
+  unitId: string;
+};
 
 const Section = ({ className, unitId }: SectionProps) => {
   const l10n = useL10n()
-  const { getUnit, canBuyUnit, buyUnit, updateUnitDuration, updateValueByAction } = useGameProviderContext()
+  const {
+    getUnit,
+    canBuyUnit,
+    buyUnit,
+    updateUnitDuration,
+    updateValueByAction
+  } = useGameProviderContext()
   const {
     getElementsForUnit,
     getItemCount,
@@ -51,16 +58,18 @@ const Section = ({ className, unitId }: SectionProps) => {
   else if (unitId === 'complex') unitName = 'UNITS.COMPLEX'
   else if (unitId === 'sale') unitName = 'UNITS.SALE'
 
-  const handleClick = () => {
-    buyUnit(unitId)
-  }
+  const handleClick = () => buyUnit(unitId)
 
   const improveTime = () => {
     if (!canPurchaseTime(10, 'actif')) return
     updateUnitDuration('complex')
   }
 
-  const improveValueByAction = (newValue: number, unitId: string, requiredUnitId: string) => {
+  const improveValueByAction = (
+    newValue: number,
+    unitId: string,
+    requiredUnitId: string
+  ) => {
     if (!canPurchaseQuantity(newValue, requiredUnitId)) return
     updateValueByAction(unitId)
   }
@@ -81,6 +90,13 @@ const Section = ({ className, unitId }: SectionProps) => {
     return false
   }
 
+  // Animations
+  const [animations, setAnimations] = useState<string[]>([])
+  useEffect(() => {
+    const timeOut = setTimeout(() => setAnimations(['Dance']), 1000)
+    return () => clearTimeout(timeOut)
+  }, [])
+
   let costText = ''
   if (unit.costAmount && unit.costAmount > 0 && unit.costUnitId)
     costText = `${unit.costAmount} (${unit.costUnitId})`
@@ -91,7 +107,7 @@ const Section = ({ className, unitId }: SectionProps) => {
   let duration = 0
   const complexDuration = unit.duration
   if (complexDuration && unitId === 'complex') {
-    duration = useMotionState(complexDuration, (value) => value)
+    duration = useMotionState(complexDuration, (v) => v)
 
     const seconds = duration / 1000
     formattedSeconds = seconds.toFixed(1)
@@ -123,6 +139,12 @@ const Section = ({ className, unitId }: SectionProps) => {
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
+      <BangerRive
+        id='devilboy'
+        src='rive/devilboy.riv'
+        stateMachines='StateMachine'
+        animations={ animations }
+      />
       <div className={ styles.stepWrapper }>
         <div className={ styles.stepCounter }>
           <Count unit={ unitName } count={ formattedCount } />
@@ -133,50 +155,49 @@ const Section = ({ className, unitId }: SectionProps) => {
           ) }
         </div>
       </div>
-      { unitId === 'complex'
-        ? (
-          <>
-            <HoldButton label='BUTTONS.PRODUCE' />
-            <div className={ styles.perfWrapper }>
-              <div className={ styles.perf }>
-                <div className={ styles.perfBox }>
-                  <p className={ styles.perfTitle }>Durée d'exécution</p>
-                  <span className={ styles.perfValue }>{ formattedSeconds } s</span>
-                </div>
-                <button
-                  className={ classNames(styles.improvePerf, {
-                    [styles.disabled]: !canPurchaseTime(10, 'actif')
-                  }) } onClick={ improveTime }
-                >
-                  <p>-0.5 s</p>
-                  <p>{ unit.costAmount } <span>({ unit.costUnitId })</span></p>
-                </button>
+      { unitId === 'complex' ? (
+        <>
+          <HoldButton label='BUTTONS.PRODUCE' />
+          <div className={ styles.perfWrapper }>
+            <div className={ styles.perf }>
+              <div className={ styles.perfBox }>
+                <p className={ styles.perfTitle }>Durée d'exécution</p>
+                <span className={ styles.perfValue }>{ formattedSeconds } s</span>
               </div>
-              <div className={ styles.perf }>
-                <div className={ styles.perfBox }>
-                  <p className={ styles.perfTitle }>Quantité exécutée
-                  </p>
-                  <span className={ styles.perfValue }>{ quantity }</span>
-                </div>
-                <button
-                  className={ classNames(styles.improvePerf, {
-                    [styles.disabled]: !canPurchaseQuantity(10, 'actif')
-                  }) } onClick={ () => improveValueByAction(10, 'complex', 'actif') }
-                >
-                  <p>+1</p>
-                  <p>{ unit.costAmount } <span>({ unit.costUnitId })</span></p>
-                </button>
-              </div>
+              <button
+                className={ classNames(styles.improvePerf, {
+                  [styles.disabled]: !canPurchaseTime(10, 'actif')
+                }) }
+                onClick={ improveTime }
+              >
+                <p>-0.5 s</p>
+                <p>
+                  { unit.costAmount } <span>({ unit.costUnitId })</span>
+                </p>
+              </button>
             </div>
-          </>
-          )
-        : (
-          <Button
-            title={ actionName }
-            onClick={ handleClick }
-            disabled={ !canBuy }
-          />
-          ) }
+            <div className={ styles.perf }>
+              <div className={ styles.perfBox }>
+                <p className={ styles.perfTitle }>Quantité exécutée</p>
+                <span className={ styles.perfValue }>{ quantity }</span>
+              </div>
+              <button
+                className={ classNames(styles.improvePerf, {
+                  [styles.disabled]: !canPurchaseQuantity(10, 'actif')
+                }) }
+                onClick={ () => improveValueByAction(10, 'complex', 'actif') }
+              >
+                <p>+1</p>
+                <p>
+                  { unit.costAmount } <span>({ unit.costUnitId })</span>
+                </p>
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <Button title={ actionName } onClick={ handleClick } disabled={ !canBuy } />
+      ) }
 
       { /* Purchased Upgrades Display */ }
       { Object.keys(upgrades).length > 0 && (
@@ -184,7 +205,6 @@ const Section = ({ className, unitId }: SectionProps) => {
           <div className={ styles.purchasedUpgradesList }>
             { Object.entries(upgrades).map(([upgradeId, upgrade]) => {
               const isPurchased = getUpgradeCount(unitId, upgradeId) > 0
-
               if (!isPurchased) return null
 
               return (
@@ -192,7 +212,9 @@ const Section = ({ className, unitId }: SectionProps) => {
                   <div className={ styles.upgradeIcon }>✓</div>
                   <div className={ styles.upgradeInfo }>
                     <b className={ styles.upgradeName }>{ l10n(upgrade.name) }</b>
-                    <span className={ styles.upgradeEffect }>+{ upgrade.valueByAction - 1 }x multiplier</span>
+                    <span className={ styles.upgradeEffect }>
+                      +{ upgrade.valueByAction - 1 }x multiplier
+                    </span>
                   </div>
                 </div>
               )
@@ -208,19 +230,28 @@ const Section = ({ className, unitId }: SectionProps) => {
           <div className={ styles.itemsList }>
             { Object.entries(items).map(([itemId, item]) => {
               const itemCount = getItemCount(unitId, itemId)
-              const isSequentiallyPurchasable = canPurchaseItemSequentially(itemId)
-              const canPurchase = canBuyElement(unitId, itemId, 'item') && isSequentiallyPurchasable
+              const isSequentiallyPurchasable =
+                canPurchaseItemSequentially(itemId)
+              const canPurchase =
+                canBuyElement(unitId, itemId, 'item') &&
+                isSequentiallyPurchasable
 
               return (
                 <div
-                  key={ itemId } className={ classNames(styles.item, {
+                  key={ itemId }
+                  className={ classNames(styles.item, {
                     [styles.unavailable]: !isSequentiallyPurchasable
                   }) }
                 >
                   <div className={ styles.itemInfo }>
                     <b className={ styles.itemName }>{ l10n(item.name) }</b>
-                    <span className={ styles.itemCount }> Owned: { itemCount }</span>
-                    <span className={ styles.itemProduction }>+{ item.unitByTime }/sec</span>
+                    <span className={ styles.itemCount }>
+                      { ' ' }
+                      Owned: { itemCount }
+                    </span>
+                    <span className={ styles.itemProduction }>
+                      +{ item.unitByTime }/sec
+                    </span>
                   </div>
                   <div className={ styles.itemPurchase }>
                     <Button
