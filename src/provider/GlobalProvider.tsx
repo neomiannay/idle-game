@@ -25,11 +25,10 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
   const providers = [
     ViewportProvider,
     L10nProvider,
-    PricesProvider,
+    PricesProvider, // PricesProvider should be before GameProvider to ensure prices are available
     GameProvider,
     InventoryProvider,
     IterationProvider
-    // ItemsProvider
   ]
 
   context = {

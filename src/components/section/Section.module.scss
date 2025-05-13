@@ -69,3 +69,23 @@
   }
 }
 
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8);
+
+  & .line {
+    border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .title {
+    text-transform: uppercase;
+  }
+
+  & .count {
+    color: red;
+  }
+}
+

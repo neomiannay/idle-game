@@ -15,12 +15,18 @@ type ShopProps = {
 }
 
 const Shop = ({ className }: ShopProps) => {
-  const l10n = useL10n()
-  const { getElementsForUnit, canBuyElement, buyElement, getUpgradeCount, shouldDisplayElement } = useInventoryContext()
   const { canDisplayUnit, units } = useGameProviderContext()
+  const {
+    getElementsForUnit,
+    canBuyElement,
+    buyElementFromShop,
+    shouldDisplayElement,
+    getItemPurchased,
+    getUpgradePurchased
+  } = useInventoryContext()
   const { canPurchaseElementSequentially } = useSequentialPurchase()
-
   const { checkForNewUpgrades } = useUpgradeObserver()
+  const l10n = useL10n()
 
   useEffect(() => {
     checkForNewUpgrades()
@@ -33,37 +39,38 @@ const Shop = ({ className }: ShopProps) => {
       { unitIds.map(unitId => {
         if (!canDisplayUnit(unitId)) return null
 
+        const items = getElementsForUnit(unitId, 'item')
         const upgrades = getElementsForUnit(unitId, 'upgrade')
-        if (Object.keys(upgrades).length === 0) return null
 
-        let unitName = unitId.toUpperCase()
-        if (unitId === 'actif') unitName = 'UNITS.ACTIVE'
-        else if (unitId === 'complex') unitName = 'UNITS.COMPLEX'
-        else if (unitId === 'sale') unitName = 'UNITS.SALE'
+        const hasElements = Object.keys(items).length > 0 || Object.keys(upgrades).length > 0
+
+        // console.log(items?.ami?.purchased.get())
+
+        if (!hasElements) return null
 
         return (
           <div key={ unitId } className={ styles.unitSection }>
-            <h3 className={ styles.unitTitle }>{ l10n(unitName) }</h3>
-
-            <div className={ styles.upgradeCards }>
-              { Object.entries(upgrades).map(([upgradeId, upgrade]) => {
+            <div className={ styles.cards }>
+              { /* Upgrades */ }
+              { /* { Object.entries(upgrades).map(([upgradeId, upgrade]) => {
                 const shouldDisplay = shouldDisplayElement(unitId, upgradeId, 'upgrade')
                 const canPurchase = canBuyElement(unitId, upgradeId, 'upgrade')
                 const sequentiallyPurchasable = canPurchaseElementSequentially(unitId, upgradeId, 'upgrade')
-                const isPurchased = getUpgradeCount(unitId, upgradeId) > 0
-                if (!shouldDisplay) return null
+                const isPurchased = getUpgradePurchased(unitId, upgradeId)
+
+                if (!shouldDisplay || isPurchased) return null
 
                 return (
                   <div
                     key={ upgradeId }
-                    className={ classNames(styles.upgradeCard, {
+                    className={ classNames(styles.card, {
                       [styles.purchased]: isPurchased,
                       [styles.unavailable]: !sequentiallyPurchasable
                     }) }
                   >
-                    <div className={ styles.upgradeInfo }>
-                      <h4 className={ styles.upgradeName }>{ l10n(upgrade.name) }</h4>
-                      <p className={ styles.upgradeEffect }>+{ upgrade.valueByAction - 1 }x multiplier</p>
+                    <div className={ styles.cardInfo }>
+                      <h4 className={ styles.cardName }>{ l10n(upgrade.name) }</h4>
+                      <p className={ styles.cardEffect }>+{ upgrade.valueByAction - 1 }x multiplier</p>
                     </div>
 
                     { isPurchased ? (
@@ -72,17 +79,55 @@ const Shop = ({ className }: ShopProps) => {
                       <div className={ styles.purchaseAction }>
                         <Button
                           title='ACTIONS.BUY'
-                          onClick={ () => buyElement(unitId, upgradeId, 'upgrade') }
+                          onClick={ () => buyElementFromShop(unitId, upgradeId, 'upgrade') }
                           disabled={ !canPurchase }
                         />
-                        <span className={ styles.upgradeCost }>
+                        <span className={ styles.cardCost }>
                           { upgrade.cost.value } { upgrade.cost.unitId }
                         </span>
                       </div>
                     ) }
                   </div>
                 )
+              }) } */ }
+
+              { /* Items */ }
+              { Object.entries(items).map(([itemId, item]) => {
+                const shouldDisplay = shouldDisplayElement(unitId, itemId, 'item')
+                const canPurchase = canBuyElement(unitId, itemId, 'item')
+                const sequentiallyPurchasable = canPurchaseElementSequentially(unitId, itemId, 'item')
+                const isPurchased = getItemPurchased(unitId, itemId)
+
+                console.log(isPurchased)
+
+                if (!shouldDisplay || isPurchased) return null
+
+                return (
+                  <div
+                    key={ itemId }
+                    className={ classNames(styles.card, {
+                      [styles.purchased]: isPurchased,
+                      [styles.unavailable]: !sequentiallyPurchasable
+                    }) }
+                  >
+                    <div className={ styles.cardInfo }>
+                      <h4 className={ styles.cardName }>{ l10n(item.name) }</h4>
+                      <p className={ styles.cardEffect }>+{ item.unitByTime }/sec</p>
+                    </div>
+                    <div className={ styles.purchaseAction }>
+                      <Button
+                        title='ACTIONS.BUY'
+                        onClick={ () => buyElementFromShop(unitId, itemId, 'item') }
+                        disabled={ !canPurchase }
+                      />
+                      <span className={ styles.cardCost }>
+                        { item.cost.value } { item.cost.unitId }
+                      </span>
+                    </div>
+                  </div>
+                )
               }) }
+
             </div>
           </div>
         )

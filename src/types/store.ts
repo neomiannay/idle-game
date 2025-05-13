@@ -36,6 +36,7 @@ export interface ItemType {
     value: number
   }
   count: MotionValue<number>
+  purchased: MotionValue<boolean>
 }
 
 export interface UpgradeType {

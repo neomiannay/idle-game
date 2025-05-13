@@ -32,5 +32,11 @@
   "PRICES": {
     "PRODUCTION": "Coût de fabrication",
     "SELLING": "Prix de vente"
+  },
+  "UI": {
+    "UNIT_PRODUCTION": "Afficher la production /s"
+  },
+  "PACKS": {
+    "FRIEND_X10": "Pack Ami ×10 +2 bonus"
   }
 }

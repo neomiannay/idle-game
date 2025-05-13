@@ -4,7 +4,7 @@ import { ElementTypes } from 'types/store'
 import { useInventoryContext } from 'provider/InventoryProvider'
 
 export function useSequentialPurchase () {
-  const { getElementsForUnit, getItemCount, getUpgradeCount } = useInventoryContext()
+  const { getElementsForUnit, getItemCount, getUpgradeCount, getItemPackCount } = useInventoryContext()
 
   const canPurchaseItemSequentially = useCallback((unitId: string, itemId: string): boolean => {
     const items = getElementsForUnit(unitId, 'item')
@@ -42,6 +42,23 @@ export function useSequentialPurchase () {
     return false
   }, [getElementsForUnit, getUpgradeCount])
 
+  const canPurchaseItemPackSequentially = useCallback((unitId: string, itemPackId: string): boolean => {
+    const itemPacks = getElementsForUnit(unitId, 'itemPack')
+    const itemPackIds = Object.keys(itemPacks)
+
+    const currentIndex = itemPackIds.indexOf(itemPackId)
+
+    if (currentIndex === 0) return true
+
+    // Otherwise, check if previous itemPack is purchased
+    if (currentIndex > 0) {
+      const previousItemPackId = itemPackIds[currentIndex - 1]
+      return getItemPackCount(unitId, previousItemPackId) > 0
+    }
+
+    return false
+  }, [getElementsForUnit, getItemPackCount])
+
   // Generic function that works for any element type
   const canPurchaseElementSequentially = useCallback(<T extends keyof ElementTypes>(
     unitId: string,
@@ -52,13 +69,16 @@ export function useSequentialPurchase () {
       return canPurchaseItemSequentially(unitId, elementId)
     else if (type === 'upgrade')
       return canPurchaseUpgradeSequentially(unitId, elementId)
+    else if (type === 'itemPack')
+      return canPurchaseItemPackSequentially(unitId, elementId)
 
     return false
-  }, [canPurchaseItemSequentially, canPurchaseUpgradeSequentially])
+  }, [canPurchaseItemSequentially, canPurchaseUpgradeSequentially, canPurchaseItemPackSequentially])
 
   return {
     canPurchaseItemSequentially,
     canPurchaseUpgradeSequentially,
+    canPurchaseItemPackSequentially,
     canPurchaseElementSequentially
   }
 }

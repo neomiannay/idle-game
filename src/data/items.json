@@ -13,8 +13,9 @@
         },
         "cost": {
           "unitId": "actif",
-          "value": 5
-        }
+          "value": 2
+        },
+        "count": 0
       },
       {
         "_type": "item",
@@ -29,7 +30,8 @@
         "cost": {
           "unitId": "actif",
           "value": 10
-        }
+        },
+        "count": 0
       },
       {
         "_type": "item",
@@ -44,7 +46,8 @@
         "cost": {
           "unitId": "actif",
           "value": 15
-        }
+        },
+        "count": 0
       }
     ]
   }

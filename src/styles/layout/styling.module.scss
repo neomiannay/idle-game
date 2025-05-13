@@ -118,3 +118,34 @@ $styles: ();
     text-transform: uppercase;
   }
 }
+
+%button-text {
+  @include rule {
+    font-size: rem(16);
+    font-stretch: normal;
+    font-variation-settings: 'wght' 700, 'wdth' 0, 'ital' 0;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+}
+
+%button-sub {
+  @include rule {
+    font-size: rem(16);
+    font-stretch: normal;
+    font-variation-settings: 'wght' 220, 'wdth' 0, 'ital' 0;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-transform: uppercase;
+  }
+}
+
+%button-subtext {
+  @include rule {
+    font-size: rem(16);
+    font-stretch: normal;
+    font-variation-settings: 'wght' 500, 'wdth' 0, 'ital' 0;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+}

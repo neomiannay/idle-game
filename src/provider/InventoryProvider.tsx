@@ -18,10 +18,13 @@ type InventoryType = {
   getAllElements: <T extends keyof ElementTypes>(unitId: string, type: T) => Record<string, ElementTypes[T]>
   canBuyElement: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => boolean
   buyElement: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => void
+  buyElementFromShop: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => void
   getElementsForUnit: <T extends keyof ElementTypes>(unitId: string, type: T) => Record<string, ElementTypes[T]>
   shouldDisplayElement: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => boolean
   getItemCount: (unitId: string, itemId: string) => number
   getUpgradeCount: (unitId: string, upgradeId: string) => number
+  getItemPurchased: (unitId: string, itemId: string) => boolean
+  getUpgradePurchased: (unitId: string, upgradeId: string) => boolean
   setItemCount: (unitId: string, itemId: string, count: number) => void
   setUpgradeCount: (unitId: string, upgradeId: string, count: number) => void
   getUnitMultiplier: (unitId: string) => number
@@ -41,7 +44,8 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     unitItems.forEach((item: any) => {
       items[unitId][item._id] = {
         ...item,
-        count: useMotionValue(0)
+        count: useMotionValue(0),
+        purchased: useMotionValue(false)
       }
     })
   })
@@ -58,15 +62,25 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   })
 
   const getElement = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): ElementTypes[T] => {
-    if (type === 'item')
-      return items[unitId]?.[id] as ElementTypes[T]
-    else
-      return upgrades[unitId]?.[id] as ElementTypes[T]
+    switch (type) {
+      case 'item':
+        return items[unitId]?.[id] as ElementTypes[T]
+      case 'upgrade':
+        return upgrades[unitId]?.[id] as ElementTypes[T]
+      default:
+        throw new Error(`Unknown element type: ${type}`)
+    }
   }
 
   const getAllElements = <T extends keyof ElementTypes>(unitId: string, type: T): Record<string, ElementTypes[T]> => {
-    const unit = type === 'item' ? items[unitId] : upgrades[unitId]
-    return unit as Record<string, ElementTypes[T]> || {}
+    switch (type) {
+      case 'item':
+        return items[unitId] as Record<string, ElementTypes[T]> || {}
+      case 'upgrade':
+        return upgrades[unitId] as Record<string, ElementTypes[T]> || {}
+      default:
+        throw new Error(`Unknown element type: ${type}`)
+    }
   }
 
   const getResourceByUnitId = (unitId: string): MotionValue<number> | null => {
@@ -118,11 +132,21 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     if (type === 'item') {
       const newCount = (element as ItemType).count.get() + 1;
       (element as ItemType).count.set(newCount)
-      console.log(`Bought item ${id} for unit ${unitId}. New count: ${newCount}`)
-    } else {
+    } else if (type === 'upgrade') {
       (element as UpgradeType).purchased.set(true)
-      console.log(`Bought upgrade ${id} for unit ${unitId}.`)
     }
+  }
+
+  const buyElementFromShop = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): void => {
+    if (!canBuyElement(unitId, id, type)) return
+
+    const element = getElement(unitId, id, type)
+    const resource = getResourceByUnitId(element.cost.unitId)
+    if (!resource) return
+
+    resource.set(resource.get() - element.cost.value);
+
+    (element as ItemType | UpgradeType).purchased.set(true)
   }
 
   const getElementsForUnit = <T extends keyof ElementTypes>(unitId: string, type: T): Record<string, ElementTypes[T]> => {
@@ -130,8 +154,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     const visibleElements: Record<string, ItemType | UpgradeType> = {}
 
     Object.entries(allElements).forEach(([elementId, element]) => {
-      if (shouldDisplayElement(unitId, elementId, type))
-        visibleElements[elementId] = element
+      if (shouldDisplayElement(unitId, elementId, type)) visibleElements[elementId] = element
     })
 
     return visibleElements as Record<string, ElementTypes[T]>
@@ -144,6 +167,14 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
 
   const getUpgradeCount = (unitId: string, upgradeId: string): number => {
     return upgrades[unitId]?.[upgradeId]?.purchased.get() ? 1 : 0
+  }
+
+  const getItemPurchased = (unitId: string, itemId: string): boolean => {
+    return items[unitId]?.[itemId]?.purchased.get() || false
+  }
+
+  const getUpgradePurchased = (unitId: string, upgradeId: string): boolean => {
+    return upgrades[unitId]?.[upgradeId]?.purchased.get() || false
   }
 
   const setItemCount = (unitId: string, itemId: string, count: number): void => {
@@ -192,10 +223,13 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     getAllElements,
     canBuyElement,
     buyElement,
+    buyElementFromShop,
     getElementsForUnit,
     shouldDisplayElement,
     getItemCount,
     getUpgradeCount,
+    getItemPurchased,
+    getUpgradePurchased,
     setItemCount,
     setUpgradeCount,
     getUnitMultiplier,

@@ -58,7 +58,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
   const valueByAction = useUnitMotionValue(1)
 
   const updateDisplayConditions = useCallback(() => {
-    setDisplayComplex(actifUnit.getTotal() >= 10)
+    setDisplayComplex(actifUnit.getTotal() >= 100)
     setDisplaySale(complexUnit.getTotal() >= 5)
     setDisplayBenefits(saleUnit.getTotal() > 0)
     setDisplayReputation(reputationUnit.getTotal() > 0)

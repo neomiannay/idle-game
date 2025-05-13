@@ -9,6 +9,11 @@ type UpgradeObserverResult = {
   checkForNewUpgrades: () => void
 }
 
+// Fonction d'aide pour ajouter un listener à une MotionValue
+function addMotionValueListener<T> (motionValue: MotionValue<T>, callback: (value: T) => void): () => void {
+  return motionValue.on('change', callback)
+}
+
 export function useUpgradeObserver (): UpgradeObserverResult {
   const { totalUnits, updateDisplayConditions } = useGameProviderContext()
   const { getElementsForUnit, shouldDisplayElement } = useInventoryContext()
@@ -27,7 +32,7 @@ export function useUpgradeObserver (): UpgradeObserverResult {
       if (Object.keys(upgrades).length > 0) {
         newAvailableUpgrades[unitId] = []
 
-        Object.entries(upgrades).forEach(([upgradeId, _]) => {
+        Object.entries(upgrades).forEach(([upgradeId, upgrade]) => {
           if (shouldDisplayElement(unitId, upgradeId, 'upgrade'))
             newAvailableUpgrades[unitId].push(upgradeId)
         })
@@ -50,6 +55,20 @@ export function useUpgradeObserver (): UpgradeObserverResult {
       unsubscribeFunctions.push(unsubscribe)
     })
 
+    // Observer les changements d'état des upgrades
+    Object.entries(totalUnits).forEach(([unitId, _]) => {
+      const upgrades = getElementsForUnit(unitId, 'upgrade')
+      Object.entries(upgrades).forEach(([upgradeId, upgrade]) => {
+        const callback = (newValue: boolean) => {
+          checkForNewUpgrades()
+        }
+
+        // Ajouter un listener pour l'état purchased de chaque upgrade
+        const unsubscribe = addMotionValueListener(upgrade.purchased, callback)
+        unsubscribeFunctions.push(unsubscribe)
+      })
+    })
+
     // Vérifier une première fois au mount
     checkForNewUpgrades()
 
@@ -57,23 +76,7 @@ export function useUpgradeObserver (): UpgradeObserverResult {
     return () => {
       unsubscribeFunctions.forEach(unsubscribe => unsubscribe())
     }
-  }, [totalUnits, checkForNewUpgrades])
+  }, [totalUnits, checkForNewUpgrades, getElementsForUnit])
 
   return { availableUpgrades, checkForNewUpgrades }
-}
-
-// Ajouter un listener à une motion value
-function addMotionValueListener (
-  motionValue: MotionValue<number>,
-  callback: (value: number) => void
-): () => void {
-  const onValueChange = (v: number) => {
-    callback(v)
-  }
-
-  const unsubscribe = motionValue.on('change', onValueChange)
-
-  return () => {
-    unsubscribe()
-  }
 }
