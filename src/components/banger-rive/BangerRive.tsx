@@ -70,17 +70,6 @@ function BangerRive ({
     input?.fire()
   }, [animations, rive])
 
-  setTimeout(() => {
-    // Get the current animation position
-    console.log(rive)
-    console.log(rive?.frameTime)
-
-    rive?.setNumberStateAtPath('StateMachine.Timeline', 12, 'StateMachine.Timeline')
-
-    // Save the current animation position to localStorage
-    localStorage.setItem(storageKey, rive?.frameTime.toString() ?? '0')
-  }, 3000)
-
   return <RiveComponent />
 }
 

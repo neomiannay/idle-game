@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo } from 'react'
 
 import classNames from 'classnames'
 import Count from 'components/count/Count'
@@ -8,7 +8,6 @@ import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { useL10n } from 'provider/L10nProvider'
 import HoldButton from 'components/holdButton/HoldButton'
-import BangerRive from 'components/banger-rive/BangerRive'
 
 import styles from './Section.module.scss'
 
@@ -90,13 +89,6 @@ const Section = ({ className, unitId }: SectionProps) => {
     return false
   }
 
-  // Animations
-  const [animations, setAnimations] = useState<string[]>([])
-  useEffect(() => {
-    const timeOut = setTimeout(() => setAnimations(['Dance']), 1000)
-    return () => clearTimeout(timeOut)
-  }, [])
-
   let costText = ''
   if (unit.costAmount && unit.costAmount > 0 && unit.costUnitId)
     costText = `${unit.costAmount} (${unit.costUnitId})`
@@ -139,12 +131,6 @@ const Section = ({ className, unitId }: SectionProps) => {
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
-      <BangerRive
-        id='devilboy'
-        src='rive/devilboy.riv'
-        stateMachines='StateMachine'
-        animations={ animations }
-      />
       <div className={ styles.stepWrapper }>
         <div className={ styles.stepCounter }>
           <Count unit={ unitName } count={ formattedCount } />

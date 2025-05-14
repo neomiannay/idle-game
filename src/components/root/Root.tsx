@@ -6,6 +6,7 @@ import Meta from 'components/meta/Meta'
 import Header from 'components/header/Header'
 import Sections from 'components/sections/Sections'
 import { useIterationContext } from 'provider/IterationProvider'
+import Background from 'components/background/background'
 
 import styles from './Root.module.scss'
 
@@ -17,28 +18,29 @@ function Root ({ className }: RootProps) {
   const { isPaused, togglePause, loading } = useIterationContext()
 
   return (
-    <main className={ classNames(styles.wrapper, {
+    <>
+      <main className={ classNames(styles.wrapper, {
       // [styles.loading]: loading
-    }) }
-    >
-      <Meta />
-      <Header />
-      <Sections className={ styles.sections } />
-      <button
-        className={ classNames(styles.pauseButton, {
-          [styles.paused]: isPaused
-        }) }
-        onClick={ togglePause }
+      }) }
       >
-        { isPaused ? 'Paused' : 'Running' }
-      </button>
-      <div className={ styles.gameLayout }>
-        { /* { unitIds.map((unitId) => (
+        <Meta />
+        <Header />
+        <Sections className={ styles.sections } />
+        <button
+          className={ classNames(styles.pauseButton, {
+            [styles.paused]: isPaused
+          }) }
+          onClick={ togglePause }
+        >
+          { isPaused ? 'Paused' : 'Running' }
+        </button>
+        <div className={ styles.gameLayout }>
+          { /* { unitIds.map((unitId) => (
           canDisplayUnit(unitId) && (
             <Section key={ unitId } unitId={ unitId } />
           )
         )) } */ }
-        { /* <button
+          { /* <button
           className={ classNames(styles.pauseButton, {
             [styles.paused]: isPaused
           }) }
@@ -46,10 +48,12 @@ function Root ({ className }: RootProps) {
         >
           { isPaused ? 'Paused' : 'Running' }
         </button> */ }
-      </div>
+        </div>
 
-      <Shop />
-    </main>
+        <Shop />
+      </main>
+      <Background />
+    </>
   )
 }
 
