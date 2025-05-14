@@ -27,6 +27,8 @@ type InventoryType = {
   getUpgradePurchased: (unitId: string, upgradeId: string) => boolean
   setItemCount: (unitId: string, itemId: string, count: number) => void
   setUpgradeCount: (unitId: string, upgradeId: string, count: number) => void
+  setItemPurchased: (unitId: string, itemId: string) => void
+  setUpgradePurchased: (unitId: string, upgradeId: string) => void
   getUnitMultiplier: (unitId: string) => number
   getItemProduction: (unitId: string) => number
 }
@@ -56,6 +58,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     unitUpgrades.forEach((upgrade: any) => {
       upgrades[unitId][upgrade._id] = {
         ...upgrade,
+        count: useMotionValue(0),
         purchased: useMotionValue(false)
       }
     })
@@ -110,7 +113,6 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     if (!element) return false
 
     if (!shouldDisplayElement(unitId, id, type)) return false
-    if (type === 'upgrade' && (element as UpgradeType).purchased.get()) return false
 
     const resource = getResourceByUnitId(element.cost.unitId)
     if (!resource) return false
@@ -137,18 +139,6 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     }
   }
 
-  const buyElementFromShop = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): void => {
-    if (!canBuyElement(unitId, id, type)) return
-
-    const element = getElement(unitId, id, type)
-    const resource = getResourceByUnitId(element.cost.unitId)
-    if (!resource) return
-
-    resource.set(resource.get() - element.cost.value);
-
-    (element as ItemType | UpgradeType).purchased.set(true)
-  }
-
   const getElementsForUnit = <T extends keyof ElementTypes>(unitId: string, type: T): Record<string, ElementTypes[T]> => {
     const allElements = getAllElements(unitId, type)
     const visibleElements: Record<string, ItemType | UpgradeType> = {}
@@ -166,7 +156,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   }
 
   const getUpgradeCount = (unitId: string, upgradeId: string): number => {
-    return upgrades[unitId]?.[upgradeId]?.purchased.get() ? 1 : 0
+    return upgrades[unitId]?.[upgradeId]?.count.get() || 0
   }
 
   const getItemPurchased = (unitId: string, itemId: string): boolean => {
@@ -184,7 +174,34 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
 
   const setUpgradeCount = (unitId: string, upgradeId: string, count: number): void => {
     if (upgrades[unitId]?.[upgradeId])
-      upgrades[unitId][upgradeId].purchased.set(count > 0)
+      upgrades[unitId][upgradeId].count.set(count)
+  }
+
+  const setItemPurchased = (unitId: string, itemId: string): void => {
+    if (items[unitId]?.[itemId]) {
+      items[unitId][itemId].count.set(1)
+      items[unitId][itemId].purchased.set(true)
+    }
+  }
+
+  const setUpgradePurchased = (unitId: string, upgradeId: string): void => {
+    if (upgrades[unitId]?.[upgradeId]) {
+      upgrades[unitId][upgradeId].count.set(1)
+      upgrades[unitId][upgradeId].purchased.set(true)
+    }
+  }
+
+  const buyElementFromShop = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): void => {
+    if (!canBuyElement(unitId, id, type)) return
+
+    const element = getElement(unitId, id, type)
+    const resource = getResourceByUnitId(element.cost.unitId)
+    if (!resource) return
+
+    resource.set(resource.get() - element.cost.value)
+
+    if (type === 'item') setItemPurchased(unitId, id)
+    else if (type === 'upgrade') setUpgradePurchased(unitId, id)
   }
 
   // Calculate unit multiplier based on purchased upgrades
@@ -232,6 +249,8 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     getUpgradePurchased,
     setItemCount,
     setUpgradeCount,
+    setItemPurchased,
+    setUpgradePurchased,
     getUnitMultiplier,
     getItemProduction
   }

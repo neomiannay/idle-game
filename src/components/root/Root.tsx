@@ -21,19 +21,24 @@ function Root ({ className }: RootProps) {
       [styles.loading]: loading
     }) }
     >
-      <Meta />
-      <Header />
-      <Sections className={ styles.sections } />
-      <button
-        className={ classNames(styles.pauseButton, {
-          [styles.paused]: isPaused
-        }) }
-        onClick={ togglePause }
-      >
-        { isPaused ? 'Paused' : 'Running' }
-      </button>
+      { loading && <div className={ styles.loading }>Loading...</div> }
+      { !loading && (
+        <>
+          <Meta />
+          <Header />
+          <Sections className={ styles.sections } />
+          <button
+            className={ classNames(styles.pauseButton, {
+              [styles.paused]: isPaused
+            }) }
+            onClick={ togglePause }
+          >
+            { isPaused ? 'Paused' : 'Running' }
+          </button>
 
-      <Shop />
+          <Shop />
+        </>
+      ) }
     </main>
   )
 }

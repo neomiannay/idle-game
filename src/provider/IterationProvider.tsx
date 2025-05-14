@@ -21,7 +21,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const [loading, setLoading] = useState(true)
 
   const { units, getUnit, updateDisplayConditions } = useGameProviderContext()
-  const { getItemProduction, getElementsForUnit, setItemCount, setUpgradeCount } = useInventoryContext()
+  const { getItemProduction, getElementsForUnit, setItemCount, setUpgradeCount, setItemPurchased, setUpgradePurchased } = useInventoryContext()
 
   // Fonction pour traiter un tick de jeu (production d'items)
   const processTick = useCallback((deltaTimeInSeconds: number) => {
@@ -77,21 +77,27 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         if (Object.keys(unitUpgrades).length > 0) {
           acc[unitId] = {}
           Object.entries(unitUpgrades).forEach(([upgradeId, upgrade]) => {
-            acc[unitId][upgradeId] = upgrade.purchased.get()
+            acc[unitId][upgradeId] = {
+              count: upgrade.count.get(),
+              purchased: upgrade.purchased.get()
+            }
           })
         }
         return acc
-      }, {} as Record<string, Record<string, boolean>>),
+      }, {} as Record<string, Record<string, { count: number, purchased: boolean }>>),
       items: Object.keys(units).reduce((acc, unitId) => {
         const unitItems = getElementsForUnit(unitId, 'item')
         if (Object.keys(unitItems).length > 0) {
           acc[unitId] = {}
           Object.entries(unitItems).forEach(([itemId, item]) => {
-            acc[unitId][itemId] = item.count.get()
+            acc[unitId][itemId] = {
+              count: item.count.get(),
+              purchased: item.purchased.get()
+            }
           })
         }
         return acc
-      }, {} as Record<string, Record<string, number>>)
+      }, {} as Record<string, Record<string, { count: number, purchased: boolean }>>)
     }
   }, [units, getElementsForUnit])
 
@@ -128,8 +134,9 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     // Charger les items
     if (gameState.items) {
       Object.entries(gameState.items).forEach(([unitId, unitItems]) => {
-        Object.entries(unitItems as Record<string, number>).forEach(([itemId, count]) => {
+        Object.entries(unitItems as Record<string, { count: number, purchased: boolean }>).forEach(([itemId, { count, purchased }]) => {
           if (count > 0) setItemCount(unitId, itemId, count)
+          if (purchased) setItemPurchased(unitId, itemId)
         })
       })
     }
@@ -137,8 +144,9 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     // Charger les upgrades
     if (gameState.upgrades) {
       Object.entries(gameState.upgrades).forEach(([unitId, unitUpgrades]) => {
-        Object.entries(unitUpgrades as Record<string, boolean>).forEach(([upgradeId, purchased]) => {
-          if (purchased) setUpgradeCount(unitId, upgradeId, 1)
+        Object.entries(unitUpgrades as Record<string, { count: number, purchased: boolean }>).forEach(([upgradeId, { count, purchased }]) => {
+          if (count > 0) setUpgradeCount(unitId, upgradeId, 1)
+          if (purchased) setUpgradePurchased(unitId, upgradeId)
         })
       })
     }
@@ -166,7 +174,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     }
 
     setLoading(false)
-  }, [loadGameState, processTick, updateDisplayConditions])
+  }, [])
 
   const contextValue = useMemo<IterationContextType>(() => ({
     isPaused,

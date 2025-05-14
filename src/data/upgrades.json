@@ -9,11 +9,11 @@
         "valueByAction": 2,
         "apparitionCondition": {
           "unitId": "actif",
-          "value": 50
+          "value": 5
         },
         "cost": {
           "unitId": "actif",
-          "value": 2
+          "value": 5
         }
       },
       {
@@ -28,7 +28,7 @@
         },
         "cost": {
           "unitId": "actif",
-          "value": 3
+          "value": 400
         }
       }
     ]

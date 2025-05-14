@@ -21,6 +21,8 @@ export interface GamePrice {
   totalMotionValue: MotionValue<number>
 }
 
+export type ElementType = 'item' | 'upgrade'
+
 export interface ItemType {
   _type: 'item'
   _id: string
@@ -53,6 +55,7 @@ export interface UpgradeType {
     unitId: string
     value: number
   }
+  count: MotionValue<number>
   purchased: MotionValue<boolean>
 }
 

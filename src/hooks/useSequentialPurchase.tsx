@@ -1,84 +1,26 @@
-import { useCallback } from 'react'
-
-import { ElementTypes } from 'types/store'
+import { ElementType } from 'types/store'
 import { useInventoryContext } from 'provider/InventoryProvider'
 
-export function useSequentialPurchase () {
-  const { getElementsForUnit, getItemCount, getUpgradeCount, getItemPackCount } = useInventoryContext()
+import useMotionState from './useMotionState'
 
-  const canPurchaseItemSequentially = useCallback((unitId: string, itemId: string): boolean => {
-    const items = getElementsForUnit(unitId, 'item')
-    const itemIds = Object.keys(items)
+export const useSequentialPurchaseState = (unitId: string, elementId: string, type: ElementType) => {
+  const { getElementsForUnit, items, upgrades } = useInventoryContext()
 
-    const currentIndex = itemIds.indexOf(itemId)
+  const elements = getElementsForUnit(unitId, type)
+  const elementIds = Object.keys(elements)
+  const currentIndex = elementIds.indexOf(elementId)
 
-    if (currentIndex === 0) return true
+  if (currentIndex === 0) return true
 
-    // Otherwise, check if previous item is purchased
-    if (currentIndex > 0) {
-      const previousItemId = itemIds[currentIndex - 1]
-      return getItemCount(unitId, previousItemId) > 0
-    }
+  if (currentIndex > 0) {
+    const previousElementId = elementIds[currentIndex - 1]
+    const previousElement = type === 'item'
+      ? items[unitId]?.[previousElementId]
+      : upgrades[unitId]?.[previousElementId]
 
-    return false
-  }, [getElementsForUnit, getItemCount])
-
-  const canPurchaseUpgradeSequentially = useCallback((unitId: string, upgradeId: string): boolean => {
-    const upgrades = getElementsForUnit(unitId, 'upgrade')
-    const upgradeIds = Object.keys(upgrades)
-
-    // Find current upgrade index
-    const currentIndex = upgradeIds.indexOf(upgradeId)
-
-    // If it's the first upgrade, allow purchase
-    if (currentIndex === 0) return true
-
-    // Otherwise, check if previous upgrade is purchased
-    if (currentIndex > 0) {
-      const previousUpgradeId = upgradeIds[currentIndex - 1]
-      return getUpgradeCount(unitId, previousUpgradeId) > 0
-    }
-
-    return false
-  }, [getElementsForUnit, getUpgradeCount])
-
-  const canPurchaseItemPackSequentially = useCallback((unitId: string, itemPackId: string): boolean => {
-    const itemPacks = getElementsForUnit(unitId, 'itemPack')
-    const itemPackIds = Object.keys(itemPacks)
-
-    const currentIndex = itemPackIds.indexOf(itemPackId)
-
-    if (currentIndex === 0) return true
-
-    // Otherwise, check if previous itemPack is purchased
-    if (currentIndex > 0) {
-      const previousItemPackId = itemPackIds[currentIndex - 1]
-      return getItemPackCount(unitId, previousItemPackId) > 0
-    }
-
-    return false
-  }, [getElementsForUnit, getItemPackCount])
-
-  // Generic function that works for any element type
-  const canPurchaseElementSequentially = useCallback(<T extends keyof ElementTypes>(
-    unitId: string,
-    elementId: string,
-    type: T
-  ): boolean => {
-    if (type === 'item')
-      return canPurchaseItemSequentially(unitId, elementId)
-    else if (type === 'upgrade')
-      return canPurchaseUpgradeSequentially(unitId, elementId)
-    else if (type === 'itemPack')
-      return canPurchaseItemPackSequentially(unitId, elementId)
-
-    return false
-  }, [canPurchaseItemSequentially, canPurchaseUpgradeSequentially, canPurchaseItemPackSequentially])
-
-  return {
-    canPurchaseItemSequentially,
-    canPurchaseUpgradeSequentially,
-    canPurchaseItemPackSequentially,
-    canPurchaseElementSequentially
+    if (!previousElement) return false
+    return useMotionState(previousElement.purchased, (value) => value)
   }
+
+  return false
 }

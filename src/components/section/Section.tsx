@@ -214,7 +214,7 @@ const Section = ({ className, unitId }: SectionProps) => {
               const itemCount = getItemCount(unitId, itemId)
               const canPurchase = canBuyElement(unitId, itemId, 'item') && sequentiallyPurchasable
 
-              console.log(isPurchased)
+              // console.log(isPurchased)
 
               if (!isPurchased) return null
 
