@@ -6,6 +6,7 @@ import { useIterationContext } from 'provider/IterationProvider'
 import Meta from 'components/meta/Meta'
 import Header from 'components/header/Header'
 import Sections from 'components/sections/Sections'
+import Modal from 'components/modal/Modal'
 
 import styles from './Root.module.scss'
 
@@ -34,6 +35,7 @@ function Root ({ className }: RootProps) {
       </button>
 
       <Shop />
+      <Modal />
     </main>
   )
 }

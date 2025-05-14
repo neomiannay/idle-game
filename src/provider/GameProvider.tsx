@@ -1,4 +1,3 @@
-// GameProvider.tsx
 import React, { createContext, useContext, useCallback, useState } from 'react'
 
 import { MotionValue } from 'motion/react'
@@ -24,6 +23,7 @@ type GameProviderType = {
   updateDisplayConditions: () => void
   updateUnitDuration: (unitId: string) => void
   updateValueByAction: (unitId: string) => void
+  modifyUnitValue: (unitId: string, value: number) => boolean | void
 }
 
 export const GameProviderContext = createContext<GameProviderType | null>(null)
@@ -39,6 +39,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
   const saleUnit = useUnitMotionValue(0)
   const benefitsUnit = useUnitMotionValue(0)
   const reputationUnit = useUnitMotionValue(0)
+  const karmaUnit = useUnitMotionValue(0)
 
   // Purchase conditions
   const canBuyActif = true
@@ -111,6 +112,14 @@ export function GameProvider ({ children }: BaseProviderProps) {
       totalMotionValue: reputationUnit.total,
       displayCondition: displayReputation,
       purchaseCondition: canBuyWithReputation
+    },
+    karma: {
+      id: 'karma',
+      rawValue: karmaUnit,
+      motionValue: karmaUnit.value,
+      totalMotionValue: karmaUnit.total,
+      displayCondition: false,
+      purchaseCondition: true
     }
   }
 
@@ -158,6 +167,22 @@ export function GameProvider ({ children }: BaseProviderProps) {
       const sellingCost = getPrice('selling').motionValue.get()
       benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
     }
+  }, [getUnit, getPrice])
+
+  const modifyUnitValue = useCallback((unitId: string, value: number) => {
+    const unit = getUnit(unitId)
+    if (!unit) return false
+
+    if (value < 0) {
+      // On vérifie qu'on peut soustraire (qu'on ne tombe pas en dessous de 0)
+      const currentValue = unit.rawValue.get()
+      if (currentValue + value < 0) return false
+      return unit.rawValue.subtract(Math.abs(value))
+    } else if (value > 0) {
+      return unit.rawValue.add(value)
+    }
+
+    return true
   }, [getUnit])
 
   const setUnitMultiplierGetter = useCallback((getter: UnitMultiplierGetter) => {
@@ -198,7 +223,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
     setUnitMultiplierGetter,
     updateDisplayConditions,
     updateUnitDuration,
-    updateValueByAction
+    updateValueByAction,
+    modifyUnitValue
   }
 
   return (
