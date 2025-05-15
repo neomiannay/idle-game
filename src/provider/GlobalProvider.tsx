@@ -6,6 +6,7 @@ import { GameProvider } from './GameProvider'
 import { IterationProvider } from './IterationProvider'
 import { InventoryProvider } from './InventoryProvider'
 import { PricesProvider } from './PricesProvider'
+import { MessageSystemProvider } from './MessageSystemProvider'
 
 type GlobalContextType = {
   loading: boolean
@@ -28,6 +29,7 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
     PricesProvider,
     GameProvider,
     InventoryProvider,
+    MessageSystemProvider,
     IterationProvider
     // ItemsProvider
   ]

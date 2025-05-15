@@ -14,11 +14,15 @@ type PersistenceOptions = {
   storageKey?: string
 }
 
+const getStorageKey = () => {
+  return import.meta.env.VITE_LOCAL_STORAGE_KEY || 'game-store'
+}
+
 export function useGamePersistence ({
   onLoad,
   onSave,
   autoSaveInterval = 60000, // Save every minute by default
-  storageKey = 'gameState'
+  storageKey = getStorageKey()
 }: PersistenceOptions) {
   const saveGameState = useCallback(() => {
     if (!onSave) return

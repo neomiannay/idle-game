@@ -1,0 +1,37 @@
+[
+  {
+	"id": "msg_1",
+	"condition": { "unit": "actif", "min": 10 },
+	"message": "Diluer les produits ?",
+	"accept": { "reputation": 5, "karma": -40, "selling": 300, "production": -5 },
+	"decline": { "karma": 10 }
+  },
+    {
+    "id": "msg_2",
+    "condition": { "unit": "actif", "min": 50 },
+    "message": "Packaging rose pour vendre plus cher ?",
+    "accept": { "reputation": 10, "karma": -40, "selling": 500 },
+    "decline": { "karma": 20 }
+  },
+  {
+	"id": "msg_3",
+	"condition": { "unit": "actif", "min": 100 },
+	"message": "Une question qui apparaît lorsqu'on a atteint 100 actifs",
+	"accept": { "reputation": 0, "karma": -40, "selling": 100 },
+	"decline": { "karma": 40 }
+  },
+  {
+	"id": "msg_4",
+	"condition": { "unit": "complex", "min": 5 },
+	"message": "Une question qui apparaît lorsqu'on a atteint 5 complexes",
+	"accept": { "reputation": 0, "karma": -40, "selling": 200 },
+	"decline": { "karma": 40 }
+  },
+{
+	"id": "msg_5",
+	"condition": { "unit": "sale", "min": 5 },
+	"message": "Une question qui apparaît lorsqu'on a atteint 5 ventes",
+	"accept": { "reputation": 5, "karma": -40, "selling": 300, "production": -5 },
+	"decline": { "karma": 10 }
+  }
+]
