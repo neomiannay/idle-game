@@ -1,8 +1,7 @@
 .wrapper {
 	@include apply(action2);
-    user-select: none;
+	user-select: none;
 	margin: 0 auto;
-	cursor: pointer;
 	user-select: none;
 }
 
@@ -11,10 +10,7 @@
 	cursor: not-allowed;
 }
 
-.startColor {
-}
-
 .endColor {
-	 color: #818181;
-	 position: absolute;
+	color: #818181;
+	position: absolute;
 }

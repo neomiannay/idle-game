@@ -6,15 +6,16 @@ import { useGameProviderContext } from 'provider/GameProvider'
 
 import styles from './HoldButton.module.scss'
 
-// Définition des types
 interface HoldButtonProps {
   className?: string;
   label: string;
+  autoMode?: boolean;
 }
 
 const HoldButton: FC<HoldButtonProps> = ({
   className,
-  label
+  label,
+  autoMode
 }) => {
   const l10n = useL10n()
   const { getUnit, buyUnit, canBuyUnit } = useGameProviderContext()
@@ -45,8 +46,15 @@ const HoldButton: FC<HoldButtonProps> = ({
           clearInterval(timerRef.current)
 
         setProgress(100)
-        setIsAnimating(false)
-        buyUnit('complex')
+
+        setTimeout(() => {
+          buyUnit('complex')
+          setIsAnimating(false)
+          setProgress(100)
+          setTimeout(() => {
+            setProgress(0)
+          }, 200)
+        }, 50)
       } else {
         setProgress(currentProgress)
       }
@@ -59,6 +67,12 @@ const HoldButton: FC<HoldButtonProps> = ({
         clearInterval(timerRef.current)
     }
   }, [])
+
+  useEffect(() => {
+    if (!autoMode || isAnimating || !canBuy) return
+
+    handleClick()
+  }, [autoMode, isAnimating, canBuy])
 
   return (
     <div className={ classNames(styles.wrapper, className, {
