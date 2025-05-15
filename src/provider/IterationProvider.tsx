@@ -3,6 +3,7 @@ import React, { createContext, useContext, useCallback, useState, useMemo, useEf
 import { useGameLoop } from 'hooks/useGameLoop'
 import { useGamePersistence } from 'hooks/useGamePersistence'
 import { floor } from 'lodash-es'
+import { GameState, GameStateElement, GameStateUnit } from 'types/store'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { useGameProviderContext } from './GameProvider'
@@ -53,12 +54,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     return {
       lastPlayedTime: Date.now(),
       units: Object.entries(units).reduce((acc, [unitId, unit]) => {
-        const unitData: {
-          motionValue: number,
-          totalMotionValue: number,
-          duration?: number,
-          valueByAction?: number
-        } = {
+        const unitData: GameStateUnit = {
           motionValue: unit.motionValue.get(),
           totalMotionValue: unit.totalMotionValue.get()
         }
@@ -71,7 +67,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
 
         acc[unitId] = unitData
         return acc
-      }, {} as Record<string, { motionValue: number, totalMotionValue: number, duration?: number }>),
+      }, {} as GameState['units']),
       upgrades: Object.keys(units).reduce((acc, unitId) => {
         const unitUpgrades = getElementsForUnit(unitId, 'upgrade')
         if (Object.keys(unitUpgrades).length > 0) {
@@ -84,7 +80,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
           })
         }
         return acc
-      }, {} as Record<string, Record<string, { count: number, purchased: boolean }>>),
+      }, {} as Record<string, Record<string, GameStateElement>>),
       items: Object.keys(units).reduce((acc, unitId) => {
         const unitItems = getElementsForUnit(unitId, 'item')
         if (Object.keys(unitItems).length > 0) {
@@ -97,12 +93,12 @@ export function IterationProvider ({ children }: BaseProviderProps) {
           })
         }
         return acc
-      }, {} as Record<string, Record<string, { count: number, purchased: boolean }>>)
+      }, {} as Record<string, Record<string, GameStateElement>>)
     }
   }, [units, getElementsForUnit])
 
   // Fonction pour charger l'état du jeu
-  const handleLoadState = useCallback((gameState: any) => {
+  const handleLoadState = useCallback((gameState: GameState) => {
     // Charger les unités
     Object.entries(gameState.units || {}).forEach(([unitId, value]) => {
       const unit = getUnit(unitId)
@@ -134,7 +130,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     // Charger les items
     if (gameState.items) {
       Object.entries(gameState.items).forEach(([unitId, unitItems]) => {
-        Object.entries(unitItems as Record<string, { count: number, purchased: boolean }>).forEach(([itemId, { count, purchased }]) => {
+        Object.entries(unitItems as Record<string, GameStateElement>).forEach(([itemId, { count, purchased }]) => {
           if (count > 0) setItemCount(unitId, itemId, count)
           if (purchased) setItemPurchased(unitId, itemId)
         })
@@ -144,7 +140,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     // Charger les upgrades
     if (gameState.upgrades) {
       Object.entries(gameState.upgrades).forEach(([unitId, unitUpgrades]) => {
-        Object.entries(unitUpgrades as Record<string, { count: number, purchased: boolean }>).forEach(([upgradeId, { count, purchased }]) => {
+        Object.entries(unitUpgrades as Record<string, GameStateElement>).forEach(([upgradeId, { count, purchased }]) => {
           if (count > 0) setUpgradeCount(unitId, upgradeId, 1)
           if (purchased) setUpgradePurchased(unitId, upgradeId)
         })

@@ -1,11 +1,6 @@
 import { useCallback, useEffect } from 'react'
 
-type GameState = {
-  units: Record<string, { motionValue: number, totalMotionValue: number, duration?: number, valueByAction?: number }>
-  items?: Record<string, Record<string, { count: number, purchased: boolean }>>
-  upgrades?: Record<string, Record<string, { count: number, purchased: boolean }>>
-  lastPlayedTime: number
-}
+import { GameState } from 'types/store'
 
 type PersistenceOptions = {
   onLoad?: (state: GameState) => void
@@ -14,11 +9,15 @@ type PersistenceOptions = {
   storageKey?: string
 }
 
+const getStorageKey = () => {
+  return import.meta.env.VITE_LOCAL_STORAGE_KEY || 'game-store'
+}
+
 export function useGamePersistence ({
   onLoad,
   onSave,
   autoSaveInterval = 60000, // Save every minute by default
-  storageKey = 'gameState'
+  storageKey = getStorageKey()
 }: PersistenceOptions) {
   const saveGameState = useCallback(() => {
     if (!onSave) return

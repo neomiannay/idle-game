@@ -13,12 +13,30 @@ export interface GameUnit {
   duration?: MotionValue<number>
   valueByAction?: MotionValue<number>
 }
-
 export interface GamePrice {
   id: string
   rawValue: UnitMotionValueResult
   motionValue: MotionValue<number>
   totalMotionValue: MotionValue<number>
+}
+
+export interface GameStateUnit {
+  motionValue: number
+  totalMotionValue: number
+  duration?: number
+  valueByAction?: number
+}
+
+export interface GameStateElement {
+  count: number
+  purchased: boolean
+}
+
+export interface GameState {
+  units: Record<string, GameStateUnit>
+  items?: Record<string, Record<string, GameStateElement>>
+  upgrades?: Record<string, Record<string, GameStateElement>>
+  lastPlayedTime: number
 }
 
 export type ElementType = 'item' | 'upgrade'
