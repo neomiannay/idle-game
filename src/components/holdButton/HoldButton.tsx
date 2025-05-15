@@ -6,15 +6,16 @@ import { useGameProviderContext } from 'provider/GameProvider'
 
 import styles from './HoldButton.module.scss'
 
-// Définition des types
 interface HoldButtonProps {
   className?: string;
   label: string;
+  autoMode?: boolean;
 }
 
 const HoldButton: FC<HoldButtonProps> = ({
   className,
-  label
+  label,
+  autoMode
 }) => {
   const l10n = useL10n()
   const { getUnit, buyUnit, canBuyUnit } = useGameProviderContext()
@@ -22,7 +23,6 @@ const HoldButton: FC<HoldButtonProps> = ({
   const [progress, setProgress] = useState<number>(100)
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const [autoMode, setAutoMode] = useState<boolean>(false)
 
   const canBuy = canBuyUnit('complex')
   const duration = getUnit('complex')?.duration?.get() ?? 5000
@@ -91,14 +91,6 @@ const HoldButton: FC<HoldButtonProps> = ({
         </div>
         <div className={ styles.startColor }>{ l10n(label) }</div>
       </div>
-
-      <div className={ styles.autoSwitch } onClick={ () => setAutoMode(prev => !prev) }>
-        <span className={ styles.switchLabel }>Production automatique</span>
-        <div className={ classNames(styles.switchTrack, { [styles.on]: autoMode }) }>
-          <div className={ styles.switchThumb } />
-        </div>
-      </div>
-
     </div>
   )
 }

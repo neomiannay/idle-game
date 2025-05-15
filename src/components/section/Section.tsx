@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 
 import classNames from 'classnames'
 import Count from 'components/count/Count'
@@ -8,6 +8,7 @@ import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { useL10n } from 'provider/L10nProvider'
 import HoldButton from 'components/holdButton/HoldButton'
+import AutoSwitch from 'components/autoSwitch/AutoSwitch'
 
 import styles from './Section.module.scss'
 
@@ -18,6 +19,7 @@ type SectionProps = {
 
 const Section = ({ className, unitId }: SectionProps) => {
   const l10n = useL10n()
+  const [autoMode, setAutoMode] = useState(false)
   const {
     getUnit,
     canBuyUnit,
@@ -143,7 +145,7 @@ const Section = ({ className, unitId }: SectionProps) => {
       </div>
       { unitId === 'complex' ? (
         <>
-          <HoldButton label='BUTTONS.PRODUCE' />
+          <HoldButton label='BUTTONS.PRODUCE' autoMode={ autoMode } />
           <div className={ styles.perfWrapper }>
             <div className={ styles.perf }>
               <div className={ styles.perfBox }>
@@ -254,6 +256,10 @@ const Section = ({ className, unitId }: SectionProps) => {
             }) }
           </div>
         </div>
+      ) }
+
+      { unitId === 'complex' && (
+        <AutoSwitch value={ autoMode } onToggle={ () => setAutoMode(prev => !prev) } />
       ) }
     </div>
   )
