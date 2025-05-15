@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect } from 'react'
 
 import { MotionValue, useMotionValue } from 'motion/react'
-import { ElementTypes, GameStateElement, ItemType, UpgradeType } from 'types/store'
+import { EGameUnit, ElementTypes, GameStateElement, ItemType, UpgradeType } from 'types/store'
 
 import itemsData from '../data/items.json'
 import upgradesData from '../data/upgrades.json'
@@ -14,25 +14,25 @@ type InventoryType = {
   upgrades: Record<string, Record<string, UpgradeType>>
 
   // Methods
-  getElement: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => ElementTypes[T]
-  getAllElements: <T extends keyof ElementTypes>(unitId: string, type: T) => Record<string, ElementTypes[T]>
-  canBuyElement: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => boolean
-  buyElement: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => void
-  buyElementFromShop: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => void
-  getElementsForUnit: <T extends keyof ElementTypes>(unitId: string, type: T) => Record<string, ElementTypes[T]>
-  shouldDisplayElement: <T extends keyof ElementTypes>(unitId: string, id: string, type: T) => boolean
-  getItemCount: (unitId: string, itemId: string) => number
-  getUpgradeCount: (unitId: string, upgradeId: string) => number
-  getItemPurchased: (unitId: string, itemId: string) => boolean
-  getUpgradePurchased: (unitId: string, upgradeId: string) => boolean
-  setItemCount: (unitId: string, itemId: string, count: number) => void
-  setUpgradeCount: (unitId: string, upgradeId: string, count: number) => void
-  setItemPurchased: (unitId: string, itemId: string) => void
-  setUpgradePurchased: (unitId: string, upgradeId: string) => void
-  getUnitMultiplier: (unitId: string) => number
-  getItemProduction: (unitId: string) => number
-  setElementCount: (unitId: string, elementId: string, count: number) => void
-  setElementPurchased: (unitId: string, elementId: string) => void
+  getElement: <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T) => ElementTypes[T]
+  getAllElements: <T extends keyof ElementTypes>(unitId: EGameUnit, type: T) => Record<string, ElementTypes[T]>
+  canBuyElement: <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T) => boolean
+  buyElement: <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T) => void
+  buyElementFromShop: <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T) => void
+  getElementsForUnit: <T extends keyof ElementTypes>(unitId: EGameUnit, type: T) => Record<string, ElementTypes[T]>
+  shouldDisplayElement: <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T) => boolean
+  getItemCount: (unitId: EGameUnit, itemId: string) => number
+  getUpgradeCount: (unitId: EGameUnit, upgradeId: string) => number
+  getItemPurchased: (unitId: EGameUnit, itemId: string) => boolean
+  getUpgradePurchased: (unitId: EGameUnit, upgradeId: string) => boolean
+  setItemCount: (unitId: EGameUnit, itemId: string, count: number) => void
+  setUpgradeCount: (unitId: EGameUnit, upgradeId: string, count: number) => void
+  setItemPurchased: (unitId: EGameUnit, itemId: string) => void
+  setUpgradePurchased: (unitId: EGameUnit, upgradeId: string) => void
+  getUnitMultiplier: (unitId: EGameUnit) => number
+  getItemProduction: (unitId: EGameUnit) => number
+  setElementCount: (unitId: EGameUnit, elementId: string, count: number) => void
+  setElementPurchased: (unitId: EGameUnit, elementId: string) => void
   loadElements: (data: Record<string, Record<string, GameStateElement>>) => void
 }
 
@@ -67,7 +67,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     })
   })
 
-  const getElement = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): ElementTypes[T] => {
+  const getElement = <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T): ElementTypes[T] => {
     switch (type) {
       case 'item':
         return items[unitId]?.[id] as ElementTypes[T]
@@ -78,7 +78,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     }
   }
 
-  const getAllElements = <T extends keyof ElementTypes>(unitId: string, type: T): Record<string, ElementTypes[T]> => {
+  const getAllElements = <T extends keyof ElementTypes>(unitId: EGameUnit, type: T): Record<string, ElementTypes[T]> => {
     switch (type) {
       case 'item':
         return items[unitId] as Record<string, ElementTypes[T]> || {}
@@ -89,19 +89,19 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     }
   }
 
-  const getResourceByUnitId = (unitId: string): MotionValue<number> | null => {
+  const getResourceByUnitId = (unitId: EGameUnit): MotionValue<number> | null => {
     const unit = getUnit(unitId)
     if (!unit) return null
     return unit.motionValue
   }
 
-  const getTotalResourceByUnitId = (unitId: string): MotionValue<number> | null => {
+  const getTotalResourceByUnitId = (unitId: EGameUnit): MotionValue<number> | null => {
     const unit = getUnit(unitId)
     if (!unit) return null
     return unit.totalMotionValue
   }
 
-  const shouldDisplayElement = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): boolean => {
+  const shouldDisplayElement = <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T): boolean => {
     const element = getElement(unitId, id, type)
     if (!element) return false
 
@@ -111,7 +111,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     return conditionUnit.get() >= element.apparitionCondition.value
   }
 
-  const canBuyElement = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): boolean => {
+  const canBuyElement = <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T): boolean => {
     const element = getElement(unitId, id, type)
     if (!element) return false
 
@@ -123,7 +123,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     return resource.get() >= element.cost.value
   }
 
-  const buyElement = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): void => {
+  const buyElement = <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T): void => {
     if (!canBuyElement(unitId, id, type)) return
 
     const element = getElement(unitId, id, type)
@@ -142,7 +142,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     }
   }
 
-  const getElementsForUnit = <T extends keyof ElementTypes>(unitId: string, type: T): Record<string, ElementTypes[T]> => {
+  const getElementsForUnit = <T extends keyof ElementTypes>(unitId: EGameUnit, type: T): Record<string, ElementTypes[T]> => {
     const allElements = getAllElements(unitId, type)
     const visibleElements: Record<string, ItemType | UpgradeType> = {}
 
@@ -154,54 +154,54 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   }
 
   // Get item count
-  const getItemCount = (unitId: string, itemId: string): number => {
+  const getItemCount = (unitId: EGameUnit, itemId: string): number => {
     return items[unitId]?.[itemId]?.count.get() || 0
   }
 
-  const getUpgradeCount = (unitId: string, upgradeId: string): number => {
+  const getUpgradeCount = (unitId: EGameUnit, upgradeId: string): number => {
     return upgrades[unitId]?.[upgradeId]?.count.get() || 0
   }
 
-  const getItemPurchased = (unitId: string, itemId: string): boolean => {
+  const getItemPurchased = (unitId: EGameUnit, itemId: string): boolean => {
     return items[unitId]?.[itemId]?.purchased.get() || false
   }
 
-  const getUpgradePurchased = (unitId: string, upgradeId: string): boolean => {
+  const getUpgradePurchased = (unitId: EGameUnit, upgradeId: string): boolean => {
     return upgrades[unitId]?.[upgradeId]?.purchased.get() || false
   }
 
-  const setItemCount = (unitId: string, itemId: string, count: number): void => {
+  const setItemCount = (unitId: EGameUnit, itemId: string, count: number): void => {
     if (items[unitId]?.[itemId])
       items[unitId][itemId].count.set(count)
   }
 
-  const setUpgradeCount = (unitId: string, upgradeId: string, count: number): void => {
+  const setUpgradeCount = (unitId: EGameUnit, upgradeId: string, count: number): void => {
     if (upgrades[unitId]?.[upgradeId])
       upgrades[unitId][upgradeId].count.set(count)
   }
 
-  const setElementCount = (unitId: string, elementId: string, count: number): void => {
+  const setElementCount = (unitId: EGameUnit, elementId: string, count: number): void => {
     if (items[unitId]?.[elementId])
       items[unitId][elementId].count.set(count)
     else if (upgrades[unitId]?.[elementId])
       upgrades[unitId][elementId].count.set(1) // we force the upgrade count to 1 only
   }
 
-  const setItemPurchased = (unitId: string, itemId: string): void => {
+  const setItemPurchased = (unitId: EGameUnit, itemId: string): void => {
     if (items[unitId]?.[itemId]) {
       items[unitId][itemId].count.set(1)
       items[unitId][itemId].purchased.set(true)
     }
   }
 
-  const setUpgradePurchased = (unitId: string, upgradeId: string): void => {
+  const setUpgradePurchased = (unitId: EGameUnit, upgradeId: string): void => {
     if (upgrades[unitId]?.[upgradeId]) {
       upgrades[unitId][upgradeId].count.set(1)
       upgrades[unitId][upgradeId].purchased.set(true)
     }
   }
 
-  const setElementPurchased = (unitId: string, elementId: string): void => {
+  const setElementPurchased = (unitId: EGameUnit, elementId: string): void => {
     if (items[unitId]?.[elementId]) {
       items[unitId][elementId].count.set(1)
       items[unitId][elementId].purchased.set(true)
@@ -211,7 +211,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     }
   }
 
-  const buyElementFromShop = <T extends keyof ElementTypes>(unitId: string, id: string, type: T): void => {
+  const buyElementFromShop = <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T): void => {
     if (!canBuyElement(unitId, id, type)) return
 
     const element = getElement(unitId, id, type)
@@ -225,7 +225,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   }
 
   // Calculate unit multiplier based on purchased upgrades
-  const getUnitMultiplier: UnitMultiplierGetter = (unitId: string): number => {
+  const getUnitMultiplier: UnitMultiplierGetter = (unitId: EGameUnit): number => {
     let multiplier = 1
     const unitUpgrades = upgrades[unitId] || {}
 
@@ -238,7 +238,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   }
 
   // Calculate production from items for a specific unit
-  const getItemProduction = (unitId: string): number => {
+  const getItemProduction = (unitId: EGameUnit): number => {
     let production = 0
     const unitItems = items[unitId] || {}
 
@@ -249,11 +249,11 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     return production
   }
 
-  const loadElements = (data: Record<string, Record<string, GameStateElement>>) => {
+  const loadElements = (data: Record<EGameUnit, Record<string, GameStateElement>>) => {
     Object.entries(data).forEach(([unitId, unitElements]) => {
       Object.entries(unitElements).forEach(([elementId, element]) => {
-        if (element.count > 0) setElementCount(unitId, elementId, element.count)
-        if (element.purchased) setElementPurchased(unitId, elementId)
+        if (element.count > 0) setElementCount(unitId as EGameUnit, elementId, element.count)
+        if (element.purchased) setElementPurchased(unitId as EGameUnit, elementId)
       })
     })
   }

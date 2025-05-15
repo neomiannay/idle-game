@@ -2,28 +2,28 @@ import React, { createContext, useContext, useCallback, useState } from 'react'
 
 import { MotionValue } from 'motion/react'
 import useMotionState from 'hooks/useMotionState'
-import { GameUnit } from 'types/store'
+import { EGamePrice, EGameUnit, GameUnit } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { usePricesContext } from './PricesProvider'
 
-export type UnitMultiplierGetter = (unitId: string) => number;
+export type UnitMultiplierGetter = (unitId: EGameUnit) => number;
 
 const defaultUnitMultiplier: UnitMultiplierGetter = () => 1
 
 type GameProviderType = {
-  units: Record<string, GameUnit>
-  totalUnits: Record<string, MotionValue<number>>
-  getUnit: (unitId: string) => GameUnit | null
-  canDisplayUnit: (unitId: string) => boolean
-  canBuyUnit: (unitId: string) => boolean
-  buyUnit: (unitId: string, multiplierGetter?: UnitMultiplierGetter) => void
+  units: Record<EGameUnit, GameUnit>
+  totalUnits: Record<EGameUnit, MotionValue<number>>
+  getUnit: (unitId: EGameUnit) => GameUnit | null
+  canDisplayUnit: (unitId: EGameUnit) => boolean
+  canBuyUnit: (unitId: EGameUnit) => boolean
+  buyUnit: (unitId: EGameUnit, multiplierGetter?: UnitMultiplierGetter) => void
   setUnitMultiplierGetter: (getter: UnitMultiplierGetter) => void
   updateDisplayConditions: () => void
-  updateUnitDuration: (unitId: string) => void
-  updateValueByAction: (unitId: string) => void
-  modifyUnitValue: (unitId: string, value: number) => boolean | void
+  updateUnitDuration: (unitId: EGameUnit) => void
+  updateValueByAction: (unitId: EGameUnit) => void
+  modifyUnitValue: (unitId: EGameUnit, value: number) => boolean | void
 }
 
 export const GameProviderContext = createContext<GameProviderType | null>(null)
@@ -66,55 +66,55 @@ export function GameProvider ({ children }: BaseProviderProps) {
   }, [actifUnit, complexUnit, saleUnit, reputationUnit])
 
   // Define the units
-  const units: Record<string, GameUnit> = {
-    actif: {
-      id: 'actif',
+  const units: Record<EGameUnit, GameUnit> = {
+    [EGameUnit.ACTIF]: {
+      id: EGameUnit.ACTIF,
       rawValue: actifUnit,
       motionValue: actifUnit.value,
       totalMotionValue: actifUnit.total,
       displayCondition: canDisplayActif,
       purchaseCondition: canBuyActif
     },
-    complex: {
-      id: 'complex',
+    [EGameUnit.COMPLEX]: {
+      id: EGameUnit.COMPLEX,
       rawValue: complexUnit,
       motionValue: complexUnit.value,
       totalMotionValue: complexUnit.total,
       displayCondition: displayComplex,
       purchaseCondition: canBuyComplex,
-      costUnitId: 'actif',
+      costUnitId: EGameUnit.ACTIF,
       costAmount: 10,
       duration: complexDuration.value,
       valueByAction: valueByAction.value
     },
-    sale: {
-      id: 'sale',
+    [EGameUnit.SALE]: {
+      id: EGameUnit.SALE,
       rawValue: saleUnit,
       motionValue: saleUnit.value,
       totalMotionValue: saleUnit.total,
       displayCondition: displaySale,
       purchaseCondition: canBuySale,
-      costUnitId: 'complex',
+      costUnitId: EGameUnit.COMPLEX,
       costAmount: 1
     },
-    benefits: {
-      id: 'benefits',
+    [EGameUnit.BENEFITS]: {
+      id: EGameUnit.BENEFITS,
       rawValue: benefitsUnit,
       motionValue: benefitsUnit.value,
       totalMotionValue: benefitsUnit.total,
       displayCondition: displayBenefits,
       purchaseCondition: canBuyWithBenefits
     },
-    reputation: {
-      id: 'reputation',
+    [EGameUnit.REPUTATION]: {
+      id: EGameUnit.REPUTATION,
       rawValue: reputationUnit,
       motionValue: reputationUnit.value,
       totalMotionValue: reputationUnit.total,
       displayCondition: displayReputation,
       purchaseCondition: canBuyWithReputation
     },
-    karma: {
-      id: 'karma',
+    [EGameUnit.KARMA]: {
+      id: EGameUnit.KARMA,
       rawValue: karmaUnit,
       motionValue: karmaUnit.value,
       totalMotionValue: karmaUnit.total,
@@ -124,28 +124,29 @@ export function GameProvider ({ children }: BaseProviderProps) {
   }
 
   const totalUnits = {
-    actif: actifUnit.total,
-    complex: complexUnit.total,
-    sale: saleUnit.total,
-    benefit: benefitsUnit.total,
-    reputationUnit: reputationUnit.total
+    [EGameUnit.ACTIF]: actifUnit.total,
+    [EGameUnit.COMPLEX]: complexUnit.total,
+    [EGameUnit.SALE]: saleUnit.total,
+    [EGameUnit.BENEFITS]: benefitsUnit.total,
+    [EGameUnit.REPUTATION]: reputationUnit.total,
+    [EGameUnit.KARMA]: karmaUnit.total
   }
 
-  const getUnit = useCallback((unitId: string): GameUnit | null => {
+  const getUnit = useCallback((unitId: EGameUnit): GameUnit | null => {
     return units[unitId] || null
   }, [units])
 
-  const canDisplayUnit = useCallback((unitId: string): boolean => {
+  const canDisplayUnit = useCallback((unitId: EGameUnit): boolean => {
     const unit = getUnit(unitId)
     return unit ? unit.displayCondition : false
   }, [getUnit])
 
-  const canBuyUnit = useCallback((unitId: string): boolean => {
+  const canBuyUnit = useCallback((unitId: EGameUnit): boolean => {
     const unit = getUnit(unitId)
     return unit ? unit.purchaseCondition : false
   }, [getUnit])
 
-  const buyUnit = useCallback((unitId: string) => {
+  const buyUnit = useCallback((unitId: EGameUnit) => {
     const unit = getUnit(unitId)
     if (!unit) return
 
@@ -162,14 +163,14 @@ export function GameProvider ({ children }: BaseProviderProps) {
 
     unit.rawValue.add(1 * multiplier)
     if (unit.id === 'sale') {
-      const benefitsUnit = getUnit('benefits')
-      const productionCost = getPrice('production').motionValue.get()
-      const sellingCost = getPrice('selling').motionValue.get()
+      const benefitsUnit = getUnit(EGameUnit.BENEFITS)
+      const productionCost = getPrice(EGamePrice.PRODUCTION).motionValue.get()
+      const sellingCost = getPrice(EGamePrice.SELLING).motionValue.get()
       benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
     }
   }, [getUnit, getPrice])
 
-  const modifyUnitValue = useCallback((unitId: string, value: number) => {
+  const modifyUnitValue = useCallback((unitId: EGameUnit, value: number) => {
     const unit = getUnit(unitId)
     if (!unit) return false
 
@@ -189,7 +190,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
     currentUnitMultiplierGetter = getter
   }, [])
 
-  const updateUnitDuration = useCallback((unitId: string) => {
+  const updateUnitDuration = useCallback((unitId: EGameUnit) => {
     const unit = getUnit(unitId)
 
     if (unit && unitId === 'complex') {
@@ -201,7 +202,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
     }
   }, [])
 
-  const updateValueByAction = useCallback((unitId: string) => {
+  const updateValueByAction = useCallback((unitId: EGameUnit) => {
     const unit = getUnit(unitId)
 
     if (unit && unitId === 'complex') {

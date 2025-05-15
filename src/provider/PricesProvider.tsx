@@ -1,13 +1,13 @@
 import { createContext, useCallback, useContext } from 'react'
 
-import { GamePrice } from 'types/store'
+import { EGamePrice, GamePrice } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
 
 import { BaseProviderProps } from './GlobalProvider'
 
 type PricesContextType = {
-  prices: Record<string, GamePrice>
-  getPrice: (unitId: string) => GamePrice
+  prices: Record<EGamePrice, GamePrice>
+  getPrice: (priceId: EGamePrice) => GamePrice
 }
 
 export const PricesContext = createContext<PricesContextType | null>({} as PricesContextType)
@@ -20,21 +20,21 @@ export const PricesProvider = ({ children }: BaseProviderProps) => {
   const sellingPrice = useUnitMotionValue(80)
 
   // Define prices
-  const prices: Record<string, GamePrice> = {
-    production: {
-      id: 'production',
+  const prices: Record<EGamePrice, GamePrice> = {
+    [EGamePrice.PRODUCTION]: {
+      id: EGamePrice.PRODUCTION,
       rawValue: productionPrice,
       motionValue: productionPrice.value,
       totalMotionValue: productionPrice.total
     },
-    selling: {
-      id: 'selling',
+    [EGamePrice.SELLING]: {
+      id: EGamePrice.SELLING,
       rawValue: sellingPrice,
       motionValue: sellingPrice.value,
       totalMotionValue: sellingPrice.total
     }
   }
-  const getPrice = useCallback((priceId: string): GamePrice => {
+  const getPrice = useCallback((priceId: EGamePrice): GamePrice => {
     return prices[priceId] || null
   }, [])
 

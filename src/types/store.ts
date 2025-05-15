@@ -19,6 +19,20 @@ export interface MessageType {
   };
 }
 
+export enum EGamePrice {
+  PRODUCTION = 'production',
+  SELLING = 'selling',
+}
+
+export enum EGameUnit {
+  ACTIF = 'actif',
+  COMPLEX = 'complex',
+  SALE = 'sale',
+  BENEFITS = 'benefits',
+  REPUTATION = 'reputation',
+  KARMA = 'karma',
+}
+
 export interface GameUnit {
   id: string
   rawValue: UnitMotionValueResult
@@ -26,7 +40,7 @@ export interface GameUnit {
   totalMotionValue: MotionValue<number>
   displayCondition: boolean
   purchaseCondition: boolean
-  costUnitId?: string
+  costUnitId?: EGameUnit
   costAmount?: number
   duration?: MotionValue<number>
   valueByAction?: MotionValue<number>
@@ -71,15 +85,15 @@ export type ElementType = 'item' | 'upgrade'
 export interface ItemType {
   _type: 'item'
   _id: string
-  unitId: string
+  unitId: EGameUnit
   name: string
   unitByTime: number
   apparitionCondition: {
-    unitId: string
+    unitId: EGameUnit
     value: number
   }
   cost: {
-    unitId: string
+    unitId: EGameUnit
     value: number
   }
   count: MotionValue<number>
@@ -89,15 +103,15 @@ export interface ItemType {
 export interface UpgradeType {
   _type: 'upgrade'
   _id: string
-  unitId: string
+  unitId: EGameUnit
   name: string
   valueByAction: number
   apparitionCondition: {
-    unitId: string
+    unitId: EGameUnit
     value: number
   }
   cost: {
-    unitId: string
+    unitId: EGameUnit
     value: number
   }
   count: MotionValue<number>

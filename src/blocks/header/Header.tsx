@@ -5,6 +5,7 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { useL10n } from 'provider/L10nProvider'
 import useMotionState from 'hooks/useMotionState'
 import { usePricesContext } from 'provider/PricesProvider'
+import { EGamePrice, EGameUnit } from 'types/store'
 
 import styles from './Header.module.scss'
 
@@ -16,9 +17,9 @@ const Header = ({ className }: HeaderProps) => {
   const { getUnit, canDisplayUnit } = useGameProviderContext()
   const { getPrice } = usePricesContext()
 
-  const benefits = getUnit('benefits')
-  const productionPrice = getPrice('production')
-  const sellingPrice = getPrice('selling')
+  const benefits = getUnit(EGameUnit.BENEFITS)
+  const productionPrice = getPrice(EGamePrice.PRODUCTION)
+  const sellingPrice = getPrice(EGamePrice.SELLING)
 
   const l10n = useL10n()
 
@@ -28,7 +29,7 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <>
-      { canDisplayUnit('benefits') && (
+      { canDisplayUnit(EGameUnit.BENEFITS) && (
 
         <div className={ classNames(styles.wrapper, className) }>
           <div className={ styles.price }>

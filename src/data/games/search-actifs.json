@@ -1,0 +1,36 @@
+{
+  "settings": {
+    "duration": 20,
+    "price": 3000,
+    "efficiency": 90
+  },
+  "layout": {
+    "name": "SEARCH_ACTIFS.LAYOUT.NAME",
+    "title": "SEARCH_ACTIFS.LAYOUT.TITLE",
+    "subtitle": "SEARCH_ACTIFS.LAYOUT.SUBTITLE",
+    "description": "SEARCH_ACTIFS.LAYOUT.DESCRIPTION",
+    "buttonLabel": "SEARCH_ACTIFS.LAYOUT.BUTTON_LABEL"
+  },
+  "items": [
+    {
+      "id": "search-actif-1",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.GLYCERIN",
+      "description": "SEARCH_ACTIFS.ITEMS.GLYCERIN_DESC",
+      "values": [
+        {
+          "value": 8,
+          "target": "production"
+        },
+        {
+          "value": 64,
+          "target": "selling"
+        },
+        {
+          "value": 40,
+          "target": "reputation"
+        }
+      ]
+    }
+  ]
+}

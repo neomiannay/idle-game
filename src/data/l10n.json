@@ -38,5 +38,18 @@
   },
   "PACKS": {
     "FRIEND_X10": "Pack Ami ×10 +2 bonus"
+  },
+  "SEARCH_ACTIFS": {
+    "LAYOUT": {
+      "NAME": "Recherche d’actifs",
+      "TITLE": "[TBC]",
+      "SUBTITLE": "Scientifique Expert Quantique",
+      "DESCRIPTION": "Depuis tant d'années je décrypte les phénomènes photoniques, à l'échelle de l'infiniment petit, l'échelle quantique. La révolution quantique est une avancée majeure car elle est à l'origine de nouvelles technologies ultrapuissantes et ultrarapides.",
+      "BUTTON_LABEL": "Lancer la recherche"
+    },
+    "ITEMS": {
+      "GLYCERIN": "Glycérine",
+      "GLYCERIN_DESC": "Substance translucide qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations."
+    }
   }
 }
