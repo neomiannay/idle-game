@@ -22,6 +22,7 @@ const HoldButton: FC<HoldButtonProps> = ({
   const [progress, setProgress] = useState<number>(100)
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const [autoMode, setAutoMode] = useState<boolean>(false)
 
   const canBuy = canBuyUnit('complex')
   const duration = getUnit('complex')?.duration?.get() ?? 5000
@@ -45,8 +46,15 @@ const HoldButton: FC<HoldButtonProps> = ({
           clearInterval(timerRef.current)
 
         setProgress(100)
-        setIsAnimating(false)
-        buyUnit('complex')
+
+        setTimeout(() => {
+          buyUnit('complex')
+          setIsAnimating(false)
+          setProgress(100)
+          setTimeout(() => {
+            setProgress(0)
+          }, 200)
+        }, 50)
       } else {
         setProgress(currentProgress)
       }
@@ -59,6 +67,12 @@ const HoldButton: FC<HoldButtonProps> = ({
         clearInterval(timerRef.current)
     }
   }, [])
+
+  useEffect(() => {
+    if (!autoMode || isAnimating || !canBuy) return
+
+    handleClick()
+  }, [autoMode, isAnimating, canBuy])
 
   return (
     <div className={ classNames(styles.wrapper, className, {
@@ -77,6 +91,14 @@ const HoldButton: FC<HoldButtonProps> = ({
         </div>
         <div className={ styles.startColor }>{ l10n(label) }</div>
       </div>
+
+      <div className={ styles.autoSwitch } onClick={ () => setAutoMode(prev => !prev) }>
+        <span className={ styles.switchLabel }>Production automatique</span>
+        <div className={ classNames(styles.switchTrack, { [styles.on]: autoMode }) }>
+          <div className={ styles.switchThumb } />
+        </div>
+      </div>
+
     </div>
   )
 }
