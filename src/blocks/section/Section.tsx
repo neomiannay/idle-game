@@ -7,8 +7,8 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { useL10n } from 'provider/L10nProvider'
-import HoldButton from 'components/holdButton/HoldButton'
-import AutoSwitch from 'blocks/autoSwitch/AutoSwitch'
+import HoldButton from 'components/hold-button/HoldButton'
+import AutoSwitch from 'blocks/auto-switch/AutoSwitch'
 
 import styles from './Section.module.scss'
 
