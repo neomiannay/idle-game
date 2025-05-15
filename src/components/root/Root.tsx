@@ -5,7 +5,6 @@ import Shop from 'components/shop/Shop' // Import the new Shop component
 import Meta from 'components/meta/Meta'
 import Header from 'components/header/Header'
 import Sections from 'components/sections/Sections'
-import Background from 'components/background/background'
 import { useIterationContext } from 'provider/IterationProvider'
 import Modal from 'components/modal/Modal'
 
@@ -54,7 +53,7 @@ function Root ({ className }: RootProps) {
         <Shop />
         <Modal />
       </main>
-      <Background />
+      { /* <Background /> */ }
     </>
   )
 }
