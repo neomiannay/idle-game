@@ -37,7 +37,7 @@ $rem-reference: 1px;
   /* GRID */
   --grid-margin: #{rem(16)};
   --grid-gutter: #{rem(16)};
-  --grid-column: #{computeGridColumn(15, true)};
+  --grid-column: #{computeGridColumn(13, true)};
 
   /* SIZES */
   --border-size: #{rem(.5)};

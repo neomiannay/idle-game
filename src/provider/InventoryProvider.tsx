@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect } from 'react'
 
 import { MotionValue, useMotionValue } from 'motion/react'
-import { ElementTypes, ItemType, UpgradeType } from 'types/store'
+import { ElementTypes, GameStateElement, ItemType, UpgradeType } from 'types/store'
 
 import itemsData from '../data/items.json'
 import upgradesData from '../data/upgrades.json'
@@ -31,6 +31,9 @@ type InventoryType = {
   setUpgradePurchased: (unitId: string, upgradeId: string) => void
   getUnitMultiplier: (unitId: string) => number
   getItemProduction: (unitId: string) => number
+  setElementCount: (unitId: string, elementId: string, count: number) => void
+  setElementPurchased: (unitId: string, elementId: string) => void
+  loadElements: (data: Record<string, Record<string, GameStateElement>>) => void
 }
 
 export const InventoryContext = createContext<InventoryType | null>(null)
@@ -177,6 +180,13 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
       upgrades[unitId][upgradeId].count.set(count)
   }
 
+  const setElementCount = (unitId: string, elementId: string, count: number): void => {
+    if (items[unitId]?.[elementId])
+      items[unitId][elementId].count.set(count)
+    else if (upgrades[unitId]?.[elementId])
+      upgrades[unitId][elementId].count.set(1) // we force the upgrade count to 1 only
+  }
+
   const setItemPurchased = (unitId: string, itemId: string): void => {
     if (items[unitId]?.[itemId]) {
       items[unitId][itemId].count.set(1)
@@ -188,6 +198,16 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     if (upgrades[unitId]?.[upgradeId]) {
       upgrades[unitId][upgradeId].count.set(1)
       upgrades[unitId][upgradeId].purchased.set(true)
+    }
+  }
+
+  const setElementPurchased = (unitId: string, elementId: string): void => {
+    if (items[unitId]?.[elementId]) {
+      items[unitId][elementId].count.set(1)
+      items[unitId][elementId].purchased.set(true)
+    } else if (upgrades[unitId]?.[elementId]) {
+      upgrades[unitId][elementId].count.set(1)
+      upgrades[unitId][elementId].purchased.set(true)
     }
   }
 
@@ -229,6 +249,15 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     return production
   }
 
+  const loadElements = (data: Record<string, Record<string, GameStateElement>>) => {
+    Object.entries(data).forEach(([unitId, unitElements]) => {
+      Object.entries(unitElements).forEach(([elementId, element]) => {
+        if (element.count > 0) setElementCount(unitId, elementId, element.count)
+        if (element.purchased) setElementPurchased(unitId, elementId)
+      })
+    })
+  }
+
   useEffect(() => {
     setUnitMultiplierGetter(getUnitMultiplier)
   }, [setUnitMultiplierGetter])
@@ -252,7 +281,10 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     setItemPurchased,
     setUpgradePurchased,
     getUnitMultiplier,
-    getItemProduction
+    getItemProduction,
+    setElementCount,
+    setElementPurchased,
+    loadElements
   }
 
   return (

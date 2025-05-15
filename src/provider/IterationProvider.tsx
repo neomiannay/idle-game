@@ -26,7 +26,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const emitter = useTinyEmitter()
 
   const { units, getUnit, updateDisplayConditions } = useGameProviderContext()
-  const { getItemProduction, getElementsForUnit, setItemCount, setUpgradeCount, setItemPurchased, setUpgradePurchased } = useInventoryContext()
+  const { getItemProduction, getElementsForUnit, loadElements } = useInventoryContext()
   const { prices } = usePricesContext()
   const { seenMessages, loadMessages, setSeenMessagesLoaded } = useMessageSystemContext()
 
@@ -84,6 +84,8 @@ export function IterationProvider ({ children }: BaseProviderProps) {
           acc[unitId] = {}
           Object.entries(unitUpgrades).forEach(([upgradeId, upgrade]) => {
             acc[unitId][upgradeId] = {
+              _type: 'upgrade',
+              _id: upgradeId,
               count: upgrade.count.get(),
               purchased: upgrade.purchased.get()
             }
@@ -97,6 +99,8 @@ export function IterationProvider ({ children }: BaseProviderProps) {
           acc[unitId] = {}
           Object.entries(unitItems).forEach(([itemId, item]) => {
             acc[unitId][itemId] = {
+              _type: 'item',
+              _id: itemId,
               count: item.count.get(),
               purchased: item.purchased.get()
             }
@@ -146,24 +150,12 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     })
 
     // Charger les items
-    if (gameState.items) {
-      Object.entries(gameState.items).forEach(([unitId, unitItems]) => {
-        Object.entries(unitItems as Record<string, GameStateElement>).forEach(([itemId, { count, purchased }]) => {
-          if (count > 0) setItemCount(unitId, itemId, count)
-          if (purchased) setItemPurchased(unitId, itemId)
-        })
-      })
-    }
+    if (gameState.items)
+      loadElements(gameState.items)
 
     // Charger les upgrades
-    if (gameState.upgrades) {
-      Object.entries(gameState.upgrades).forEach(([unitId, unitUpgrades]) => {
-        Object.entries(unitUpgrades as Record<string, GameStateElement>).forEach(([upgradeId, { count, purchased }]) => {
-          if (count > 0) setUpgradeCount(unitId, upgradeId, 1)
-          if (purchased) setUpgradePurchased(unitId, upgradeId)
-        })
-      })
-    }
+    if (gameState.upgrades)
+      loadElements(gameState.upgrades)
 
     // Charger les messages déjà vus
     if (gameState.seenMessages)
@@ -180,7 +172,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         }
       })
     }
-  }, [getUnit, setItemCount, setUpgradeCount])
+  }, [getUnit, loadElements])
 
   // Hook pour la persistance de l'état du jeu
   const { saveGameState, loadGameState } = useGamePersistence({

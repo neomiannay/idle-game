@@ -46,6 +46,8 @@ export interface GameStateUnit {
 }
 
 export interface GameStateElement {
+  _type: 'item' | 'upgrade'
+  _id: string
   count: number
   purchased: boolean
 }

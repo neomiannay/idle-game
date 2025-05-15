@@ -45,8 +45,6 @@ const GridHelper = () => {
       <div className={ styles.gridHelperCol } />
       <div className={ styles.gridHelperCol } />
       <div className={ styles.gridHelperCol } />
-      <div className={ styles.gridHelperCol } />
-      <div className={ styles.gridHelperCol } />
     </div>
 
   )
