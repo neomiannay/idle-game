@@ -1,30 +1,13 @@
 import React, { useEffect, useState, createContext, useContext, useMemo } from 'react'
 
 import useTinyEmitter from 'hooks/useTinyEmitter'
+import { MessageType } from 'types/store'
 
 import messagesData from '../data/messageEvents.json'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { usePricesContext } from './PricesProvider'
 import { useGameProviderContext } from './GameProvider'
-
-type MessageType = {
-  id: string;
-  condition: {
-    unit: string;
-    min: number;
-  };
-  message: string;
-  accept: {
-    karma: number;
-    reputation?: number;
-    selling?: number;
-    production?: number;
-  };
-  decline: {
-    karma: number;
-  };
-}
 
 type UnitUpdatedType = {
   unitId: string;
@@ -38,6 +21,7 @@ type MessageSystemContextType = {
   seenMessagesLoaded: boolean;
   setSeenMessagesLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   handleResponse: (choice: 'accept' | 'decline') => void;
+  loadMessages: (data: string[]) => void;
 }
 
 const MessageContext = createContext<MessageSystemContextType | null>(null)
@@ -60,8 +44,8 @@ export const MessageSystemProvider = ({ children }: BaseProviderProps) => {
         const { unit, min } = msg.condition
         return (
           unitUpdated.unitId === unit &&
-        unitUpdated.motionValue >= min &&
-        !seenMessages?.includes(msg.id)
+          unitUpdated.motionValue >= min &&
+          !seenMessages?.includes(msg.id)
         )
       })
 
@@ -114,14 +98,20 @@ export const MessageSystemProvider = ({ children }: BaseProviderProps) => {
     setActiveMessage(null)
   }
 
+  const loadMessages = (data: string[]) => {
+    const refinedData = Array.from(new Set([...data]))
+    setSeenMessages(refinedData)
+  }
+
   const contextValue = useMemo<MessageSystemContextType>(() => ({
     activeMessage,
     seenMessages,
     setSeenMessages,
     seenMessagesLoaded,
     setSeenMessagesLoaded,
-    handleResponse
-  }), [activeMessage, seenMessages, setSeenMessagesLoaded, handleResponse])
+    handleResponse,
+    loadMessages
+  }), [activeMessage, seenMessages, setSeenMessagesLoaded, handleResponse, loadMessages])
 
   return (
     <MessageContext.Provider value={ contextValue }>

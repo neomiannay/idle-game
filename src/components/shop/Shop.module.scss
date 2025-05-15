@@ -12,6 +12,7 @@
   box-shadow: 0 rem(4) rem(12) rgba(0, 0, 0, 0.1);
   max-height: calc(100vh - rem(100));
   overflow-y: auto;
+  border: 1px solid red;
 }
 
 .title {
@@ -22,75 +23,15 @@
   padding-bottom: var(--gap-s);
 }
 
-.unitSection {
-}
-
 .unitTitle {
   font-size: rem(16);
   margin-bottom: var(--gap);
   color: var(--color-main);
 }
 
-.upgradeCards {
+.cards {
   display: flex;
   gap: var(--gap);
-}
-
-.upgradeCard {
-  color: var(--color-main);
-  position: relative;
-  background-color: white;
-  border-radius: var(--border-radius);
-  padding: rem(10);
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-s);
-  box-shadow: 0 rem(2) rem(4) rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-
-  &.purchased {
-    background-color: #e6f7e6;
-    border: 1px solid #b3e6b3;
-  }
-
-  &.unavailable {
-    opacity: 0.6;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.upgradeInfo {
-  display: flex;
-  flex-direction: column;
-  gap: rem(4);
-}
-
-.upgradeName {
-  font-size: rem(16);
-  margin: 0;
-}
-
-.upgradeEffect {
-  font-size: rem(12);
-  margin: 0;
-}
-
-.purchaseAction {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--gap-s);
-}
-
-.upgradeCost {
-  position: absolute;
-  top: var(--grid-gutter);
-  right: var(--grid-gutter);
-  font-size: rem(12);
 }
 
 .purchasedBadge {

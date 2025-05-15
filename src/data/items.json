@@ -13,7 +13,7 @@
         },
         "cost": {
           "unitId": "actif",
-          "value": 5
+          "value": 10
         }
       },
       {
@@ -21,29 +21,29 @@
         "_id": "stagiaire",
         "unitId": "actif",
         "name": "ITEMS.TRAINEE",
-        "unitByTime": 30,
+        "unitByTime": 5,
         "apparitionCondition": {
           "unitId": "actif",
           "value": 10
         },
         "cost": {
           "unitId": "actif",
-          "value": 10
+          "value": 20
         }
       },
       {
         "_type": "item",
-        "id": "apprenti",
+        "_id": "apprenti",
         "unitId": "actif",
         "name": "ITEMS.APPRENTICE",
-        "unitByTime": 100,
+        "unitByTime": 10,
         "apparitionCondition": {
           "unitId": "actif",
-          "value": 15
+          "value": 20
         },
         "cost": {
           "unitId": "actif",
-          "value": 15
+          "value": 40
         }
       }
     ]

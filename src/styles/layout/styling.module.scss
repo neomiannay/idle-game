@@ -119,16 +119,33 @@ $styles: ();
   }
 }
 
-%modale {
+%button-text {
   @include rule {
-    backdrop-filter: blur(2px);
-    background-color: #15151550;
-    pointer-events: all;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    font-size: rem(16);
+    font-stretch: normal;
+    font-variation-settings: 'wght' 700, 'wdth' 0, 'ital' 0;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+}
+
+%button-sub {
+  @include rule {
+    font-size: rem(16);
+    font-stretch: normal;
+    font-variation-settings: 'wght' 220, 'wdth' 0, 'ital' 0;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-transform: uppercase;
+  }
+}
+
+%button-subtext {
+  @include rule {
+    font-size: rem(16);
+    font-stretch: normal;
+    font-variation-settings: 'wght' 500, 'wdth' 0, 'ital' 0;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
   }
 }

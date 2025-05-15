@@ -3,6 +3,7 @@ import React, { createContext, useContext, useCallback, useState, useMemo, useEf
 import { useGameLoop } from 'hooks/useGameLoop'
 import { useGamePersistence } from 'hooks/useGamePersistence'
 import { floor } from 'lodash-es'
+import { GameState, GameStateElement, GameStatePrice, GameStateUnit } from 'types/store'
 import useTinyEmitter from 'hooks/useTinyEmitter'
 
 import { useMessageSystemContext } from './MessageSystemProvider'
@@ -25,9 +26,9 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const emitter = useTinyEmitter()
 
   const { units, getUnit, updateDisplayConditions } = useGameProviderContext()
-  const { getItemProduction, getElementsForUnit, setItemCount, setUpgradeCount } = useInventoryContext()
+  const { getItemProduction, getElementsForUnit, setItemCount, setUpgradeCount, setItemPurchased, setUpgradePurchased } = useInventoryContext()
   const { prices } = usePricesContext()
-  const { seenMessages, setSeenMessages, setSeenMessagesLoaded } = useMessageSystemContext()
+  const { seenMessages, loadMessages, setSeenMessagesLoaded } = useMessageSystemContext()
 
   // Fonction pour traiter un tick de jeu (production d'items)
   const processTick = useCallback((deltaTimeInSeconds: number) => {
@@ -63,12 +64,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     return {
       lastPlayedTime: Date.now(),
       units: Object.entries(units).reduce((acc, [unitId, unit]) => {
-        const unitData: {
-          motionValue: number,
-          totalMotionValue: number,
-          duration?: number,
-          valueByAction?: number
-        } = {
+        const unitData: GameStateUnit = {
           motionValue: unit.motionValue.get(),
           totalMotionValue: unit.totalMotionValue.get()
         }
@@ -81,40 +77,46 @@ export function IterationProvider ({ children }: BaseProviderProps) {
 
         acc[unitId] = unitData
         return acc
-      }, {} as Record<string, { motionValue: number, totalMotionValue: number, duration?: number }>),
+      }, {} as GameState['units']),
       upgrades: Object.keys(units).reduce((acc, unitId) => {
         const unitUpgrades = getElementsForUnit(unitId, 'upgrade')
         if (Object.keys(unitUpgrades).length > 0) {
           acc[unitId] = {}
           Object.entries(unitUpgrades).forEach(([upgradeId, upgrade]) => {
-            acc[unitId][upgradeId] = upgrade.purchased.get()
+            acc[unitId][upgradeId] = {
+              count: upgrade.count.get(),
+              purchased: upgrade.purchased.get()
+            }
           })
         }
         return acc
-      }, {} as Record<string, Record<string, boolean>>),
+      }, {} as Record<string, Record<string, GameStateElement>>),
       items: Object.keys(units).reduce((acc, unitId) => {
         const unitItems = getElementsForUnit(unitId, 'item')
         if (Object.keys(unitItems).length > 0) {
           acc[unitId] = {}
           Object.entries(unitItems).forEach(([itemId, item]) => {
-            acc[unitId][itemId] = item.count.get()
+            acc[unitId][itemId] = {
+              count: item.count.get(),
+              purchased: item.purchased.get()
+            }
           })
         }
         return acc
-      }, {} as Record<string, Record<string, number>>),
+      }, {} as Record<string, Record<string, GameStateElement>>),
       prices: Object.entries(prices).reduce((acc, [priceId, price]) => {
         acc[priceId] = {
           motionValue: price.motionValue.get(),
           totalMotionValue: price.totalMotionValue.get()
         }
         return acc
-      }, {} as Record<string, { motionValue: number, totalMotionValue: number }>),
+      }, {} as Record<string, GameStatePrice>),
       seenMessages
     }
   }, [units, getElementsForUnit, seenMessages])
 
   // Fonction pour charger l'état du jeu
-  const handleLoadState = useCallback((gameState: any) => {
+  const handleLoadState = useCallback((gameState: GameState) => {
     // Charger les unités
     Object.entries(gameState.units || {}).forEach(([unitId, value]) => {
       const unit = getUnit(unitId)
@@ -146,8 +148,9 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     // Charger les items
     if (gameState.items) {
       Object.entries(gameState.items).forEach(([unitId, unitItems]) => {
-        Object.entries(unitItems as Record<string, number>).forEach(([itemId, count]) => {
+        Object.entries(unitItems as Record<string, GameStateElement>).forEach(([itemId, { count, purchased }]) => {
           if (count > 0) setItemCount(unitId, itemId, count)
+          if (purchased) setItemPurchased(unitId, itemId)
         })
       })
     }
@@ -155,22 +158,22 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     // Charger les upgrades
     if (gameState.upgrades) {
       Object.entries(gameState.upgrades).forEach(([unitId, unitUpgrades]) => {
-        Object.entries(unitUpgrades as Record<string, boolean>).forEach(([upgradeId, purchased]) => {
-          if (purchased) setUpgradeCount(unitId, upgradeId, 1)
+        Object.entries(unitUpgrades as Record<string, GameStateElement>).forEach(([upgradeId, { count, purchased }]) => {
+          if (count > 0) setUpgradeCount(unitId, upgradeId, 1)
+          if (purchased) setUpgradePurchased(unitId, upgradeId)
         })
       })
     }
 
     // Charger les messages déjà vus
-    if (gameState.seenMessages) {
-      const uniqueSeen = Array.from(new Set([...gameState.seenMessages]))
-      setSeenMessages(uniqueSeen)
-    }
+    if (gameState.seenMessages)
+      loadMessages(gameState.seenMessages)
+
     setSeenMessagesLoaded(true)
 
     // Charger les prix
     if (gameState.prices) {
-      Object.entries(gameState.prices as Record<string, { motionValue: number; totalMotionValue: number }>).forEach(([priceId, priceData]) => {
+      Object.entries(gameState.prices as Record<string, GameStatePrice>).forEach(([priceId, priceData]) => {
         if (prices[priceId]) {
           prices[priceId].motionValue.set(priceData.motionValue)
           prices[priceId].totalMotionValue.set(priceData.totalMotionValue)
@@ -201,7 +204,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     }
 
     setLoading(false)
-  }, [loadGameState, processTick, updateDisplayConditions])
+  }, [])
 
   const contextValue = useMemo<IterationContextType>(() => ({
     isPaused,

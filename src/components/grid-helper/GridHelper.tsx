@@ -21,7 +21,7 @@ const GridHelper = () => {
     const isGridEnabled = localStorage.getItem('grid-helper') === 'true'
     setEnabled(isGridEnabled)
 
-    if (typeof window !== 'undefined' && gridRef.current) {
+    if (window !== undefined && gridRef.current) {
       window.addEventListener('keydown', handleKeyDown)
 
       return () => {

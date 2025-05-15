@@ -1,6 +1,24 @@
 import { UnitMotionValueResult } from 'hooks/useUnitMotionValue'
 import { MotionValue } from 'motion'
 
+export interface MessageType {
+  id: string;
+  condition: {
+    unit: string;
+    min: number;
+  };
+  message: string;
+  accept: {
+    karma: number;
+    reputation?: number;
+    selling?: number;
+    production?: number;
+  };
+  decline: {
+    karma: number;
+  };
+}
+
 export interface GameUnit {
   id: string
   rawValue: UnitMotionValueResult
@@ -13,13 +31,40 @@ export interface GameUnit {
   duration?: MotionValue<number>
   valueByAction?: MotionValue<number>
 }
-
 export interface GamePrice {
   id: string
   rawValue: UnitMotionValueResult
   motionValue: MotionValue<number>
   totalMotionValue: MotionValue<number>
 }
+
+export interface GameStateUnit {
+  motionValue: number
+  totalMotionValue: number
+  duration?: number
+  valueByAction?: number
+}
+
+export interface GameStateElement {
+  count: number
+  purchased: boolean
+}
+
+export interface GameStatePrice {
+  motionValue: number,
+  totalMotionValue: number
+}
+
+export interface GameState {
+  lastPlayedTime: number
+  units: Record<string, GameStateUnit>
+  items?: Record<string, Record<string, GameStateElement>>
+  upgrades?: Record<string, Record<string, GameStateElement>>
+  prices?: Record<string, GameStatePrice>
+  seenMessages?: Array<string> | null
+}
+
+export type ElementType = 'item' | 'upgrade'
 
 export interface ItemType {
   _type: 'item'
@@ -36,6 +81,7 @@ export interface ItemType {
     value: number
   }
   count: MotionValue<number>
+  purchased: MotionValue<boolean>
 }
 
 export interface UpgradeType {
@@ -52,6 +98,7 @@ export interface UpgradeType {
     unitId: string
     value: number
   }
+  count: MotionValue<number>
   purchased: MotionValue<boolean>
 }
 

@@ -1,11 +1,6 @@
 import { useCallback, useEffect } from 'react'
 
-type GameState = {
-  units: Record<string, { motionValue: number, totalMotionValue: number, duration?: number, valueByAction?: number }>
-  items?: Record<string, Record<string, number>>
-  upgrades?: Record<string, Record<string, boolean>>
-  lastPlayedTime: number
-}
+import { GameState } from 'types/store'
 
 type PersistenceOptions = {
   onLoad?: (state: GameState) => void
@@ -30,7 +25,7 @@ export function useGamePersistence ({
     const gameState = onSave()
     try {
       localStorage.setItem(storageKey, JSON.stringify(gameState))
-      console.log('Game state saved successfully')
+      console.log('✨✨✨ Game state saved successfully')
     } catch (error) {
       console.error('Error saving game state:', error)
     }
@@ -40,11 +35,13 @@ export function useGamePersistence ({
     if (!onLoad) return
 
     try {
+      console.log('🔍🔍🔍 Loading game state')
+
       const savedState = localStorage.getItem(storageKey)
       if (savedState) {
         const gameState = JSON.parse(savedState) as GameState
         onLoad(gameState)
-        console.log('Game state loaded successfully')
+        console.log('✨✨✨ Game state loaded successfully')
 
         // Calculate offline progress in seconds
         const offlineTime = (Date.now() - gameState.lastPlayedTime) / 1000

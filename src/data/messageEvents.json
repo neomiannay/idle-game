@@ -6,7 +6,7 @@
 	"accept": { "reputation": 5, "karma": -40, "selling": 300, "production": -5 },
 	"decline": { "karma": 10 }
   },
-    {
+  {
     "id": "msg_2",
     "condition": { "unit": "actif", "min": 50 },
     "message": "Packaging rose pour vendre plus cher ?",

@@ -31,6 +31,8 @@ const Section = ({ className, unitId }: SectionProps) => {
     getElementsForUnit,
     getItemCount,
     getUpgradeCount,
+    getItemPurchased,
+    getUpgradePurchased,
     canBuyElement,
     buyElement,
     getItemProduction,
@@ -192,7 +194,8 @@ const Section = ({ className, unitId }: SectionProps) => {
         <div className={ styles.purchasedUpgradesSection }>
           <div className={ styles.purchasedUpgradesList }>
             { Object.entries(upgrades).map(([upgradeId, upgrade]) => {
-              const isPurchased = getUpgradeCount(unitId, upgradeId) > 0
+              const isPurchased = getUpgradePurchased(unitId, upgradeId)
+
               if (!isPurchased) return null
 
               return (
@@ -214,42 +217,37 @@ const Section = ({ className, unitId }: SectionProps) => {
       { /* Items section */ }
       { Object.keys(items).length > 0 && (
         <div className={ styles.itemsSection }>
-          <h3>Items</h3>
+          <h3 className={ styles.itemsTitle }>Items list</h3>
           <div className={ styles.itemsList }>
             { Object.entries(items).map(([itemId, item]) => {
+              const isPurchased = getItemPurchased(unitId, itemId)
+              const sequentiallyPurchasable = canPurchaseItemSequentially(itemId)
               const itemCount = getItemCount(unitId, itemId)
-              const isSequentiallyPurchasable =
-                canPurchaseItemSequentially(itemId)
-              const canPurchase =
-                canBuyElement(unitId, itemId, 'item') &&
-                isSequentiallyPurchasable
+              const canPurchase = canBuyElement(unitId, itemId, 'item') && sequentiallyPurchasable
+
+              // console.log(isPurchased)
+
+              if (!isPurchased) return null
 
               return (
                 <div
-                  key={ itemId }
-                  className={ classNames(styles.item, {
-                    [styles.unavailable]: !isSequentiallyPurchasable
+                  key={ itemId } className={ classNames(styles.item, {
+                    [styles.unavailable]: !sequentiallyPurchasable
                   }) }
                 >
-                  <div className={ styles.itemInfo }>
-                    <b className={ styles.itemName }>{ l10n(item.name) }</b>
-                    <span className={ styles.itemCount }>
-                      { ' ' }
-                      Owned: { itemCount }
-                    </span>
-                    <span className={ styles.itemProduction }>
-                      +{ item.unitByTime }/sec
-                    </span>
+                  <div className={ styles.line }>
+                    <h4 className={ styles.title }>{ l10n(item.name) }</h4>
+                    <span className={ styles.count }>{ itemCount }</span>
                   </div>
-                  <div className={ styles.itemPurchase }>
-                    <Button
-                      title='ACTIONS.BUY'
-                      onClick={ () => buyElement(unitId, itemId, 'item') }
-                      disabled={ !canPurchase }
-                    />
-                    <span className={ styles.itemCost }>
-                      { item.cost.value } { item.cost.unitId }
-                    </span>
+                  <div className={ styles.line }>
+                    <span className={ styles.production }>+{ item.unitByTime }/sec</span>
+                    <div className={ styles.purchase }>
+                      <Button
+                        title='ACTIONS.BUY'
+                        onClick={ () => buyElement(unitId, itemId, 'item') }
+                        disabled={ !canPurchase }
+                      />
+                    </div>
                   </div>
                 </div>
               )

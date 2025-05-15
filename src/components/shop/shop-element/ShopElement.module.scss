@@ -1,0 +1,51 @@
+.wrapper {
+  color: var(--color-main);
+  position: relative;
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: rem(10);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-s);
+  box-shadow: 0 rem(2) rem(4) rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+
+  &.unavailable {
+    opacity: 0.6;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: rem(4);
+}
+
+.cardName {
+  font-size: rem(16);
+  margin: 0;
+}
+
+.cardEffect {
+  font-size: rem(12);
+  margin: 0;
+}
+
+.purchaseAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--gap-s);
+}
+
+.cardCost {
+  position: absolute;
+  top: var(--grid-gutter);
+  right: var(--grid-gutter);
+  font-size: rem(12);
+}
