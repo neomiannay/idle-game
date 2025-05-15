@@ -1,10 +1,10 @@
 import React, { memo } from 'react'
 
 import classNames from 'classnames'
-import Shop from 'components/shop/Shop' // Import the new Shop component
-import Meta from 'components/meta/Meta'
-import Header from 'components/header/Header'
-import Sections from 'components/sections/Sections'
+import Shop from 'blocks/shop/Shop' // Import the new Shop component
+import Meta from 'blocks/meta/Meta'
+import Header from 'blocks/header/Header'
+import Sections from 'blocks/sections/Sections'
 import { useIterationContext } from 'provider/IterationProvider'
 import Modal from 'components/modal/Modal'
 

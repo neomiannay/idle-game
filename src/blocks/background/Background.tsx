@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 
-import BangerRive from 'components/banger-rive/BangerRive'
+import BangerRive from 'blocks/banger-rive/BangerRive'
 import { Alignment } from '@rive-app/react-canvas'
 import { Fit, Layout } from 'rive-react'
 

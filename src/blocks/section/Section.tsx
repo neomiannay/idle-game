@@ -8,7 +8,7 @@ import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { useL10n } from 'provider/L10nProvider'
 import HoldButton from 'components/holdButton/HoldButton'
-import AutoSwitch from 'components/autoSwitch/AutoSwitch'
+import AutoSwitch from 'blocks/autoSwitch/AutoSwitch'
 
 import styles from './Section.module.scss'
 

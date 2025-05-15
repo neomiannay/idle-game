@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react'
 
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
-import Section from 'components/section/Section'
+import Section from 'blocks/section/Section'
 
 import styles from './Sections.module.scss'
 
