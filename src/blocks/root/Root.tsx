@@ -7,7 +7,6 @@ import Header from 'blocks/header/Header'
 import Sections from 'blocks/sections/Sections'
 import { useIterationContext } from 'provider/IterationProvider'
 import Modal from 'components/modal/Modal'
-import SearchGame, { SearchGameProps } from 'blocks/search-game/SearchGame'
 
 import searchActifs from 'data/games/search-actifs.json'
 
@@ -51,13 +50,13 @@ function Root ({ className }: RootProps) {
         ) }
       </main>
       { /* <Background /> */ }
-      <SearchGame
+      { /* <SearchGame
         duration={ searchGameData.settings.duration }
         price={ searchGameData.settings.price }
         efficiency={ searchGameData.settings.efficiency }
         layoutInfos={ searchGameData.layout }
         items={ searchGameData.items as SearchGameProps['items'] }
-      />
+      /> */ }
     </>
   )
 }
