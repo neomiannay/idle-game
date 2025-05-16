@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, FC } from 'react'
 import classNames from 'classnames'
 import { useL10n } from 'provider/L10nProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
+import { EGameUnit } from 'types/store'
 
 import styles from './HoldButton.module.scss'
 
@@ -24,8 +25,8 @@ const HoldButton: FC<HoldButtonProps> = ({
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
-  const canBuy = canBuyUnit('complex')
-  const duration = getUnit('complex')?.duration?.get() ?? 5000
+  const canBuy = canBuyUnit(EGameUnit.COMPLEX)
+  const duration = getUnit(EGameUnit.COMPLEX)?.duration?.get() ?? 5000
 
   const handleClick = () => {
     if (isAnimating || !canBuy) return
@@ -48,7 +49,7 @@ const HoldButton: FC<HoldButtonProps> = ({
         setProgress(100)
 
         setTimeout(() => {
-          buyUnit('complex')
+          buyUnit(EGameUnit.COMPLEX)
           setIsAnimating(false)
           setProgress(100)
           setTimeout(() => {

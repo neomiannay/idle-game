@@ -1,0 +1,42 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+  display: flex;
+  gap: rem(8);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+	color: var(--skin-60);
+	font-size: rem(8);
+	font-variation-settings: "wght" 800, "wdth" 100;
+}
+
+.label {
+  font-size: rem(20);
+  font-variation-settings: "wght" 800, "wdth" 60;
+  color: var(--skin-60);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  font-size: rem(10);
+  padding: rem(10);
+  border-radius: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.wrapper:hover .tooltip {
+  opacity: 1;
+}

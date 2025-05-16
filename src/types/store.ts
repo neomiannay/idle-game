@@ -33,6 +33,11 @@ export enum EGameUnit {
   KARMA = 'karma',
 }
 
+export enum EStatus {
+  SUCCESS = 'success',
+  FAIL = 'fail',
+}
+
 export interface GameUnit {
   id: string
   rawValue: UnitMotionValueResult

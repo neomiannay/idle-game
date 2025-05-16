@@ -38,7 +38,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
   const complexUnit = useUnitMotionValue(0)
   const saleUnit = useUnitMotionValue(0)
   const benefitsUnit = useUnitMotionValue(0)
-  const reputationUnit = useUnitMotionValue(0)
+  const reputationUnit = useUnitMotionValue(50)
   const karmaUnit = useUnitMotionValue(0)
 
   // Purchase conditions

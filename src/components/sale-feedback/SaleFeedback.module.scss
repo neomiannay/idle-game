@@ -1,0 +1,42 @@
+.feedback {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: rem(4);
+  border-radius: 8px;
+  font-size: rem(10);
+  font-weight: bold;
+  z-index: 1000;
+  opacity: 0;
+  animation: slideFadeInOut 1.5s ease-out forwards;
+}
+
+.success {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.fail {
+  background-color: #e74c3c;
+  color: white;
+}
+
+@keyframes slideFadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+}

@@ -9,17 +9,22 @@ import useMotionState from 'hooks/useMotionState'
 import { useL10n } from 'provider/L10nProvider'
 import HoldButton from 'components/hold-button/HoldButton'
 import AutoSwitch from 'blocks/auto-switch/AutoSwitch'
+import { EGameUnit, EStatus } from 'types/store'
+import SaleFeedback from 'components/sale-feedback/SaleFeedback'
+import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
 
 import styles from './Section.module.scss'
 
 type SectionProps = {
   className?: string;
-  unitId: string;
+  unitId: EGameUnit;
 };
 
 const Section = ({ className, unitId }: SectionProps) => {
   const l10n = useL10n()
   const [autoMode, setAutoMode] = useState(false)
+  const [feedback, setFeedback] = useState<{ status: EStatus; key: number } | null>(null)
+
   const {
     getUnit,
     canBuyUnit,
@@ -56,22 +61,38 @@ const Section = ({ className, unitId }: SectionProps) => {
   else if (unitId === 'complex') actionName = 'BUTTONS.PRODUCE'
   else if (unitId === 'sale') actionName = 'BUTTONS.SPREAD'
 
-  let unitName = unitId
+  let unitName = unitId.toString()
   if (unitId === 'actif') unitName = 'UNITS.ACTIVE'
   else if (unitId === 'complex') unitName = 'UNITS.COMPLEX'
   else if (unitId === 'sale') unitName = 'UNITS.SALE'
 
-  const handleClick = () => buyUnit(unitId)
+  const handleClick = () => {
+    if (!canBuy) return
+    if (unitId === EGameUnit.SALE) {
+      const reputation = getUnit(EGameUnit.REPUTATION)?.motionValue.get() ?? 0
+      const chance = Math.min(reputation, 100)
+      const roll = Math.random() * 100
+
+      if (roll <= chance) {
+        buyUnit(unitId)
+        setFeedback({ status: EStatus.SUCCESS, key: Date.now() })
+      } else {
+        setFeedback({ status: EStatus.FAIL, key: Date.now() })
+      }
+    } else {
+      buyUnit(unitId)
+    }
+  }
 
   const improveTime = () => {
-    if (!canPurchaseTime(10, 'actif')) return
-    updateUnitDuration('complex')
+    if (!canPurchaseTime(10, EGameUnit.ACTIF)) return
+    updateUnitDuration(EGameUnit.COMPLEX)
   }
 
   const improveValueByAction = (
     newValue: number,
-    unitId: string,
-    requiredUnitId: string
+    unitId: EGameUnit,
+    requiredUnitId: EGameUnit
   ) => {
     if (!canPurchaseQuantity(newValue, requiredUnitId)) return
     updateValueByAction(unitId)
@@ -118,7 +139,7 @@ const Section = ({ className, unitId }: SectionProps) => {
     return rawValue >= unitsNeeded
   }
 
-  const canPurchaseTime = (unitsNeeded: number, unitId: string) => {
+  const canPurchaseTime = (unitsNeeded: number, unitId: EGameUnit) => {
     if (duration <= 500) return false
     const unit = getUnit(unitId)
     if (!unit) return false
@@ -126,7 +147,7 @@ const Section = ({ className, unitId }: SectionProps) => {
     return checkPurchaseRequirement(unitsNeeded, unit.rawValue.get())
   }
 
-  const canPurchaseQuantity = (unitsNeeded: number, requiredUnitId: string) => {
+  const canPurchaseQuantity = (unitsNeeded: number, requiredUnitId: EGameUnit) => {
     const unit = getUnit(requiredUnitId)
     if (!unit) return false
 
@@ -156,7 +177,7 @@ const Section = ({ className, unitId }: SectionProps) => {
               </div>
               <button
                 className={ classNames(styles.improvePerf, {
-                  [styles.disabled]: !canPurchaseTime(10, 'actif')
+                  [styles.disabled]: !canPurchaseTime(10, EGameUnit.ACTIF)
                 }) }
                 onClick={ improveTime }
               >
@@ -173,9 +194,9 @@ const Section = ({ className, unitId }: SectionProps) => {
               </div>
               <button
                 className={ classNames(styles.improvePerf, {
-                  [styles.disabled]: !canPurchaseQuantity(10, 'actif')
+                  [styles.disabled]: !canPurchaseQuantity(10, EGameUnit.ACTIF)
                 }) }
-                onClick={ () => improveValueByAction(10, 'complex', 'actif') }
+                onClick={ () => improveValueByAction(10, EGameUnit.COMPLEX, EGameUnit.ACTIF) }
               >
                 <p>+1</p>
                 <p>
@@ -186,7 +207,20 @@ const Section = ({ className, unitId }: SectionProps) => {
           </div>
         </>
       ) : (
-        <Button title={ actionName } onClick={ handleClick } disabled={ !canBuy } />
+        <div className={ styles.buttonContainer }>
+          <Button title={ actionName } onClick={ handleClick } disabled={ !canBuy } />
+          { feedback && (
+            <SaleFeedback
+              key={ feedback.key }
+              status={ feedback.status }
+              onDone={ () => setFeedback(null) }
+            />
+          ) }
+        </div>
+      ) }
+
+      { unitId === 'sale' && (
+        <ReputationIndicator />
       ) }
 
       { /* Purchased Upgrades Display */ }
