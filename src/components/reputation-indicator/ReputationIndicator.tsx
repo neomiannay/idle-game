@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
+import useMotionState from 'hooks/useMotionState'
 
 import styles from './ReputationIndicator.module.scss'
 
@@ -15,7 +16,9 @@ const getReputationLabel = (value: number) => {
 
 const ReputationIndicator = () => {
   const { getUnit } = useGameProviderContext()
-  const reputationValue = getUnit(EGameUnit.REPUTATION)?.motionValue.get() ?? 0
+  const reputation = getUnit(EGameUnit.REPUTATION)
+  if (!reputation) return null
+  const reputationValue = useMotionState(reputation.motionValue, (value) => value)
   const clampedValue = Math.min(reputationValue, 100)
   const label = getReputationLabel(clampedValue)
 

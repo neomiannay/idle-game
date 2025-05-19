@@ -18,7 +18,10 @@
   "ITEMS": {
     "FRIEND": "Ami",
     "TRAINEE": "Stagiaire",
-    "APPRENTICE": "Apprenti"
+    "APPRENTICE": "Apprenti",
+    "SELLER1": "Vendeur basique",
+    "SELLER3": "Vendeur qualifié",
+    "SELLER2": "Vendeur senior"
   },
   "ACTIONS": {
     "BUY": "Acheter"

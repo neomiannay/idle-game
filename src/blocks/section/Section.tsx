@@ -12,6 +12,7 @@ import AutoSwitch from 'blocks/auto-switch/AutoSwitch'
 import { EGameUnit, EStatus } from 'types/store'
 import SaleFeedback from 'components/sale-feedback/SaleFeedback'
 import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
+import { useFeedbackContext } from 'provider/FeedbackProvider'
 
 import styles from './Section.module.scss'
 
@@ -23,7 +24,7 @@ type SectionProps = {
 const Section = ({ className, unitId }: SectionProps) => {
   const l10n = useL10n()
   const [autoMode, setAutoMode] = useState(false)
-  const [feedback, setFeedback] = useState<{ status: EStatus; key: number } | null>(null)
+  const { feedback, setFeedback, triggerFeedback } = useFeedbackContext()
 
   const {
     getUnit,
@@ -73,12 +74,10 @@ const Section = ({ className, unitId }: SectionProps) => {
       const chance = Math.min(reputation, 100)
       const roll = Math.random() * 100
 
-      if (roll <= chance) {
+      if (roll <= chance)
         buyUnit(unitId)
-        setFeedback({ status: EStatus.SUCCESS, key: Date.now() })
-      } else {
-        setFeedback({ status: EStatus.FAIL, key: Date.now() })
-      }
+      else
+        triggerFeedback(EStatus.FAIL)
     } else {
       buyUnit(unitId)
     }
@@ -90,12 +89,18 @@ const Section = ({ className, unitId }: SectionProps) => {
   }
 
   const improveValueByAction = (
-    newValue: number,
+    unitsNeeded: number,
     unitId: EGameUnit,
     requiredUnitId: EGameUnit
   ) => {
-    if (!canPurchaseQuantity(newValue, requiredUnitId)) return
-    updateValueByAction(unitId)
+    if (!canPurchaseQuantity(unitsNeeded, requiredUnitId)) return
+    const unit = getUnit(unitId)
+    if (!unit) return
+    const unitValue = unit.valueByAction
+    if (!unitValue) return
+    const currentValue = unitValue.get()
+    const newValue = currentValue + 1
+    updateValueByAction(unitId, newValue)
   }
 
   // Function to check if previous item has been purchased
@@ -166,7 +171,7 @@ const Section = ({ className, unitId }: SectionProps) => {
           ) }
         </div>
       </div>
-      { unitId === 'complex' ? (
+      { unitId === EGameUnit.COMPLEX ? (
         <>
           <HoldButton label='BUTTONS.PRODUCE' autoMode={ autoMode } />
           <div className={ styles.perfWrapper }>
@@ -209,7 +214,7 @@ const Section = ({ className, unitId }: SectionProps) => {
       ) : (
         <div className={ styles.buttonContainer }>
           <Button title={ actionName } onClick={ handleClick } disabled={ !canBuy } />
-          { feedback && (
+          { unitId === EGameUnit.SALE && feedback && (
             <SaleFeedback
               key={ feedback.key }
               status={ feedback.status }
@@ -219,7 +224,7 @@ const Section = ({ className, unitId }: SectionProps) => {
         </div>
       ) }
 
-      { unitId === 'sale' && (
+      { unitId === EGameUnit.SALE && (
         <ReputationIndicator />
       ) }
 

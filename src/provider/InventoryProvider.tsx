@@ -41,7 +41,7 @@ export const InventoryContext = createContext<InventoryType | null>(null)
 let context: InventoryType
 
 export const InventoryProvider = ({ children }: BaseProviderProps) => {
-  const { getUnit, setUnitMultiplierGetter } = useGameProviderContext()
+  const { getUnit, setUnitMultiplierGetter, updateValueByAction } = useGameProviderContext()
 
   const items: Record<string, Record<string, ItemType>> = {}
   Object.entries(itemsData.items).forEach(([unitId, unitItems]) => {
@@ -196,6 +196,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
 
   const setUpgradePurchased = (unitId: EGameUnit, upgradeId: string): void => {
     if (upgrades[unitId]?.[upgradeId]) {
+      updateValueByAction(unitId, upgrades[unitId][upgradeId].valueByAction)
       upgrades[unitId][upgradeId].count.set(1)
       upgrades[unitId][upgradeId].purchased.set(true)
     }

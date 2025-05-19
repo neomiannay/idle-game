@@ -48,6 +48,7 @@ export interface GameUnit {
   costUnitId?: EGameUnit
   costAmount?: number
   duration?: MotionValue<number>
+  rawValueByAction?: UnitMotionValueResult
   valueByAction?: MotionValue<number>
 }
 export interface GamePrice {

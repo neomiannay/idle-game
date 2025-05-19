@@ -1,7 +1,7 @@
 import React from 'react'
 
 import classNames from 'classnames'
-import { ElementType, ItemType, UpgradeType } from 'types/store'
+import { EGameUnit, ElementType, ItemType, UpgradeType } from 'types/store'
 import { useSequentialPurchaseState } from 'hooks/useSequentialPurchase'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { useL10n } from 'provider/L10nProvider'
@@ -14,7 +14,7 @@ import styles from './ShopElement.module.scss'
 type ShopElementProps = {
   elementId: string
   element: ItemType | UpgradeType
-  unitId: string
+  unitId: EGameUnit
   type: ElementType
 }
 

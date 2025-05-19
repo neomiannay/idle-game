@@ -46,6 +46,53 @@
           "value": 40
         }
       }
+    ],
+    "sale": [
+      {
+        "_type": "item",
+        "_id": "vendeur1",
+        "unitId": "sale",
+        "name": "ITEMS.SELLER1",
+        "unitByTime": 1,
+        "apparitionCondition": {
+          "unitId": "sale",
+          "value": 5
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 100
+        }
+      },
+      {
+        "_type": "item",
+        "_id": "vendeur2",
+        "unitId": "sale",
+        "name": "ITEMS.SELLER2",
+        "unitByTime": 5,
+        "apparitionCondition": {
+          "unitId": "sale",
+          "value": 10
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 2000
+        }
+      },
+      {
+        "_type": "item",
+        "_id": "vendeur3",
+        "unitId": "sale",
+        "name": "ITEMS.SELLER3",
+        "unitByTime": 10,
+        "apparitionCondition": {
+          "unitId": "sale",
+          "value": 20
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 4000
+        }
+      }
     ]
   }
 }

@@ -25,7 +25,7 @@ const SaleFeedback = ({ status, onDone }: SaleFeedbackProps) => {
 
   return (
     <div className={ `${styles.feedback} ${styles[status]}` }>
-      { status === EStatus.SUCCESS ? '✅ Succès !' : '❌ Échec' }
+      { status === EStatus.SUCCESS ? '✅ Vendu !' : '❌ Raté' }
     </div>
   )
 }

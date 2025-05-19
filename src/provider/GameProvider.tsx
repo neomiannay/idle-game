@@ -2,11 +2,12 @@ import React, { createContext, useContext, useCallback, useState } from 'react'
 
 import { MotionValue } from 'motion/react'
 import useMotionState from 'hooks/useMotionState'
-import { EGamePrice, EGameUnit, GameUnit } from 'types/store'
+import { EGamePrice, EGameUnit, EStatus, GameUnit } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { usePricesContext } from './PricesProvider'
+import { useFeedbackContext } from './FeedbackProvider'
 
 export type UnitMultiplierGetter = (unitId: EGameUnit) => number;
 
@@ -22,7 +23,7 @@ type GameProviderType = {
   setUnitMultiplierGetter: (getter: UnitMultiplierGetter) => void
   updateDisplayConditions: () => void
   updateUnitDuration: (unitId: EGameUnit) => void
-  updateValueByAction: (unitId: EGameUnit) => void
+  updateValueByAction: (unitId: EGameUnit, newValue: number) => void
   modifyUnitValue: (unitId: EGameUnit, value: number) => boolean | void
 }
 
@@ -32,6 +33,7 @@ let currentUnitMultiplierGetter: UnitMultiplierGetter = defaultUnitMultiplier
 
 export function GameProvider ({ children }: BaseProviderProps) {
   const { getPrice } = usePricesContext()
+  const { triggerFeedback } = useFeedbackContext()
 
   // Initialize motion values for units
   const actifUnit = useUnitMotionValue(0)
@@ -53,16 +55,15 @@ export function GameProvider ({ children }: BaseProviderProps) {
   const [displayComplex, setDisplayComplex] = useState(false)
   const [displaySale, setDisplaySale] = useState(false)
   const [displayBenefits, setDisplayBenefits] = useState(false)
-  const [displayReputation, setDisplayReputation] = useState(false)
 
   const complexDuration = useUnitMotionValue(5000)
-  const valueByAction = useUnitMotionValue(1)
+  const actifValueByAction = useUnitMotionValue(1)
+  const complexValueByAction = useUnitMotionValue(1)
 
   const updateDisplayConditions = useCallback(() => {
     setDisplayComplex(actifUnit.getTotal() >= 100)
     setDisplaySale(complexUnit.getTotal() >= 5)
     setDisplayBenefits(saleUnit.getTotal() > 0)
-    setDisplayReputation(reputationUnit.getTotal() > 0)
   }, [actifUnit, complexUnit, saleUnit, reputationUnit])
 
   // Define the units
@@ -73,7 +74,9 @@ export function GameProvider ({ children }: BaseProviderProps) {
       motionValue: actifUnit.value,
       totalMotionValue: actifUnit.total,
       displayCondition: canDisplayActif,
-      purchaseCondition: canBuyActif
+      purchaseCondition: canBuyActif,
+      rawValueByAction: actifValueByAction,
+      valueByAction: actifValueByAction.value
     },
     [EGameUnit.COMPLEX]: {
       id: EGameUnit.COMPLEX,
@@ -85,7 +88,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
       costUnitId: EGameUnit.ACTIF,
       costAmount: 10,
       duration: complexDuration.value,
-      valueByAction: valueByAction.value
+      rawValueByAction: complexValueByAction,
+      valueByAction: complexValueByAction.value
     },
     [EGameUnit.SALE]: {
       id: EGameUnit.SALE,
@@ -110,7 +114,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
       rawValue: reputationUnit,
       motionValue: reputationUnit.value,
       totalMotionValue: reputationUnit.total,
-      displayCondition: displayReputation,
+      displayCondition: true,
       purchaseCondition: canBuyWithReputation
     },
     [EGameUnit.KARMA]: {
@@ -143,6 +147,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
 
   const canBuyUnit = useCallback((unitId: EGameUnit): boolean => {
     const unit = getUnit(unitId)
+
     return unit ? unit.purchaseCondition : false
   }, [getUnit])
 
@@ -151,22 +156,38 @@ export function GameProvider ({ children }: BaseProviderProps) {
     if (!unit) return
 
     // If the unit has a cost, subtract it
-    if (unit.costUnitId && unit.costAmount) {
+    if (unit.costUnitId && unit.costAmount && unitId === EGameUnit.COMPLEX) {
       const costUnit = getUnit(unit.costUnitId)
       if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
     }
 
-    let multiplier = currentUnitMultiplierGetter(unitId)
-
-    if (unit.id === 'complex' && unit.valueByAction)
+    let multiplier = 1
+    if (unit.valueByAction)
       multiplier = unit.valueByAction.get()
 
-    unit.rawValue.add(1 * multiplier)
-    if (unit.id === 'sale') {
+    if (unit.id !== EGameUnit.SALE)
+      unit.rawValue.add(1 * multiplier)
+
+    if (unit.id === EGameUnit.SALE) {
       const benefitsUnit = getUnit(EGameUnit.BENEFITS)
       const productionCost = getPrice(EGamePrice.PRODUCTION).motionValue.get()
       const sellingCost = getPrice(EGamePrice.SELLING).motionValue.get()
-      benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
+
+      const reputation = getUnit(EGameUnit.REPUTATION)?.motionValue.get() ?? 0
+      const roll = Math.random() * 100
+      if (roll <= reputation) {
+        // If the unit has a cost, subtract it
+        if (unit.costUnitId && unit.costAmount) {
+          const costUnit = getUnit(unit.costUnitId)
+          if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+        }
+
+        triggerFeedback(EStatus.SUCCESS)
+        benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
+        unit.rawValue.add(1 * multiplier)
+      } else {
+        triggerFeedback(EStatus.FAIL)
+      }
     }
   }, [getUnit, getPrice])
 
@@ -202,15 +223,15 @@ export function GameProvider ({ children }: BaseProviderProps) {
     }
   }, [])
 
-  const updateValueByAction = useCallback((unitId: EGameUnit) => {
+  const updateValueByAction = useCallback((unitId: EGameUnit, newValue: number) => {
     const unit = getUnit(unitId)
 
-    if (unit && unitId === 'complex') {
-      if (unit.costUnitId && unit.costAmount) {
+    if (unit && unit.valueByAction) {
+      if (unitId === EGameUnit.COMPLEX && unit.costUnitId && unit.costAmount) {
         const costUnit = getUnit(unit.costUnitId)
         if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
       }
-      valueByAction.add(1)
+      unit.valueByAction.set(newValue)
     }
   }, [])
 

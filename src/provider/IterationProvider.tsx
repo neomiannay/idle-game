@@ -3,8 +3,7 @@ import React, { createContext, useContext, useCallback, useState, useMemo, useEf
 import { useGameLoop } from 'hooks/useGameLoop'
 import { useGamePersistence } from 'hooks/useGamePersistence'
 import { floor } from 'lodash-es'
-import { GameState, GameStateElement, GameStatePrice, GameStateUnit } from 'types/store'
-import useTinyEmitter from 'hooks/useTinyEmitter'
+import { EGamePrice, EGameUnit, GameState, GameStateElement, GameStatePrice, GameStateUnit } from 'types/store'
 
 import { useMessageSystemContext } from './MessageSystemProvider'
 import { BaseProviderProps } from './GlobalProvider'
@@ -23,9 +22,9 @@ const IterationContext = createContext<IterationContextType | null>(null)
 
 export function IterationProvider ({ children }: BaseProviderProps) {
   const [loading, setLoading] = useState(true)
-  const emitter = useTinyEmitter()
+  // const emitter = useTinyEmitter()
 
-  const { units, getUnit, updateDisplayConditions } = useGameProviderContext()
+  const { units, getUnit, updateDisplayConditions, buyUnit } = useGameProviderContext()
   const { getItemProduction, getElementsForUnit, loadElements } = useInventoryContext()
   const { prices } = usePricesContext()
   const { seenMessages, loadMessages, setSeenMessagesLoaded } = useMessageSystemContext()
@@ -33,10 +32,10 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   // Fonction pour traiter un tick de jeu (production d'items)
   const processTick = useCallback((deltaTimeInSeconds: number) => {
     Object.keys(units).forEach(unitId => {
-      const unitMotionValue = getUnit(unitId)?.motionValue
+      const unitMotionValue = getUnit(unitId as EGameUnit)?.motionValue
       if (!unitMotionValue) return
 
-      const productionPerSecond = getItemProduction(unitId)
+      const productionPerSecond = getItemProduction(unitId as EGameUnit)
 
       // Mettre à jour uniquement s'il y a une production
       if (productionPerSecond > 0) {
@@ -45,12 +44,15 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         const currentValue = unitMotionValue.get()
         const newValue = floor(currentValue + production, 0)
 
-        unitMotionValue.set(newValue)
+        if (unitId === EGameUnit.SALE)
+          for (let i = 0; i < production; i++) buyUnit(EGameUnit.SALE)
+        else
+          unitMotionValue.set(newValue)
       }
 
-      const motionValue = unitMotionValue.get()
-
-      emitter.emit('unitUpdated', { unitId, motionValue })
+      // Emitter pour la modale
+      // const motionValue = unitMotionValue.get()
+      // emitter.emit('unitUpdated', { unitId, motionValue })
     })
   }, [units, getUnit, getItemProduction])
 
@@ -79,7 +81,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         return acc
       }, {} as GameState['units']),
       upgrades: Object.keys(units).reduce((acc, unitId) => {
-        const unitUpgrades = getElementsForUnit(unitId, 'upgrade')
+        const unitUpgrades = getElementsForUnit(unitId as EGameUnit, 'upgrade')
         if (Object.keys(unitUpgrades).length > 0) {
           acc[unitId] = {}
           Object.entries(unitUpgrades).forEach(([upgradeId, upgrade]) => {
@@ -94,7 +96,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         return acc
       }, {} as Record<string, Record<string, GameStateElement>>),
       items: Object.keys(units).reduce((acc, unitId) => {
-        const unitItems = getElementsForUnit(unitId, 'item')
+        const unitItems = getElementsForUnit(unitId as EGameUnit, 'item')
         if (Object.keys(unitItems).length > 0) {
           acc[unitId] = {}
           Object.entries(unitItems).forEach(([itemId, item]) => {
@@ -123,7 +125,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const handleLoadState = useCallback((gameState: GameState) => {
     // Charger les unités
     Object.entries(gameState.units || {}).forEach(([unitId, value]) => {
-      const unit = getUnit(unitId)
+      const unit = getUnit(unitId as EGameUnit)
       if (unit) {
         // Vérifier si la valeur est un objet avec motionValue et totalMotionValue
         if (typeof value === 'object' && value !== null && 'motionValue' in value && 'totalMotionValue' in value) {
@@ -165,10 +167,10 @@ export function IterationProvider ({ children }: BaseProviderProps) {
 
     // Charger les prix
     if (gameState.prices) {
-      Object.entries(gameState.prices as Record<string, GameStatePrice>).forEach(([priceId, priceData]) => {
-        if (prices[priceId]) {
-          prices[priceId].motionValue.set(priceData.motionValue)
-          prices[priceId].totalMotionValue.set(priceData.totalMotionValue)
+      Object.entries(gameState.prices as Record<EGamePrice, GameStatePrice>).forEach(([priceId, priceData]) => {
+        if (prices[priceId as EGamePrice]) {
+          prices[priceId as EGamePrice].motionValue.set(priceData.motionValue)
+          prices[priceId as EGamePrice].totalMotionValue.set(priceData.totalMotionValue)
         }
       })
     }

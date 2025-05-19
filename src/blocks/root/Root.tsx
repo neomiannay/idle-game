@@ -6,7 +6,6 @@ import Meta from 'blocks/meta/Meta'
 import Header from 'blocks/header/Header'
 import Sections from 'blocks/sections/Sections'
 import { useIterationContext } from 'provider/IterationProvider'
-import Modal from 'components/modal/Modal'
 
 import searchActifs from 'data/games/search-actifs.json'
 
@@ -45,7 +44,6 @@ function Root ({ className }: RootProps) {
             </button>
 
             <Shop />
-            <Modal />
           </>
         ) }
       </main>
