@@ -59,8 +59,6 @@ export function IterationProvider ({ children }: BaseProviderProps) {
               triggerFeedback(EStatus.FAIL)
               setFailCount((prev: number) => prev + 1)
             }
-
-            console.log('Réussi: ', successCount, 'Échoué:', failCount)
           }
         } else { unitMotionValue.set(newValue) }
       }

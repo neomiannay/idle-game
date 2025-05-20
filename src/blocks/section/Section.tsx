@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 
 import classNames from 'classnames'
 import Count from 'components/count/Count'
@@ -7,14 +7,14 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { useL10n } from 'provider/L10nProvider'
-import HoldButton from 'components/hold-button/HoldButton'
-import AutoSwitch from 'blocks/auto-switch/AutoSwitch'
 import { EGameUnit, EStatus } from 'types/store'
 import SaleFeedback from 'components/sale-feedback/SaleFeedback'
 import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
 import { useFeedbackContext } from 'provider/FeedbackProvider'
+import ComplexSection from 'blocks/section/complex-section/ComplexSection'
 
 import styles from './Section.module.scss'
+import Items from './items/Items'
 
 type SectionProps = {
   className?: string;
@@ -23,29 +23,10 @@ type SectionProps = {
 
 const Section = ({ className, unitId }: SectionProps) => {
   const l10n = useL10n()
-  const [autoMode, setAutoMode] = useState(false)
   const { feedback, setFeedback, triggerFeedback, setSuccessCount, setFailCount } = useFeedbackContext()
 
-  const {
-    getUnit,
-    canBuyUnit,
-    buyUnit,
-    updateUnitDuration,
-    updateValueByAction,
-    isSaleSuccessful,
-    hasEnoughUnits
-  } = useGameProviderContext()
-  const {
-    getElementsForUnit,
-    getItemCount,
-    getUpgradeCount,
-    getItemPurchased,
-    getUpgradePurchased,
-    canBuyElement,
-    buyElement,
-    getItemProduction,
-    getUnitMultiplier
-  } = useInventoryContext()
+  const { getUnit, canBuyUnit, buyUnit, isSaleSuccessful } = useGameProviderContext()
+  const { getElementsForUnit, getUpgradePurchased, getItemProduction } = useInventoryContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null
@@ -53,21 +34,16 @@ const Section = ({ className, unitId }: SectionProps) => {
   const count = useMotionState(unit.motionValue, (value) => value)
   const canBuy = canBuyUnit(unitId)
 
-  const items = getElementsForUnit(unitId, 'item')
   const upgrades = getElementsForUnit(unitId, 'upgrade')
 
   const productionPerSecond = getItemProduction(unitId)
-  const unitMultiplier = getUnitMultiplier(unitId)
 
   let actionName = 'Buy'
-  if (unitId === 'actif') actionName = 'BUTTONS.ACTIVATE'
-  else if (unitId === 'complex') actionName = 'BUTTONS.PRODUCE'
-  else if (unitId === 'sale') actionName = 'BUTTONS.SPREAD'
+  if (unitId === EGameUnit.ACTIF) actionName = 'BUTTONS.ACTIVATE'
+  else if (unitId === EGameUnit.COMPLEX) actionName = 'BUTTONS.PRODUCE'
+  else if (unitId === EGameUnit.SALE) actionName = 'BUTTONS.SPREAD'
 
-  let unitName = unitId.toString()
-  if (unitId === 'actif') unitName = 'UNITS.ACTIVE'
-  else if (unitId === 'complex') unitName = 'UNITS.COMPLEX'
-  else if (unitId === 'sale') unitName = 'UNITS.SALE'
+  const unitName = `UNITS.${unitId.toString().toUpperCase()}`
 
   const handleClick = () => {
     if (!canBuy) return
@@ -87,73 +63,11 @@ const Section = ({ className, unitId }: SectionProps) => {
     }
   }
 
-  const improveTime = () => {
-    if (!canPurchaseTime(10, EGameUnit.ACTIF)) return
-    updateUnitDuration(EGameUnit.COMPLEX)
-  }
-
-  const improveValueByAction = (
-    unitsNeeded: number,
-    unitId: EGameUnit,
-    requiredUnitId: EGameUnit
-  ) => {
-    if (!hasEnoughUnits(unitsNeeded, requiredUnitId)) return
-    const unit = getUnit(unitId)
-    if (!unit) return
-    const unitValue = unit.valueByAction
-    if (!unitValue) return
-    const currentValue = unitValue.get()
-    const newValue = currentValue + 1
-    updateValueByAction(unitId, newValue)
-  }
-
-  // Function to check if previous item has been purchased
-  const canPurchaseItemSequentially = (itemId: string) => {
-    const itemIds = Object.keys(items)
-    const currentIndex = itemIds.indexOf(itemId)
-
-    if (currentIndex === 0) return true // first item so always purchasable
-
-    // Otherwise, check if previous item is purchased
-    if (currentIndex > 0) {
-      const previousItemId = itemIds[currentIndex - 1]
-      return getItemCount(unitId, previousItemId) > 0
-    }
-
-    return false
-  }
-
-  let costText = ''
-  if (unit.costAmount && unit.costAmount > 0 && unit.costUnitId)
-    costText = `${unit.costAmount} (${unit.costUnitId})`
-
-  const formattedCount = count
-
-  let formattedSeconds = ''
-  let duration = 0
-  const complexDuration = unit.duration
-  if (complexDuration && unitId === 'complex') {
-    duration = useMotionState(complexDuration, (v) => v)
-
-    const seconds = duration / 1000
-    formattedSeconds = seconds.toFixed(1)
-  }
-
-  let quantity = 1
-  const valueByAction = unit.valueByAction
-  if (valueByAction && unitId === 'complex')
-    quantity = useMotionState(valueByAction, (value) => value)
-
-  const canPurchaseTime = (unitsNeeded: number, unitId: EGameUnit) => {
-    if (duration <= 500) return false
-    return hasEnoughUnits(unitsNeeded, unitId)
-  }
-
   return (
     <div className={ classNames(styles.wrapper, className) }>
       <div className={ styles.stepWrapper }>
         <div className={ styles.stepCounter }>
-          <Count unit={ unitName } count={ formattedCount } />
+          <Count unit={ unitName } count={ count } />
           { productionPerSecond > 0 && (
             <span className={ styles.production }>
               [{ productionPerSecond.toFixed(1) }/s]
@@ -162,45 +76,7 @@ const Section = ({ className, unitId }: SectionProps) => {
         </div>
       </div>
       { unitId === EGameUnit.COMPLEX ? (
-        <>
-          <HoldButton label='BUTTONS.PRODUCE' autoMode={ autoMode } />
-          <div className={ styles.perfWrapper }>
-            <div className={ styles.perf }>
-              <div className={ styles.perfBox }>
-                <p className={ styles.perfTitle }>Durée d'exécution</p>
-                <span className={ styles.perfValue }>{ formattedSeconds } s</span>
-              </div>
-              <button
-                className={ classNames(styles.improvePerf, {
-                  [styles.disabled]: !canPurchaseTime(10, EGameUnit.ACTIF)
-                }) }
-                onClick={ improveTime }
-              >
-                <p>-0.5 s</p>
-                <p>
-                  { unit.costAmount } <span>({ unit.costUnitId })</span>
-                </p>
-              </button>
-            </div>
-            <div className={ styles.perf }>
-              <div className={ styles.perfBox }>
-                <p className={ styles.perfTitle }>Quantité exécutée</p>
-                <span className={ styles.perfValue }>{ quantity }</span>
-              </div>
-              <button
-                className={ classNames(styles.improvePerf, {
-                  [styles.disabled]: !hasEnoughUnits(10, EGameUnit.ACTIF)
-                }) }
-                onClick={ () => improveValueByAction(10, EGameUnit.COMPLEX, EGameUnit.ACTIF) }
-              >
-                <p>+1</p>
-                <p>
-                  { unit.costAmount } <span>({ unit.costUnitId })</span>
-                </p>
-              </button>
-            </div>
-          </div>
-        </>
+        <ComplexSection unitId={ EGameUnit.COMPLEX } />
       ) : (
         <div className={ styles.buttonContainer }>
           <Button title={ actionName } onClick={ handleClick } disabled={ !canBuy } />
@@ -247,51 +123,7 @@ const Section = ({ className, unitId }: SectionProps) => {
         </div>
       ) }
 
-      { /* Items section */ }
-      { Object.keys(items).length > 0 && (
-        <div className={ styles.itemsSection }>
-          <h3 className={ styles.itemsTitle }>Items list</h3>
-          <div className={ styles.itemsList }>
-            { Object.entries(items).map(([itemId, item]) => {
-              const isPurchased = getItemPurchased(unitId, itemId)
-              const sequentiallyPurchasable = canPurchaseItemSequentially(itemId)
-              const itemCount = getItemCount(unitId, itemId)
-              const canPurchase = canBuyElement(unitId, itemId, 'item') && sequentiallyPurchasable
-
-              // console.log(isPurchased)
-
-              if (!isPurchased) return null
-
-              return (
-                <div
-                  key={ itemId } className={ classNames(styles.item, {
-                    [styles.unavailable]: !sequentiallyPurchasable
-                  }) }
-                >
-                  <div className={ styles.line }>
-                    <h4 className={ styles.title }>{ l10n(item.name) }</h4>
-                    <span className={ styles.count }>{ itemCount }</span>
-                  </div>
-                  <div className={ styles.line }>
-                    <span className={ styles.production }>+{ item.unitByTime }/sec</span>
-                    <div className={ styles.purchase }>
-                      <Button
-                        title='ACTIONS.BUY'
-                        onClick={ () => buyElement(unitId, itemId, 'item') }
-                        disabled={ !canPurchase }
-                      />
-                    </div>
-                  </div>
-                </div>
-              )
-            }) }
-          </div>
-        </div>
-      ) }
-
-      { unitId === 'complex' && (
-        <AutoSwitch value={ autoMode } onToggle={ () => setAutoMode(prev => !prev) } />
-      ) }
+      <Items unitId={ unitId } />
     </div>
   )
 }
