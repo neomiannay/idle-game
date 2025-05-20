@@ -2,29 +2,25 @@ import React, { PropsWithChildren } from 'react'
 
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
-import Section from 'blocks/section/Section'
 import { EGameUnit } from 'types/store'
 
 import styles from './Sections.module.scss'
+import ActifSection from './actif-section/ActifSection'
+import ComplexSection from './complex-section/ComplexSection'
+import SaleSection from './sale-section/SaleSection'
 
 type SectionsProps = PropsWithChildren<{
   className?: string
 }>
 
 const Sections = ({ className, ...props } : SectionsProps) => {
-  const { canDisplayUnit, units } = useGameProviderContext()
-
-  const unitIds = Object.keys(units).filter(
-    (unitId) => unitId !== EGameUnit.BENEFITS && unitId !== EGameUnit.REPUTATION
-  ) as EGameUnit[]
+  const { canDisplayUnit } = useGameProviderContext()
 
   return (
     <div className={ classNames(styles.wrapper, className) } { ...props }>
-      { unitIds.map((unitId) => (
-        canDisplayUnit(unitId) && (
-          <Section key={ unitId } unitId={ unitId } />
-        )
-      )) }
+      { canDisplayUnit(EGameUnit.ACTIF) && (<ActifSection />) }
+      { canDisplayUnit(EGameUnit.COMPLEX) && (<ComplexSection />) }
+      { canDisplayUnit(EGameUnit.SALE) && (<SaleSection />) }
     </div>
   )
 }

@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(32);
+  width: grid(3, 0);
+}
+
+.disabled {
+  color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
+.stepWrapper {
+  display: flex;
+}
+
+.stepCounter {
+  border: 1px solid purple;
+  display: flex;
+  flex-direction: column;
+  padding: var(--grid-gutter);
+}
+
+.production {
+  @include apply(count-production);
+  margin: 0 auto;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8);
+
+  & .line {
+    border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .title {
+    text-transform: uppercase;
+  }
+
+  & .count {
+    color: red;
+  }
+}
+
+.buttonContainer {
+  position: relative;
+}

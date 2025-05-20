@@ -6,6 +6,7 @@ import { EGameUnit } from 'types/store'
 import HoldButton from 'components/hold-button/HoldButton'
 import AutoSwitch from 'blocks/auto-switch/AutoSwitch'
 import useMotionState from 'hooks/useMotionState'
+import Count from 'components/count/Count'
 
 import styles from './ComplexSection.module.scss'
 
@@ -18,8 +19,12 @@ const ComplexSection = ({ className }: ComplexSectionProps) => {
 
   const [autoMode, setAutoMode] = useState(false)
 
-  const unit = getUnit(EGameUnit.COMPLEX)
+  const unitId = EGameUnit.COMPLEX
+
+  const unit = getUnit(unitId)
   if (!unit) return null
+
+  const count = useMotionState(unit.motionValue, (value) => value)
 
   let formattedSeconds = ''
   let duration = 0
@@ -63,6 +68,11 @@ const ComplexSection = ({ className }: ComplexSectionProps) => {
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
+      <div className={ styles.stepWrapper }>
+        <div className={ styles.stepCounter }>
+          <Count unit={ `UNITS.${unitId.toString().toUpperCase()}` } count={ count } />
+        </div>
+      </div>
       <HoldButton label='BUTTONS.PRODUCE' autoMode={ autoMode } />
       <div className={ styles.perfWrapper }>
         <div className={ styles.perf }>
