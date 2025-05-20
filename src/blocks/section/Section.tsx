@@ -24,7 +24,7 @@ type SectionProps = {
 const Section = ({ className, unitId }: SectionProps) => {
   const l10n = useL10n()
   const [autoMode, setAutoMode] = useState(false)
-  const { feedback, setFeedback, triggerFeedback } = useFeedbackContext()
+  const { feedback, setFeedback, triggerFeedback, setSuccessCount, setFailCount } = useFeedbackContext()
 
   const {
     getUnit,
@@ -75,7 +75,13 @@ const Section = ({ className, unitId }: SectionProps) => {
       if (isSaleSuccessful()) {
         buyUnit(unitId)
         triggerFeedback(EStatus.SUCCESS)
-      } else { triggerFeedback(EStatus.FAIL) }
+        setSuccessCount(1)
+        setFailCount(0)
+      } else {
+        triggerFeedback(EStatus.FAIL)
+        setSuccessCount(0)
+        setFailCount(1)
+      }
     } else {
       buyUnit(unitId)
     }
@@ -202,7 +208,11 @@ const Section = ({ className, unitId }: SectionProps) => {
             <SaleFeedback
               key={ feedback.key }
               status={ feedback.status }
-              onDone={ () => setFeedback(null) }
+              onDone={ () => {
+                setSuccessCount(0)
+                setFailCount(0)
+                setFeedback(null)
+              } }
             />
           ) }
         </div>

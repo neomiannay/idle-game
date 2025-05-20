@@ -29,7 +29,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const { getItemProduction, getElementsForUnit, loadElements } = useInventoryContext()
   const { prices } = usePricesContext()
   const { seenMessages, loadMessages, setSeenMessagesLoaded } = useMessageSystemContext()
-  const { triggerFeedback } = useFeedbackContext()
+  const { triggerFeedback, successCount, setSuccessCount, failCount, setFailCount } = useFeedbackContext()
 
   // Fonction pour traiter un tick de jeu (production d'items)
   const processTick = useCallback((deltaTimeInSeconds: number) => {
@@ -47,18 +47,17 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         const newValue = floor(currentValue + production, 0)
 
         if (unitId === EGameUnit.SALE) {
-          let successCount = 0
-          let failCount = 0
-
+          setSuccessCount(0)
+          setFailCount(0)
           for (let i = 0; i < production; i++) {
             if (!hasEnoughUnits(1, EGameUnit.COMPLEX)) return
             if (isSaleSuccessful()) {
               triggerFeedback(EStatus.SUCCESS)
               buyUnit(EGameUnit.SALE)
-              successCount++
+              setSuccessCount((prev: number) => prev + 1)
             } else {
               triggerFeedback(EStatus.FAIL)
-              failCount++
+              setFailCount((prev: number) => prev + 1)
             }
 
             console.log('Réussi: ', successCount, 'Échoué:', failCount)

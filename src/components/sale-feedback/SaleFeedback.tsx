@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { EStatus } from 'types/store'
+import { useFeedbackContext } from 'provider/FeedbackProvider'
 
 import styles from './SaleFeedback.module.scss'
 
@@ -11,6 +12,7 @@ type SaleFeedbackProps = {
 
 const SaleFeedback = ({ status, onDone }: SaleFeedbackProps) => {
   const [visible, setVisible] = useState(true)
+  const { successCount, failCount } = useFeedbackContext()
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -24,9 +26,8 @@ const SaleFeedback = ({ status, onDone }: SaleFeedbackProps) => {
   if (!visible) return null
 
   return (
-    <div className={ `${styles.feedback} ${styles[status]}` }>
-      { status === EStatus.SUCCESS && '✅ Vendu !' }
-      { status === EStatus.FAIL && '❌ Raté' }
+    <div className={ styles.feedback }>
+      Réussi: { successCount } / Raté: { failCount }
     </div>
   )
 }

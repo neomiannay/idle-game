@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 import { EStatus } from 'types/store'
 
@@ -8,6 +8,10 @@ type FeedbackContextType = {
   feedback: { status: EStatus; key: number } | null
   setFeedback: (feedback: { status: EStatus; key: number } | null) => void
   triggerFeedback: (status: EStatus) => void
+  successCount: number
+  setSuccessCount: React.Dispatch<React.SetStateAction<number>>
+  failCount: number
+  setFailCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const FeedbackContext = createContext<FeedbackContextType | null>({} as FeedbackContextType)
@@ -16,6 +20,8 @@ let context: FeedbackContextType
 
 export const FeedbackProvider = ({ children }: BaseProviderProps) => {
   const [feedback, setFeedback] = useState<{ status: EStatus; key: number } | null>(null)
+  const [successCount, setSuccessCount] = useState<number>(0)
+  const [failCount, setFailCount] = useState<number>(0)
 
   const triggerFeedback = (status: EStatus) => {
     setFeedback({ status, key: Date.now() })
@@ -24,7 +30,11 @@ export const FeedbackProvider = ({ children }: BaseProviderProps) => {
   context = {
     feedback,
     setFeedback,
-    triggerFeedback
+    triggerFeedback,
+    successCount,
+    setSuccessCount,
+    failCount,
+    setFailCount
   }
 
   return (

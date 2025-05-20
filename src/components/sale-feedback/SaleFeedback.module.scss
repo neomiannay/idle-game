@@ -1,6 +1,6 @@
 .feedback {
   position: absolute;
-  bottom: 0;
+  bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
   padding: rem(4);
@@ -9,6 +9,7 @@
   font-weight: bold;
   z-index: 1000;
   opacity: 0;
+  white-space: nowrap;
   animation: slideFadeInOut 1.5s ease-out forwards;
 }
 
