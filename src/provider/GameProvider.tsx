@@ -2,12 +2,11 @@ import React, { createContext, useContext, useCallback, useState } from 'react'
 
 import { MotionValue } from 'motion/react'
 import useMotionState from 'hooks/useMotionState'
-import { EGamePrice, EGameUnit, EStatus, GameUnit } from 'types/store'
+import { EGamePrice, EGameUnit, GameUnit } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { usePricesContext } from './PricesProvider'
-import { useFeedbackContext } from './FeedbackProvider'
 
 export type UnitMultiplierGetter = (unitId: EGameUnit) => number;
 
@@ -24,7 +23,9 @@ type GameProviderType = {
   updateDisplayConditions: () => void
   updateUnitDuration: (unitId: EGameUnit) => void
   updateValueByAction: (unitId: EGameUnit, newValue: number) => void
-  modifyUnitValue: (unitId: EGameUnit, value: number) => boolean | void
+  modifyUnitValue: (unitId: EGameUnit, value: number) => boolean | void,
+  isSaleSuccessful: () => boolean
+  hasEnoughUnits: (amountNeeded: number, unitNeeded: EGameUnit) => boolean
 }
 
 export const GameProviderContext = createContext<GameProviderType | null>(null)
@@ -33,7 +34,6 @@ let currentUnitMultiplierGetter: UnitMultiplierGetter = defaultUnitMultiplier
 
 export function GameProvider ({ children }: BaseProviderProps) {
   const { getPrice } = usePricesContext()
-  const { triggerFeedback } = useFeedbackContext()
 
   // Initialize motion values for units
   const actifUnit = useUnitMotionValue(0)
@@ -151,14 +151,23 @@ export function GameProvider ({ children }: BaseProviderProps) {
     return unit ? unit.purchaseCondition : false
   }, [getUnit])
 
+  const hasEnoughUnits = (amountNeeded: number, unitNeeded: EGameUnit) => {
+    const unit = getUnit(unitNeeded)
+    if (!unit) return false
+    const unitNeededValue = unit.rawValue.get()
+    return amountNeeded <= unitNeededValue
+  }
+
   const buyUnit = useCallback((unitId: EGameUnit) => {
     const unit = getUnit(unitId)
     if (!unit) return
 
     // If the unit has a cost, subtract it
-    if (unit.costUnitId && unit.costAmount && unitId === EGameUnit.COMPLEX) {
+    if (unit.costUnitId && unit.costAmount) {
       const costUnit = getUnit(unit.costUnitId)
-      if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+      if (!costUnit) return
+      if (!hasEnoughUnits(unit.costAmount, costUnit.id)) return
+      if (unitId === EGameUnit.COMPLEX && !costUnit.rawValue.subtract(unit.costAmount)) return
     }
 
     let multiplier = 1
@@ -173,21 +182,13 @@ export function GameProvider ({ children }: BaseProviderProps) {
       const productionCost = getPrice(EGamePrice.PRODUCTION).motionValue.get()
       const sellingCost = getPrice(EGamePrice.SELLING).motionValue.get()
 
-      const reputation = getUnit(EGameUnit.REPUTATION)?.motionValue.get() ?? 0
-      const roll = Math.random() * 100
-      if (roll <= reputation) {
-        // If the unit has a cost, subtract it
-        if (unit.costUnitId && unit.costAmount) {
-          const costUnit = getUnit(unit.costUnitId)
-          if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
-        }
-
-        triggerFeedback(EStatus.SUCCESS)
-        benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
-        unit.rawValue.add(1 * multiplier)
-      } else {
-        triggerFeedback(EStatus.FAIL)
+      if (unit.costUnitId && unit.costAmount) {
+        const costUnit = getUnit(unit.costUnitId)
+        if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
       }
+
+      benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
+      unit.rawValue.add(1 * multiplier)
     }
   }, [getUnit, getPrice])
 
@@ -235,6 +236,14 @@ export function GameProvider ({ children }: BaseProviderProps) {
     }
   }, [])
 
+  const isSaleSuccessful = () => {
+    const reputation = getUnit(EGameUnit.REPUTATION)?.motionValue.get() ?? 0
+    const chance = Math.min(reputation, 100)
+    const roll = Math.random() * 100
+
+    return roll <= chance
+  }
+
   const contextValue = {
     units,
     totalUnits,
@@ -246,7 +255,9 @@ export function GameProvider ({ children }: BaseProviderProps) {
     updateDisplayConditions,
     updateUnitDuration,
     updateValueByAction,
-    modifyUnitValue
+    modifyUnitValue,
+    isSaleSuccessful,
+    hasEnoughUnits
   }
 
   return (

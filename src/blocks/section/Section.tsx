@@ -31,7 +31,9 @@ const Section = ({ className, unitId }: SectionProps) => {
     canBuyUnit,
     buyUnit,
     updateUnitDuration,
-    updateValueByAction
+    updateValueByAction,
+    isSaleSuccessful,
+    hasEnoughUnits
   } = useGameProviderContext()
   const {
     getElementsForUnit,
@@ -70,14 +72,10 @@ const Section = ({ className, unitId }: SectionProps) => {
   const handleClick = () => {
     if (!canBuy) return
     if (unitId === EGameUnit.SALE) {
-      const reputation = getUnit(EGameUnit.REPUTATION)?.motionValue.get() ?? 0
-      const chance = Math.min(reputation, 100)
-      const roll = Math.random() * 100
-
-      if (roll <= chance)
+      if (isSaleSuccessful()) {
         buyUnit(unitId)
-      else
-        triggerFeedback(EStatus.FAIL)
+        triggerFeedback(EStatus.SUCCESS)
+      } else { triggerFeedback(EStatus.FAIL) }
     } else {
       buyUnit(unitId)
     }
@@ -93,7 +91,7 @@ const Section = ({ className, unitId }: SectionProps) => {
     unitId: EGameUnit,
     requiredUnitId: EGameUnit
   ) => {
-    if (!canPurchaseQuantity(unitsNeeded, requiredUnitId)) return
+    if (!hasEnoughUnits(unitsNeeded, requiredUnitId)) return
     const unit = getUnit(unitId)
     if (!unit) return
     const unitValue = unit.valueByAction
@@ -140,23 +138,9 @@ const Section = ({ className, unitId }: SectionProps) => {
   if (valueByAction && unitId === 'complex')
     quantity = useMotionState(valueByAction, (value) => value)
 
-  const checkPurchaseRequirement = (unitsNeeded: number, rawValue: number) => {
-    return rawValue >= unitsNeeded
-  }
-
   const canPurchaseTime = (unitsNeeded: number, unitId: EGameUnit) => {
     if (duration <= 500) return false
-    const unit = getUnit(unitId)
-    if (!unit) return false
-
-    return checkPurchaseRequirement(unitsNeeded, unit.rawValue.get())
-  }
-
-  const canPurchaseQuantity = (unitsNeeded: number, requiredUnitId: EGameUnit) => {
-    const unit = getUnit(requiredUnitId)
-    if (!unit) return false
-
-    return checkPurchaseRequirement(unitsNeeded, unit.rawValue.get())
+    return hasEnoughUnits(unitsNeeded, unitId)
   }
 
   return (
@@ -199,7 +183,7 @@ const Section = ({ className, unitId }: SectionProps) => {
               </div>
               <button
                 className={ classNames(styles.improvePerf, {
-                  [styles.disabled]: !canPurchaseQuantity(10, EGameUnit.ACTIF)
+                  [styles.disabled]: !hasEnoughUnits(10, EGameUnit.ACTIF)
                 }) }
                 onClick={ () => improveValueByAction(10, EGameUnit.COMPLEX, EGameUnit.ACTIF) }
               >
