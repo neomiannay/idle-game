@@ -14,9 +14,7 @@ function Background () {
   // Animations
   const [animations, setAnimations] = useState<string[]>([])
 
-  useEffect(() => {
-    setAnimations(['idle'])
-  }, [])
+  useEffect(() => setAnimations(['idle']), [])
 
   return (
     <>

@@ -25,7 +25,10 @@
       "singular": "pépette",
       "plural": "pépettes"
     },
-    "REPUTATION": "% de réputation"
+    "REPUTATION": "Réputation",
+    "MIN": "min",
+    "PERCENT": "%",
+    "EURO": "€"
   },
   "ITEMS": {
     "FRIEND": "Ami",
@@ -36,7 +39,9 @@
     "SELLER2": "Vendeur senior"
   },
   "ACTIONS": {
-    "BUY": "Acheter"
+    "BUY": "Acheter",
+    "ACCEPT": "Accepter",
+    "REJECT": "Rejeter"
   },
   "UPGRADES": {
     "LEVEL1": "Niveau 1",
@@ -57,14 +62,28 @@
   "SEARCH_ACTIFS": {
     "LAYOUT": {
       "NAME": "Recherche d’actifs",
-      "TITLE": "[TBC]",
+      "TITLE": "Michael Scott",
       "SUBTITLE": "Scientifique Expert Quantique",
-      "DESCRIPTION": "Depuis tant d'années je décrypte les phénomènes photoniques, à l'échelle de l'infiniment petit, l'échelle quantique. La révolution quantique est une avancée majeure car elle est à l'origine de nouvelles technologies ultrapuissantes et ultrarapides.",
-      "BUTTON_LABEL": "Lancer la recherche"
+      "DESCRIPTION": "Depuis tant d'années je décrypte les phénomènes photoniques, à l'échelle de l'infiniment petit, l'échelle quantique.",
+      "BUTTON_LABEL": "Lancer la recherche",
+      "NEW": "Nouvel actif trouvé !",
+      "COMPOSITION": "Composition du complexe",
+      "PROBABILITY": "Probabilité de trouver un actif",
+      "DURATION": "Durée de la recherche"
     },
     "ITEMS": {
       "GLYCERIN": "Glycérine",
-      "GLYCERIN_DESC": "Substance translucide qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations."
+      "GLYCERIN_DESC": "Substance translucide qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations.",
+      "HA": "Acide hyaluronique",
+      "HA_DESC": "Substance naturelle qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations.",
+      "AL": "Acive lactique",
+      "AL_DESC": "Substance naturelle qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations.",
+      "NIA": "Niacinamide",
+      "NIA_DESC": "Substance naturelle qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations.",
+      "ORCHID_EXTRACT": "Extrait d'Orchidée",
+      "ORCHID_EXTRACT_DESC": "Substance naturelle qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations.",
+      "BENZYL_ALCOHOL": "Benzyl alcool",
+      "BENZYL_ALCOHOL_DESC": "Substance naturelle qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations."
     }
   }
 }

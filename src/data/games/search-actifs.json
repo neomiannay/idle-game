@@ -1,6 +1,6 @@
 {
   "settings": {
-    "duration": 20,
+    "duration": 8,
     "price": 3000,
     "efficiency": 90
   },
@@ -9,7 +9,11 @@
     "title": "SEARCH_ACTIFS.LAYOUT.TITLE",
     "subtitle": "SEARCH_ACTIFS.LAYOUT.SUBTITLE",
     "description": "SEARCH_ACTIFS.LAYOUT.DESCRIPTION",
-    "buttonLabel": "SEARCH_ACTIFS.LAYOUT.BUTTON_LABEL"
+    "buttonLabel": "SEARCH_ACTIFS.LAYOUT.BUTTON_LABEL",
+    "new": "SEARCH_ACTIFS.LAYOUT.NEW",
+    "composition": "SEARCH_ACTIFS.LAYOUT.COMPOSITION",
+    "probability": "SEARCH_ACTIFS.LAYOUT.PROBABILITY",
+    "duration": "SEARCH_ACTIFS.LAYOUT.DURATION"
   },
   "items": [
     {
@@ -29,6 +33,114 @@
         {
           "value": 40,
           "target": "reputation"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-2",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.HA",
+      "description": "SEARCH_ACTIFS.ITEMS.HA_DESC",
+      "values": [
+        {
+          "value": 10,
+          "target": "production"
+        },
+        {
+          "value": 22,
+          "target": "selling"
+        },
+        {
+          "value": 15,
+          "target": "reputation"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-3",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.AL",
+      "description": "SEARCH_ACTIFS.ITEMS.AL_DESC",
+      "values": [
+        {
+          "value": 12,
+          "target": "production"
+        },
+        {
+          "value": 24,
+          "target": "selling"
+        },
+        {
+          "value": 18,
+          "target": "reputation"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-4",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.AL",
+      "description": "SEARCH_ACTIFS.ITEMS.AL_DESC",
+      "values": [
+        {
+          "value": 12,
+          "target": "production"
+        },
+        {
+          "value": 24,
+          "target": "selling"
+        },
+        {
+          "value": 18,
+          "target": "reputation"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-5",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.ORCHID_EXTRACT",
+      "description": "SEARCH_ACTIFS.ITEMS.ORCHID_EXTRACT_DESC",
+      "values": [
+        {
+          "value": 14,
+          "target": "production"
+        },
+        {
+          "value": 26,
+          "target": "selling"
+        },
+        {
+          "value": 20,
+          "target": "reputation"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-6",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL",
+      "description": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL_DESC",
+      "values": [
+        {
+          "value": 16,
+          "target": "production"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-7",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL",
+      "description": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL_DESC",
+      "values": [
+        {
+          "value": 16,
+          "target": "production"
+        },
+        {
+          "value": 26,
+          "target": "selling"
         }
       ]
     }

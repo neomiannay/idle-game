@@ -1,11 +1,12 @@
 import React, { memo, useMemo } from 'react'
 
 import classNames from 'classnames'
-import Shop from 'blocks/shop/Shop' // Import the new Shop component
+import Shop from 'blocks/shop/Shop'
 import Meta from 'blocks/meta/Meta'
 import Header from 'blocks/header/Header'
 import Sections from 'blocks/sections/Sections'
 import { useIterationContext } from 'provider/IterationProvider'
+import SearchGame, { SearchGameProps } from 'blocks/search-game/SearchGame'
 
 import searchActifs from 'data/games/search-actifs.json'
 
@@ -48,13 +49,13 @@ function Root ({ className }: RootProps) {
         ) }
       </main>
       { /* <Background /> */ }
-      { /* <SearchGame
+      <SearchGame
         duration={ searchGameData.settings.duration }
         price={ searchGameData.settings.price }
         efficiency={ searchGameData.settings.efficiency }
         layoutInfos={ searchGameData.layout }
         items={ searchGameData.items as SearchGameProps['items'] }
-      /> */ }
+      />
     </>
   )
 }
