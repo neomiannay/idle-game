@@ -11,21 +11,20 @@ import styles from './ComplexSection.module.scss'
 
 type ComplexSectionProps = {
   className?: string
-  unitId: EGameUnit
 }
 
-const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
+const ComplexSection = ({ className }: ComplexSectionProps) => {
   const { getUnit, hasEnoughUnits, updateUnitDuration, updateValueByAction } = useGameProviderContext()
 
   const [autoMode, setAutoMode] = useState(false)
 
-  const unit = getUnit(unitId)
+  const unit = getUnit(EGameUnit.COMPLEX)
   if (!unit) return null
 
   let formattedSeconds = ''
   let duration = 0
   const complexDuration = unit.duration
-  if (complexDuration && unitId === 'complex') {
+  if (complexDuration) {
     duration = useMotionState(complexDuration, (v) => v)
 
     const seconds = duration / 1000
@@ -34,7 +33,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
 
   let quantity = 1
   const valueByAction = unit.valueByAction
-  if (valueByAction && unitId === 'complex')
+  if (valueByAction)
     quantity = useMotionState(valueByAction, (value) => value)
 
   const canPurchaseTime = (unitsNeeded: number, unitId: EGameUnit) => {

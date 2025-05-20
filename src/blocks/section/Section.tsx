@@ -6,15 +6,15 @@ import Button from 'components/button/Button'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
-import { useL10n } from 'provider/L10nProvider'
 import { EGameUnit, EStatus } from 'types/store'
-import SaleFeedback from 'components/sale-feedback/SaleFeedback'
 import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
 import { useFeedbackContext } from 'provider/FeedbackProvider'
 import ComplexSection from 'blocks/section/complex-section/ComplexSection'
+import SaleFeedback from 'components/sale-feedback/SaleFeedback'
 
 import styles from './Section.module.scss'
 import Items from './items/Items'
+import Upgrades from './upgrades/Upgrades'
 
 type SectionProps = {
   className?: string;
@@ -22,19 +22,16 @@ type SectionProps = {
 };
 
 const Section = ({ className, unitId }: SectionProps) => {
-  const l10n = useL10n()
   const { feedback, setFeedback, triggerFeedback, setSuccessCount, setFailCount } = useFeedbackContext()
 
   const { getUnit, canBuyUnit, buyUnit, isSaleSuccessful } = useGameProviderContext()
-  const { getElementsForUnit, getUpgradePurchased, getItemProduction } = useInventoryContext()
+  const { getItemProduction } = useInventoryContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null
 
   const count = useMotionState(unit.motionValue, (value) => value)
   const canBuy = canBuyUnit(unitId)
-
-  const upgrades = getElementsForUnit(unitId, 'upgrade')
 
   const productionPerSecond = getItemProduction(unitId)
 
@@ -76,52 +73,30 @@ const Section = ({ className, unitId }: SectionProps) => {
         </div>
       </div>
       { unitId === EGameUnit.COMPLEX ? (
-        <ComplexSection unitId={ EGameUnit.COMPLEX } />
+        <ComplexSection />
       ) : (
         <div className={ styles.buttonContainer }>
           <Button title={ actionName } onClick={ handleClick } disabled={ !canBuy } />
-          { unitId === EGameUnit.SALE && feedback && (
-            <SaleFeedback
-              key={ feedback.key }
-              status={ feedback.status }
-              onDone={ () => {
-                setSuccessCount(0)
-                setFailCount(0)
-                setFeedback(null)
-              } }
-            />
+          { unitId === EGameUnit.SALE && (
+            <>
+              <ReputationIndicator />
+              { feedback && (
+                <SaleFeedback
+                  key={ feedback.key }
+                  status={ feedback.status }
+                  onDone={ () => {
+                    setSuccessCount(0)
+                    setFailCount(0)
+                    setFeedback(null)
+                  } }
+                />
+              ) }
+            </>
           ) }
         </div>
       ) }
 
-      { unitId === EGameUnit.SALE && (
-        <ReputationIndicator />
-      ) }
-
-      { /* Purchased Upgrades Display */ }
-      { Object.keys(upgrades).length > 0 && (
-        <div className={ styles.purchasedUpgradesSection }>
-          <div className={ styles.purchasedUpgradesList }>
-            { Object.entries(upgrades).map(([upgradeId, upgrade]) => {
-              const isPurchased = getUpgradePurchased(unitId, upgradeId)
-
-              if (!isPurchased) return null
-
-              return (
-                <div key={ upgradeId } className={ styles.purchasedUpgrade }>
-                  <div className={ styles.upgradeIcon }>✓</div>
-                  <div className={ styles.upgradeInfo }>
-                    <b className={ styles.upgradeName }>{ l10n(upgrade.name) }</b>
-                    <span className={ styles.upgradeEffect }>
-                      +{ upgrade.valueByAction - 1 }x multiplier
-                    </span>
-                  </div>
-                </div>
-              )
-            }) }
-          </div>
-        </div>
-      ) }
+      <Upgrades unitId={ unitId } />
 
       <Items unitId={ unitId } />
     </div>
