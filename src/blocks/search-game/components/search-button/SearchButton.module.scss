@@ -1,0 +1,12 @@
+.button {
+  font-family: "PP Formula";
+  font-size: rem(16);
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  position: relative;
+
+  &.disabled {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+}

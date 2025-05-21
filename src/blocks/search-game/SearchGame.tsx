@@ -8,6 +8,7 @@ import useMotionState from 'hooks/useMotionState'
 import Translatable from 'components/translatable/Translatable'
 
 import styles from './SearchGame.module.scss'
+import SearchButton from './components/search-button/SearchButton'
 
 type TSearchGameItemValue = {
   value: number;
@@ -87,7 +88,7 @@ const SearchGame: React.FC<SearchGameProps> = ({ duration, price, efficiency, la
             </Translatable>
           </div>
           <div style={{
-            transform: 'translateX(-10px) rotate(-4deg)'
+            transform: 'translate(-10px, -5px) rotate(-4deg)'
           }}
           >
             <Translatable>
@@ -98,12 +99,24 @@ const SearchGame: React.FC<SearchGameProps> = ({ duration, price, efficiency, la
                   { duration + l10n('UNITS.MIN') }
                 </h4>
                 <p className={ styles.gameInfosCardDesc }>
-                  { l10n(layoutInfos.probability) }
+                  { l10n(layoutInfos.duration) }
                 </p>
               </div>
             </Translatable>
           </div>
         </div>
+      </div>
+      <div>
+        <SearchButton
+          duration={ duration }
+          price={{
+            unit: EGameUnit.BENEFITS,
+            value: price
+          }}
+          disabled={ benefitsCount < price && false }
+        >
+          { `${l10n(layoutInfos.buttonLabel)} (${price}${l10n('UNITS.EURO')})` }
+        </SearchButton>
       </div>
       <div className={ styles.itemsContainer }>
         <h6 className={ classNames(styles.itemsLabel, styles.subTitle) }>
@@ -118,13 +131,6 @@ const SearchGame: React.FC<SearchGameProps> = ({ duration, price, efficiency, la
           )) }
         </small>
       </div>
-      { /* <button
-        type='button' className={ classNames(styles.button, styles.searchButton, {
-          [styles.buttonDisabled]: benefitsCount < price
-        }) }
-      >
-        { `${l10n(layoutInfos.buttonLabel)} (${price}${l10n('UNITS.EURO')})` }
-      </button> */ }
     </div>
   )
 }
