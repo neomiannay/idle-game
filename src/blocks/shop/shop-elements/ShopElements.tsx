@@ -1,7 +1,7 @@
 import React from 'react'
 
 import classNames from 'classnames'
-import { ElementType, ItemType, UpgradeType } from 'types/store'
+import { EGameUnit, ElementType, ItemType, UpgradeType } from 'types/store'
 
 import ShopElement from '../shop-element/ShopElement'
 
@@ -10,7 +10,7 @@ import styles from './ShopElements.module.scss'
 type ShopElementsProps = {
   className?: string
   elements: Record<string, ItemType | UpgradeType>
-  unitId: string
+  unitId: EGameUnit
   type: ElementType
 }
 

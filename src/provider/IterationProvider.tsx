@@ -3,13 +3,14 @@ import React, { createContext, useContext, useCallback, useState, useMemo, useEf
 import { useGameLoop } from 'hooks/useGameLoop'
 import { useGamePersistence } from 'hooks/useGamePersistence'
 import { floor } from 'lodash-es'
-import { EGamePrice, EGameUnit, GameState, GameStateElement, GameStatePrice, GameStateUnit } from 'types/store'
+import { EGamePrice, EGameUnit, EStatus, GameState, GameStateElement, GameStatePrice, GameStateUnit } from 'types/store'
 
 import { useMessageSystemContext } from './MessageSystemProvider'
 import { BaseProviderProps } from './GlobalProvider'
 import { useGameProviderContext } from './GameProvider'
 import { useInventoryContext } from './InventoryProvider'
 import { usePricesContext } from './PricesProvider'
+import { useFeedbackContext } from './FeedbackProvider'
 
 type IterationContextType = {
   isPaused: boolean
@@ -24,10 +25,11 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const [loading, setLoading] = useState(true)
   // const emitter = useTinyEmitter()
 
-  const { units, getUnit, updateDisplayConditions, buyUnit } = useGameProviderContext()
+  const { units, getUnit, updateDisplayConditions, buyUnit, isSaleSuccessful, hasEnoughUnits } = useGameProviderContext()
   const { getItemProduction, getElementsForUnit, loadElements } = useInventoryContext()
   const { prices } = usePricesContext()
   const { seenMessages, loadMessages, setSeenMessagesLoaded } = useMessageSystemContext()
+  const { triggerFeedback, successCount, setSuccessCount, failCount, setFailCount } = useFeedbackContext()
 
   // Fonction pour traiter un tick de jeu (production d'items)
   const processTick = useCallback((deltaTimeInSeconds: number) => {
@@ -44,10 +46,21 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         const currentValue = unitMotionValue.get()
         const newValue = floor(currentValue + production, 0)
 
-        if (unitId === EGameUnit.SALE)
-          for (let i = 0; i < production; i++) buyUnit(EGameUnit.SALE)
-        else
-          unitMotionValue.set(newValue)
+        if (unitId === EGameUnit.SALE) {
+          setSuccessCount(0)
+          setFailCount(0)
+          for (let i = 0; i < production; i++) {
+            if (!hasEnoughUnits(1, EGameUnit.COMPLEX)) return
+            if (isSaleSuccessful()) {
+              triggerFeedback(EStatus.SUCCESS)
+              buyUnit(EGameUnit.SALE)
+              setSuccessCount((prev: number) => prev + 1)
+            } else {
+              triggerFeedback(EStatus.FAIL)
+              setFailCount((prev: number) => prev + 1)
+            }
+          }
+        } else { unitMotionValue.set(newValue) }
       }
 
       // Emitter pour la modale

@@ -39,7 +39,7 @@ export enum EStatus {
 }
 
 export interface GameUnit {
-  id: string
+  id: EGameUnit
   rawValue: UnitMotionValueResult
   motionValue: MotionValue<number>
   totalMotionValue: MotionValue<number>
