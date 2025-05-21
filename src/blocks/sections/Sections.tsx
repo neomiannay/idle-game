@@ -13,14 +13,20 @@ type SectionsProps = PropsWithChildren<{
   className?: string
 }>
 
+const Components = {
+  [EGameUnit.ACTIF]: ActifSection,
+  [EGameUnit.COMPLEX]: ComplexSection,
+  [EGameUnit.SALE]: SaleSection
+}
+
 const Sections = ({ className, ...props } : SectionsProps) => {
   const { canDisplayUnit } = useGameProviderContext()
 
   return (
     <div className={ classNames(styles.wrapper, className) } { ...props }>
-      { canDisplayUnit(EGameUnit.ACTIF) && (<ActifSection />) }
-      { canDisplayUnit(EGameUnit.COMPLEX) && (<ComplexSection />) }
-      { canDisplayUnit(EGameUnit.SALE) && (<SaleSection />) }
+      { Object.entries(Components).map(([unitId, Component], index) => (
+        canDisplayUnit(unitId as EGameUnit) && <Component key={ index } unitId={ unitId as EGameUnit } />
+      )) }
     </div>
   )
 }

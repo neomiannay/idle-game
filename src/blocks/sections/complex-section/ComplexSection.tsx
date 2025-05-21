@@ -12,14 +12,13 @@ import styles from './ComplexSection.module.scss'
 
 type ComplexSectionProps = {
   className?: string
+  unitId: EGameUnit
 }
 
-const ComplexSection = ({ className }: ComplexSectionProps) => {
+const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   const { getUnit, hasEnoughUnits, updateUnitDuration, updateValueByAction } = useGameProviderContext()
 
   const [autoMode, setAutoMode] = useState(false)
-
-  const unitId = EGameUnit.COMPLEX
 
   const unit = getUnit(unitId)
   if (!unit) return null

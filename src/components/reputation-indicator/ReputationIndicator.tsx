@@ -6,7 +6,7 @@ import useMotionState from 'hooks/useMotionState'
 
 import styles from './ReputationIndicator.module.scss'
 
-const getReputationLabel = (value: number) => {
+const getReputationLabel = (value: number): string => {
   if (value >= 80) return 'Excellente'
   if (value >= 60) return 'Très bonne'
   if (value >= 40) return 'Bonne'
@@ -16,8 +16,10 @@ const getReputationLabel = (value: number) => {
 
 const ReputationIndicator = () => {
   const { getUnit } = useGameProviderContext()
+
   const reputation = getUnit(EGameUnit.REPUTATION)
   if (!reputation) return null
+
   const reputationValue = useMotionState(reputation.motionValue, (value) => value)
   const clampedValue = Math.min(reputationValue, 100)
   const label = getReputationLabel(clampedValue)

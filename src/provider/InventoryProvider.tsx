@@ -253,8 +253,10 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   const loadElements = (data: Record<EGameUnit, Record<string, GameStateElement>>) => {
     Object.entries(data).forEach(([unitId, unitElements]) => {
       Object.entries(unitElements).forEach(([elementId, element]) => {
-        if (element.count > 0) setElementCount(unitId as EGameUnit, elementId, element.count)
         if (element.purchased) setElementPurchased(unitId as EGameUnit, elementId)
+
+        // set the count after the setElementPurchased to avoid race condition
+        if (element.count > 0) setElementCount(unitId as EGameUnit, elementId, element.count)
       })
     })
   }

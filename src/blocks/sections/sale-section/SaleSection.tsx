@@ -17,15 +17,13 @@ import styles from './SaleSection.module.scss'
 
 type SaleSectionProps = {
   className?: string;
+  unitId: EGameUnit;
 };
 
-const SaleSection = ({ className }: SaleSectionProps) => {
-  const { feedback, setFeedback, triggerFeedback, setSuccessCount, setFailCount } = useFeedbackContext()
-
+const SaleSection = ({ className, unitId }: SaleSectionProps) => {
   const { getUnit, canBuyUnit, buyUnit, isSaleSuccessful } = useGameProviderContext()
   const { getItemProduction } = useInventoryContext()
-
-  const unitId = EGameUnit.SALE
+  const { feedback, setFeedback, triggerFeedback, setSuccessCount, setFailCount } = useFeedbackContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null

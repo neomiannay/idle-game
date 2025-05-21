@@ -14,13 +14,12 @@ import styles from './ActifSection.module.scss'
 
 type ActifSectionProps = {
   className?: string;
+  unitId: EGameUnit;
 };
 
-const ActifSection = ({ className }: ActifSectionProps) => {
+const ActifSection = ({ className, unitId }: ActifSectionProps) => {
   const { getUnit, canBuyUnit, buyUnit } = useGameProviderContext()
   const { getItemProduction } = useInventoryContext()
-
-  const unitId = EGameUnit.ACTIF
 
   const unit = getUnit(unitId)
   if (!unit) return null
