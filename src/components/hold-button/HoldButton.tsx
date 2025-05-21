@@ -51,9 +51,8 @@ const HoldButton: FC<HoldButtonProps> = ({
         setTimeout(() => {
           buyUnit(EGameUnit.COMPLEX)
           setIsAnimating(false)
-          setProgress(100)
           setTimeout(() => {
-            setProgress(0)
+            setProgress(100)
           }, 200)
         }, 50)
       } else {
