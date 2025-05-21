@@ -7,8 +7,8 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { EGameUnit } from 'types/store'
-import Upgrades from 'blocks/section/upgrades/Upgrades'
-import Items from 'blocks/section/items/Items'
+import Upgrades from 'blocks/elements/upgrades/Upgrades'
+import Items from 'blocks/elements/items/Items'
 
 import styles from './ActifSection.module.scss'
 

@@ -10,8 +10,8 @@ import { EGameUnit, EStatus } from 'types/store'
 import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
 import { useFeedbackContext } from 'provider/FeedbackProvider'
 import SaleFeedback from 'components/sale-feedback/SaleFeedback'
-import Upgrades from 'blocks/section/upgrades/Upgrades'
-import Items from 'blocks/section/items/Items'
+import Upgrades from 'blocks/elements/upgrades/Upgrades'
+import Items from 'blocks/elements/items/Items'
 
 import styles from './SaleSection.module.scss'
 
