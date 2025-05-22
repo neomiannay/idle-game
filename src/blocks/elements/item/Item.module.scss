@@ -1,41 +1,48 @@
-.perfWrapper {
-  display: flex;
-  gap: rem(20);
+.wrapper {
+  border-radius: rem(8);
+  width: 100%;
+  min-width: 200px;
 }
 
-.perfBox {
-  width: rem(124);
-  background-color: #FCFCFC;
-  padding: rem(12);
-
-  .perfTitle {
-    font-size: rem(10);
-    font-variation-settings: "wght" 800, "wdth" 100, "ital" 100;
-    width: rem(54);
-    color: #A78D7E;
-  }
-
-  .perfValue {
-    font-size: rem(24);
-    font-variation-settings: "wght" 800, "wdth" 50, "ital" 100;
-    color: #635042;
-  }
+.title {
+  font-size: rem(14);
+  font-variation-settings: "wght" 640, "wdth" 48;
+  text-transform: uppercase;
 }
 
-.improvePerf {
+.description {
+  font-size: rem(12);
+  font-variation-settings: "wght" 300, "wdth" 48;
+  margin: rem(4) 0 rem(12) 0;
+}
+
+.line {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: rem(12);
+}
+
+.count {
+  font-size: rem(20);
+  font-variation-settings: "wght" 600, "wdth" 40;
+  color: var(--noir-bleute);
+}
+
+.buyButton {
   width: 100%;
-  padding: rem(10) rem(8);
-  background-color: #ebebeb;
+  border: 1px solid rgba(4, 4, 7, 0.06);
+  padding: rem(7) rem(18);
+  border-radius: rem(24);
+  text-transform: uppercase;
+  font-size: rem(12);
+  font-variation-settings: "wght" 200, "wdth" 40;
+  display: flex;
+  justify-content: center;
+  gap: rem(6);
+  backdrop-filter: blur(16px);
 
-  p {
-    margin: 0;
-    font-size: rem(10);
-    font-variation-settings: "wght" 600, "wdth" 50, "ital" 100;
-  }
-
-  span {
-    font-variation-settings: "wght" 400, "wdth" 10, "ital" 100;
+  .costValue {
+    font-variation-settings: "wght" 800, "wdth" 40;
   }
 }

@@ -9,11 +9,23 @@
     "SPREAD": "Répands"
   },
   "UNITS": {
-    "ACTIF": "Actif",
-    "COMPLEX": "Complexe",
-    "SALE": "Vente",
-    "MONEY": "Pépette",
-    "REPUTATION": "Réputation"
+    "ACTIF": {
+      "singular": "actif",
+      "plural": "actifs"
+    },
+    "COMPLEX": {
+      "singular": "complexe",
+      "plural": "complexes"
+    },
+    "SALE": {
+      "singular": "vente",
+      "plural": "ventes"
+    },
+    "MONEY": {
+      "singular": "pépette",
+      "plural": "pépettes"
+    },
+    "REPUTATION": "% de réputation"
   },
   "ITEMS": {
     "FRIEND": "Ami",

@@ -149,3 +149,24 @@ $styles: ();
     line-height: 1.08;
   }
 }
+
+%cost-value {
+  @include rule {
+    font-size: rem(12);
+    font-stretch: normal;
+    font-variation-settings: "wght" 700, "wdth" 60, "ital" 100;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+}
+
+%cost-unit {
+  @include rule {
+    font-size: rem(12);
+    font-stretch: normal;
+    font-variation-settings: "wght" 400, "wdth" 60, "ital" 100;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+}
+

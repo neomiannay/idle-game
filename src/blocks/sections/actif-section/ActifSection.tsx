@@ -40,16 +40,14 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
       <div className={ styles.stepWrapper }>
         <div className={ styles.stepCounter }>
           <Count unit={ unitName } count={ count } />
-          { productionPerSecond > 0 && (
+          { /* { productionPerSecond > 0 && (
             <span className={ styles.production }>
               [{ productionPerSecond.toFixed(1) }/s]
             </span>
-          ) }
+          ) } */ }
         </div>
       </div>
-      <div className={ styles.buttonContainer }>
-        <Button title='BUTTONS.ACTIVATE' onClick={ handleClick } disabled={ !canBuy } />
-      </div>
+      <Button title='BUTTONS.ACTIVATE' onClick={ handleClick } disabled={ !canBuy } />
 
       <Upgrades unitId={ unitId } />
       <Items unitId={ unitId } />

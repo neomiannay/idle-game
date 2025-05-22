@@ -93,6 +93,7 @@ export interface ItemType {
   _id: string
   unitId: EGameUnit
   name: string
+  description: string
   unitByTime: number
   apparitionCondition: {
     unitId: EGameUnit
@@ -111,6 +112,7 @@ export interface UpgradeType {
   _id: string
   unitId: EGameUnit
   name: string
+  description: string
   valueByAction: number
   apparitionCondition: {
     unitId: EGameUnit

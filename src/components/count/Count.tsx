@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
 import classNames from 'classnames'
-import { useL10n } from 'provider/L10nProvider'
+import { conjugate, useL10n } from 'provider/L10nProvider'
 
 import styles from './Count.module.scss'
 
@@ -16,8 +16,8 @@ const Count = ({ className, unit, count, ...props }: CountProps) => {
 
   return (
     <div className={ classNames(styles.wrapper, className) } { ...props }>
-      <span className={ styles.title }>{ l10n(unit) }</span>
       <span className={ styles.count }>{ count }</span>
+      <span className={ styles.title }>{ l10n(conjugate(unit, count)) }</span>
     </div>
   )
 }

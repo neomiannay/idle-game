@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import classNames from 'classnames'
 import { EGameUnit } from 'types/store'
-import { useInventoryContext } from 'provider/InventoryProvider'
-
-import Upgrade from '../upgrade/Upgrade'
+import { useGameProviderContext } from 'provider/GameProvider'
+import useMotionState from 'hooks/useMotionState'
 
 import styles from './Upgrades.module.scss'
 
@@ -14,28 +13,20 @@ type UpgradesProps = {
 }
 
 const Upgrades = ({ className, unitId }: UpgradesProps) => {
-  const { getElementsForUnit } = useInventoryContext()
+  const { getUnit } = useGameProviderContext()
 
-  const upgrades = getElementsForUnit(unitId, 'upgrade')
+  const unit = getUnit(unitId)
+  if (!unit) return
+  if (!unit.valueByAction) return
+
+  const valueByAction = useMotionState(unit.valueByAction, (value) => value)
+  if (!valueByAction) return
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
-      { Object.keys(upgrades).length > 0 && (
-        <div className={ styles.purchasedUpgradesSection }>
-          <div className={ styles.purchasedUpgradesList }>
-            { Object.entries(upgrades).map(([upgradeId, upgrade]) => (
-              <Upgrade
-                key={ upgradeId }
-                unitId={ unitId }
-                upgradeId={ upgradeId }
-                upgrade={ upgrade }
-              />
-            )) }
-          </div>
-        </div>
-      ) }
+      <p className={ styles.upgradesCount }>x{ valueByAction }</p>
     </div>
   )
 }
 
-export default Upgrades
+export default memo(Upgrades)

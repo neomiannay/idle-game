@@ -7,7 +7,6 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { EGameUnit, EStatus } from 'types/store'
-import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
 import { useFeedbackContext } from 'provider/FeedbackProvider'
 import SaleFeedback from 'components/sale-feedback/SaleFeedback'
 import Upgrades from 'blocks/elements/upgrades/Upgrades'
@@ -53,16 +52,15 @@ const SaleSection = ({ className, unitId }: SaleSectionProps) => {
       <div className={ styles.stepWrapper }>
         <div className={ styles.stepCounter }>
           <Count unit={ unitName } count={ count } />
-          { productionPerSecond > 0 && (
+          { /* { productionPerSecond > 0 && (
             <span className={ styles.production }>
               [{ productionPerSecond.toFixed(1) }/s]
             </span>
-          ) }
+          ) } */ }
         </div>
       </div>
       <div className={ styles.buttonContainer }>
         <Button title='BUTTONS.SPREAD' onClick={ handleClick } disabled={ !canBuy } />
-        <ReputationIndicator />
         { feedback && (
           <SaleFeedback
             key={ feedback.key }

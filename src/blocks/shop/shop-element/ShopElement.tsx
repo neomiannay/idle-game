@@ -4,8 +4,7 @@ import classNames from 'classnames'
 import { EGameUnit, ElementType, ItemType, UpgradeType } from 'types/store'
 import { useSequentialPurchaseState } from 'hooks/useSequentialPurchase'
 import { useInventoryContext } from 'provider/InventoryProvider'
-import { useL10n } from 'provider/L10nProvider'
-import Button from 'components/button/Button'
+import { conjugate, useL10n } from 'provider/L10nProvider'
 import useElementPurchased from 'hooks/useElementPurchased'
 import useCanBuyElement from 'hooks/useCanBuyElement'
 
@@ -33,30 +32,25 @@ const ShopElement = ({ elementId, element, unitId, type }: ShopElementProps) => 
 
   const isUpgrade = type === 'upgrade'
   const effectText = isUpgrade
-    ? `+${(element as UpgradeType).valueByAction - 1}x multiplier`
+    ? `+${(element as UpgradeType).valueByAction} par action`
     : `+${(element as ItemType).unitByTime}/sec`
 
+  const unitName = `UNITS.${element.cost.unitId.toString().toUpperCase()}`
+
   return (
-    <div
+    <button
       className={ classNames(styles.wrapper, {
-        [styles.unavailable]: !sequentiallyPurchasable
+        [styles.unavailable]: !sequentiallyPurchasable || !canPurchase
       }) }
+      onClick={ () => buyElementFromShop(unitId, elementId, type) }
+      disabled={ !sequentiallyPurchasable || !canPurchase }
     >
-      <div className={ styles.cardInfo }>
-        <h4 className={ styles.cardName }>{ l10n(element.name) }</h4>
-        <p className={ styles.cardEffect }>{ effectText }</p>
-      </div>
-      <div className={ styles.purchaseAction }>
-        <Button
-          title='ACTIONS.BUY'
-          onClick={ () => buyElementFromShop(unitId, elementId, type) }
-          disabled={ !canPurchase }
-        />
-        <span className={ styles.cardCost }>
-          { element.cost.value } { element.cost.unitId }
-        </span>
-      </div>
-    </div>
+      <h4 className={ styles.cardName }>{ l10n(element.name) }</h4>
+      <p className={ styles.cardEffect }>{ element.description } { effectText }</p>
+      <span className={ styles.cardCost }>
+        { element.cost.value } <span>({ l10n(conjugate(unitName, element.cost.value)) })</span>
+      </span>
+    </button>
   )
 }
 

@@ -1,12 +1,15 @@
 .feedback {
   position: absolute;
-  bottom: -20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
   padding: rem(4);
   border-radius: 8px;
   font-size: rem(10);
-  font-weight: bold;
+  font-weight: 500;
   z-index: 1000;
   opacity: 0;
   white-space: nowrap;
@@ -26,7 +29,7 @@
 @keyframes slideFadeInOut {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(8px);
   }
   20% {
     opacity: 1;
@@ -38,6 +41,6 @@
   }
   100% {
     opacity: 0;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(8px);
   }
 }

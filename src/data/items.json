@@ -6,6 +6,7 @@
         "_id": "ami",
         "unitId": "actif",
         "name": "ITEMS.FRIEND",
+        "description": "Un ami qui vous aide à faire des choses.",
         "unitByTime": 1,
         "apparitionCondition": {
           "unitId": "actif",
@@ -21,6 +22,7 @@
         "_id": "stagiaire",
         "unitId": "actif",
         "name": "ITEMS.TRAINEE",
+        "description": "Un stagiaire qui vous aide à faire des choses.",
         "unitByTime": 5,
         "apparitionCondition": {
           "unitId": "actif",
@@ -36,6 +38,7 @@
         "_id": "apprenti",
         "unitId": "actif",
         "name": "ITEMS.APPRENTICE",
+        "description": "Un apprenti qui vous aide à faire des choses.",
         "unitByTime": 10,
         "apparitionCondition": {
           "unitId": "actif",
@@ -53,6 +56,7 @@
         "_id": "vendeur1",
         "unitId": "sale",
         "name": "ITEMS.SELLER1",
+        "description": "Un vendeur basique qui ne fait pas grand chose.",
         "unitByTime": 1,
         "apparitionCondition": {
           "unitId": "sale",
@@ -68,6 +72,7 @@
         "_id": "vendeur2",
         "unitId": "sale",
         "name": "ITEMS.SELLER2",
+        "description": "Un vendeur senior qui fait un peu plus de choses.",
         "unitByTime": 5,
         "apparitionCondition": {
           "unitId": "sale",
@@ -83,6 +88,7 @@
         "_id": "vendeur3",
         "unitId": "sale",
         "name": "ITEMS.SELLER3",
+        "description": "Un vendeur qualifié qui fait beaucoup de choses.",
         "unitByTime": 10,
         "apparitionCondition": {
           "unitId": "sale",

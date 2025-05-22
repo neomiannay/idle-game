@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { useUpgradeObserver } from 'hooks/useUpgradeObserver'
+import { EGameUnit } from 'types/store'
 
 import ShopElements from './shop-elements/ShopElements'
 import styles from './Shop.module.scss'
@@ -21,7 +22,7 @@ const Shop = ({ className }: ShopProps) => {
     checkForNewUpgrades()
   }, [checkForNewUpgrades])
 
-  const unitIds = Object.keys(units)
+  const unitIds = Object.keys(units) as EGameUnit[]
 
   return (
     <aside className={ classNames(styles.wrapper, className) }>

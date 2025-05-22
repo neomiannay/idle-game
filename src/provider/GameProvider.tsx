@@ -22,7 +22,7 @@ type GameProviderType = {
   setUnitMultiplierGetter: (getter: UnitMultiplierGetter) => void
   updateDisplayConditions: () => void
   updateUnitDuration: (unitId: EGameUnit) => void
-  updateValueByAction: (unitId: EGameUnit, newValue: number) => void
+  updateValueByAction: (unitId: EGameUnit, addedValue: number) => void
   modifyUnitValue: (unitId: EGameUnit, value: number) => boolean | void,
   isSaleSuccessful: () => boolean
   hasEnoughUnits: (amountNeeded: number, unitNeeded: EGameUnit) => boolean
@@ -224,7 +224,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
     }
   }, [])
 
-  const updateValueByAction = useCallback((unitId: EGameUnit, newValue: number) => {
+  const updateValueByAction = useCallback((unitId: EGameUnit, addedValue: number) => {
     const unit = getUnit(unitId)
 
     if (unit && unit.valueByAction) {
@@ -232,6 +232,9 @@ export function GameProvider ({ children }: BaseProviderProps) {
         const costUnit = getUnit(unit.costUnitId)
         if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
       }
+      const unitValue = unit.valueByAction.get()
+      const newValue = unitValue + addedValue
+
       unit.valueByAction.set(newValue)
     }
   }, [])

@@ -27,7 +27,8 @@ const SaleFeedback = ({ status, onDone }: SaleFeedbackProps) => {
 
   return (
     <div className={ styles.feedback }>
-      Réussi: { successCount } / Raté: { failCount }
+      <span>Ratées: { failCount }</span>
+      <span>Réussies: { successCount }</span>
     </div>
   )
 }

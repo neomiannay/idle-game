@@ -6,6 +6,7 @@
         "_id": "lvl1",
         "unitId": "actif",
         "name": "UPGRADES.LEVEL1",
+        "description": "Niveau 1",
         "valueByAction": 2,
         "apparitionCondition": {
           "unitId": "actif",
@@ -21,6 +22,7 @@
         "_id": "lvl2",
         "unitId": "actif",
         "name": "UPGRADES.LEVEL2",
+        "description": "Niveau 2",
         "valueByAction": 8,
         "apparitionCondition": {
           "unitId": "actif",

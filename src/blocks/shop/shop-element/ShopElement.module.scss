@@ -2,16 +2,22 @@
   color: var(--color-main);
   position: relative;
   background-color: white;
-  border-radius: var(--border-radius);
   padding: rem(10);
   display: flex;
   flex-direction: column;
   gap: var(--gap-s);
   box-shadow: 0 rem(2) rem(4) rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
+  width: 240px;
+
+  border-radius: var(--border-radius);
+  border: 2px solid rgb(150, 151, 176);
+  background: linear-gradient(0deg, rgba(224, 224, 245, 0.20) 0%, rgba(224, 224, 245, 0.20) 100%), linear-gradient(287deg, rgba(0, 119, 88, 0.00) -5.89%, rgba(145, 180, 116, 0.10) 47.54%, rgba(165, 179, 144, 0.12) 65.24%, rgba(210, 177, 206, 0.15) 74.25%, rgba(224, 217, 226, 0.18) 82.57%, rgba(232, 240, 238, 0.20) 100.96%);
+  backdrop-filter: blur(16px);
 
   &.unavailable {
-    opacity: 0.6;
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 
   &:hover {
@@ -20,32 +26,24 @@
   }
 }
 
-.cardInfo {
-  display: flex;
-  flex-direction: column;
-  gap: rem(4);
-}
-
 .cardName {
   font-size: rem(16);
   margin: 0;
+  font-variation-settings: "wght" 640, "wdth" 60;
+  text-transform: uppercase;
 }
 
 .cardEffect {
   font-size: rem(12);
   margin: 0;
-}
-
-.purchaseAction {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--gap-s);
+  font-variation-settings: "wght" 200, "wdth" 60;
+  text-transform: uppercase;
 }
 
 .cardCost {
-  position: absolute;
-  top: var(--grid-gutter);
-  right: var(--grid-gutter);
-  font-size: rem(12);
+  @include apply(cost-value);
+
+  span {
+    @include apply(cost-unit);
+  }
 }

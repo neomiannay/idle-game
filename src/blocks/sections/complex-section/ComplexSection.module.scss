@@ -11,16 +11,21 @@
   gap: rem(20);
 }
 
-.perfBox {
-  width: rem(124);
-  background-color: #FCFCFC;
+.perf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(10);
+  width: rem(160);
   padding: rem(12);
 
   .perfTitle {
+    text-align: center;
     font-size: rem(10);
-    font-variation-settings: "wght" 800, "wdth" 100, "ital" 100;
-    width: rem(54);
-    color: #A78D7E;
+    font-variation-settings: "wght" 800, "wdth" 40,;
+    width: 100%;
+    color: var(--noir-bleute);
+    margin: 0
   }
 
   .perfValue {
@@ -34,16 +39,25 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: rem(10) rem(8);
-  background-color: #ebebeb;
+  border-radius: 999px;
+  border: 2px solid var(--vert-transparent);
+  backdrop-filter: blur(16px);
 
   p {
+    padding: rem(8);
     margin: 0;
-    font-size: rem(10);
-    font-variation-settings: "wght" 600, "wdth" 50, "ital" 100;
+    @include apply(cost-value)
+  }
+
+  .gain {
+    padding: rem(8);
+    border-radius: 999px;
+    background-color: var(--vert-transparent);
+    background-blend-mode: color-burn;
+    backdrop-filter: blur(2px);
   }
 
   span {
-    font-variation-settings: "wght" 400, "wdth" 10, "ital" 100;
+    @include apply(cost-unit)
   }
 }

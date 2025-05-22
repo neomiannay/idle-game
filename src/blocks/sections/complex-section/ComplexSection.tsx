@@ -7,6 +7,7 @@ import HoldButton from 'components/hold-button/HoldButton'
 import AutoSwitch from 'blocks/auto-switch/AutoSwitch'
 import useMotionState from 'hooks/useMotionState'
 import Count from 'components/count/Count'
+import { conjugate, useL10n } from 'provider/L10nProvider'
 
 import styles from './ComplexSection.module.scss'
 
@@ -16,6 +17,7 @@ type ComplexSectionProps = {
 }
 
 const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
+  const l10n = useL10n()
   const { getUnit, hasEnoughUnits, updateUnitDuration, updateValueByAction } = useGameProviderContext()
 
   const [autoMode, setAutoMode] = useState(false)
@@ -58,12 +60,10 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
     if (!hasEnoughUnits(unitsNeeded, requiredUnitId)) return
     const unit = getUnit(unitId)
     if (!unit) return
-    const unitValue = unit.valueByAction
-    if (!unitValue) return
-    const currentValue = unitValue.get()
-    const newValue = currentValue + 1
-    updateValueByAction(unitId, newValue)
+    updateValueByAction(unitId, 1)
   }
+
+  const costName = `UNITS.${unit.costUnitId?.toString().toUpperCase()}`
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
@@ -75,36 +75,32 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
       <HoldButton label='BUTTONS.PRODUCE' autoMode={ autoMode } />
       <div className={ styles.perfWrapper }>
         <div className={ styles.perf }>
-          <div className={ styles.perfBox }>
-            <p className={ styles.perfTitle }>Durée d'exécution</p>
-            <span className={ styles.perfValue }>{ formattedSeconds } s</span>
-          </div>
+          <p className={ styles.perfTitle }>Durée de production</p>
+          <span className={ styles.perfValue }>{ formattedSeconds } s</span>
           <button
             className={ classNames(styles.improvePerf, {
               [styles.disabled]: !canPurchaseTime(10, EGameUnit.ACTIF)
             }) }
             onClick={ improveTime }
           >
-            <p>-0.5 s</p>
+            <p className={ styles.gain }>-0.5 s</p>
             <p>
-              { unit.costAmount } <span>({ unit.costUnitId })</span>
+              { unit.costAmount } <span>({ l10n(conjugate(costName, unit.costAmount ?? 0)) })</span>
             </p>
           </button>
         </div>
         <div className={ styles.perf }>
-          <div className={ styles.perfBox }>
-            <p className={ styles.perfTitle }>Quantité exécutée</p>
-            <span className={ styles.perfValue }>{ quantity }</span>
-          </div>
+          <p className={ styles.perfTitle }>Quantité exécutée</p>
+          <span className={ styles.perfValue }>{ quantity }</span>
           <button
             className={ classNames(styles.improvePerf, {
               [styles.disabled]: !hasEnoughUnits(10, EGameUnit.ACTIF)
             }) }
             onClick={ () => improveValueByAction(10, EGameUnit.COMPLEX, EGameUnit.ACTIF) }
           >
-            <p>+1</p>
+            <p className={ styles.gain }>+1</p>
             <p>
-              { unit.costAmount } <span>({ unit.costUnitId })</span>
+              { unit.costAmount } <span>({ l10n(conjugate(costName, unit.costAmount ?? 0)) })</span>
             </p>
           </button>
         </div>

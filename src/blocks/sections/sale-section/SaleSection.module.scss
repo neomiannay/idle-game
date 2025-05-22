@@ -1,9 +1,10 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   gap: rem(32);
   width: grid(3, 0);
+  max-width: rem(220);
 }
 
 .disabled {
@@ -16,10 +17,8 @@
 }
 
 .stepCounter {
-  border: 1px solid purple;
   display: flex;
   flex-direction: column;
-  padding: var(--grid-gutter);
 }
 
 .production {
@@ -49,4 +48,8 @@
 
 .buttonContainer {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: rem(64);
 }

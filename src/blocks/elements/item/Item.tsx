@@ -2,8 +2,7 @@ import React, { memo } from 'react'
 
 import classNames from 'classnames'
 import { EGameUnit, ItemType } from 'types/store'
-import { useL10n } from 'provider/L10nProvider'
-import Button from 'components/button/Button'
+import { conjugate, useL10n } from 'provider/L10nProvider'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { useSequentialPurchaseState } from 'hooks/useSequentialPurchase'
 import useElementPurchased from 'hooks/useElementPurchased'
@@ -46,30 +45,31 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
   const itemCount = useItemCount(unitId, itemId)
   const canPurchase = useCanBuyElement(unitId, itemId, 'item') && sequentiallyPurchasable
 
+  const unitName = `UNITS.${item.cost.unitId.toString().toUpperCase()}`
+  const costName = `(${l10n(conjugate(unitName, item.cost.value))})`
+
   if (!isPurchased) return null
 
   return (
-    <div className={ classNames(styles.wrapper, className) }>
-      <div
-        key={ itemId } className={ classNames(styles.item, {
-          [styles.unavailable]: !sequentiallyPurchasable
-        }) }
-      >
-        <div className={ styles.line }>
+    <div className={ classNames(styles.wrapper, className, {
+      [styles.unavailable]: !sequentiallyPurchasable
+    }) }
+    >
+      <div className={ styles.line }>
+        <div className={ styles.information }>
           <h4 className={ styles.title }>{ l10n(item.name) }</h4>
-          <span className={ styles.count }>{ itemCount }</span>
+          <p className={ styles.description }>{ item.description } +{ item.unitByTime }/sec</p>
         </div>
-        <div className={ styles.line }>
-          <span className={ styles.production }>+{ item.unitByTime }/sec</span>
-          <div className={ styles.purchase }>
-            <Button
-              title='ACTIONS.BUY'
-              onClick={ () => buyElement(unitId, itemId, 'item') }
-              disabled={ !canPurchase }
-            />
-          </div>
-        </div>
+        <span className={ styles.count }>{ itemCount }</span>
       </div>
+      <button
+        className={ styles.buyButton }
+        onClick={ () => buyElement(unitId, itemId, 'item') }
+        disabled={ !canPurchase }
+      >
+        <span className={ styles.costValue }>{ item.cost.value }</span>
+        <span>{ costName }</span>
+      </button>
     </div>
   )
 }

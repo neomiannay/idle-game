@@ -26,6 +26,11 @@ $rem-reference: 1px;
   --skin-20: #57524E;
   --skin-60: #99918C;
   --skin-100: #D1CECC;
+  --noir-bleute: #0F1426;
+  --blanc: #F0F5F5;
+  --vert-transparent: #2c7b5a10;
+  --purple-transparent-24: rgba(28, 28, 66, 0.24);
+  --translucent-24: linear-gradient(0deg, var(--purple-transparent-24, rgba(28, 28, 66, 0.24)) 0%, var(--purple-transparent-24, rgba(28, 28, 66, 0.24)) 100%), linear-gradient(287deg, rgba(0, 2, 119, 0.00) -5.89%, rgba(145, 180, 116, 0.12) 47.54%, rgba(165, 179, 144, 0.14) 65.24%, rgba(210, 177, 206, 0.18) 74.25%, rgba(224, 217, 226, 0.22) 82.57%, rgba(232, 240, 238, 0.24) 100.96%);
 
   /* SHORTCUTS */
   --color-main: var(--color-black);

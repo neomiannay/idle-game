@@ -1,10 +1,10 @@
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { ElementType } from 'types/store'
+import { EGameUnit, ElementType } from 'types/store'
 
 import useMotionState from './useMotionState'
 
-const useCanBuyElement = (unitId: string, elementId: string, type: ElementType) => {
+const useCanBuyElement = (unitId: EGameUnit, elementId: string, type: ElementType) => {
   const { getElement, shouldDisplayElement } = useInventoryContext()
   const { getUnit } = useGameProviderContext()
 
