@@ -69,7 +69,8 @@
       "NEW": "Nouvel actif trouvé !",
       "COMPOSITION": "Composition du complexe",
       "PROBABILITY": "Probabilité de trouver un actif",
-      "DURATION": "Durée de la recherche"
+      "DURATION": "Durée de la recherche",
+      "IN_PROGRESS": "Recherche en cours..."
     },
     "ITEMS": {
       "GLYCERIN": "Glycérine",

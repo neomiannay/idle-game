@@ -15,11 +15,13 @@ export function formatValue (
   decimal ??= 0
   showUnits ??= true
 
-  const result = value.toLocaleString(undefined, {
-    style: 'decimal',
-    minimumFractionDigits: decimal,
-    maximumFractionDigits: decimal
-  }).replace(/\s/g, '.')
+  const result = value
+    .toLocaleString(undefined, {
+      style: 'decimal',
+      minimumFractionDigits: decimal,
+      maximumFractionDigits: decimal
+    })
+    .replace(/\s/g, '.')
 
   const unitIndex = Math.floor(Math.log10(value) / 3) - 1
   const maxUnitIndex = UNITS.length - 1
@@ -29,7 +31,8 @@ export function formatValue (
 
   if (showUnits && parsedResult.length > 1) {
     const separator = parsedResult[1].length > 2 ? ' ' : ','
-    const sliceMax = index >= maxUnitIndex ? parsedResult.length - UNITS.length : 2
+    const sliceMax =
+      index >= maxUnitIndex ? parsedResult.length - UNITS.length : 2
 
     return parsedResult.slice(0, sliceMax).join(separator) + unit
   } else {
@@ -48,4 +51,50 @@ export function formatBenefits (value: number): string {
   const formattedInt = paddedInt.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
 
   return `${formattedInt}.${decimalPart}`
+}
+
+/**
+ * @param duration in ms
+ */
+export const getRoundedTime = (
+  duration: number
+): { value: number; unit: string } => {
+  // Duration to seconds:
+  const seconds = duration / 1000
+
+  // Minutes
+  const minutes = Math.floor(seconds / 60)
+  if (minutes < 1) return { value: seconds, unit: 'UNITS.SEC' }
+
+  // Hours
+  const hours = Math.floor(minutes / 60)
+  if (hours < 1) return { value: minutes, unit: 'UNITS.MIN' }
+
+  return { value: hours, unit: 'UNITS.HOUR' }
+}
+
+/**
+ * @param time - The time to print
+ * @param forceZero - Whether to force the time to print
+ * @returns The time to print
+ */
+const timeToPrint = (time: number, forceZero: boolean = false) => {
+  return time || forceZero ? time + ':' : ''
+}
+
+/**
+ * @param duration in ms
+ * @returns hh:mm:ss
+ */
+export const timeToHHMMSS = (duration: number) => {
+  duration = duration / 1000
+  const hours = Math.floor(duration / 3600)
+  const minutes = Math.floor((duration % 3600) / 60)
+  const seconds = duration % 60
+
+  const hStr = timeToPrint(hours)
+  const mStr = timeToPrint(minutes, !!hStr.length)
+  const sStr = seconds
+
+  return `${hStr}${mStr}${sStr}`
 }

@@ -1,10 +1,8 @@
 import React from 'react'
 
-import classNames from 'classnames'
 import { EGameUnit } from 'types/store'
-import GradientText from 'components/gradient-text/GradientText'
 
-import styles from './SearchButton.module.scss'
+import SearchProgress from '../search-progress/SearchProgress'
 
 export type SearchButtonProps = {
   children: React.ReactNode;
@@ -16,22 +14,22 @@ export type SearchButtonProps = {
   };
 };
 
-const SearchButton: React.FC<SearchButtonProps> = ({ children, disabled, duration, price }) => {
+const SearchButton: React.FC<SearchButtonProps> = ({
+  children,
+  disabled,
+  duration,
+  price
+}) => {
   return (
-    <div className={ styles.buttonContainer }>
-      <div className={ styles.buttonWrapper }>
-        <button
-          className={ classNames(styles.button, {
-            [styles.disabled]: disabled
-          }) }
-          disabled={ disabled }
-        >
-          <GradientText blur={ 1 }>
-            toto
-          </GradientText>
-        </button>
-      </div>
-    </div>
+    <SearchProgress
+      isPlaying={ false }
+      duration={ duration }
+      colors={{
+        background: 'var(--color-white)',
+        progress: '#D5E9E7'
+      }}
+    />
   )
 }
+
 export default SearchButton

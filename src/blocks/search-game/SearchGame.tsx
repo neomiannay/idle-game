@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
 import useMotionState from 'hooks/useMotionState'
 import Translatable from 'components/translatable/Translatable'
+import { getRoundedTime } from 'helpers/units'
 
 import styles from './SearchGame.module.scss'
 import SearchButton from './components/search-button/SearchButton'
@@ -13,7 +14,7 @@ import SearchButton from './components/search-button/SearchButton'
 type TSearchGameItemValue = {
   value: number;
   target: EGameUnit | EGamePrice;
-}
+};
 
 type TSearchGameItem = {
   id: string;
@@ -21,7 +22,7 @@ type TSearchGameItem = {
   name: string;
   description: string;
   values: TSearchGameItemValue[];
-}
+};
 
 type TSearchGameLayoutInfos = {
   name: string;
@@ -32,7 +33,7 @@ type TSearchGameLayoutInfos = {
   composition: string;
   probability: string;
   duration: string;
-}
+};
 
 export type SearchGameProps = {
   duration: number; // In seconds
@@ -42,19 +43,26 @@ export type SearchGameProps = {
   items: TSearchGameItem[];
 };
 
-const SearchGame: React.FC<SearchGameProps> = ({ duration, price, efficiency, layoutInfos, items }) => {
+const SearchGame: React.FC<SearchGameProps> = ({
+  duration,
+  price,
+  efficiency,
+  layoutInfos,
+  items
+}) => {
   const l10n = useL10n()
   const { getUnit } = useGameProviderContext()
 
   const benefits = getUnit(EGameUnit.BENEFITS)
-  const benefitsCount = benefits ? useMotionState(benefits.motionValue, (v) => v) : 0
+  const benefitsCount = benefits
+    ? useMotionState(benefits.motionValue, (v) => v)
+    : 0
+
+  const roundedTime = getRoundedTime(duration)
 
   return (
     <div className={ styles.wrapper }>
-
-      <h3 className={ styles.name }>
-        { l10n(layoutInfos.name) }
-      </h3>
+      <h3 className={ styles.name }>{ l10n(layoutInfos.name) }</h3>
       <div className={ styles.gameInfos }>
         <div className={ styles.gameInfosItem }>
           <h4 className={ styles.gameInfosItemLabel }>
@@ -67,7 +75,12 @@ const SearchGame: React.FC<SearchGameProps> = ({ duration, price, efficiency, la
             { l10n(layoutInfos.description) }
           </p>
         </div>
-        <div className={ classNames(styles.gameInfosItem, styles.gameInfosItemComposition) }>
+        <div
+          className={ classNames(
+            styles.gameInfosItem,
+            styles.gameInfosItemComposition
+          ) }
+        >
           <div
             style={{
               transform: 'rotate(5deg)',
@@ -75,9 +88,7 @@ const SearchGame: React.FC<SearchGameProps> = ({ duration, price, efficiency, la
             }}
           >
             <Translatable>
-              <div
-                className={ styles.gameInfosCard }
-              >
+              <div className={ styles.gameInfosCard }>
                 <h4 className={ styles.gameInfosCardValue }>
                   { efficiency + l10n('UNITS.PERCENT') }
                 </h4>
@@ -87,16 +98,15 @@ const SearchGame: React.FC<SearchGameProps> = ({ duration, price, efficiency, la
               </div>
             </Translatable>
           </div>
-          <div style={{
-            transform: 'translate(-10px, -5px) rotate(-4deg)'
-          }}
+          <div
+            style={{
+              transform: 'translate(-10px, -5px) rotate(-4deg)'
+            }}
           >
             <Translatable>
-              <div
-                className={ styles.gameInfosCard }
-              >
+              <div className={ styles.gameInfosCard }>
                 <h4 className={ styles.gameInfosCardValue }>
-                  { duration + l10n('UNITS.MIN') }
+                  { roundedTime.value + l10n(roundedTime.unit) }
                 </h4>
                 <p className={ styles.gameInfosCardDesc }>
                   { l10n(layoutInfos.duration) }
@@ -106,18 +116,16 @@ const SearchGame: React.FC<SearchGameProps> = ({ duration, price, efficiency, la
           </div>
         </div>
       </div>
-      <div>
-        <SearchButton
-          duration={ duration }
-          price={{
-            unit: EGameUnit.BENEFITS,
-            value: price
-          }}
-          disabled={ benefitsCount < price && false }
-        >
-          { `${l10n(layoutInfos.buttonLabel)} (${price}${l10n('UNITS.EURO')})` }
-        </SearchButton>
-      </div>
+      <SearchButton
+        duration={ duration }
+        price={{
+          unit: EGameUnit.BENEFITS,
+          value: price
+        }}
+        disabled={ benefitsCount < price && false }
+      >
+        { `${l10n(layoutInfos.buttonLabel)} (${price}${l10n('UNITS.EURO')})` }
+      </SearchButton>
       <div className={ styles.itemsContainer }>
         <h6 className={ classNames(styles.itemsLabel, styles.subTitle) }>
           { l10n(layoutInfos.composition) }
