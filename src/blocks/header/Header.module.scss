@@ -1,32 +1,78 @@
 .wrapper {
-  border: 1px solid rgb(58, 58, 58);
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: rem(10);
+  width: grid(13, 2);
+  margin: auto;
+
+  .information {
+    display: flex;
+    justify-content: space-between;
+    width: grid(13, 0);
+    margin: auto;
+  }
+
+  .prices {
+    display: flex;
+    gap: rem(52);
+  }
 
   .price {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 
-    .label {
-      font-size: rem(16);
-      color: var(--color-grey);
-      font-variation-settings: "wght" 200, "wdth" 0, "ital" 100;
+    .title {
+      @include apply(title-uppercase);
     }
 
     .count {
-      font-size: rem(40);
-      font-variation-settings: "wght" 800, "wdth" 20, "ital" 100;
+      @include apply(label-bold);
     }
   }
 
+  .blur-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blurred-text {
+    text-align: center;
+    width: grid(13, 2);
+    filter: blur(7px);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    backdrop-filter: blur(16px);
+  }
+
+  .clearText {
+    text-align: center;
+    width: grid(13, 2);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+
   .benefits {
-    font-size: rem(72);
-    font-variation-settings: "wght" 800, "wdth" 0, "ital" 100;
+    color: rgba(112, 112, 196, 0.54);
+    font-variation-settings: "wght" 500;
     font-variant-numeric: lining-nums tabular-nums;
+    letter-spacing: -8.8px;
+    font-size: 5.9vw;
+    width: grid(13, 2);
+    height: fit-content;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: justify;
+    display: inline-block;
+    vertical-align: top;
+
+  // &::after {
+  //   content: '';
+  //   display: inline-block;
+  //   width: 100%;
+  //   height: 0;
+  // }
   }
 }
 

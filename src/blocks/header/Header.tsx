@@ -6,6 +6,8 @@ import { useL10n } from 'provider/L10nProvider'
 import useMotionState from 'hooks/useMotionState'
 import { usePricesContext } from 'provider/PricesProvider'
 import { EGamePrice, EGameUnit } from 'types/store'
+import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
+import { formatBenefits } from 'helpers/units'
 
 import styles from './Header.module.scss'
 
@@ -32,19 +34,26 @@ const Header = ({ className }: HeaderProps) => {
       { canDisplayUnit(EGameUnit.BENEFITS) && (
 
         <div className={ classNames(styles.wrapper, className) }>
-          <div className={ styles.price }>
-            <span className={ styles.label }>{ l10n('PRICES.PRODUCTION') }</span>
-            <span className={ styles.count }>{ productionCount } €</span>
+
+          <div className={ classNames(styles.benefits, styles.blurContainer) }>
+            <div className={ styles.clearText }>{ formatBenefits(benefitsCount) } €</div>
+            <div className={ styles.blurredText }>{ formatBenefits(benefitsCount) } €</div>
           </div>
 
-          <div className={ styles.benefits }>
-            { benefitsCount } €
+          <div className={ styles.information }>
+            <div className={ styles.prices }>
+              <div className={ styles.price }>
+                <span className={ styles.title }>{ l10n('PRICES.PRODUCTION') }</span>
+                <span className={ styles.count }>{ productionCount } €</span>
+              </div>
+              <div className={ styles.price }>
+                <span className={ styles.title }>{ l10n('PRICES.SELLING') }</span>
+                <span className={ styles.count }>{ sellingCount } €</span>
+              </div>
+            </div>
+            <ReputationIndicator />
           </div>
 
-          <div className={ styles.price }>
-            <span className={ styles.label }>{ l10n('PRICES.SELLING') }</span>
-            <span className={ styles.count }>{ sellingCount } €</span>
-          </div>
         </div>
       ) }
     </>

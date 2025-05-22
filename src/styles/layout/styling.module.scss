@@ -76,13 +76,14 @@ $styles: ();
 }
 
 
-%count-label {
+%label-bold {
   @include rule {
-    font-size: rem(32);
+    font-size: rem(24);
     font-stretch: normal;
-    font-variation-settings: 'wght' 500, 'wdth' 0, 'ital' 0;
+    font-variation-settings: 'wght' 400, 'wdth' 0, 'ital' 0;
     letter-spacing: 0.02em;
     line-height: 1.08;
+    color: var(--purple-fill-20);
   }
 }
 
@@ -116,6 +117,7 @@ $styles: ();
     letter-spacing: 0.02em;
     line-height: 1.08;
     text-transform: uppercase;
+    color: var(--purple-fill-20);
   }
 }
 
@@ -170,3 +172,11 @@ $styles: ();
   }
 }
 
+%title-uppercase {
+  @include rule {
+    font-size: rem(14);
+    font-variation-settings: "wght" 200, "wdth" 0;
+    text-transform: uppercase;
+    color: var(--purple-fill-40);
+  }
+}

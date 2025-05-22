@@ -8,12 +8,14 @@
   font-size: rem(14);
   font-variation-settings: "wght" 640, "wdth" 48;
   text-transform: uppercase;
+  color: var(--purple-fill-20);
 }
 
 .description {
   font-size: rem(12);
   font-variation-settings: "wght" 300, "wdth" 48;
   margin: rem(4) 0 rem(12) 0;
+  color: var(--purple-fill-40);
 }
 
 .line {
@@ -26,7 +28,7 @@
 .count {
   font-size: rem(20);
   font-variation-settings: "wght" 600, "wdth" 40;
-  color: var(--noir-bleute);
+  color: var(--purple-fill-20);
 }
 
 .buyButton {
@@ -41,6 +43,7 @@
   justify-content: center;
   gap: rem(6);
   backdrop-filter: blur(16px);
+  color: var(--purple-fill-20);
 
   .costValue {
     font-variation-settings: "wght" 800, "wdth" 40;

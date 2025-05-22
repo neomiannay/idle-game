@@ -10,20 +10,11 @@
   border-radius: 8px;
   font-size: rem(10);
   font-weight: 500;
+  color: var(--purple-fill-20);
   z-index: 1000;
   opacity: 0;
   white-space: nowrap;
   animation: slideFadeInOut 1.5s ease-out forwards;
-}
-
-.success {
-  background-color: #2ecc71;
-  color: white;
-}
-
-.fail {
-  background-color: #e74c3c;
-  color: white;
 }
 
 @keyframes slideFadeInOut {

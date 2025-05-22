@@ -22,16 +22,16 @@
   .perfTitle {
     text-align: center;
     font-size: rem(10);
-    font-variation-settings: "wght" 800, "wdth" 40,;
+    font-variation-settings: "wght" 700, "wdth" 60;
     width: 100%;
-    color: var(--noir-bleute);
+    color: var(--purple-fill-40);
     margin: 0
   }
 
   .perfValue {
     font-size: rem(24);
     font-variation-settings: "wght" 800, "wdth" 50, "ital" 100;
-    color: #635042;
+    color: var(--purple-fill-20);
   }
 }
 
@@ -42,6 +42,7 @@
   border-radius: 999px;
   border: 2px solid var(--vert-transparent);
   backdrop-filter: blur(16px);
+  color: var(--purple-fill-20);
 
   p {
     padding: rem(8);

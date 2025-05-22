@@ -9,12 +9,11 @@
   font-size: rem(48);
   font-variation-settings: "wght" 400, "wdth" 20;
   letter-spacing: -0.96px;
-  color: var(--skin-20);
+  color: var(--purple-transparent-24);
 }
 
 .title {
-  @include apply(count-label);
-  color: var(--color-grey);
+  @include apply(label-bold);
+  font-variation-settings: 'wght' 500, 'wdth' 0, 'ital' 0;
   text-transform: lowercase;
-  font-size: rem(24)
 }

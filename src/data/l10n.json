@@ -5,7 +5,7 @@
   },
   "BUTTONS": {
     "ACTIVATE": "Extrais",
-    "PRODUCE": "Produis",
+    "PRODUCE": "Formule",
     "SPREAD": "Répands"
   },
   "UNITS": {
@@ -45,8 +45,8 @@
     "LEVEL4": "Niveau 4"
   },
   "PRICES": {
-    "PRODUCTION": "Coût de fabrication",
-    "SELLING": "Prix de vente"
+    "PRODUCTION": "Coût",
+    "SELLING": "Prix"
   },
   "UI": {
     "UNIT_PRODUCTION": "Afficher la production /s"

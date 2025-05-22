@@ -3,22 +3,17 @@
   display: inline-block;
   cursor: default;
   display: flex;
-  gap: rem(8);
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
 }
 
 .title {
-	color: var(--skin-60);
-	font-size: rem(8);
-	font-variation-settings: "wght" 800, "wdth" 100;
+  @include apply(title-uppercase);
 }
 
 .label {
-  font-size: rem(20);
-  font-variation-settings: "wght" 800, "wdth" 60;
-  color: var(--skin-60);
+  @include apply(label-bold);
 }
 
 .tooltip {
