@@ -1,8 +1,5 @@
 .wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+  z-index: 100;
   width: 45vw;
   height: 100%;
   background-color: var(--color-white);
@@ -117,7 +114,7 @@
     box-shadow: 0px 4px 28px 0px rgba(0, 0, 0, 0.04);
     padding: rem(16);
     border-radius: rem(8);
-    transform: translateX(-rem(20));
+    transform: translateX(rem(-20));
     width: rem(105);
 
     &Value {

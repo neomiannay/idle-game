@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 
 import classNames from 'classnames'
+import Sections from 'blocks/sections/Sections'
 
 import Sector from '../sector/Sector'
 
@@ -17,6 +18,7 @@ const ProductionSector = ({ className, ...props } : ProductionSectorProps) => {
       { ...props }
     >
       ProductionSector
+      <Sections />
     </Sector>
   )
 }
