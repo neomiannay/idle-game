@@ -1,12 +1,14 @@
 import React from 'react'
 
-import { useL10n } from 'provider/L10nProvider'
 import { EGameUnit } from 'types/store'
+
+import styles from './SearchStart.module.scss'
 
 export type SearchStartProps = {
   children: React.ReactNode;
   disabled: boolean;
   duration: number;
+  setIsPlaying: (isPlaying: boolean) => void;
   price: {
     unit: EGameUnit;
     value: number;
@@ -16,13 +18,17 @@ export type SearchStartProps = {
 const SearchStart = ({
   children,
   disabled,
-  duration
+  duration,
+  setIsPlaying
 }: SearchStartProps) => {
-  const l10n = useL10n()
   return (
-    <div>
+    <button
+      className={ styles.button }
+      disabled={ disabled }
+      onClick={ () => setIsPlaying(true) }
+    >
       { children }
-    </div>
+    </button>
   )
 }
 
