@@ -9,7 +9,7 @@ type PersistenceOptions = {
   storageKey?: string
 }
 
-const getStorageKey = () => {
+export const getStorageKey = () => {
   return import.meta.env.VITE_LOCAL_STORAGE_KEY || 'game-store'
 }
 
