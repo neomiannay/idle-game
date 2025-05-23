@@ -3,7 +3,8 @@ import React, { useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { EGameUnit } from 'types/store'
+import { EGameSector, EGameUnit } from 'types/store'
+import { useSectorsProviderContext } from 'provider/SectorsProvider'
 
 import styles from './Sections.module.scss'
 import ActifSection from './actif-section/ActifSection'
@@ -18,6 +19,7 @@ const Components = {
 
 const Sections = ({ className }: { className?: string }) => {
   const { canDisplayUnit } = useGameProviderContext()
+  const { setUnlockedSectors, unlockedSectors } = useSectorsProviderContext()
 
   const activeSections = useMemo(() => {
     return Object.entries(Components).filter(([unitId]) => canDisplayUnit(unitId as EGameUnit)

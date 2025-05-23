@@ -11,6 +11,7 @@ import { useGameProviderContext } from './GameProvider'
 import { useInventoryContext } from './InventoryProvider'
 import { usePricesContext } from './PricesProvider'
 import { useFeedbackContext } from './FeedbackProvider'
+import { useSectorsProviderContext } from './SectorsProvider'
 
 type IterationContextType = {
   isPaused: boolean
@@ -30,6 +31,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const { prices } = usePricesContext()
   const { seenMessages, loadMessages, setSeenMessagesLoaded } = useMessageSystemContext()
   const { triggerFeedback, successCount, setSuccessCount, failCount, setFailCount } = useFeedbackContext()
+  const { loadSectors, unlockedSectors } = useSectorsProviderContext()
 
   // Fonction pour traiter un tick de jeu (production d'items)
   const processTick = useCallback((deltaTimeInSeconds: number) => {
@@ -130,9 +132,10 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         }
         return acc
       }, {} as Record<string, GameStatePrice>),
-      seenMessages
+      seenMessages,
+      unlockedSectors
     }
-  }, [units, getElementsForUnit, seenMessages])
+  }, [units, getElementsForUnit, seenMessages, unlockedSectors])
 
   // Fonction pour charger l'état du jeu
   const handleLoadState = useCallback((gameState: GameState) => {
@@ -187,7 +190,10 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         }
       })
     }
-  }, [getUnit, loadElements])
+
+    if (gameState.unlockedSectors)
+      loadSectors(gameState.unlockedSectors)
+  }, [getUnit, loadElements, loadSectors])
 
   // Hook pour la persistance de l'état du jeu
   const { saveGameState, loadGameState } = useGamePersistence({

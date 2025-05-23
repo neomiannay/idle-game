@@ -8,6 +8,7 @@ import { usePricesContext } from 'provider/PricesProvider'
 import { EGamePrice, EGameUnit } from 'types/store'
 import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
 import { formatBenefits } from 'helpers/units'
+import SectorsTab from 'blocks/sectors/sectors-tab/SectorsTab'
 
 import styles from './Header.module.scss'
 
@@ -56,6 +57,8 @@ const Header = ({ className }: HeaderProps) => {
 
         </div>
       ) }
+
+      <SectorsTab />
     </>
   )
 }

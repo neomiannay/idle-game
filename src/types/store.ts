@@ -38,6 +38,12 @@ export enum EStatus {
   FAIL = 'fail',
 }
 
+export enum EGameSector {
+  PRODUCTION = 'production',
+  TRALALERO = 'tralalero',
+  SAHUR = 'sahur',
+}
+
 export interface GameUnit {
   id: EGameUnit
   rawValue: UnitMotionValueResult
@@ -84,6 +90,7 @@ export interface GameState {
   upgrades?: Record<string, Record<string, GameStateElement>>
   prices?: Record<string, GameStatePrice>
   seenMessages?: Array<string> | null
+  unlockedSectors?: EGameSector[] | null
 }
 
 export type ElementType = 'item' | 'upgrade'
@@ -129,4 +136,13 @@ export interface UpgradeType {
 export interface ElementTypes {
   item: ItemType
   upgrade: UpgradeType
+}
+
+export interface Sector {
+  id: EGameSector
+  name: string
+}
+
+export interface Sectors {
+  sectors: Record<EGameSector, Sector>
 }

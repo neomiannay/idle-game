@@ -1,14 +1,15 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo } from 'react'
 
 import classNames from 'classnames'
 import Shop from 'blocks/shop/Shop'
 import Meta from 'blocks/meta/Meta'
 import Header from 'blocks/header/Header'
-import Sections from 'blocks/sections/Sections'
 import { useIterationContext } from 'provider/IterationProvider'
-import SearchGame, { SearchGameProps } from 'blocks/search-game/SearchGame'
-
-import searchActifs from 'data/games/search-actifs.json'
+import Sectors from 'blocks/sectors/Sectors'
+import { AnimatePresence, motion } from 'motion/react'
+import { baseVariants } from 'core/animation'
+import useTransitionType from 'hooks/useTransitionType'
+import { useSectorsProviderContext } from 'provider/SectorsProvider'
 
 import styles from './Root.module.scss'
 
@@ -18,10 +19,9 @@ type RootProps = {
 
 function Root ({ className }: RootProps) {
   const { isPaused, togglePause, loading } = useIterationContext()
+  const { reactiveCurrentSector, sectors } = useSectorsProviderContext()
 
-  const searchGameData = useMemo(() => {
-    return searchActifs
-  }, [])
+  const custom = { type: useTransitionType(reactiveCurrentSector, sectors) }
 
   return (
     <>
@@ -34,7 +34,13 @@ function Root ({ className }: RootProps) {
           <>
             <Meta />
             <Header />
-            <Sections className={ styles.sections } />
+
+            <AnimatePresence custom={ custom }>
+              <motion.div key='sectors' { ...baseVariants }>
+                <Sectors />
+              </motion.div>
+            </AnimatePresence>
+
             <button
               className={ classNames(styles.pauseButton, {
                 [styles.paused]: isPaused
@@ -49,13 +55,6 @@ function Root ({ className }: RootProps) {
         ) }
       </main>
       { /* <Background /> */ }
-      <SearchGame
-        duration={ searchGameData.settings.duration }
-        price={ searchGameData.settings.price }
-        efficiency={ searchGameData.settings.efficiency }
-        layoutInfos={ searchGameData.layout }
-        items={ searchGameData.items as SearchGameProps['items'] }
-      />
     </>
   )
 }
