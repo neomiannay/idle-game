@@ -30,21 +30,6 @@
           "unitId": "actif",
           "value": 20
         }
-      },
-      {
-        "_type": "item",
-        "_id": "apprenti",
-        "unitId": "actif",
-        "name": "ITEMS.APPRENTICE",
-        "unitByTime": 10,
-        "apparitionCondition": {
-          "unitId": "actif",
-          "value": 20
-        },
-        "cost": {
-          "unitId": "actif",
-          "value": 40
-        }
       }
     ],
     "sale": [
@@ -76,21 +61,6 @@
         "cost": {
           "unitId": "actif",
           "value": 2000
-        }
-      },
-      {
-        "_type": "item",
-        "_id": "vendeur3",
-        "unitId": "sale",
-        "name": "ITEMS.SELLER3",
-        "unitByTime": 10,
-        "apparitionCondition": {
-          "unitId": "sale",
-          "value": 20
-        },
-        "cost": {
-          "unitId": "actif",
-          "value": 4000
         }
       }
     ]

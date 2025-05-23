@@ -1,0 +1,38 @@
+.wrapper {
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+	min-height: 100vh;
+  visibility: hidden;
+  background-color: rgb(250, 91, 250);
+  pointer-events: auto;
+
+  &.exiting {
+    // background-color: blue;
+  }
+
+  &.shown {
+    // background-color: red;
+  }
+
+  // &::before {
+  //   position: absolute;
+  //   z-index: 600;
+  //   top: 0;
+  //   left: 0;
+  //   display: block;
+  //   width: 100%;
+  //   height: var(--ivh);
+  //   // background-color: var(--color-black);
+  //   background-color: aqua;
+  //   content: '';
+  //   opacity: calc(var(--overlay, 0) * 0.8);
+  //   pointer-events: none;
+  // }
+}
+
+
+.inner {
+  position: relative;
+  min-height: 100%;
+}

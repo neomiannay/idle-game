@@ -6,6 +6,7 @@ import { useL10n } from 'provider/L10nProvider'
 import useMotionState from 'hooks/useMotionState'
 import { usePricesContext } from 'provider/PricesProvider'
 import { EGamePrice, EGameUnit } from 'types/store'
+import SectorsTab from 'blocks/sectors/sectors-tab/SectorsTab'
 
 import styles from './Header.module.scss'
 
@@ -47,6 +48,8 @@ const Header = ({ className }: HeaderProps) => {
           </div>
         </div>
       ) }
+
+      <SectorsTab />
     </>
   )
 }
