@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   z-index: 1000;
-  width: 75vw;
+  width: 45vw;
   height: 100%;
   background-color: var(--color-white);
   border-right: 5px solid purple;
@@ -11,6 +11,15 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  border: 0 !important;
+  background: linear-gradient(90deg, rgba(107, 107, 148, 0.24) 0%, rgba(107, 107, 148, 0.00) 100%);
+  margin-top: rem(9);
+  margin-bottom: rem(24);
 }
 
 .name {
@@ -25,11 +34,6 @@
 
   width: 75%;
   padding: 0.25rem 0;
-  margin-bottom: 25rem;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-image: linear-gradient(90deg, #09402c 0%, var(--color-white) 100%) 0 0
-    100% 0;
 }
 
 .searchButton {

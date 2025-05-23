@@ -9,7 +9,7 @@ import Translatable from 'components/translatable/Translatable'
 import { getRoundedTime } from 'helpers/units'
 
 import styles from './SearchGame.module.scss'
-import SearchButton from './components/search-button/SearchButton'
+import SearchContainer from './components/search-container/SearchContainer'
 
 type TSearchGameItemValue = {
   value: number;
@@ -63,6 +63,7 @@ const SearchGame: React.FC<SearchGameProps> = ({
   return (
     <div className={ styles.wrapper }>
       <h3 className={ styles.name }>{ l10n(layoutInfos.name) }</h3>
+      <hr className={ styles.divider } />
       <div className={ styles.gameInfos }>
         <div className={ styles.gameInfosItem }>
           <h4 className={ styles.gameInfosItemLabel }>
@@ -116,16 +117,16 @@ const SearchGame: React.FC<SearchGameProps> = ({
           </div>
         </div>
       </div>
-      <SearchButton
+      <SearchContainer
+        layoutInfos={ layoutInfos }
         duration={ duration }
         price={{
           unit: EGameUnit.BENEFITS,
           value: price
         }}
         disabled={ benefitsCount < price && false }
-      >
-        { `${l10n(layoutInfos.buttonLabel)} (${price}${l10n('UNITS.EURO')})` }
-      </SearchButton>
+      />
+      <hr className={ styles.divider } />
       <div className={ styles.itemsContainer }>
         <h6 className={ classNames(styles.itemsLabel, styles.subTitle) }>
           { l10n(layoutInfos.composition) }

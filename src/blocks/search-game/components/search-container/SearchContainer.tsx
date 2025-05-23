@@ -1,11 +1,12 @@
 import React from 'react'
 
 import { EGameUnit } from 'types/store'
+import { SearchGameProps } from 'blocks/search-game/SearchGame'
 
 import SearchProgress from '../search-progress/SearchProgress'
 
-export type SearchButtonProps = {
-  children: React.ReactNode;
+export type SearchContainerProps = {
+  layoutInfos: SearchGameProps['layoutInfos']
   disabled: boolean;
   duration: number;
   price: {
@@ -14,12 +15,12 @@ export type SearchButtonProps = {
   };
 };
 
-const SearchButton: React.FC<SearchButtonProps> = ({
-  children,
+const SearchContainer = ({
+  layoutInfos,
   disabled,
   duration,
   price
-}) => {
+}: SearchContainerProps) => {
   return (
     <SearchProgress
       isPlaying={ false }
@@ -32,4 +33,4 @@ const SearchButton: React.FC<SearchButtonProps> = ({
   )
 }
 
-export default SearchButton
+export default SearchContainer

@@ -79,7 +79,7 @@ export const getRoundedTime = (
  * @returns The time to print
  */
 const timeToPrint = (time: number, forceZero: boolean = false) => {
-  return time || forceZero ? time + ':' : ''
+  return time || forceZero ? (time).toString().padStart(2, '0') + ':' : ''
 }
 
 /**
@@ -94,7 +94,7 @@ export const timeToHHMMSS = (duration: number) => {
 
   const hStr = timeToPrint(hours)
   const mStr = timeToPrint(minutes, !!hStr.length)
-  const sStr = seconds
+  const sStr = seconds.toString().padStart(2, '0')
 
   return `${hStr}${mStr}${sStr}`
 }
