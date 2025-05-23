@@ -32,22 +32,6 @@
           "unitId": "actif",
           "value": 20
         }
-      },
-      {
-        "_type": "item",
-        "_id": "apprenti",
-        "unitId": "actif",
-        "name": "ITEMS.APPRENTICE",
-        "description": "Un apprenti qui vous aide à faire des choses.",
-        "unitByTime": 10,
-        "apparitionCondition": {
-          "unitId": "actif",
-          "value": 20
-        },
-        "cost": {
-          "unitId": "actif",
-          "value": 40
-        }
       }
     ],
     "sale": [
@@ -81,22 +65,6 @@
         "cost": {
           "unitId": "actif",
           "value": 2000
-        }
-      },
-      {
-        "_type": "item",
-        "_id": "vendeur3",
-        "unitId": "sale",
-        "name": "ITEMS.SELLER3",
-        "description": "Un vendeur qualifié qui fait beaucoup de choses.",
-        "unitByTime": 10,
-        "apparitionCondition": {
-          "unitId": "sale",
-          "value": 20
-        },
-        "cost": {
-          "unitId": "actif",
-          "value": 4000
         }
       }
     ]

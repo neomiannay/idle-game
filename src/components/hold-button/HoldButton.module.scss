@@ -4,6 +4,7 @@
 	margin: 0 auto;
 	user-select: none;
 	cursor: pointer;
+	@include apply(basic-hover);
 }
 
 .disabled {

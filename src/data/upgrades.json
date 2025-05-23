@@ -33,6 +33,24 @@
           "value": 400
         }
       }
+    ],
+    "complex": [
+      {
+        "_type": "upgrade",
+        "_id": "autoprod",
+        "unitId": "complex",
+        "name": "UPGRADES.AUTOPROD",
+        "description": "C'est un switch en gros qui te permet de faire des productions automatiques.",
+        "valueByAction": 0,
+        "apparitionCondition": {
+          "unitId": "complex",
+          "value": 2
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 10
+        }
+      }
     ]
   }
 }

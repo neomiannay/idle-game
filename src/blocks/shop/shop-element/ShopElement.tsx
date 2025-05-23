@@ -31,9 +31,11 @@ const ShopElement = ({ elementId, element, unitId, type }: ShopElementProps) => 
   if (!shouldDisplay || isPurchased) return null
 
   const isUpgrade = type === 'upgrade'
-  const effectText = isUpgrade
-    ? `+${(element as UpgradeType).valueByAction} par action`
-    : `+${(element as ItemType).unitByTime}/sec`
+  let effectText = ''
+  if (isUpgrade && (element as UpgradeType).valueByAction !== 0)
+    effectText = `+${(element as UpgradeType).valueByAction} par action`
+  else if (!isUpgrade && (element as ItemType).unitByTime !== 0)
+    effectText = `+${(element as ItemType).unitByTime}/sec`
 
   const unitName = `UNITS.${element.cost.unitId.toString().toUpperCase()}`
 

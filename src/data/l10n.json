@@ -47,7 +47,8 @@
     "LEVEL1": "Niveau 1",
     "LEVEL2": "Niveau 2",
     "LEVEL3": "Niveau 3",
-    "LEVEL4": "Niveau 4"
+    "LEVEL4": "Niveau 4",
+    "AUTOPROD": "Auto-production"
   },
   "PRICES": {
     "PRODUCTION": "Coût",

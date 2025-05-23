@@ -43,6 +43,7 @@
   border: 2px solid var(--vert-transparent);
   backdrop-filter: blur(16px);
   color: var(--purple-fill-20);
+  @include apply(basic-hover);
 
   p {
     padding: rem(8);

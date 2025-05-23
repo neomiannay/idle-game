@@ -9,6 +9,7 @@
   font-variation-settings: "wght" 640, "wdth" 48;
   text-transform: uppercase;
   color: var(--purple-fill-20);
+  text-align: left;
 }
 
 .description {
@@ -16,6 +17,7 @@
   font-variation-settings: "wght" 300, "wdth" 48;
   margin: rem(4) 0 rem(12) 0;
   color: var(--purple-fill-40);
+  text-align: left;
 }
 
 .line {
@@ -44,6 +46,7 @@
   gap: rem(6);
   backdrop-filter: blur(16px);
   color: var(--purple-fill-20);
+  @include apply(basic-hover);
 
   .costValue {
     font-variation-settings: "wght" 800, "wdth" 40;

@@ -1,12 +1,12 @@
 .wrapper {
-  width: grid(13, 2);
-  margin: auto;
+  width: 100%;
 
   .information {
     display: flex;
     justify-content: space-between;
     width: grid(13, 0);
     margin: auto;
+    padding-top: rem(16);
   }
 
   .prices {
@@ -35,7 +35,6 @@
 
   .blurred-text {
     text-align: center;
-    width: grid(13, 2);
     filter: blur(7px);
     mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
     -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
@@ -44,7 +43,7 @@
 
   .clearText {
     text-align: center;
-    width: grid(13, 2);
+    width: 100%;
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
     -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
     position: absolute;
@@ -58,21 +57,23 @@
     font-variation-settings: "wght" 500;
     font-variant-numeric: lining-nums tabular-nums;
     letter-spacing: -8.8px;
-    font-size: 5.9vw;
-    width: grid(13, 2);
+    font-size: 7.8vw;
+    width: 100%;
     height: fit-content;
     white-space: nowrap;
     overflow: hidden;
     text-align: justify;
     display: inline-block;
     vertical-align: top;
+    user-select: none;
 
-  // &::after {
-  //   content: '';
-  //   display: inline-block;
-  //   width: 100%;
-  //   height: 0;
-  // }
+  &::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: 0;
+  }
   }
 }
 

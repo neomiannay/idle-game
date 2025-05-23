@@ -8,6 +8,7 @@ import AutoSwitch from 'blocks/auto-switch/AutoSwitch'
 import useMotionState from 'hooks/useMotionState'
 import Count from 'components/count/Count'
 import { conjugate, useL10n } from 'provider/L10nProvider'
+import { useUpgradePurchased } from 'hooks/useUpgradePurchased'
 
 import styles from './ComplexSection.module.scss'
 
@@ -65,6 +66,8 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
 
   const costName = `UNITS.${unit.costUnitId?.toString().toUpperCase()}`
 
+  const isUpgradePurchased = useUpgradePurchased(unitId, 'autoprod')
+
   return (
     <div className={ classNames(styles.wrapper, className) }>
       <div className={ styles.stepCounter }>
@@ -103,7 +106,9 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
           </button>
         </div>
       </div>
-      <AutoSwitch value={ autoMode } onToggle={ () => setAutoMode(prev => !prev) } />
+      { isUpgradePurchased && (
+        <AutoSwitch value={ autoMode } onToggle={ () => setAutoMode(prev => !prev) } />
+      ) }
     </div>
   )
 }

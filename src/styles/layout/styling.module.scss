@@ -180,3 +180,17 @@ $styles: ();
     color: var(--purple-fill-40);
   }
 }
+
+%basic-hover {
+  @include rule {
+    transition: all 0.1s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}

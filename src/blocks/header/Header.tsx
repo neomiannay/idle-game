@@ -36,11 +36,6 @@ const Header = ({ className }: HeaderProps) => {
 
         <div className={ classNames(styles.wrapper, className) }>
 
-          <div className={ classNames(styles.benefits, styles.blurContainer) }>
-            <div className={ styles.clearText }>{ formatBenefits(benefitsCount) } €</div>
-            <div className={ styles.blurredText }>{ formatBenefits(benefitsCount) } €</div>
-          </div>
-
           <div className={ styles.information }>
             <div className={ styles.prices }>
               <div className={ styles.price }>
@@ -53,6 +48,11 @@ const Header = ({ className }: HeaderProps) => {
               </div>
             </div>
             <ReputationIndicator />
+          </div>
+
+          <div className={ classNames(styles.benefits, styles.blurContainer) }>
+            <div className={ styles.clearText }>{ formatBenefits(benefitsCount) } €</div>
+            <div className={ styles.blurredText }>{ formatBenefits(benefitsCount) } €</div>
           </div>
 
         </div>

@@ -45,7 +45,7 @@ export function formatBenefits (value: number): string {
   const [intPart, decimalPart] = fixed.split('.')
 
   // Padding de l'entier à 15 chiffres (on veut 17 total avec 2 décimales)
-  const paddedInt = intPart.padStart(15, '0')
+  const paddedInt = intPart.padStart(10, '0')
 
   // Groupes de 3 chiffres (de droite à gauche)
   const formattedInt = paddedInt.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
