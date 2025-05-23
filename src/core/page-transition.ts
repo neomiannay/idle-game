@@ -44,8 +44,8 @@ const unit = (d: PageTransitionType) => {
 const initial = ({ type = PageTransitions.leftToRight }:PageTransitionCustom = {}) => {
   if (type === PageTransitions.none) {
     return {
-      visibility: 'visible',
-      '--overlay': 0
+      visibility: 'visible'
+      // '--overlay': 0
     }
   }
 
@@ -60,7 +60,7 @@ const initial = ({ type = PageTransitions.leftToRight }:PageTransitionCustom = {
   if (type === PageTransitions.bottomOverlayExit || type === PageTransitions.topOverlayExit) { // Behind
     return {
       [axe(type)]: 0,
-      '--overlay': 1,
+      // '--overlay': 1,
       visibility: 'visible',
       zIndex: 10
     }
@@ -68,21 +68,25 @@ const initial = ({ type = PageTransitions.leftToRight }:PageTransitionCustom = {
     return {
       visibility: 'visible',
       [axe(type)]: adapt(type, '100' + unit(type)),
-      zIndex: 50,
-      '--clip-progress': 0
+      zIndex: 50
+      // '--clip-progress': 0
     }
   } else { // In front
     return {
       visibility: 'visible',
       [axe(type)]: adapt(type, '100' + unit(type)),
-      zIndex: 50,
-      '--clip-progress': 0
+      zIndex: 50
+      // '--clip-progress': 0
     }
   }
 }
 
 const animate = ({ type = PageTransitions.leftToRight }:PageTransitionCustom = {}) => {
-  if (type === PageTransitions.none) return { '--overlay': 0 }
+  if (type === PageTransitions.none) {
+    return {
+    // '--overlay': 0
+    }
+  }
 
   let transition : Transition = { ...baseTransition }
   if (type === PageTransitions.rightToLeft || type === PageTransitions.leftToRight)
@@ -94,17 +98,20 @@ const animate = ({ type = PageTransitions.leftToRight }:PageTransitionCustom = {
   return {
     x: 0, // Force override
     y: 0, // Force override
-    '--overlay': 0,
+    // '--overlay': 0,
     opacity: 1,
     [axe(type)]: 0,
-    '--clip-progress': 1,
+    // '--clip-progress': 1,
     transition
-
   }
 }
 
 const exit = ({ type = PageTransitions.leftToRight }:PageTransitionCustom = {}) => {
-  if (type === PageTransitions.none) return { '--overlay': 0 }
+  if (type === PageTransitions.none) {
+    return {
+      // '--overlay': 0
+    }
+  }
 
   if (type === PageTransitions.rightToLeft || type === PageTransitions.leftToRight) {
     return {
@@ -120,15 +127,14 @@ const exit = ({ type = PageTransitions.leftToRight }:PageTransitionCustom = {}) 
   if (type !== PageTransitions.bottomOverlayExit && type !== PageTransitions.topOverlayExit) { // Behind
     return {
       [axe(type)]: 0,
-      '--overlay': 1,
+      // '--overlay': 1,
       zIndex: 10
     }
   } else { // In front
     return {
       [axe(type)]: adapt(type, '100' + unit(type)),
-      zIndex: 50,
-      '--clip-progress': 0
-
+      zIndex: 50
+      // '--clip-progress': 0
     }
   }
 }
@@ -147,10 +153,10 @@ const transitions = {
   initial: {},
   animate: {
     topOverlay: {
-      '--clip-progress': {
-        ...baseTransition
-        // ease: bezier.quadEaseOut
-      },
+      // '--clip-progress': {
+      //   ...baseTransition
+      //   // ease: bezier.quadEaseOut
+      // },
       y: {
         ...baseTransition
         // delay: .1
