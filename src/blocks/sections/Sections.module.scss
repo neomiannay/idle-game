@@ -1,9 +1,42 @@
 .wrapper {
-  border: 1px solid blue;
-
   display: flex;
   justify-content: space-around;
   width: grid(13, 0);
   margin: auto;
-  padding-bottom: rem(132);
+  align-items: flex-start;
+  transition: all 0.5s ease;
+  position: relative;
+  // overflow: hidden; // ← empêche les débordements lors du slide
+}
+
+// Layouts
+.center {
+  justify-content: center;
+}
+
+.dual {
+  justify-content: space-around;
+}
+
+.triple {
+  justify-content: space-between;
+
+  .section1 {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .section2 {
+    align-items: center;
+    text-align: center;
+  }
+
+  .section3 {
+    align-items: flex-end;
+    text-align: right;
+
+    .count {
+      align-items: flex-end;
+    }
+  }
 }

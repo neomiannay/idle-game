@@ -49,15 +49,13 @@ const SaleSection = ({ className, unitId }: SaleSectionProps) => {
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
-      <div className={ styles.stepWrapper }>
-        <div className={ styles.stepCounter }>
-          <Count unit={ unitName } count={ count } />
-          { /* { productionPerSecond > 0 && (
+      <div className={ styles.stepCounter }>
+        <Count unit={ unitName } count={ count } />
+        { /* { productionPerSecond > 0 && (
             <span className={ styles.production }>
               [{ productionPerSecond.toFixed(1) }/s]
             </span>
           ) } */ }
-        </div>
       </div>
       <div className={ styles.buttonContainer }>
         <Button title='BUTTONS.SPREAD' onClick={ handleClick } disabled={ !canBuy } />
