@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
@@ -7,8 +7,11 @@ import useMotionState from 'hooks/useMotionState'
 import { usePricesContext } from 'provider/PricesProvider'
 import { EGamePrice, EGameUnit } from 'types/store'
 import ReputationIndicator from 'components/reputation-indicator/ReputationIndicator'
-import { formatBenefits } from 'helpers/units'
 import SectorsTab from 'blocks/sectors/sectors-tab/SectorsTab'
+import { AnimatePresence, motion } from 'motion/react'
+import { baseVariants, fadeAppear, stagger } from 'core/animation'
+import AdaptativeText from 'components/adaptative-text/AdaptativeText'
+import { formatBenefits } from 'helpers/units'
 
 import styles from './Header.module.scss'
 
@@ -30,35 +33,48 @@ const Header = ({ className }: HeaderProps) => {
   const productionCount = useMotionState(productionPrice.motionValue, (value) => value)
   const sellingCount = useMotionState(sellingPrice.motionValue, (value) => value)
 
+  const benefitsMemo = useMemo(() => formatBenefits(benefitsCount), [benefitsCount])
+
   return (
     <>
-      { canDisplayUnit(EGameUnit.BENEFITS) && (
+      <AnimatePresence>
+        { canDisplayUnit(EGameUnit.BENEFITS) && (
+          <motion.div
+            className={ classNames(styles.wrapper, className) }
+            { ...baseVariants }
+            { ...stagger() }
+          >
+            <div className={ styles.pricesContainer }>
+              <motion.div className={ styles.prices } { ...fadeAppear }>
+                <div className={ styles.price }>
+                  <span className={ styles.title }>{ l10n('PRICES.PRODUCTION') }</span>
+                  <span className={ styles.count }>{ productionCount } €</span>
+                </div>
+                <div className={ styles.price }>
+                  <span className={ styles.title }>{ l10n('PRICES.SELLING') }</span>
+                  <span className={ styles.count }>{ sellingCount } €</span>
+                </div>
+              </motion.div>
 
-        <div className={ classNames(styles.wrapper, className) }>
+              <motion.div { ...fadeAppear }>
+                <SectorsTab />
+              </motion.div>
 
-          <div className={ styles.information }>
-            <div className={ styles.prices }>
-              <div className={ styles.price }>
-                <span className={ styles.title }>{ l10n('PRICES.PRODUCTION') }</span>
-                <span className={ styles.count }>{ productionCount } €</span>
-              </div>
-              <div className={ styles.price }>
-                <span className={ styles.title }>{ l10n('PRICES.SELLING') }</span>
-                <span className={ styles.count }>{ sellingCount } €</span>
-              </div>
+              <motion.div { ...fadeAppear }>
+                <ReputationIndicator />
+              </motion.div>
             </div>
-            <ReputationIndicator />
-          </div>
 
-          <div className={ classNames(styles.benefits, styles.blurContainer) }>
-            <div className={ styles.clearText }>{ formatBenefits(benefitsCount) } €</div>
-            <div className={ styles.blurredText }>{ formatBenefits(benefitsCount) } €</div>
-          </div>
+            <div className={ classNames(styles.benefits) }>
+              <motion.div { ...fadeAppear }>
+                <AdaptativeText className={ classNames(styles.money, styles.blur) }>{ benefitsMemo } €</AdaptativeText>
+                <AdaptativeText className={ styles.money }>{ benefitsMemo } €</AdaptativeText>
+              </motion.div>
+            </div>
 
-        </div>
-      ) }
-
-      <SectorsTab />
+          </motion.div>
+        ) }
+      </AnimatePresence>
     </>
   )
 }

@@ -41,14 +41,14 @@ function Root ({ className }: RootProps) {
               </motion.div>
             </AnimatePresence>
 
-            <button
+            { /* <button
               className={ classNames(styles.pauseButton, {
                 [styles.paused]: isPaused
               }) }
               onClick={ togglePause }
             >
               { isPaused ? 'Paused' : 'Running' }
-            </button>
+            </button> */ }
 
             <Shop />
           </>

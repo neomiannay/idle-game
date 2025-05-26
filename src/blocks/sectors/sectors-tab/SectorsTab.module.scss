@@ -1,3 +1,47 @@
 .wrapper {
-  border: 1px solid hotpink;
+  display: flex;
+  gap: var(--grid-margin);
+  margin: rem(8);
+  position: relative; // Important pour le positionnement absolu de l'arrière-plan
+}
+
+.sector {
+  @include apply(header-tab);
+
+  position: relative;
+  z-index: 2;
+  min-width: rem(108);
+  text-align: center;
+  color: var(--purple-fill-60);
+  text-transform: uppercase;
+  padding: var(--gap-s) var(--grid-margin);
+  border-radius: var(--border-radius);
+  transition: color 0.3s ease, font-variation-settings 0.3s ease;
+
+  &.active {
+    color: var(--color-white);
+    font-variation-settings: 'wght' 700, 'wdth' 65, 'ital' 0;
+  }
+
+  &:focus-visible {
+    outline: 1px solid red;
+  }
+}
+
+.activeBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  border-radius: var(--border-radius);
+  background: linear-gradient(
+    287deg,
+    rgba(0, 2, 119, 0.00) -5.89%,
+    rgba(145, 180, 116, 0.12) 47.54%,
+    rgba(165, 179, 144, 0.14) 65.24%,
+    rgba(210, 177, 206, 0.18) 74.25%,
+    rgba(224, 217, 226, 0.22) 82.57%,
+    rgba(232, 240, 238, 0.24) 100.96%
+  ), var(--purple-fill-20, #36074E);
+  pointer-events: none;
 }

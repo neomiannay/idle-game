@@ -21,21 +21,6 @@ $styles: ();
   }
 }
 
-%heading {
-  @include rule {
-    font-size: rem(30);
-    font-stretch: expanded;
-    font-weight: bold;
-    letter-spacing: 0;
-    line-height: 1;
-    text-transform: uppercase;
-  }
-
-  @include mobile-rule {
-    font-size: rem(20);
-  }
-}
-
 %body {
   @include rule {
     font-size: rem(10);
@@ -63,6 +48,16 @@ $styles: ();
   }
 }
 
+%header-tab {
+  @include rule {
+    font-size: rem(14);
+    font-stretch: normal;
+    font-variation-settings: 'wght' 500, 'wdth' 65, 'ital' 0;
+    letter-spacing: -0.02em;
+    line-height: normal;
+  }
+}
+
 %count {
   @include rule {
     font-size: rem(72);
@@ -76,12 +71,12 @@ $styles: ();
 }
 
 
-%label-bold {
+%label-light {
   @include rule {
     font-size: rem(24);
     font-stretch: normal;
     font-variation-settings: 'wght' 400, 'wdth' 0, 'ital' 0;
-    letter-spacing: 0.02em;
+    letter-spacing: -0.04em;
     line-height: 1.08;
     color: var(--purple-fill-20);
   }
@@ -174,8 +169,8 @@ $styles: ();
 
 %title-uppercase {
   @include rule {
-    font-size: rem(14);
-    font-variation-settings: "wght" 200, "wdth" 0;
+    font-size: rem(16);
+    font-variation-settings: "wght" 400, "wdth" 0;
     text-transform: uppercase;
     color: var(--purple-fill-40);
   }

@@ -17,7 +17,7 @@ $rem-reference: 1px;
   --color-grey: #717171;
   --color-light-green: #D5E9E7;
   --color-divider: #E6E6E6;;
-  --color-white: #F5F5F5;
+  --color-white: #ffffff;
   --color-overlay: rgb(245 245 245 / 80%);
   --color-hover: #666666;
   --color-disabled: #c2c2c2;
@@ -30,6 +30,7 @@ $rem-reference: 1px;
   --noir-bleute: #0F1426;
   --blanc: #F0F5F5;
   --vert-transparent: #2c7b5a10;
+  --purple-fill-60: #A792B1;
   --purple-fill-40: #6B6B94;
   --purple-fill-20: #07074E;
   --purple-fill-10: #060635;
@@ -51,7 +52,7 @@ $rem-reference: 1px;
 
   /* SIZES */
   --border-size: #{rem(.5)};
-  --border-radius: #{rem(3)};
+  --border-radius: #{rem(100)};
   --inner-border-radius: #{rem(1)};
   --viewport-inset: var(--grid-gutter);
 

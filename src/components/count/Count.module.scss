@@ -13,7 +13,7 @@
 }
 
 .title {
-  @include apply(label-bold);
+  @include apply(label-light);
   font-variation-settings: 'wght' 500, 'wdth' 0, 'ital' 0;
   text-transform: lowercase;
 }
