@@ -17,7 +17,6 @@ const ProductionSector = ({ className, ...props } : ProductionSectorProps) => {
       className={ classNames(styles.wrapper, className) }
       { ...props }
     >
-      ProductionSector
       <Sections />
     </Sector>
   )

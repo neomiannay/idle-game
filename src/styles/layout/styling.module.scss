@@ -189,3 +189,32 @@ $styles: ();
     }
   }
 }
+
+%card-title {
+  @include rule {
+    font-size: rem(16);
+    font-stretch: normal;
+    font-variation-settings: "wght" 640, "wdth" 60;
+    letter-spacing: -0.04em;
+    line-height: 1.16;
+  }
+}
+
+%card-text {
+  @include rule {
+    font-size: rem(14);
+    font-stretch: normal;
+    font-variation-settings: "wght" 200, "wdth" 0;
+    letter-spacing: 0.04em;
+    line-height: 1.16;
+  }
+}
+
+%shop-title {
+  @include rule {
+    font-size: rem(14);
+    font-stretch: normal;
+    font-variation-settings: "wght" 600, "wdth" 100;
+    line-height: 1.08;
+  }
+}

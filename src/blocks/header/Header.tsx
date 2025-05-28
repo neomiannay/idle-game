@@ -36,11 +36,11 @@ const Header = ({ className }: HeaderProps) => {
   const benefitsMemo = useMemo(() => formatBenefits(benefitsCount), [benefitsCount])
 
   return (
-    <>
+    <div className={ classNames(styles.wrapper) }>
       <AnimatePresence>
         { canDisplayUnit(EGameUnit.BENEFITS) && (
           <motion.div
-            className={ classNames(styles.wrapper, className) }
+            className={ classNames(styles.content, className) }
             { ...baseVariants }
             { ...stagger() }
           >
@@ -75,7 +75,7 @@ const Header = ({ className }: HeaderProps) => {
           </motion.div>
         ) }
       </AnimatePresence>
-    </>
+    </div>
   )
 }
 

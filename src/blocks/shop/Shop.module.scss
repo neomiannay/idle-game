@@ -1,44 +1,25 @@
-.wrapper {
+.title {
+  @include apply(shop-title);
   position: absolute;
-  z-index: 99999;
-  display: flex;
-  gap: var(--gap);
-  position: fixed;
-  bottom: 0;
+  // z-index: 1;
+  bottom: rem(32);
   left: 50%;
   transform: translateX(-50%);
-  width: grid(13, 2);
-  border-radius: rem(8);
-  padding: var(--gap);
+  text-transform: uppercase;
+}
+
+
+.wrapper {
+  position: absolute;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  padding: rem(24) var(--grid-margin) var(--grid-margin);
   overflow-y: auto;
   scrollbar-width: none;
-}
-
-.title {
-  font-size: rem(18);
-  margin-bottom: var(--gap);
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: var(--gap-s);
-}
-
-.unitTitle {
-  font-size: rem(16);
-  margin-bottom: var(--gap);
-  color: var(--color-main);
-}
-
-.cards {
-  display: flex;
   gap: var(--gap);
-}
 
-.purchasedBadge {
-  background-color: #4caf50;
-  color: white;
-  padding: 4px 8px;
-  border-radius: var(--border-radius);
-  font-size: rem(12);
-  align-self: flex-end;
-  margin-top: var(--gap-s);
+  // background-color: rgba(255, 105, 180, 0.301);
 }

@@ -3,8 +3,8 @@ import React, { useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { EGameSector, EGameUnit } from 'types/store'
-import { useSectorsProviderContext } from 'provider/SectorsProvider'
+import { EGameUnit } from 'types/store'
+import { baseVariants, fadeAppear } from 'core/animation'
 
 import styles from './Sections.module.scss'
 import ActifSection from './actif-section/ActifSection'
@@ -19,11 +19,9 @@ const Components = {
 
 const Sections = ({ className }: { className?: string }) => {
   const { canDisplayUnit } = useGameProviderContext()
-  const { setUnlockedSectors, unlockedSectors } = useSectorsProviderContext()
 
   const activeSections = useMemo(() => {
-    return Object.entries(Components).filter(([unitId]) => canDisplayUnit(unitId as EGameUnit)
-    )
+    return Object.entries(Components).filter(([unitId]) => canDisplayUnit(unitId as EGameUnit))
   }, [canDisplayUnit])
 
   const layoutClass =
@@ -40,17 +38,8 @@ const Sections = ({ className }: { className?: string }) => {
           <motion.div
             key={ unitId }
             layout
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{
-              duration: 0.3,
-              type: 'spring',
-              stiffness: 100,
-              damping: 20,
-              mass: 0.5,
-              delay: index * 0.05
-            }}
+            { ...baseVariants }
+            { ...fadeAppear }
           >
             <Component unitId={ unitId as EGameUnit } className={ styles[`section${index + 1}`] } />
           </motion.div>

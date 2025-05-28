@@ -1,49 +1,42 @@
 import React, { memo, useEffect } from 'react'
 
-import classNames from 'classnames'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { useUpgradeObserver } from 'hooks/useUpgradeObserver'
 import { EGameUnit } from 'types/store'
 
-import ShopElements from './shop-elements/ShopElements'
-import styles from './Shop.module.scss'
+import ShopMainView from './ShopMainView'
+import ShopFirstPurchaseView from './ShopFirstPurchaseView'
 
-type ShopProps = {
-  className?: string
-}
-
-const Shop = ({ className }: ShopProps) => {
+const Shop = ({ className }: { className?: string }) => {
   const { canDisplayUnit, units } = useGameProviderContext()
-  const { getElementsForUnit } = useInventoryContext()
+  const { getElementsForUnit, getItemPurchased } = useInventoryContext()
   const { checkForNewUpgrades } = useUpgradeObserver()
 
-  useEffect(() => {
-    checkForNewUpgrades()
-  }, [checkForNewUpgrades])
+  const firstAvailableElement = (Object.keys(units) as EGameUnit[])
+    .filter(unitId => canDisplayUnit(unitId))
+    .map(unitId => {
+      const items = getElementsForUnit(unitId, 'item')
+      const firstItemId = Object.keys(items)[0]
+      return firstItemId ? {
+        unitId,
+        elementId: firstItemId,
+        isPurchased: getItemPurchased(unitId, firstItemId)
+      } : null
+    })
+    .find(Boolean)
 
-  const unitIds = Object.keys(units) as EGameUnit[]
+  useEffect(() => checkForNewUpgrades(), [checkForNewUpgrades])
 
-  return (
-    <aside className={ classNames(styles.wrapper, className) }>
-      { unitIds.map(unitId => {
-        if (!canDisplayUnit(unitId)) return null
+  if (!firstAvailableElement) return null
 
-        const items = getElementsForUnit(unitId, 'item')
-        const upgrades = getElementsForUnit(unitId, 'upgrade')
-
-        const hasElements = Object.keys(items).length > 0 || Object.keys(upgrades).length > 0
-
-        if (!hasElements) return null
-
-        return (
-          <React.Fragment key={ unitId }>
-            <ShopElements elements={ upgrades } unitId={ unitId } type='upgrade' />
-            <ShopElements elements={ items } unitId={ unitId } type='item' />
-          </React.Fragment>
-        )
-      }) }
-    </aside>
+  return firstAvailableElement.isPurchased ? (
+    <ShopMainView className={ className } />
+  ) : (
+    <ShopFirstPurchaseView
+      unitId={ firstAvailableElement.unitId }
+      elementId={ firstAvailableElement.elementId }
+    />
   )
 }
 

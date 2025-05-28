@@ -15,7 +15,7 @@
   color: var(--purple-fill-60);
   text-transform: uppercase;
   padding: var(--gap-s) var(--grid-margin);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-xl);
   transition: color 0.3s ease, font-variation-settings 0.3s ease;
 
   &.active {
@@ -33,7 +33,7 @@
   top: 0;
   left: 0;
   z-index: 1;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-xl);
   background: linear-gradient(
     287deg,
     rgba(0, 2, 119, 0.00) -5.89%,

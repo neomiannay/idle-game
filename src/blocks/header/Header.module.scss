@@ -1,5 +1,10 @@
 .wrapper {
   width: grid(13, 2);
+  height: var(--header-height);
+
+  .content {
+    height: 100%;
+  }
 
   .pricesContainer {
     display: flex;
