@@ -41,6 +41,7 @@
   },
   "ACTIONS": {
     "BUY": "Acheter",
+    "BUY_RABIT": "Acheter un lapin",
     "ACCEPT": "Accepter",
     "REJECT": "Rejeter"
   },
@@ -87,6 +88,11 @@
       "ORCHID_EXTRACT_DESC": "Substance naturelle qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations.",
       "BENZYL_ALCOHOL": "Benzyl alcool",
       "BENZYL_ALCOHOL_DESC": "Substance naturelle qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations."
+    }
+  },
+  "RABIT_GAME": {
+    "LAYOUT": {
+      "NAME": "Protocole de Draize"
     }
   }
 }

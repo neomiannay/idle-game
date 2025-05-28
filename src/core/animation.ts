@@ -128,6 +128,19 @@ export const cut = {
   }
 }
 
+export const rabbitAnimation = () => ({
+  variants: {
+    initial: { opacity: 1, scale: .9, rotate: -5, filter: 'blur(4px)' },
+    animate: { opacity: 1, scale: 1, rotate: 0, filter: 'blur(0px)' },
+    exit: { opacity: 1, scale: .9, rotate: 5, filter: 'blur(4px)' }
+  } as Variants,
+  transition: {
+    duration: .2,
+    type: 'spring',
+    filter: { duration: .2 }
+  }
+})
+
 export const stagger = (stagger = .1, delay = 0) => ({
   variants: {
     animate: {

@@ -1,9 +1,11 @@
-export const RabitGameBgMask = ({
+export const RabitBgMask = ({
   width,
-  height
+  height,
+  bgScale
 }: {
   width: number;
   height: number;
+  bgScale: number;
 }) => {
   return (
     <mask
@@ -15,7 +17,10 @@ export const RabitGameBgMask = ({
       width={ width }
       height={ height }
     >
-      <g clipPath='url(#clip0_2013_8229)'>
+      <g
+        clipPath='url(#clip0_2013_8229)'
+        transform={ `scale(${bgScale})` }
+      >
         <circle cx='20' cy='20.5' r='4' fill='#fff' />
         <circle cx='60' cy='20.5' r='4' fill='#fff' />
         <circle cx='100' cy='20.5' r='4' fill='#fff' />

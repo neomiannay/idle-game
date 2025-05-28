@@ -1,18 +1,23 @@
 import React from 'react'
 
+import { useMotionValue } from 'motion/react'
+import { useL10n } from 'provider/L10nProvider'
+
 import styles from './RabitGame.module.scss'
-import RabitGameBg from './components/rabit-game-bg/RabitGameBg'
-import RabitGameImg from './components/rabit-game-img/RabitGameImg'
+import Rabit from './rabit/Rabit'
 
 const RabitGame = () => {
+  const l10n = useL10n()
+  const life = useMotionValue(0)
+  const price = 100
+
   return (
     <div className={ styles.wrapper }>
-      <div className={ styles.rabitGame }>
-        <RabitGameImg />
-        <RabitGameBg className={ styles.rabitGameBg } />
-      </div>
+      <h3 className={ styles.name }>{ l10n('RABIT_GAME.LAYOUT.NAME') }</h3>
+      <hr className={ styles.divider } />
+      <Rabit life={ life } price={ price } />
     </div>
   )
 }
 
-export default RabitGame
+export default React.memo(RabitGame)
