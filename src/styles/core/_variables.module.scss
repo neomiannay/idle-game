@@ -17,7 +17,7 @@ $rem-reference: 1px;
   --color-grey: #717171;
   --color-light-green: #D5E9E7;
   --color-divider: #E6E6E6;;
-  --color-white: #F5F5F5;
+  --color-white: #ffffff;
   --color-overlay: rgb(245 245 245 / 80%);
   --color-hover: #666666;
   --color-disabled: #c2c2c2;
@@ -30,11 +30,18 @@ $rem-reference: 1px;
   --noir-bleute: #0F1426;
   --blanc: #F0F5F5;
   --vert-transparent: #2c7b5a10;
+  --purple-fill-60: #A792B1;
   --purple-fill-40: #6B6B94;
   --purple-fill-20: #07074E;
   --purple-fill-10: #060635;
   --purple-transparent-24: rgba(28, 28, 66, 0.24);
   --translucent-24: linear-gradient(0deg, var(--purple-transparent-24, rgba(28, 28, 66, 0.24)) 0%, var(--purple-transparent-24, rgba(28, 28, 66, 0.24)) 100%), linear-gradient(287deg, rgba(0, 2, 119, 0.00) -5.89%, rgba(145, 180, 116, 0.12) 47.54%, rgba(165, 179, 144, 0.14) 65.24%, rgba(210, 177, 206, 0.18) 74.25%, rgba(224, 217, 226, 0.22) 82.57%, rgba(232, 240, 238, 0.24) 100.96%);
+
+  /* GRADIENTS */
+  --gradient-border:linear-gradient(287deg, rgba(142, 16, 205, 0) -5.89%, rgba(134, 22, 190, 0.58) 30.42%, rgba(140, 42, 190, 0.75) 49.99%, rgba(225, 181, 247, 0.90) 77.66%, rgba(111, 18, 158, 1) 100.96%), rgba(255, 255, 255, 0.6);
+  --gradient-white: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 40%, rgba(255, 255, 255, 0.40) 50%, rgba(255, 255, 255, 0.40) 55%, rgba(255, 255, 255, 0.00) 70%);
+  --gradient-40: linear-gradient(287deg, rgba(249, 243, 252, 0.60) -5.89%, rgba(229, 204, 241, 0.60) 30.42%, rgba(221, 192, 236, 0.60) 49.99%, rgba(240, 222, 249, 0.60) 77.66%, rgba(202, 166, 219, 0.60) 100.96%), rgba(255, 255, 255, 0.60);
+  --gradient-hover: linear-gradient(287deg, #F9F3FC -5.89%, #E5CCF1 30.42%, #DDC0EC 49.99%, #F0DEF9 77.66%, #CAA6DB 100.96%), rgba(255, 255, 255, 0.60);
 
   /* SHORTCUTS */
   --color-main: var(--color-black);
@@ -51,12 +58,13 @@ $rem-reference: 1px;
 
   /* SIZES */
   --border-size: #{rem(.5)};
-  --border-radius: #{rem(3)};
+  --border-radius: #{rem(8)};
+  --border-radius-xl: #{rem(100)};
   --inner-border-radius: #{rem(1)};
   --viewport-inset: var(--grid-gutter);
 
   /* HEADER */
-  --header-height: #{rem(100)};
+  --header-height: #{rem(245)};
 
   /* SIZES */
   --width-reference: #{$width-reference};

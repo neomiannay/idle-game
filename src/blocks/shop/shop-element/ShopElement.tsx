@@ -15,9 +15,10 @@ type ShopElementProps = {
   element: ItemType | UpgradeType
   unitId: EGameUnit
   type: ElementType
+  onBuyComplete?: () => void
 }
 
-const ShopElement = ({ elementId, element, unitId, type }: ShopElementProps) => {
+const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopElementProps) => {
   const { buyElementFromShop, shouldDisplayElement } = useInventoryContext()
   const l10n = useL10n()
   const isPurchased = useElementPurchased(unitId, elementId, type)
@@ -44,14 +45,23 @@ const ShopElement = ({ elementId, element, unitId, type }: ShopElementProps) => 
       className={ classNames(styles.wrapper, {
         [styles.unavailable]: !sequentiallyPurchasable || !canPurchase
       }) }
-      onClick={ () => buyElementFromShop(unitId, elementId, type) }
+      onClick={ () => {
+        buyElementFromShop(unitId, elementId, type)
+        onBuyComplete?.()
+      } }
       disabled={ !sequentiallyPurchasable || !canPurchase }
     >
-      <h4 className={ styles.cardName }>{ l10n(element.name) }</h4>
-      <p className={ styles.cardEffect }>{ element.description } { effectText }</p>
-      <span className={ styles.cardCost }>
-        { element.cost.value } <span>({ l10n(conjugate(unitName, element.cost.value)) })</span>
-      </span>
+      <div className={ styles.whiteBackground }>
+        <div className={ styles.inner }>
+          <div className={ styles.content }>
+            <h4 className={ styles.title }>{ l10n(element.name) }</h4>
+            <p className={ styles.text }>{ element.description }</p>
+          </div>
+          <span className={ styles.cost }>
+            { element.cost.value } <span>({ l10n(conjugate(unitName, element.cost.value)) })</span>
+          </span>
+        </div>
+      </div>
     </button>
   )
 }

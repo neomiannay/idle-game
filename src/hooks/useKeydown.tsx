@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
-
-function useKeydown (keys : string[] = [], callback = () => {}) {
-  const savedCallback = useRef<() => void>()
+function useKeydown (keys: string[] = [], callback = () => {}) {
+  const savedCallback = useRef<() => void>(callback)
 
   useEffect(() => {
     savedCallback.current = callback

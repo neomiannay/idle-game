@@ -23,7 +23,6 @@ const MarketingSector = ({ className, ...props } : MarketingSectorProps) => {
       className={ classNames(styles.wrapper, className) }
       { ...props }
     >
-      MarketingSector
       <SearchGame
         duration={ searchGameData.settings.duration }
         price={ searchGameData.settings.price }

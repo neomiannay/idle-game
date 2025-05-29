@@ -1,9 +1,9 @@
-import { ElementType } from 'types/store'
+import { EGameUnit, ElementType } from 'types/store'
 import { useInventoryContext } from 'provider/InventoryProvider'
 
 import useMotionState from './useMotionState'
 
-export const useSequentialPurchaseState = (unitId: string, elementId: string, type: ElementType) => {
+export const useSequentialPurchaseState = (unitId: EGameUnit, elementId: string, type: ElementType) => {
   const { getElementsForUnit, items, upgrades } = useInventoryContext()
 
   const elements = getElementsForUnit(unitId, type)

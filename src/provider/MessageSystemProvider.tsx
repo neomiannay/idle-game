@@ -1,7 +1,7 @@
 import React, { useEffect, useState, createContext, useContext, useMemo } from 'react'
 
 import useTinyEmitter from 'hooks/useTinyEmitter'
-import { MessageType } from 'types/store'
+import { EGamePrice, EGameUnit, MessageType } from 'types/store'
 
 import messagesData from '../data/messageEvents.json'
 
@@ -69,11 +69,11 @@ export const MessageSystemProvider = ({ children }: BaseProviderProps) => {
       if (activeMessage.accept) {
         Object.entries(activeMessage.accept).forEach(([key, value]) => {
           if (key === 'selling') {
-            const sellingPrice = priceContext.getPrice(key)
+            const sellingPrice = priceContext.getPrice(key as EGamePrice)
             if (sellingPrice)
               sellingPrice.rawValue.add(value)
           } else if (key === 'production') {
-            const productionPrice = priceContext.getPrice(key)
+            const productionPrice = priceContext.getPrice(key as EGamePrice)
             if (productionPrice) {
               if (value < 0) {
                 const currentValue = productionPrice.rawValue.get()
@@ -83,14 +83,14 @@ export const MessageSystemProvider = ({ children }: BaseProviderProps) => {
             }
           } else {
             // Pour les unités standards (reputation, actif, complex, etc.)
-            modifyUnitValue(key, value)
+            modifyUnitValue(key as EGameUnit, value)
           }
         })
       }
     } else {
       if (activeMessage.decline) {
         Object.entries(activeMessage.decline).forEach(([key, value]) => {
-          modifyUnitValue(key, value)
+          modifyUnitValue(key as EGameUnit, value)
         })
       }
     }

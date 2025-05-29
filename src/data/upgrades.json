@@ -6,7 +6,7 @@
         "_id": "lvl1",
         "unitId": "actif",
         "name": "UPGRADES.LEVEL1",
-        "description": "Niveau 1",
+        "description": "Vraiment la le poulet la font avec le flou et tout genre on est pense quoi de cette DA genre la y’a du texte et c’est cool en plus mais",
         "valueByAction": 2,
         "apparitionCondition": {
           "unitId": "actif",

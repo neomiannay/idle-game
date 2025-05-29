@@ -2,9 +2,9 @@
   position: relative;
   z-index: 5;
   overflow: hidden;
-	min-height: 100vh;
+	height: 100%;
   visibility: hidden;
-  background-color: rgb(250, 91, 250);
+  // background-color: rgb(250, 91, 250);
   pointer-events: auto;
 
   &.exiting {

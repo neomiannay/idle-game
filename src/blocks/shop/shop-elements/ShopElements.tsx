@@ -1,11 +1,8 @@
 import React from 'react'
 
-import classNames from 'classnames'
 import { EGameUnit, ElementType, ItemType, UpgradeType } from 'types/store'
 
 import ShopElement from '../shop-element/ShopElement'
-
-import styles from './ShopElements.module.scss'
 
 type ShopElementsProps = {
   className?: string
@@ -16,7 +13,7 @@ type ShopElementsProps = {
 
 const ShopElements = ({ className, elements, unitId, type }: ShopElementsProps) => {
   return (
-    <div className={ classNames(styles.wrapper, className) }>
+    <React.Fragment key={ unitId }>
       { Object.entries(elements).map(([elementId, element]) => (
         <ShopElement
           key={ elementId }
@@ -26,7 +23,7 @@ const ShopElements = ({ className, elements, unitId, type }: ShopElementsProps) 
           type={ type }
         />
       )) }
-    </div>
+    </React.Fragment>
   )
 }
 

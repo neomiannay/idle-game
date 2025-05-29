@@ -21,23 +21,22 @@ export const baseTransition = { duration: .7, ease: bezier.quintEaseOut }
 export const appear = {
   variants: {
     initial: ({ invert = false } = {}) => ({ y: invert ? '-100%' : '100%' }),
-    animate: { y: '0%' }
+    animate: { y: '0%' },
+    exit: ({ invert = false } = {}) => ({ y: invert ? '100%' : '-100%' })
   } as Variants,
   // transformTemplate: ({ y }) => y !== '0%' ? `translateY(${y}) translateZ(0)` : 'none',
   transition: baseTransition
 }
 
-appear.variants.exit = appear.variants.initial
-
 export const fadeAppear = {
   variants: {
-    initial: { opacity: 0, scale: .95 },
-    animate: { opacity: 1, scale: 1 }
+    initial: ({ invert = false } = {}) => ({ y: invert ? '-30%' : '30%', opacity: 0 }),
+    animate: { y: '0%', opacity: 1 }
   } as Variants,
   transition: baseTransition
 }
 
-fadeAppear.variants.exit = { opacity: 0, scale: .95 }
+fadeAppear.variants.exit = fadeAppear.variants.initial
 
 const toggleTransiton = (delay = 0) => {
   return ({ duration: .5, ease: easing.quintEaseInOut, delay })

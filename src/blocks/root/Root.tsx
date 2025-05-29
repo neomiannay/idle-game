@@ -6,7 +6,7 @@ import Meta from 'blocks/meta/Meta'
 import Header from 'blocks/header/Header'
 import { useIterationContext } from 'provider/IterationProvider'
 import Sectors from 'blocks/sectors/Sectors'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence } from 'motion/react'
 import { baseVariants } from 'core/animation'
 import useTransitionType from 'hooks/useTransitionType'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
@@ -36,19 +36,17 @@ function Root ({ className }: RootProps) {
             <Header />
 
             <AnimatePresence custom={ custom }>
-              <motion.div key='sectors' { ...baseVariants }>
-                <Sectors />
-              </motion.div>
+              <Sectors key='sectors' { ...baseVariants } />
             </AnimatePresence>
 
-            <button
+            { /* <button
               className={ classNames(styles.pauseButton, {
                 [styles.paused]: isPaused
               }) }
               onClick={ togglePause }
             >
               { isPaused ? 'Paused' : 'Running' }
-            </button>
+            </button> */ }
 
             <Shop />
           </>

@@ -25,8 +25,8 @@ export const SectorsProvider = ({ children }: BaseProviderProps) => {
 
   const sectors = useMemo<EGameSector[]>(() => [
     EGameSector.PRODUCTION,
-    EGameSector.SAHUR,
-    EGameSector.TRALALERO
+    EGameSector.LABORATORY,
+    EGameSector.PUBLICITY
   ], [])
 
   const currentSector = useMotionValue(defaultUnlockedSector)

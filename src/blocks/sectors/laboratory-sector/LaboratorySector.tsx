@@ -23,7 +23,6 @@ const LaboratorySector = ({ className, ...props } : LaboratorySectorProps) => {
       className={ classNames(styles.wrapper, className) }
       { ...props }
     >
-      LaboratorySector
       <SearchGame
         duration={ searchGameData.settings.duration }
         price={ searchGameData.settings.price }

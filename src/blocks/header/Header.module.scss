@@ -1,79 +1,77 @@
 .wrapper {
-  width: 100%;
+  width: grid(13, 2);
+  height: var(--header-height);
 
-  .information {
+  .content {
+    height: 100%;
+  }
+
+  .pricesContainer {
     display: flex;
     justify-content: space-between;
     width: grid(13, 0);
-    margin: auto;
-    padding-top: rem(16);
+    padding-top: var(--grid-margin);
+    margin: 0 auto var(--grid-margin);
   }
 
   .prices {
     display: flex;
-    gap: rem(52);
+    gap: grid(0, 3);
   }
 
   .price {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: rem(2);
 
     .title {
       @include apply(title-uppercase);
     }
 
     .count {
-      @include apply(label-bold);
+      @include apply(label-light);
     }
   }
+}
 
-  .blur-container {
-    position: relative;
-    overflow: hidden;
-  }
+.benefits {
+  position: relative;
 
-  .blurred-text {
-    text-align: center;
-    filter: blur(7px);
-    mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-    backdrop-filter: blur(16px);
-  }
-
-  .clearText {
-    text-align: center;
-    width: 100%;
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  &:after {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
-  }
-
-
-  .benefits {
-    color: rgba(112, 112, 196, 0.54);
-    font-variation-settings: "wght" 500;
-    font-variant-numeric: lining-nums tabular-nums;
-    letter-spacing: -8.8px;
-    font-size: 7.8vw;
     width: 100%;
-    height: fit-content;
-    white-space: nowrap;
-    overflow: hidden;
-    text-align: justify;
-    display: inline-block;
-    vertical-align: top;
-    user-select: none;
+    height: 100%;
+    z-index: 1;
+    backdrop-filter: blur(14px);
+    mask: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+}
 
-  &::after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    width: 100%;
-    height: 0;
-  }
-  }
+.money {
+  color: rgba(209, 147, 240, 0.40);
+  font-variation-settings: "wdth" 65, "wght" 500;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.09em;
+  line-height: 108%;
+  text-align: justify;
+  padding: 0 calc(var(--grid-margin) / 2);
+}
+
+.blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  color: rgba(209, 147, 240, 0.24);
 }
 

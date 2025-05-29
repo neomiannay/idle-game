@@ -40,8 +40,8 @@ export enum EStatus {
 
 export enum EGameSector {
   PRODUCTION = 'production',
-  TRALALERO = 'tralalero',
-  SAHUR = 'sahur',
+  LABORATORY = 'laboratoire',
+  PUBLICITY = 'publicité',
 }
 
 export interface GameUnit {

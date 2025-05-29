@@ -5,9 +5,15 @@ import useMotionState from './useMotionState'
 
 const useElementPurchased = (unitId: string, elementId: string, type: ElementType) => {
   const { items, upgrades } = useInventoryContext()
-  const purchasedMotionValue = type === 'item'
-    ? items[unitId]?.[elementId]?.purchased
-    : upgrades[unitId]?.[elementId]?.purchased
+
+  const src = type === 'item'
+    ? items
+    : upgrades
+
+  const purchasedMotionValue = src[unitId]?.[elementId]?.purchased
+
+  if (!purchasedMotionValue) return false
+
   return useMotionState(purchasedMotionValue)
 }
 
