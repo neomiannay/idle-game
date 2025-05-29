@@ -1,18 +1,5 @@
 import memoize from 'lodash/memoize'
 
-const requestFullscreen = (el: HTMLElement) => {
-  if (el.requestFullscreen) el.requestFullscreen()
-  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen()
-  else if (el.mozRequestFullScreen) el.mozRequestFullScreen()
-  else if (el.msRequestFullscreen) el.msRequestFullscreen()
-  else if (el.webkitEnterFullScreen) el.webkitEnterFullScreen()
-}
-const exitFullscreen = () => {
-  if (document.exitFullscreen) document.exitFullscreen()
-  else if (document.webkitExitFullscreen) document.webkitExitFullscreen()
-  else if (document.mozCancelFullScreen) document.mozCancelFullScreen()
-  else if (document.msExitFullscreen) document.msExitFullscreen()
-}
 const mouseEvent = (event:any) => {
   if (event.originalEvent) event = event.originalEvent
 
@@ -63,8 +50,6 @@ const offsetTop = function (el: HTMLElement) {
 const local = () => window && (parseInt(window.location.port) >= 8000)
 
 export {
-  requestFullscreen,
-  exitFullscreen,
   offsetTop,
   resetElement,
   mouseEvent,
