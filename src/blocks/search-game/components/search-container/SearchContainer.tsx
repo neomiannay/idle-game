@@ -60,10 +60,8 @@ const SearchContainer = ({
               ref={ contentRef }
             >
               <SearchStart
-                disabled={ disabled }
-                duration={ duration }
                 price={ price }
-                setIsPlaying={ () => setSearchState(1) }
+                setSearchState={ setSearchState }
               >
                 { `${l10n(layoutInfos.buttonLabel)} (${price.value}${l10n('UNITS.EURO')})` }
               </SearchStart>

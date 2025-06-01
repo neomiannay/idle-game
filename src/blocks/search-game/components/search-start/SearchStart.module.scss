@@ -5,3 +5,9 @@
   border: rem(1) solid var(--color-black);
   border-radius: rem(10);
 }
+
+.disabled {
+  color: var(--color-disabled);
+  border: rem(1) solid var(--color-disabled);
+  cursor: not-allowed;
+}
