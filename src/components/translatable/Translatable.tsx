@@ -5,30 +5,33 @@ import { useSpring, useMotionValue, useAnimationFrame } from 'motion/react'
 
 type TranslatableProps = {
   children: React.ReactNode;
+  parentRef?: React.RefObject<HTMLElement | null>;
   distance?: number;
   stiffness?: number;
   damping?: number;
   mass?: number;
 }
 
-const Translatable = ({ children, distance, stiffness, damping, mass }: TranslatableProps) => {
+const Translatable = ({ children, distance, stiffness, damping, mass, parentRef }: TranslatableProps) => {
   // Animations
   const ref = useRef<HTMLDivElement>(null)
+  const currentRef = parentRef ?? ref
+
   const options = {
     stiffness: stiffness ?? 100,
     damping: damping ?? 10,
     mass: mass ?? 1,
     distance: distance ?? 25
   }
-  const mouse = useMouseValue({ absolute: true, ref })
+  const mouse = useMouseValue({ absolute: true, ref: currentRef })
   const springX = useSpring(useMotionValue(0.5), options)
   const springY = useSpring(useMotionValue(0.5), options)
 
   let rect: DOMRect
   const handlePositionChange = useCallback(
     (axis: 'x' | 'y', value: number) => {
-      if (!ref.current) return
-      rect ??= ref.current.getBoundingClientRect()
+      if (!currentRef.current) return
+      rect ??= currentRef.current.getBoundingClientRect()
 
       const normalizedValue = axis === 'x'
         ? (value - rect.left) / rect.width
@@ -47,7 +50,7 @@ const Translatable = ({ children, distance, stiffness, damping, mass }: Translat
     mouse.y.on('change', (value) => handlePositionChange('y', value))
 
     // Add mouse leave handler
-    const element = ref.current
+    const element = currentRef.current
     if (!element) return
 
     const handleMouseLeave = () => {

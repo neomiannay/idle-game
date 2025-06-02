@@ -1,0 +1,17 @@
+.rabit {
+  position: relative;
+  margin-bottom: rem(-32);
+  margin-top: rem(-16);
+
+  &Description {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateX(-50%) scale(1.025);
+    }
+  }
+}

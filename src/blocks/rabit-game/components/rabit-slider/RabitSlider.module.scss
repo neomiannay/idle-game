@@ -1,0 +1,20 @@
+.rabitSlider {
+  position: relative;
+  overflow: hidden;
+  z-index: 100;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+
+  &Content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  &Button {
+    padding: 10px;
+    border-radius: 50%;
+  }
+}

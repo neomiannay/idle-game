@@ -13,7 +13,7 @@ $rem-reference: 1px;
   --rem: 1px;
 
   /* COLORS */
-  --color-black: #0A0A0A;
+  --color-black: #0a0a0a;
   --color-grey: #717171;
   --color-light-green: #D5E9E7;
   --color-divider: #E6E6E6;;
@@ -24,18 +24,55 @@ $rem-reference: 1px;
 
   --skin-0: #191310;
   --skin-10: #393232;
-  --skin-20: #57524E;
-  --skin-60: #99918C;
-  --skin-100: #D1CECC;
-  --noir-bleute: #0F1426;
-  --blanc: #F0F5F5;
+  --skin-20: #57524e;
+  --skin-60: #99918c;
+  --skin-100: #d1cecc;
+
+  --fill-10-0: #250635;
+  --fill-20-0: #36074e;
+  --fill-30-0: #4b285d;
+  --fill-40-0: #614d6b;
+  --fill-60-0: #a792b1;
+  --fill-100-0: #ffffff;
+
+  --fill-10-100: #edfdf5;
+  --fill-20-100: #ddf7eb;
+  --fill-30-100: #a2d7be;
+  --fill-40-100: #88aa9a;
+  --fill-60-100: #627a6e;
+  --fill-100-100: #040706;
+
+  --transparent-dark-8-0: #25063508;
+  --transparent-dark-16-0: #25063514;
+  --transparent-dark-24-0: #2506351e;
+
+  --transparent-dark-8-100: #bfe4d308;
+  --transparent-dark-16-100: #bfe4d314;
+  --transparent-dark-24-100: #bfe4d31e;
+
+  --noir-bleute: #0f1426;
+  --blanc: #f0f5f5;
   --vert-transparent: #2c7b5a10;
   --purple-fill-60: #A792B1;
   --purple-fill-40: #6B6B94;
   --purple-fill-20: #07074E;
   --purple-fill-10: #060635;
   --purple-transparent-24: rgba(28, 28, 66, 0.24);
-  --translucent-24: linear-gradient(0deg, var(--purple-transparent-24, rgba(28, 28, 66, 0.24)) 0%, var(--purple-transparent-24, rgba(28, 28, 66, 0.24)) 100%), linear-gradient(287deg, rgba(0, 2, 119, 0.00) -5.89%, rgba(145, 180, 116, 0.12) 47.54%, rgba(165, 179, 144, 0.14) 65.24%, rgba(210, 177, 206, 0.18) 74.25%, rgba(224, 217, 226, 0.22) 82.57%, rgba(232, 240, 238, 0.24) 100.96%);
+  --translucent-24:
+    linear-gradient(
+      0deg,
+      var(--purple-transparent-24, rgba(28, 28, 66, 0.24)) 0%,
+      var(--purple-transparent-24, rgba(28, 28, 66, 0.24)) 100%
+    ),
+    linear-gradient(
+      287deg,
+      rgba(0, 2, 119, 0) -5.89%,
+      rgba(145, 180, 116, 0.12) 47.54%,
+      rgba(165, 179, 144, 0.14) 65.24%,
+      rgba(210, 177, 206, 0.18) 74.25%,
+      rgba(224, 217, 226, 0.22) 82.57%,
+      rgba(232, 240, 238, 0.24) 100.96%
+    );
 
   /* GRADIENTS */
   --gradient-border:linear-gradient(287deg, rgba(142, 16, 205, 0) -5.89%, rgba(134, 22, 190, 0.58) 30.42%, rgba(140, 42, 190, 0.75) 49.99%, rgba(225, 181, 247, 0.90) 77.66%, rgba(111, 18, 158, 1) 100.96%), rgba(255, 255, 255, 0.6);

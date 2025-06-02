@@ -13,24 +13,26 @@ import styles from './RabitImg.module.scss'
 
 type TRabitImg = {
   life: MotionValue<number>
+  attack: number
 }
 
-const RabitImg = ({ life }: TRabitImg) => {
+let lifeValue = 100
+const imagePaths = [
+  'img/rabit/rabit_6.png',
+  'img/rabit/rabit_5.png',
+  'img/rabit/rabit_4.png',
+  'img/rabit/rabit_3.png',
+  'img/rabit/rabit_2.png',
+  'img/rabit/rabit_1.png'
+]
+
+const RabitImg = ({ life, attack }: TRabitImg) => {
   const [images, setImages] = useState<HTMLImageElement[]>([])
-  const [index, setIndex] = useState(0)
-  const height = useTransform(life, [0, 100], ['0%', '100%'])
+  const [index, setIndex] = useState(imagePaths.length - 1)
+  const height = useTransform(life, [0, 100], ['100%', '0%'])
 
   // Load images
   useEffect(() => {
-    const imagePaths = [
-      'img/rabit/rabit_1.png',
-      'img/rabit/rabit_2.png',
-      'img/rabit/rabit_3.png',
-      'img/rabit/rabit_4.png',
-      'img/rabit/rabit_5.png',
-      'img/rabit/rabit_6.png'
-    ]
-
     const loadedImages = imagePaths.map((src) => {
       const img = new Image()
       img.src = src
@@ -42,12 +44,13 @@ const RabitImg = ({ life }: TRabitImg) => {
 
   // Handle rabbit click
   const onRabitClick = () => {
-    const value = index + 1
-    if (index < images.length - 1) {
-      setIndex(value)
-      const res = (value / (images.length - 1)) * 100
+    const prevLifeValue = lifeValue
+    lifeValue -= attack
+    const newIndex = Math.floor((lifeValue / 100) * images.length)
 
-      animate(life, res, {
+    if (lifeValue !== prevLifeValue) {
+      setIndex(Math.max(0, newIndex))
+      animate(life, Math.max(0, lifeValue), {
         duration: 0.2,
         type: 'spring'
       })

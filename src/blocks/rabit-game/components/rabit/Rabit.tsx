@@ -3,17 +3,21 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useMouseValue from 'hooks/useMouseValue'
 import { MotionValue, useMotionValue, useSpring } from 'motion/react'
 import { useL10n } from 'provider/L10nProvider'
+import Translatable from 'components/translatable/Translatable'
+import { formatValue } from 'helpers/units'
 
 import styles from './Rabit.module.scss'
 import RabitImg from './components/rabit-img/RabitImg'
 import RabitBg from './components/rabit-bg/RabitBg'
+import RabitBtn from './components/rabit-btn/RabitBtn'
 
 type TRabit = {
   life: MotionValue<number>
-  price: string | number
+  price: number
+  attack: number
 }
 
-const Rabit = ({ life, price }: TRabit) => {
+const Rabit = ({ life, price, attack }: TRabit) => {
   const l10n = useL10n()
   const gameRef = useRef<HTMLDivElement>(null)
   const options = {
@@ -65,16 +69,16 @@ const Rabit = ({ life, price }: TRabit) => {
   return (
     <div className={ styles.rabit }>
       <div ref={ gameRef }>
-        <RabitImg life={ life } />
+        <RabitImg life={ life } attack={ attack } />
         <RabitBg opacity={ opacity } springX={ springX } springY={ springY } />
       </div>
       <div className={ styles.rabitDescription }>
-        <div className={ styles.rabitDescriptionLeft }>
-          { `${price} ${l10n('UNITS.EURO')}` }
-        </div>
-        <div className={ styles.rabitDescriptionRight }>
-          { l10n('ACTIONS.BUY_RABIT') }
-        </div>
+        <Translatable parentRef={ gameRef }>
+          <RabitBtn
+            price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
+            label={ l10n('ACTIONS.BUY_RABIT') }
+          />
+        </Translatable>
       </div>
     </div>
   )

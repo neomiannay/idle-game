@@ -10,9 +10,19 @@ type GradientTextProps = {
   startColor?: string;
   endColor?: string;
   duration?: number;
+  className?: string;
+  props?: React.HTMLAttributes<HTMLDivElement>;
 }
 
-const GradientText = ({ children, blur, startColor, endColor, duration }: GradientTextProps) => {
+const GradientText = ({
+  children,
+  blur,
+  startColor,
+  endColor,
+  duration,
+  className,
+  ...props
+}: GradientTextProps) => {
   startColor ??= '#a1d7d1'
   endColor ??= '#133946'
   duration ??= 1.5
@@ -22,24 +32,26 @@ const GradientText = ({ children, blur, startColor, endColor, duration }: Gradie
 
   return (
     <div
-      className={ styles.gradient }
+      { ...props }
+      className={ classNames(styles.gradient, className) }
     >
       <div
         className={ classNames(styles.gradientOverlay, styles.gradientItem) }
-        style={{ background, animationDuration: `${duration}s` }}
+        style={{
+          background,
+          animationDuration: `${duration}s`
+        }}
       >
         { children }
       </div>
       { blur && (
         <div
           className={ classNames(styles.gradientBlur, styles.gradientItem) }
-          style={
-            {
-              filter: `blur(${blur}px)`,
-              background: backgroundBlur,
-              animationDuration: `${duration}s`
-            }
-          }
+          style={{
+            filter: `blur(${blur}px)`,
+            background: backgroundBlur,
+            animationDuration: `${duration}s`
+          }}
         >
           { children }
         </div>

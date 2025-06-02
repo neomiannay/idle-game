@@ -42,6 +42,7 @@
   "ACTIONS": {
     "BUY": "Acheter",
     "BUY_RABIT": "Acheter un lapin",
+    "TRY": "Tester",
     "ACCEPT": "Accepter",
     "REJECT": "Rejeter"
   },
