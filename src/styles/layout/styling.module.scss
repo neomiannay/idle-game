@@ -175,6 +175,17 @@ $styles: ();
     color: var(--purple-fill-40);
   }
 }
+%subtitle-uppercase {
+  @include rule {
+    color: var(--skin-60);
+    font-family: "PP Formula";
+    font-size: rem(10);
+    font-style: normal;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: rem(12);
+  }
+}
 
 %basic-hover {
   @include rule {

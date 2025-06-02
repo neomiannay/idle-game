@@ -9,6 +9,8 @@ import { PricesProvider } from './PricesProvider'
 import { MessageSystemProvider } from './MessageSystemProvider'
 import { FeedbackProvider } from './FeedbackProvider'
 import { SectorsProvider } from './SectorsProvider'
+import { SearchLaboratoryProvider } from './SearchLaboratoryProvider'
+import { SearchPublicityProvider } from './SearchPublicityProvider'
 
 type GlobalContextType = {
   loading: boolean
@@ -34,7 +36,9 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
     SectorsProvider,
     InventoryProvider,
     MessageSystemProvider,
-    IterationProvider
+    IterationProvider,
+    SearchLaboratoryProvider,
+    SearchPublicityProvider
   ]
 
   context = {

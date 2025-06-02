@@ -1,22 +1,22 @@
 import React from 'react'
 
-import { EGamePrice, EGameUnit } from 'types/store'
+import { EGamePrice, EGameSector, EGameUnit } from 'types/store'
 import { useL10n } from 'provider/L10nProvider'
 import classNames from 'classnames'
-import { useGameProviderContext } from 'provider/GameProvider'
-import useMotionState from 'hooks/useMotionState'
 import Translatable from 'components/translatable/Translatable'
 import { getRoundedTime } from 'helpers/units'
+import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
+import { useSearchPublicityContext } from 'provider/SearchPublicityProvider'
 
 import styles from './SearchGame.module.scss'
 import SearchContainer from './components/search-container/SearchContainer'
 
-type TSearchGameItemValue = {
+export type TSearchGameItemValue = {
   value: number;
   target: EGameUnit | EGamePrice;
 };
 
-type TSearchGameItem = {
+export type TSearchGameItem = {
   id: string;
   disabled: boolean;
   name: string;
@@ -24,15 +24,18 @@ type TSearchGameItem = {
   values: TSearchGameItemValue[];
 };
 
-type TSearchGameLayoutInfos = {
+export type TSearchGameLayoutInfos = {
   name: string;
   title: string;
   subtitle: string;
   description: string;
   buttonLabel: string;
+  new: string;
   composition: string;
   probability: string;
   duration: string;
+  decline: string;
+  accept: string;
 };
 
 export type SearchGameProps = {
@@ -41,6 +44,7 @@ export type SearchGameProps = {
   efficiency: number; // In percentage
   layoutInfos: TSearchGameLayoutInfos;
   items: TSearchGameItem[];
+  sectorId: EGameSector
 };
 
 const SearchGame: React.FC<SearchGameProps> = ({
@@ -48,17 +52,30 @@ const SearchGame: React.FC<SearchGameProps> = ({
   price,
   efficiency,
   layoutInfos,
-  items
+  items,
+  sectorId
 }) => {
   const l10n = useL10n()
-  const { getUnit } = useGameProviderContext()
-
-  const benefits = getUnit(EGameUnit.BENEFITS)
-  const benefitsCount = benefits
-    ? useMotionState(benefits.motionValue, (v) => v)
-    : 0
+  const { complexComposition } = useSearchLaboratoryContext()
+  const { tips } = useSearchPublicityContext()
 
   const roundedTime = getRoundedTime(duration)
+
+  let itemList
+
+  switch (sectorId) {
+    case EGameSector.LABORATORY:
+      itemList = complexComposition
+      break
+
+    case EGameSector.PUBLICITY:
+      itemList = tips
+      break
+
+    default:
+      itemList = complexComposition
+      break
+  }
 
   return (
     <div className={ styles.wrapper }>
@@ -124,22 +141,27 @@ const SearchGame: React.FC<SearchGameProps> = ({
           unit: EGameUnit.BENEFITS,
           value: price
         }}
-        disabled={ benefitsCount < price && false }
+        items={ items }
+        sectorId={ sectorId }
       />
-      <hr className={ styles.divider } />
-      <div className={ styles.itemsContainer }>
-        <h6 className={ classNames(styles.itemsLabel, styles.subTitle) }>
-          { l10n(layoutInfos.composition) }
-        </h6>
-        <small className={ styles.itemsWrapper }>
-          { items.map((item, index) => (
-            <span key={ item.id }>
-              { l10n(item.name) }
-              { index !== items.length - 1 ? ', ' : '.' }
-            </span>
-          )) }
-        </small>
-      </div>
+      { itemList && (
+        <>
+          <hr className={ styles.divider } />
+          <div className={ styles.itemsContainer }>
+            <h6 className={ styles.subTitle }>
+              { l10n(layoutInfos.composition) }
+            </h6>
+            <small className={ styles.itemsWrapper }>
+              { itemList?.map((item, index) => (
+                <span key={ item.id }>
+                  { l10n(item.name) }
+                  { index !== items.length - 1 ? ', ' : '.' }
+                </span>
+              )) }
+            </small>
+          </div>
+        </>
+      ) }
     </div>
   )
 }

@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useMemo } from 'react'
 
 import classNames from 'classnames'
 import SearchGame, { SearchGameProps } from 'blocks/search-game/SearchGame'
+import { EGameSector } from 'types/store'
 
 import searchActifs from 'data/games/search-actifs.json'
 
@@ -29,6 +30,7 @@ const MarketingSector = ({ className, ...props } : MarketingSectorProps) => {
         efficiency={ searchGameData.settings.efficiency }
         layoutInfos={ searchGameData.layout }
         items={ searchGameData.items as SearchGameProps['items'] }
+        sectorId={ EGameSector.PUBLICITY }
       />
     </Sector>
   )

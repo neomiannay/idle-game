@@ -1,0 +1,56 @@
+.wrapper {
+display: flex;
+flex-direction: column;
+gap: rem(12);
+width: 100%;
+}
+
+.subTitle {
+  @include apply(subtitle-uppercase);
+  margin: 0;
+}
+
+.name {
+font-size: rem(14);
+text-transform: uppercase;
+letter-spacing: 1px;
+font-variation-settings: "wght" 400;
+margin: 0;
+}
+
+.description {
+  font-size: rem(12);
+  letter-spacing: -0.24px;
+  font-variation-settings: "wght" 240, "wdth" 24, "ital" 0;
+  margin: 0;
+  max-width: 300px;
+}
+
+.effects {
+  display: flex;
+  gap: rem(12);
+  font-size: rem(12);
+  letter-spacing: -0.24px;
+  font-variation-settings: "wght" 240, "wdth" 24, "ital" 0;
+  margin: 0;
+
+  p {
+	margin: 0;
+  }
+}
+
+.choices {
+  display: flex;
+  gap: rem(12);
+
+  button {
+    font-variation-settings: "wght" 700, "wdth" 20, "ital" 0;
+    text-transform: uppercase;
+	padding: rem(8) rem(12);
+
+	&:hover {
+		@include apply(basic-hover);
+		cursor: pointer;
+	}
+  }
+}

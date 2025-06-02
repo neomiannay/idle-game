@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 
 import { useL10n } from 'provider/L10nProvider'
-import { EGameUnit } from 'types/store'
-import { SearchGameProps } from 'blocks/search-game/SearchGame'
+import { EGameSector, EGameUnit } from 'types/store'
+import { SearchGameProps, TSearchGameItem } from 'blocks/search-game/SearchGame'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
+import { useSearchPublicityContext } from 'provider/SearchPublicityProvider'
 
 import SearchProgress from '../search-progress/SearchProgress'
 import SearchStart from '../search-start/SearchStart'
@@ -13,27 +15,66 @@ import styles from './SearchContainer.module.scss'
 
 export type SearchContainerProps = {
   layoutInfos: SearchGameProps['layoutInfos'];
-  disabled: boolean;
   duration: number;
   price: {
     unit: EGameUnit;
     value: number;
   };
+  items: TSearchGameItem[];
+  sectorId: EGameSector;
 };
 
 const SearchContainer = ({
   layoutInfos,
-  disabled,
   duration,
-  price
+  price,
+  items,
+  sectorId
 }: SearchContainerProps) => {
   const l10n = useL10n()
-  const [searchState, setSearchState] = useState(0)
   const [contentHeight, setContentHeight] = useState<number | 'auto'>('auto')
   const contentRef = useRef<HTMLDivElement>(null)
+  const { searchStateLab, setSearchStateLab, newItemLab, startProgressLab, setNewItemLab, saveNewItemLab, currentTimeLab } = useSearchLaboratoryContext()
+  const { searchStatePub, setSearchStatePub, newItemPub, startProgressPub, setNewItemPub, saveNewItemPub, currentTimePub } = useSearchPublicityContext()
 
-  const onProgressEnd = () => {
-    setSearchState(2)
+  let searchState
+  let setSearchState
+  let newItem
+  let startProgress
+  let setNewItem
+  let saveNewItem
+  let currentTime
+
+  switch (sectorId) {
+    case EGameSector.LABORATORY:
+      searchState = searchStateLab
+      setSearchState = setSearchStateLab
+      newItem = newItemLab
+      startProgress = startProgressLab
+      setNewItem = setNewItemLab
+      saveNewItem = saveNewItemLab
+      currentTime = currentTimeLab
+      break
+
+    case EGameSector.PUBLICITY:
+      searchState = searchStatePub
+      setSearchState = setSearchStatePub
+      newItem = newItemPub
+      startProgress = startProgressPub
+      setNewItem = setNewItemPub
+      saveNewItem = saveNewItemPub
+      currentTime = currentTimePub
+      break
+
+    default:
+      searchState = searchStateLab
+      setSearchState = setSearchStateLab
+      newItem = newItemLab
+      startProgress = startProgressLab
+      setNewItem = setNewItemLab
+      saveNewItem = saveNewItemLab
+      currentTime = currentTimeLab
+      break
   }
 
   useEffect(() => {
@@ -61,7 +102,11 @@ const SearchContainer = ({
             >
               <SearchStart
                 price={ price }
+                duration={ duration }
+                items={ items }
                 setSearchState={ setSearchState }
+                startProgress={ startProgress }
+                setNewItem={ setNewItem }
               >
                 { `${l10n(layoutInfos.buttonLabel)} (${price.value}${l10n('UNITS.EURO')})` }
               </SearchStart>
@@ -85,12 +130,11 @@ const SearchContainer = ({
               ref={ contentRef }
             >
               <SearchProgress
-                duration={ duration }
-                onProgressEnd={ onProgressEnd }
                 colors={{
                   background: 'var(--color-white)',
                   progress: '#D5E9E7'
                 }}
+                currentTime={ currentTime }
               />
             </div>
           </motion.div>
@@ -101,20 +145,21 @@ const SearchContainer = ({
             animate={{ height: contentHeight, opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            style={{ overflow: 'hidden' }}
+            style={{ overflow: 'hidden', width: '100%' }}
           >
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'flex-start'
               }}
               ref={ contentRef }
             >
               <SearchResults
-                disabled={ disabled }
-                duration={ duration }
-                price={ price }
+                newItem={ newItem }
+                layoutInfos={ layoutInfos }
+                setSearchState={ setSearchState }
+                saveNewItem={ saveNewItem }
               />
             </div>
           </motion.div>

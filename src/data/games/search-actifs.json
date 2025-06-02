@@ -1,7 +1,7 @@
 {
   "settings": {
     "duration": 5000,
-    "price": 3000,
+    "price": 30,
     "efficiency": 90
   },
   "layout": {
@@ -13,7 +13,9 @@
     "new": "SEARCH_ACTIFS.LAYOUT.NEW",
     "composition": "SEARCH_ACTIFS.LAYOUT.COMPOSITION",
     "probability": "SEARCH_ACTIFS.LAYOUT.PROBABILITY",
-    "duration": "SEARCH_ACTIFS.LAYOUT.DURATION"
+    "duration": "SEARCH_ACTIFS.LAYOUT.DURATION",
+    "decline": "SEARCH_ACTIFS.LAYOUT.DECLINE",
+    "accept": "SEARCH_ACTIFS.LAYOUT.ADD"
   },
   "items": [
     {
@@ -133,6 +135,22 @@
       "disabled": true,
       "name": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL",
       "description": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL_DESC",
+      "values": [
+        {
+          "value": 16,
+          "target": "production"
+        },
+        {
+          "value": 26,
+          "target": "selling"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-8",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.PMMA",
+      "description": "SEARCH_ACTIFS.ITEMS.PMMA_DESC",
       "values": [
         {
           "value": 16,
