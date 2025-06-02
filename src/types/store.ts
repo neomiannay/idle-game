@@ -39,6 +39,11 @@ export enum EStatus {
   FAIL = 'fail',
 }
 
+export enum EChoice {
+  ACCEPT = 'accept',
+  DECLINE = 'decline',
+}
+
 export enum EGameSector {
   PRODUCTION = 'production',
   LABORATORY = 'laboratoire',

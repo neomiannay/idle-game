@@ -23,7 +23,7 @@
       "disabled": true,
       "name": "SEARCH_TIPS.ITEMS.PINK_TAX",
       "description": "SEARCH_TIPS.ITEMS.PINK_TAX_DESC",
-      "values": [
+      "acceptValues": [
         {
           "value": 8,
           "target": "production"
@@ -35,6 +35,16 @@
         {
           "value": 40,
           "target": "reputation"
+        },
+        {
+          "value": -40,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 40,
+          "target": "karma"
         }
       ]
     },
@@ -43,7 +53,7 @@
       "disabled": true,
       "name": "SEARCH_TIPS.ITEMS.PACKAGING_OPTIMIZATION",
       "description": "SEARCH_TIPS.ITEMS.PACKAGING_OPTIMIZATION_DESC",
-      "values": [
+      "acceptValues": [
         {
           "value": 8,
           "target": "production"
@@ -55,6 +65,16 @@
         {
           "value": 40,
           "target": "reputation"
+        },
+        {
+          "value": -40,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 40,
+          "target": "karma"
         }
       ]
     },
@@ -63,7 +83,7 @@
       "disabled": true,
       "name": "SEARCH_TIPS.ITEMS.LOCAL_SOURCING",
       "description": "SEARCH_TIPS.ITEMS.LOCAL_SOURCING_DESC",
-      "values": [
+      "acceptValues": [
         {
           "value": 8,
           "target": "production"
@@ -75,6 +95,16 @@
         {
           "value": 40,
           "target": "reputation"
+        },
+        {
+          "value": -40,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 40,
+          "target": "karma"
         }
       ]
     },
@@ -83,7 +113,7 @@
       "disabled": true,
       "name": "SEARCH_TIPS.ITEMS.SALES_TRAINING",
       "description": "SEARCH_TIPS.ITEMS.SALES_TRAINING_DESC",
-      "values": [
+      "acceptValues": [
         {
           "value": 8,
           "target": "production"
@@ -95,6 +125,16 @@
         {
           "value": 40,
           "target": "reputation"
+        },
+        {
+          "value": -40,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 40,
+          "target": "karma"
         }
       ]
     },
@@ -103,7 +143,7 @@
       "disabled": true,
       "name": "SEARCH_TIPS.ITEMS.NEW_PUBLIC",
       "description": "SEARCH_TIPS.ITEMS.NEW_PUBLIC_DESC",
-      "values": [
+      "acceptValues": [
         {
           "value": 8,
           "target": "production"
@@ -115,6 +155,16 @@
         {
           "value": 40,
           "target": "reputation"
+        },
+        {
+          "value": -40,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 40,
+          "target": "karma"
         }
       ]
     }

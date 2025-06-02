@@ -21,7 +21,8 @@ export type TSearchGameItem = {
   disabled: boolean;
   name: string;
   description: string;
-  values: TSearchGameItemValue[];
+  acceptValues: TSearchGameItemValue[];
+  declineValues: TSearchGameItemValue[];
 };
 
 export type TSearchGameLayoutInfos = {

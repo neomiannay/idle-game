@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useL10n } from 'provider/L10nProvider'
-import { EGamePrice, EGameUnit } from 'types/store'
+import { EChoice, EGamePrice, EGameUnit } from 'types/store'
 import { TSearchGameItem, TSearchGameLayoutInfos } from 'blocks/search-game/SearchGame'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { usePricesContext } from 'provider/PricesProvider'
@@ -25,8 +25,8 @@ const SearchResults = ({
   const priceContext = usePricesContext()
   const l10n = useL10n()
 
-  const handleChoice = () => {
-    const itemEffects = newItem?.values
+  const handleChoice = (choice: EChoice) => {
+    const itemEffects = choice === EChoice.ACCEPT ? newItem?.acceptValues : newItem?.declineValues
 
     if (itemEffects) {
       itemEffects.forEach((effect) => {
@@ -48,7 +48,7 @@ const SearchResults = ({
         }
       })
     }
-    if (newItem)
+    if (newItem && choice === EChoice.ACCEPT)
       saveNewItem(newItem)
 
     setSearchState(0) // Reset to initial state
@@ -60,6 +60,8 @@ const SearchResults = ({
     reputation: 'Réputation'
   }
 
+  console.log(newItem)
+
   return (
     <div className={ styles.wrapper }>
       { newItem && (
@@ -70,15 +72,17 @@ const SearchResults = ({
           <p className={ styles.name }>{ l10n(newItem.name) }</p>
           <p className={ styles.description }>{ l10n(newItem.description) }</p>
           <div className={ styles.effects }>
-            { newItem.values.map((value, index) => (
-              <p key={ index }>
-                { targetLabels[value.target] ?? value.target }: +{ value.value.toString() }{ value.target === EGameUnit.REPUTATION ? '%' : '€' }
-              </p>
-            )) }
+            { newItem.acceptValues
+              .filter(value => value.target !== EGameUnit.KARMA)
+              .map((value, index) => (
+                <p key={ index }>
+                  { targetLabels[value.target] ?? value.target }: +{ value.value.toString() }{ value.target === EGameUnit.REPUTATION ? '%' : '€' }
+                </p>
+              )) }
           </div>
           <div className={ styles.choices }>
-            <button onClick={ handleChoice }>{ l10n(layoutInfos.decline) }</button>
-            <button onClick={ handleChoice }>{ l10n(layoutInfos.accept) }</button>
+            <button onClick={ () => handleChoice(EChoice.DECLINE) }>{ l10n(layoutInfos.decline) }</button>
+            <button onClick={ () => handleChoice(EChoice.ACCEPT) }>{ l10n(layoutInfos.accept) }</button>
           </div>
         </>
       ) }
