@@ -71,7 +71,7 @@
       "DESCRIPTION": "Depuis tant d'années je décrypte les phénomènes photoniques, à l'échelle de l'infiniment petit, l'échelle quantique.",
       "BUTTON_LABEL": "Lancer la recherche",
       "NEW": "Nouvel actif trouvé",
-      "COMPOSITION": "Composition du complexe",
+      "LIST": "Composition du complexe",
       "PROBABILITY": "Probabilité de trouver un actif",
       "DURATION": "Durée de la recherche",
       "IN_PROGRESS": "Recherche en cours...",
@@ -98,6 +98,34 @@
   "RABIT_GAME": {
     "LAYOUT": {
       "NAME": "Protocole de Draize"
+    }
+  },
+  "SEARCH_TIPS": {
+    "LAYOUT": {
+      "NAME": "Stratégie commerciale",
+      "TITLE": "Elèphe Antivre",
+      "SUBTITLE": "Experte en stratégie commerciale et optimisation budgétaire",
+      "DESCRIPTION": "Je navigue à la confluence des flux budgétaires et des dynamiques commerciales, décryptant les oscillations des marchés émergents avec une précision quasi-quantique.",
+      "BUTTON_LABEL": "Chercher une stratégie",
+      "NEW": "Nouvelle stratégie trouvée",
+      "LIST": "Liste des stratégies",
+      "PROBABILITY": "Probabilité de trouver une stratégie",
+      "DURATION": "Durée de la recherche",
+      "IN_PROGRESS": "Recherche en cours...",
+      "DECLINE": "Refuser",
+      "ADD": "Appliquer"
+    },
+    "ITEMS": {
+      "PINK_TAX": "Taxe rose",
+      "PINK_TAX_DESC": "Stratégie commerciale qui exploite les stéréotypes de genre pour maximiser les profits. Augmente la perception de valeur des produits destinés aux femmes, justifiant des prix plus élevés.",
+      "PACKAGING_OPTIMIZATION": "Optimisation du packaging",
+      "PACKAGING_OPTIMIZATION_DESC": "Stratégie commerciale qui améliore l'efficacité des emballages pour réduire les coûts de production et de transport. Augmente la durabilité des produits tout en réduisant l'empreinte carbone.",
+      "LOCAL_SOURCING": "Approvisionnement local",
+      "LOCAL_SOURCING_DESC": "Stratégie commerciale qui privilégie les fournisseurs locaux pour réduire les coûts de transport et soutenir l'économie locale. Améliore la traçabilité des produits et réduit l'empreinte carbone.",
+      "SALES_TRAINING": "Formation des vendeurs",
+      "SALES_TRAINING_DESC": "Stratégie commerciale qui améliore les compétences des vendeurs pour augmenter les ventes et la satisfaction client. Formations sur les techniques de vente, la connaissance des produits et le service client.",
+      "NEW_PUBLIC": "Acquérir une nouvelle clientèle",
+      "NEW_PUBLIC_DESC": "Faire une game de produits destinée aux plus jeunes, afin qu'elles puissent découvrir la marque et l'adopter dès leur plus jeune âge. Augmente la notoriété de la marque et fidélise les clients dès leur jeunesse."
     }
   }
 }

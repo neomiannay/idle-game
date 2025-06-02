@@ -1,0 +1,122 @@
+{
+  "settings": {
+    "duration": 6000,
+    "price": 40,
+    "efficiency": 90
+  },
+  "layout": {
+    "name": "SEARCH_TIPS.LAYOUT.NAME",
+    "title": "SEARCH_TIPS.LAYOUT.TITLE",
+    "subtitle": "SEARCH_TIPS.LAYOUT.SUBTITLE",
+    "description": "SEARCH_TIPS.LAYOUT.DESCRIPTION",
+    "buttonLabel": "SEARCH_TIPS.LAYOUT.BUTTON_LABEL",
+    "new": "SEARCH_TIPS.LAYOUT.NEW",
+    "list": "SEARCH_TIPS.LAYOUT.LIST",
+    "probability": "SEARCH_TIPS.LAYOUT.PROBABILITY",
+    "duration": "SEARCH_TIPS.LAYOUT.DURATION",
+    "decline": "SEARCH_TIPS.LAYOUT.DECLINE",
+    "accept": "SEARCH_TIPS.LAYOUT.ADD"
+  },
+  "items": [
+    {
+      "id": "search-tips-1",
+      "disabled": true,
+      "name": "SEARCH_TIPS.ITEMS.PINK_TAX",
+      "description": "SEARCH_TIPS.ITEMS.PINK_TAX_DESC",
+      "values": [
+        {
+          "value": 8,
+          "target": "production"
+        },
+        {
+          "value": 64,
+          "target": "selling"
+        },
+        {
+          "value": 40,
+          "target": "reputation"
+        }
+      ]
+    },
+	{
+      "id": "search-tips-2",
+      "disabled": true,
+      "name": "SEARCH_TIPS.ITEMS.PACKAGING_OPTIMIZATION",
+      "description": "SEARCH_TIPS.ITEMS.PACKAGING_OPTIMIZATION_DESC",
+      "values": [
+        {
+          "value": 8,
+          "target": "production"
+        },
+        {
+          "value": 64,
+          "target": "selling"
+        },
+        {
+          "value": 40,
+          "target": "reputation"
+        }
+      ]
+    },
+		{
+      "id": "search-tips-3",
+      "disabled": true,
+      "name": "SEARCH_TIPS.ITEMS.LOCAL_SOURCING",
+      "description": "SEARCH_TIPS.ITEMS.LOCAL_SOURCING_DESC",
+      "values": [
+        {
+          "value": 8,
+          "target": "production"
+        },
+        {
+          "value": 64,
+          "target": "selling"
+        },
+        {
+          "value": 40,
+          "target": "reputation"
+        }
+      ]
+    },
+    {
+      "id": "search-tips-4",
+      "disabled": true,
+      "name": "SEARCH_TIPS.ITEMS.SALES_TRAINING",
+      "description": "SEARCH_TIPS.ITEMS.SALES_TRAINING_DESC",
+      "values": [
+        {
+          "value": 8,
+          "target": "production"
+        },
+        {
+          "value": 64,
+          "target": "selling"
+        },
+        {
+          "value": 40,
+          "target": "reputation"
+        }
+      ]
+    },
+    {
+      "id": "search-tips-5",
+      "disabled": true,
+      "name": "SEARCH_TIPS.ITEMS.NEW_PUBLIC",
+      "description": "SEARCH_TIPS.ITEMS.NEW_PUBLIC_DESC",
+      "values": [
+        {
+          "value": 8,
+          "target": "production"
+        },
+        {
+          "value": 64,
+          "target": "selling"
+        },
+        {
+          "value": 40,
+          "target": "reputation"
+        }
+      ]
+    }
+  ]
+}

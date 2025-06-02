@@ -31,7 +31,7 @@ export type TSearchGameLayoutInfos = {
   description: string;
   buttonLabel: string;
   new: string;
-  composition: string;
+  list: string;
   probability: string;
   duration: string;
   decline: string;
@@ -149,7 +149,7 @@ const SearchGame: React.FC<SearchGameProps> = ({
           <hr className={ styles.divider } />
           <div className={ styles.itemsContainer }>
             <h6 className={ styles.subTitle }>
-              { l10n(layoutInfos.composition) }
+              { l10n(layoutInfos.list) }
             </h6>
             <small className={ styles.itemsWrapper }>
               { itemList?.map((item, index) => (

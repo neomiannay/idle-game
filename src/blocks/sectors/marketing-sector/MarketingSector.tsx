@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import SearchGame, { SearchGameProps } from 'blocks/search-game/SearchGame'
 import { EGameSector } from 'types/store'
 
-import searchActifs from 'data/games/search-actifs.json'
+import searchActifs from 'data/games/search-tips.json'
 
 import Sector from '../sector/Sector'
 
