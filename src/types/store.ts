@@ -1,3 +1,4 @@
+import { TSearchGameItem } from 'blocks/search-game/SearchGame'
 import { UnitMotionValueResult } from 'hooks/useUnitMotionValue'
 import { MotionValue } from 'motion'
 
@@ -91,6 +92,8 @@ export interface GameState {
   prices?: Record<string, GameStatePrice>
   seenMessages?: Array<string> | null
   unlockedSectors?: EGameSector[] | null
+  complexComposition?: TSearchGameItem[] | null
+  tips?: TSearchGameItem[] | null
 }
 
 export type ElementType = 'item' | 'upgrade'

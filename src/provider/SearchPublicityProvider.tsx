@@ -16,6 +16,7 @@ type SearchPublicityContextType = {
   tips: TSearchGameItem[] | null
   setTips: (items: TSearchGameItem[] | null) => void
   saveNewItemPub: (item: TSearchGameItem | null) => void
+  loadTips: (data: TSearchGameItem[]) => void
 }
 
 const SearchPublicityContext = createContext<SearchPublicityContextType | undefined>(undefined)
@@ -72,6 +73,10 @@ export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
     } else { setTips(null) }
   }
 
+  const loadTips = (data: TSearchGameItem[]) => {
+    setTips(data)
+  }
+
   context = {
     currentTimePub,
     startProgressPub,
@@ -83,7 +88,8 @@ export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
     setNewItemPub,
     tips,
     setTips,
-    saveNewItemPub
+    saveNewItemPub,
+    loadTips
   }
 
   return (

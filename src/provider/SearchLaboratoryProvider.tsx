@@ -16,6 +16,7 @@ type SearchLaboratoryContextType = {
   complexComposition: TSearchGameItem[] | null
   setComplexComposition: (items: TSearchGameItem[] | null) => void
   saveNewItemLab: (item: TSearchGameItem | null) => void
+  loadComplexComposition: (data: TSearchGameItem[]) => void
 }
 
 const SearchLaboratoryContext = createContext<SearchLaboratoryContextType | undefined>(undefined)
@@ -72,6 +73,10 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
     } else { setComplexComposition(null) }
   }
 
+  const loadComplexComposition = (data: TSearchGameItem[]) => {
+    setComplexComposition(data)
+  }
+
   context = {
     currentTimeLab,
     startProgressLab,
@@ -83,7 +88,8 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
     setNewItemLab,
     complexComposition,
     setComplexComposition,
-    saveNewItemLab
+    saveNewItemLab,
+    loadComplexComposition
   }
 
   return (

@@ -36,9 +36,9 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
     SectorsProvider,
     InventoryProvider,
     MessageSystemProvider,
-    IterationProvider,
     SearchLaboratoryProvider,
-    SearchPublicityProvider
+    SearchPublicityProvider,
+    IterationProvider
   ]
 
   context = {

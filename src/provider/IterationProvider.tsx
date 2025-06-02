@@ -12,6 +12,8 @@ import { useInventoryContext } from './InventoryProvider'
 import { usePricesContext } from './PricesProvider'
 import { useFeedbackContext } from './FeedbackProvider'
 import { useSectorsProviderContext } from './SectorsProvider'
+import { useSearchLaboratoryContext } from './SearchLaboratoryProvider'
+import { useSearchPublicityContext } from './SearchPublicityProvider'
 
 type IterationContextType = {
   isPaused: boolean
@@ -32,6 +34,8 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const { seenMessages, loadMessages, setSeenMessagesLoaded } = useMessageSystemContext()
   const { triggerFeedback, successCount, setSuccessCount, failCount, setFailCount } = useFeedbackContext()
   const { loadSectors, unlockedSectors } = useSectorsProviderContext()
+  const { complexComposition, loadComplexComposition } = useSearchLaboratoryContext()
+  const { tips, loadTips } = useSearchPublicityContext()
 
   // Fonction pour traiter un tick de jeu (production d'items)
   const processTick = useCallback((deltaTimeInSeconds: number) => {
@@ -133,9 +137,11 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         return acc
       }, {} as Record<string, GameStatePrice>),
       seenMessages,
-      unlockedSectors
+      unlockedSectors,
+      complexComposition,
+      tips
     }
-  }, [units, getElementsForUnit, seenMessages, unlockedSectors])
+  }, [units, getElementsForUnit, seenMessages, unlockedSectors, complexComposition, tips, prices])
 
   // Fonction pour charger l'état du jeu
   const handleLoadState = useCallback((gameState: GameState) => {
@@ -180,6 +186,12 @@ export function IterationProvider ({ children }: BaseProviderProps) {
       loadMessages(gameState.seenMessages)
 
     setSeenMessagesLoaded(true)
+
+    if (gameState.complexComposition)
+      loadComplexComposition(gameState.complexComposition)
+
+    if (gameState.tips)
+      loadTips(gameState.tips)
 
     // Charger les prix
     if (gameState.prices) {

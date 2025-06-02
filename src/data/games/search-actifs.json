@@ -127,18 +127,6 @@
         {
           "value": 16,
           "target": "production"
-        }
-      ]
-    },
-    {
-      "id": "search-actif-7",
-      "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL",
-      "description": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL_DESC",
-      "values": [
-        {
-          "value": 16,
-          "target": "production"
         },
         {
           "value": 26,
@@ -147,7 +135,7 @@
       ]
     },
     {
-      "id": "search-actif-8",
+      "id": "search-actif-7",
       "disabled": true,
       "name": "SEARCH_ACTIFS.ITEMS.PMMA",
       "description": "SEARCH_ACTIFS.ITEMS.PMMA_DESC",
