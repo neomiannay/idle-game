@@ -1,9 +1,11 @@
 .card {
   width: 100%;
   height: 100%;
-  background-color: var(--color-black);
-  border-radius: 10px;
+  background-color: var(--transparent-dark-50-0);
+  border-radius: rem(8);
   padding: rem(12);
+  backdrop-filter: blur(rem(20));
+  backdrop-filter: blur(20px);
 
   &Title {
     color: var(--fill-10-100);

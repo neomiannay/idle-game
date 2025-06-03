@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import classNames from 'classnames'
 import Shop from 'blocks/shop/Shop'
@@ -15,8 +15,8 @@ import RabitGame from 'blocks/rabit-game/RabitGame'
 import styles from './Root.module.scss'
 
 type RootProps = {
-  className?: string
-}
+  className?: string;
+};
 
 function Root ({ className }: RootProps) {
   const { isPaused, togglePause, loading } = useIterationContext()
@@ -24,14 +24,32 @@ function Root ({ className }: RootProps) {
 
   const custom = { type: useTransitionType(reactiveCurrentSector, sectors) }
 
+  // Make isFontsLoaded a reactive value
+  const [isFontsLoaded, setIsFontsLoaded] = useState<boolean>(false)
+
+  useEffect(() => {
+    let cancelled = false
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) setIsFontsLoaded(true)
+      })
+    }
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   return (
     <>
-      <main className={ classNames(styles.wrapper, {
-        [styles.loading]: loading
-      }) }
+      <main
+        className={ classNames(styles.wrapper, {
+          [styles.loading]: loading
+        }) }
       >
-        { loading && <div className={ styles.loading }>Loading...</div> }
-        { !loading && (
+        { (loading || !isFontsLoaded) && (
+          <div className={ styles.loading }>Loading...</div>
+        ) }
+        { !loading && isFontsLoaded && (
           <>
             <Meta />
             <Header />
@@ -50,11 +68,13 @@ function Root ({ className }: RootProps) {
             </button> */ }
 
             <Shop />
+            { /* <Background /> */ }
+            <RabitGame />
           </>
         ) }
       </main>
       { /* <Background /> */ }
-      {/* <RabitGame /> */}
+      { /* <RabitGame /> */ }
     </>
   )
 }

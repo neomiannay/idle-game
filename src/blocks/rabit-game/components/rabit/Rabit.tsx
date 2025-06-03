@@ -62,7 +62,7 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
     spring.set(springValue)
   }
 
-  const isRabitDead = useMotionState(life, (v) => v <= 0)
+  const isRabitDead = useMotionState(life, (v) => v === -1 || v <= 0)
 
   useEffect(() => {
     mouse.x.on('change', (value) => onPositionChange('x', value))
@@ -96,7 +96,7 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
   ]
 
   return (
-    <div className={ classNames(styles.rabit, { [styles.disabled]: !canBuy }) }>
+    <div className={ classNames(styles.rabit, { [styles.disabled]: !canBuy || life.get() > -1 }) }>
       <div className={ styles.rabitHpWrapper }>
         <RabitHp life={ life } length={ 6 } />
       </div>
@@ -117,7 +117,7 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
         style={{ pointerEvents: !isRabitDead ? 'none' : 'auto' }}
       >
         <AnimatePresence>
-          { isRabitDead && (
+          { (isRabitDead || life.get() === null) && (
             <motion.div { ...baseVariants } { ...fadeAppearRabbit }>
               <Translatable parentRef={ gameRef } disabled={ !canBuy }>
                 <RabitBtn

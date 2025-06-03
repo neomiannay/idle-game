@@ -34,7 +34,7 @@ const RabitBtn = ({
       <GradientText
         disabled={ disabled }
         className={ styles.btnRight }
-        startColor='var(--fill-20-100)'
+        startColor='var(--fill-40-100)'
         endColor='var(--color-white)'
         duration={ 3 }
       >

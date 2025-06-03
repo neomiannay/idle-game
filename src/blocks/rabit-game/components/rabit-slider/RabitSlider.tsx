@@ -3,34 +3,41 @@ import React, { useState, useRef, useEffect } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import Chevron from 'components/icons/chevron/Chevron'
 import { EGamePrice, EGameUnit } from 'types/store'
+import classNames from 'classnames'
+import Translatable from 'components/translatable/Translatable'
+import { formatValue } from 'helpers/units'
+import { useL10n } from 'provider/L10nProvider'
 
 import RabitSliderCard from '../rabit-slider-card/RabitSliderCard'
+import RabitBtn from '../rabit/components/rabit-btn/RabitBtn'
 
 import styles from './RabitSlider.module.scss'
 
 export type TRabitSliderItemValue = {
-  value: number
+  value: number;
   target: EGameUnit | EGamePrice;
-}
+};
 
 export type TRabitSliderItem = {
-  id: string
-  disabled: boolean
-  name: string
-  description: string
-  power: number
-  values: TRabitSliderItemValue[]
-}
+  id: string;
+  disabled: boolean;
+  name: string;
+  description: string;
+  power: number;
+  values: TRabitSliderItemValue[];
+};
 
 type TRabitSlider = {
-  items: TRabitSliderItem[]
-}
+  items: TRabitSliderItem[];
+  onStart: (exp: TRabitSliderItem) => void;
+};
 
-const RabitSlider = ({ items }: TRabitSlider) => {
+const RabitSlider = ({ items, onStart }: TRabitSlider) => {
+  const l10n = useL10n()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isReady, setIsReady] = useState(false)
   const [currentDir, setCurrentDir] = useState<'left' | 'right' | null>(null)
-  const [height, setHeight] = useState<number | 'auto'>('auto')
+  const [height, setHeight] = useState<string | number>('auto')
   const contentRef = useRef<HTMLDivElement>(null)
 
   const nextSlide = () => {
@@ -47,55 +54,80 @@ const RabitSlider = ({ items }: TRabitSlider) => {
     })
   }
 
+  const handleSetHeight = () => {
+    const value = contentRef.current?.offsetHeight ?? 0
+    setHeight(value)
+  }
+
   useEffect(() => setIsReady(true), [])
+  useEffect(() => handleSetHeight(), [])
 
   return (
-    <div className={ styles.rabitSlider }>
-      { items.length > 1 && (
-        <button className={ styles.rabitSliderButton } onClick={ prevSlide }>
-          <Chevron direction='left' />
-        </button>
-      ) }
-      <AnimatePresence mode='wait'>
-        <motion.div
-          key={ currentIndex }
-          ref={ contentRef }
-          transition={{
-            duration: isReady ? 0.25 : 0,
-            ease: 'easeInOut'
-          }}
-          initial={{
-            x: currentDir === 'left' ? '100%' : '-100%',
-            opacity: 0,
-            height
-          }}
-          animate={{
-            x: 0,
-            opacity: 1,
-            height: 'auto'
-          }}
-          exit={{
-            x: currentDir === 'left' ? '-100%' : '100%',
-            opacity: 0,
-            height
-          }}
-          onAnimationComplete={ () => {
-            setHeight(contentRef.current?.offsetHeight ?? 0)
-          } }
-          className={ styles.rabitSliderContent }
-          style={{
-            padding: items.length > 1 ? '0' : '0 16rem'
-          }}
-        >
-          <RabitSliderCard item={ items[currentIndex] } />
-        </motion.div>
-      </AnimatePresence>
-      { items.length > 1 && (
-        <button className={ styles.rabitSliderButton } onClick={ nextSlide }>
-          <Chevron direction='right' />
-        </button>
-      ) }
-    </div>
+    <>
+      <div className={ styles.rabitSlider }>
+        { items.length > 1 && (
+          <button
+            className={ classNames(
+              styles.rabitSliderButton,
+              styles.rabitSliderButtonLeft
+            ) }
+            onClick={ prevSlide }
+          >
+            <Chevron direction='left' />
+          </button>
+        ) }
+        <AnimatePresence mode='wait'>
+          <motion.div
+            key={ currentIndex }
+            ref={ contentRef }
+            transition={{
+              duration: isReady ? 0.25 : 0,
+              ease: 'easeInOut'
+            }}
+            initial={{
+              x: currentDir === 'left' ? '100%' : '-100%',
+              opacity: 0,
+              height
+            }}
+            animate={{
+              x: 0,
+              opacity: 1,
+              height: 'auto'
+            }}
+            exit={{
+              x: currentDir === 'left' ? '-100%' : '100%',
+              opacity: 0,
+              height
+            }}
+            onAnimationComplete={ handleSetHeight }
+            className={ styles.rabitSliderContent }
+            style={{
+              padding: items.length > 1 ? '0' : '0 16rem'
+            }}
+          >
+            <RabitSliderCard item={ items[currentIndex] } />
+          </motion.div>
+        </AnimatePresence>
+        { items.length > 1 && (
+          <button
+            className={ classNames(
+              styles.rabitSliderButton,
+              styles.rabitSliderButtonRight
+            ) }
+            onClick={ nextSlide }
+          >
+            <Chevron direction='right' />
+          </button>
+        ) }
+      </div>
+      <Translatable className={ styles.rabitSliderStart }>
+        <RabitBtn
+          price={ `${formatValue(10)} ${l10n('UNITS.EURO')}` }
+          label={ l10n('RABIT_GAME.LAYOUT.START_EXP') }
+          onClick={ () => onStart(items[currentIndex]) }
+        />
+      </Translatable>
+    </>
   )
 }
 

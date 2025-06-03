@@ -15,15 +15,19 @@ type TRabitHp = {
 };
 
 const RabitHp = ({ life, length, reduce, className }: TRabitHp) => {
-  const [lifeValue, setLifeValue] = useState(clamp((life.get() / 100) * length, 1, length))
+  const getLifeValue = () => {
+    const value = life.get()
+    if (value === -1) return length
+    return clamp((value / 100) * length, 1, length)
+  }
 
-  life.on('change', (v) => {
-    setLifeValue(clamp((v / 100) * length, 1, length))
-  })
+  const [lifeValue, setLifeValue] = useState(getLifeValue())
+  life.on('change', () => setLifeValue(getLifeValue())
+  )
 
   return (
     <div className={ classNames(styles.rabitHp, className) }>
-      { new Array(reduce ? lifeValue : length).fill(0).map((_, index) => (
+      { new Array(Math.round(reduce ? lifeValue : length)).fill(0).map((_, index) => (
         <Droplet key={ index } active={ index <= lifeValue - 1 } />
       )) }
     </div>

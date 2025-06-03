@@ -30,7 +30,7 @@ const imagePaths = [
 const RabitImg = ({ life, attack }: TRabitImg) => {
   const [images, setImages] = useState<HTMLImageElement[]>([])
   const [index, setIndex] = useState(0)
-  const height = useTransform(life, [0, 100], ['100%', '0%'])
+  const height = useTransform(life, [-1, 0, 100], ['0%', '100%', '0%'])
 
   // Load images
   useEffect(() => {
@@ -44,7 +44,7 @@ const RabitImg = ({ life, attack }: TRabitImg) => {
   }, [])
 
   life.on('change', (value) => {
-    if (value >= 100) {
+    if (value >= 100 || value === -1) {
       lifeValue = 100
       setIndex(0)
       height.jump('0%')
@@ -67,7 +67,7 @@ const RabitImg = ({ life, attack }: TRabitImg) => {
 
       // Animate the height value with spring
       animate(height, `${100 - clamp(lifeValue, 0, 100)}%`, {
-        duration: .2,
+        duration: 0.2,
         type: 'spring'
       })
     }
