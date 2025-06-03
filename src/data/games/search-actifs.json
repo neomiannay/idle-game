@@ -111,36 +111,6 @@
     {
       "id": "search-actif-4",
       "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.AL",
-      "description": "SEARCH_ACTIFS.ITEMS.AL_DESC",
-      "acceptValues": [
-        {
-          "value": 12,
-          "target": "production"
-        },
-        {
-          "value": 24,
-          "target": "selling"
-        },
-        {
-          "value": 18,
-          "target": "reputation"
-        },
-        {
-          "value": -40,
-          "target": "karma"
-        }
-      ],
-      "declineValues": [
-        {
-          "value": 40,
-          "target": "karma"
-        }
-      ]
-    },
-    {
-      "id": "search-actif-5",
-      "disabled": true,
       "name": "SEARCH_ACTIFS.ITEMS.ORCHID_EXTRACT",
       "description": "SEARCH_ACTIFS.ITEMS.ORCHID_EXTRACT_DESC",
       "acceptValues": [
@@ -169,7 +139,7 @@
       ]
     },
     {
-      "id": "search-actif-6",
+      "id": "search-actif-5",
       "disabled": true,
       "name": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL",
       "description": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL_DESC",
@@ -195,7 +165,7 @@
       ]
     },
     {
-      "id": "search-actif-7",
+      "id": "search-actif-6",
       "disabled": true,
       "name": "SEARCH_ACTIFS.ITEMS.PMMA",
       "description": "SEARCH_ACTIFS.ITEMS.PMMA_DESC",
