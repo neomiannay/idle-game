@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import useMouseValue from 'hooks/useMouseValue'
 import { MotionValue, useMotionValue, useSpring } from 'motion/react'
@@ -9,6 +9,7 @@ import Tooltip from 'components/tooltip/Tooltip'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
 import classNames from 'classnames'
+import useMotionState from 'hooks/useMotionState'
 
 import styles from './Rabit.module.scss'
 import RabitImg from './components/rabit-img/RabitImg'
@@ -40,23 +41,24 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
   const springY = useSpring(useMotionValue(0), options)
   const [opacity, setOpacity] = useState(0)
 
-  const handlePositionChange = useCallback(
-    (axis: 'x' | 'y', value: number) => {
-      const toTop = gameRef.current?.getBoundingClientRect().top ?? 0
-      const toLeft = gameRef.current?.getBoundingClientRect().left ?? 0
+  const onPositionChange = (axis: 'x' | 'y', value: number) => {
+    if (!gameRef.current) return
 
-      const springValue = axis === 'x' ? value - toLeft : value - toTop
-      const spring = axis === 'x' ? springX : springY
+    const toTop = gameRef.current.getBoundingClientRect().top
+    const toLeft = gameRef.current.getBoundingClientRect().left
 
-      spring.set(springValue)
-    },
-    [springX, springY]
-  )
+    const springValue = axis === 'x' ? value - toLeft : value - toTop
+    const spring = axis === 'x' ? springX : springY
+
+    spring.set(springValue)
+  }
+
+  const isRabitDead = useMotionState(life, (v) => v <= 0)
 
   useEffect(() => {
-    mouse.x.on('change', (value) => handlePositionChange('x', value))
-    mouse.y.on('change', (value) => handlePositionChange('y', value))
-  }, [mouse.x, mouse.y, handlePositionChange])
+    mouse.x.on('change', (value) => onPositionChange('x', value))
+    mouse.y.on('change', (value) => onPositionChange('y', value))
+  }, [mouse.x, mouse.y])
 
   useEffect(() => {
     if (!gameRef.current) return
@@ -83,10 +85,10 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
     'RABIT_GAME.TIPS.CLICK_4'
   ]
 
-  const canBuy = () => benefits.get() >= price
+  const canBuy = useMotionState(benefits, (v) => v >= price)
 
   return (
-    <div className={ classNames(styles.rabit, { [styles.disabled]: !canBuy() }) }>
+    <div className={ classNames(styles.rabit, { [styles.disabled]: !canBuy }) }>
       <div ref={ gameRef }>
         <Tooltip
           title={ tips[Math.floor(Math.random() * tips.length)] }
@@ -98,21 +100,21 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
         <RabitImg life={ life } attack={ attack } />
         <RabitBg opacity={ opacity } springX={ springX } springY={ springY } />
       </div>
-      { life.get() }
-      { life.get() <= 0 && (
+      { isRabitDead }
+      { isRabitDead && (
         <div ref={ descriptionRef } className={ styles.rabitDescription }>
-          <Translatable parentRef={ gameRef } disabled={ !canBuy() }>
+          <Translatable parentRef={ gameRef } disabled={ !canBuy }>
             <RabitBtn
               price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
               label={ l10n('RABIT_GAME.LAYOUT.BUY_RABIT') }
               onClick={ onBuy }
-              disabled={ !canBuy() }
+              disabled={ !canBuy }
             />
           </Translatable>
           <Tooltip
             title='RABIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
             className={ styles.rabitTooltipNotEnoughMoney }
-            disabled={ canBuy() }
+            disabled={ canBuy }
             parent={ descriptionRef }
           />
         </div>

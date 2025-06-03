@@ -1,10 +1,11 @@
-import { RefObject, useEffect, useRef, useCallback } from 'react'
+import { RefObject, useEffect, useRef } from 'react'
 
 import useMouseValue from 'hooks/useMouseValue'
 import { useL10n } from 'provider/L10nProvider'
-import { useSpring, useMotionValue, useAnimationFrame } from 'motion/react'
+import { useSpring, useMotionValue, useAnimationFrame, motion, AnimatePresence } from 'motion/react'
 import classNames from 'classnames'
 import { clamp } from 'lodash-es'
+import { baseVariants, tooltipAnimation } from 'core/animation'
 
 import styles from './Tooltip.module.scss'
 
@@ -38,67 +39,34 @@ const Tooltip = ({
   const springX = useSpring(useMotionValue(0), options)
   const springY = useSpring(useMotionValue(0), options)
 
-  const activeRef = useRef(false)
   const insideRef = useRef(false)
-  const animationRef = useRef<Animation | undefined>(undefined)
   const hasStart = useRef({ x: false, y: false })
   const unchangedRef = useRef(0)
 
-  const handlePositionChange = useCallback(
-    (axis: 'x' | 'y', value: number) => {
-      const spring = axis === 'x' ? springX : springY
-      if (!hasStart.current[axis] && !disabled) {
-        hasStart.current[axis] = true
-        spring.jump(value)
-      } else {
-        spring.set(value)
-      }
-    },
-    [springX, springY]
-  )
+  const onPositionChange = (axis: 'x' | 'y', value: number) => {
+    const spring = axis === 'x' ? springX : springY
+    if (!hasStart.current[axis] && !disabled) {
+      hasStart.current[axis] = true
+      spring.jump(value)
+    } else {
+      spring.set(value)
+    }
+  }
 
   useEffect(() => {
-    mouse.x.on('change', (value) => handlePositionChange('x', value))
-    mouse.y.on('change', (value) => handlePositionChange('y', value))
-  }, [mouse.x, mouse.y, handlePositionChange])
-
-  const animateTooltip = useCallback((to: number, onFinish?: () => void) => {
-    if (animationRef.current) animationRef.current.cancel()
-    if (!ref.current || disabled) return
-
-    const opacity = parseFloat(getComputedStyle(ref.current).opacity) || 0
-    animationRef.current = ref.current.animate([{ opacity }, { opacity: to }], {
-      delay: opacity > to ? 500 : 200,
-      duration: 250,
-      easing: 'ease-in-out'
-    })
-
-    if (animationRef.current && onFinish)
-      animationRef.current.onfinish = onFinish
-  }, [])
+    mouse.x.on('change', (value) => onPositionChange('x', value))
+    mouse.y.on('change', (value) => onPositionChange('y', value))
+  }, [mouse.x, mouse.y])
 
   useEffect(() => {
     if (!parent?.current) return
 
     const handleMouseMove = () => {
-      if (!hasStart.current.x || !hasStart.current.x || insideRef.current)
-        return
-
       insideRef.current = true
-      animateTooltip(1, () => {
-        activeRef.current = true
-        if (ref.current) ref.current.style.opacity = '1'
-      })
     }
 
     const handleMouseLeave = () => {
       insideRef.current = false
-
-      animateTooltip(0, () => {
-        activeRef.current = false
-        hasStart.current = { x: false, y: false }
-        if (ref.current) ref.current.style.opacity = '0'
-      })
     }
 
     const element = parent.current
@@ -109,7 +77,7 @@ const Tooltip = ({
       element.removeEventListener('mousemove', handleMouseMove)
       element.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [parent, animateTooltip])
+  }, [parent])
 
   useAnimationFrame(() => {
     if (!hasStart.current.x || !hasStart.current.y || !ref.current || disabled)
@@ -155,20 +123,23 @@ const Tooltip = ({
   })
 
   return (
-    <>
-      { !disabled && (
-        <div
+    <AnimatePresence>
+      { !disabled && insideRef.current && (
+        <motion.div
           ref={ ref }
           className={ classNames(styles.wrapper, className) }
           style={{
-            opacity: 0,
-            transform: isParentAbsolute.current ? 'translateY(100%)' : undefined
+            transform: isParentAbsolute.current
+              ? 'translateY(100%)'
+              : undefined
           }}
+          { ...baseVariants }
+          { ...tooltipAnimation() }
         >
           <span>{ ttl }</span>
-        </div>
+        </motion.div>
       ) }
-    </>
+    </AnimatePresence>
   )
 }
 

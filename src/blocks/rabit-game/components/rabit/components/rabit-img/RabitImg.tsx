@@ -12,9 +12,9 @@ import { baseVariants, rabbitAnimation } from 'core/animation'
 import styles from './RabitImg.module.scss'
 
 type TRabitImg = {
-  life: MotionValue<number>
-  attack: number
-}
+  life: MotionValue<number>;
+  attack: number;
+};
 
 let lifeValue = 100
 const imagePaths = [
@@ -50,8 +50,14 @@ const RabitImg = ({ life, attack }: TRabitImg) => {
 
     if (lifeValue !== prevLifeValue) {
       setIndex(Math.max(0, newIndex))
-      animate(life, Math.max(0, lifeValue), {
-        duration: 0.2,
+      const duration = 0.2
+
+      // Update life value directly
+      life.set(Math.max(0, lifeValue))
+
+      // Animate the height value with spring
+      animate(height, `${100 - Math.max(0, lifeValue)}%`, {
+        duration,
         type: 'spring'
       })
     }

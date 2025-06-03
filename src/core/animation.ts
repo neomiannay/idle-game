@@ -141,6 +141,15 @@ export const rabbitAnimation = () => ({
   }
 })
 
+export const tooltipAnimation = () => ({
+  variants: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 }
+  } as Variants,
+  transition: baseTransition
+})
+
 export const stagger = (stagger = .1, delay = 0) => ({
   variants: {
     animate: {

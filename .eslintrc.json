@@ -7,7 +7,8 @@
   "plugins": [
     "import",
     "@typescript-eslint",
-    "unused-imports"
+    "unused-imports",
+    "react-x"
   ],
   "settings": {
     "import/core-modules": [
@@ -117,6 +118,7 @@
     // eslint-react
     "react-x/no-unstable-context-value": "error",
     "react-x/no-access-state-in-setstate": "error",
+
     "max-nested-callbacks": [
       2,
       {

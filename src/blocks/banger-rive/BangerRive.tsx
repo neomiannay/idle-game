@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 
 import { Alignment, Event, Fit, RiveProps } from 'rive-react'
 import { Layout, EventType, useRive } from '@rive-app/react-canvas'
@@ -39,15 +39,14 @@ function BangerRive ({
   stateMachine ??= DEFAULT_PROPS.stateMachine ?? ''
   id ??= props.src
   save ??= DEFAULT_PROPS.save
-  const storageKey = `rive-${id}`
   let animationName: string | undefined
-
-  // Handlers
-  const handleStateChange = useCallback((e: Event) => onStateChange?.(e), [onStateChange])
-  const handleEvent = useCallback((e: Event) => onEvent?.(e), [onEvent])
 
   useEffect(() => {
     if (!rive) return
+
+    // Handlers
+    const handleStateChange = (e: Event) => onStateChange?.(e)
+    const handleEvent = (e: Event) => onEvent?.(e)
 
     rive.setupRiveListeners()
 
@@ -59,7 +58,7 @@ function BangerRive ({
       rive.off(EventType.StateChange, handleStateChange)
       rive.off(EventType.RiveEvent, handleEvent)
     }
-  }, [rive, handleStateChange, handleEvent])
+  }, [rive, onStateChange, onEvent])
 
   useEffect(() => {
     if (!animations || !rive) return
