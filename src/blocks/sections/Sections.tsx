@@ -39,7 +39,7 @@ const Sections = ({ className }: { className?: string }) => {
             key={ unitId }
             layout
             { ...baseVariants }
-            { ...fadeAppear }
+            { ...fadeAppear() }
           >
             <Component unitId={ unitId as EGameUnit } className={ styles[`section${index + 1}`] } />
           </motion.div>

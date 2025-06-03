@@ -129,6 +129,21 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         }
         return acc
       }, {} as Record<string, Record<string, GameStateElement>>),
+      sectors: Object.keys(units).reduce((acc, unitId) => {
+        const unitSectors = getElementsForUnit(unitId as EGameUnit, 'sector')
+        if (Object.keys(unitSectors).length > 0) {
+          acc[unitId] = {}
+          Object.entries(unitSectors).forEach(([sectorId, sector]) => {
+            acc[unitId][sectorId] = {
+              _type: 'sector',
+              _id: sectorId,
+              count: sector.count.get(),
+              purchased: sector.purchased.get()
+            }
+          })
+        }
+        return acc
+      }, {} as Record<string, Record<string, GameStateElement>>),
       prices: Object.entries(prices).reduce((acc, [priceId, price]) => {
         acc[priceId] = {
           motionValue: price.motionValue.get(),
@@ -180,6 +195,10 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     // Charger les upgrades
     if (gameState.upgrades)
       loadElements(gameState.upgrades)
+
+    // Charger les secteurs
+    if (gameState.sectors)
+      loadElements(gameState.sectors)
 
     // Charger les messages déjà vus
     if (gameState.seenMessages)

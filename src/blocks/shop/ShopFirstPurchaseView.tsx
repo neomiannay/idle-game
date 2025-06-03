@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useInventoryContext } from 'provider/InventoryProvider'
 import classNames from 'classnames'
@@ -18,7 +18,9 @@ const ShopFirstPurchaseView = ({ unitId, elementId, className }: Props) => {
   const element = getElementsForUnit(unitId, 'item')[elementId]
 
   return (
-    <aside className={ classNames(styles.wrapper, className) }>
+    <aside
+      className={ classNames(styles.wrapper, className) }
+    >
       <ShopElement
         elementId={ elementId }
         element={ element }
@@ -29,4 +31,4 @@ const ShopFirstPurchaseView = ({ unitId, elementId, className }: Props) => {
   )
 }
 
-export default ShopFirstPurchaseView
+export default memo(ShopFirstPurchaseView)

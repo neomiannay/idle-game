@@ -45,7 +45,7 @@ const Header = ({ className }: HeaderProps) => {
             { ...stagger() }
           >
             <div className={ styles.pricesContainer }>
-              <motion.div className={ styles.prices } { ...fadeAppear }>
+              <motion.div className={ styles.prices } { ...fadeAppear() }>
                 <div className={ styles.price }>
                   <span className={ styles.title }>{ l10n('PRICES.PRODUCTION') }</span>
                   <span className={ styles.count }>{ productionCount } €</span>
@@ -56,17 +56,17 @@ const Header = ({ className }: HeaderProps) => {
                 </div>
               </motion.div>
 
-              <motion.div { ...fadeAppear }>
+              <motion.div { ...fadeAppear() }>
                 <SectorsTab />
               </motion.div>
 
-              <motion.div { ...fadeAppear }>
+              <motion.div { ...fadeAppear() }>
                 <ReputationIndicator />
               </motion.div>
             </div>
 
             <div className={ classNames(styles.benefits) }>
-              <motion.div { ...fadeAppear }>
+              <motion.div { ...fadeAppear() }>
                 <AdaptativeText className={ classNames(styles.money, styles.blur) }>{ benefitsMemo } €</AdaptativeText>
                 <AdaptativeText className={ styles.money }>{ benefitsMemo } €</AdaptativeText>
               </motion.div>

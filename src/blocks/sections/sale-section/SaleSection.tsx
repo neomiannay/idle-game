@@ -31,7 +31,8 @@ const SaleSection = ({ className, unitId }: SaleSectionProps) => {
   const canBuy = canBuyUnit(unitId)
   const productionPerSecond = getItemProduction(unitId)
 
-  const unitName = `UNITS.${unitId.toString().toUpperCase()}`
+  const rawUnitName = unitId.toString().toUpperCase()
+  const unitName = `UNITS.${rawUnitName}`
 
   const handleClick = () => {
     if (!canBuy) return
@@ -58,7 +59,7 @@ const SaleSection = ({ className, unitId }: SaleSectionProps) => {
           ) } */ }
       </div>
       <div className={ styles.buttonContainer }>
-        <Button title='BUTTONS.SPREAD' onClick={ handleClick } disabled={ !canBuy } />
+        <Button title={ `BUTTONS.${rawUnitName}` } onClick={ handleClick } disabled={ !canBuy } />
         { feedback && (
           <SaleFeedback
             key={ feedback.key }

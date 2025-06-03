@@ -65,6 +65,8 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   }
 
   const costName = `UNITS.${unit.costUnitId?.toString().toUpperCase()}`
+  const rawUnitName = unitId.toString().toUpperCase()
+  const unitName = `UNITS.${rawUnitName}`
 
   const isUpgradePurchased = useUpgradePurchased(unitId, 'autoprod')
 

@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useEffect } from 'react'
 
 import { MotionValue, useMotionValue } from 'motion/react'
-import { EGameUnit, ElementTypes, GameStateElement, ItemType, UpgradeType } from 'types/store'
+import { EGameUnit, ElementTypes, GameStateElement, ItemType, SectorType, UpgradeType } from 'types/store'
 
 import itemsData from '../data/items.json'
 import upgradesData from '../data/upgrades.json'
+import sectorsData from '../data/sectors.json'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { UnitMultiplierGetter, useGameProviderContext } from './GameProvider'
@@ -12,6 +13,7 @@ import { UnitMultiplierGetter, useGameProviderContext } from './GameProvider'
 type InventoryType = {
   items: Record<string, Record<string, ItemType>>
   upgrades: Record<string, Record<string, UpgradeType>>
+  sectors: Record<string, Record<string, SectorType>>
 
   // Methods
   getElement: <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T) => ElementTypes[T]
@@ -23,12 +25,16 @@ type InventoryType = {
   shouldDisplayElement: <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T) => boolean
   getItemCount: (unitId: EGameUnit, itemId: string) => number
   getUpgradeCount: (unitId: EGameUnit, upgradeId: string) => number
+  getSectorCount: (unitId: EGameUnit, sectorId: string) => number
   getItemPurchased: (unitId: EGameUnit, itemId: string) => boolean
   getUpgradePurchased: (unitId: EGameUnit, upgradeId: string) => boolean
+  getSectorPurchased: (unitId: EGameUnit, sectorId: string) => boolean
   setItemCount: (unitId: EGameUnit, itemId: string, count: number) => void
   setUpgradeCount: (unitId: EGameUnit, upgradeId: string, count: number) => void
+  setSectorCount: (unitId: EGameUnit, sectorId: string, count: number) => void
   setItemPurchased: (unitId: EGameUnit, itemId: string) => void
   setUpgradePurchased: (unitId: EGameUnit, upgradeId: string) => void
+  setSectorPurchased: (unitId: EGameUnit, sectorId: string) => void
   getUnitMultiplier: (unitId: EGameUnit) => number
   getItemProduction: (unitId: EGameUnit) => number
   setElementCount: (unitId: EGameUnit, elementId: string, count: number) => void
@@ -67,12 +73,26 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     })
   })
 
+  const sectors: Record<string, Record<string, SectorType>> = {}
+  Object.entries(sectorsData.sectors).forEach(([unitId, unitSectors]) => {
+    sectors[unitId] = {}
+    unitSectors.forEach((sector: any) => {
+      sectors[unitId][sector._id] = {
+        ...sector,
+        count: useMotionValue(0),
+        purchased: useMotionValue(false)
+      }
+    })
+  })
+
   const getElement = <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T): ElementTypes[T] => {
     switch (type) {
       case 'item':
         return items[unitId]?.[id] as ElementTypes[T]
       case 'upgrade':
         return upgrades[unitId]?.[id] as ElementTypes[T]
+      case 'sector':
+        return sectors[unitId]?.[id] as ElementTypes[T]
       default:
         throw new Error(`Unknown element type: ${type}`)
     }
@@ -84,6 +104,8 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
         return items[unitId] as Record<string, ElementTypes[T]> || {}
       case 'upgrade':
         return upgrades[unitId] as Record<string, ElementTypes[T]> || {}
+      case 'sector':
+        return sectors[unitId] as Record<string, ElementTypes[T]> || {}
       default:
         throw new Error(`Unknown element type: ${type}`)
     }
@@ -139,12 +161,14 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
       (element as ItemType).count.set(newCount)
     } else if (type === 'upgrade') {
       (element as UpgradeType).purchased.set(true)
+    } else if (type === 'sector') {
+      (element as SectorType).purchased.set(true)
     }
   }
 
   const getElementsForUnit = <T extends keyof ElementTypes>(unitId: EGameUnit, type: T): Record<string, ElementTypes[T]> => {
     const allElements = getAllElements(unitId, type)
-    const visibleElements: Record<string, ItemType | UpgradeType> = {}
+    const visibleElements: Record<string, ElementTypes[T]> = {}
 
     Object.entries(allElements).forEach(([elementId, element]) => {
       if (shouldDisplayElement(unitId, elementId, type)) visibleElements[elementId] = element
@@ -162,12 +186,20 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     return upgrades[unitId]?.[upgradeId]?.count.get() || 0
   }
 
+  const getSectorCount = (unitId: EGameUnit, sectorId: string): number => {
+    return sectors[unitId]?.[sectorId]?.count.get() || 0
+  }
+
   const getItemPurchased = (unitId: EGameUnit, itemId: string): boolean => {
     return items[unitId]?.[itemId]?.purchased.get() || false
   }
 
   const getUpgradePurchased = (unitId: EGameUnit, upgradeId: string): boolean => {
     return upgrades[unitId]?.[upgradeId]?.purchased.get() || false
+  }
+
+  const getSectorPurchased = (unitId: EGameUnit, sectorId: string): boolean => {
+    return sectors[unitId]?.[sectorId]?.purchased.get() || false
   }
 
   const setItemCount = (unitId: EGameUnit, itemId: string, count: number): void => {
@@ -178,6 +210,11 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   const setUpgradeCount = (unitId: EGameUnit, upgradeId: string, count: number): void => {
     if (upgrades[unitId]?.[upgradeId])
       upgrades[unitId][upgradeId].count.set(count)
+  }
+
+  const setSectorCount = (unitId: EGameUnit, sectorId: string, count: number): void => {
+    if (sectors[unitId]?.[sectorId])
+      sectors[unitId][sectorId].count.set(count)
   }
 
   const setElementCount = (unitId: EGameUnit, elementId: string, count: number): void => {
@@ -202,6 +239,13 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     }
   }
 
+  const setSectorPurchased = (unitId: EGameUnit, sectorId: string): void => {
+    if (sectors[unitId]?.[sectorId]) {
+      sectors[unitId][sectorId].count.set(1)
+      sectors[unitId][sectorId].purchased.set(true)
+    }
+  }
+
   const setElementPurchased = (unitId: EGameUnit, elementId: string): void => {
     if (items[unitId]?.[elementId]) {
       items[unitId][elementId].count.set(1)
@@ -209,6 +253,9 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     } else if (upgrades[unitId]?.[elementId]) {
       upgrades[unitId][elementId].count.set(1)
       upgrades[unitId][elementId].purchased.set(true)
+    } else if (sectors[unitId]?.[elementId]) {
+      sectors[unitId][elementId].count.set(1)
+      sectors[unitId][elementId].purchased.set(true)
     }
   }
 
@@ -223,6 +270,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
 
     if (type === 'item') setItemPurchased(unitId, id)
     else if (type === 'upgrade') setUpgradePurchased(unitId, id)
+    else if (type === 'sector') setSectorPurchased(unitId, id)
   }
 
   // Calculate unit multiplier based on purchased upgrades
@@ -268,6 +316,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   context = {
     items,
     upgrades,
+    sectors,
     getElement,
     getAllElements,
     canBuyElement,
@@ -277,12 +326,16 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     shouldDisplayElement,
     getItemCount,
     getUpgradeCount,
+    getSectorCount,
     getItemPurchased,
     getUpgradePurchased,
+    getSectorPurchased,
     setItemCount,
     setUpgradeCount,
+    setSectorCount,
     setItemPurchased,
     setUpgradePurchased,
+    setSectorPurchased,
     getUnitMultiplier,
     getItemProduction,
     setElementCount,

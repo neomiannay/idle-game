@@ -11,6 +11,7 @@ import { FeedbackProvider } from './FeedbackProvider'
 import { SectorsProvider } from './SectorsProvider'
 import { SearchLaboratoryProvider } from './SearchLaboratoryProvider'
 import { SearchPublicityProvider } from './SearchPublicityProvider'
+import { ShopProvider } from './ShopProvider'
 
 type GlobalContextType = {
   loading: boolean
@@ -33,11 +34,12 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
     PricesProvider, // PricesProvider should be before GameProvider to ensure prices are available
     FeedbackProvider,
     GameProvider,
-    SectorsProvider,
     InventoryProvider,
+    SectorsProvider,
     MessageSystemProvider,
     SearchLaboratoryProvider,
     SearchPublicityProvider,
+    ShopProvider,
     IterationProvider
   ]
 

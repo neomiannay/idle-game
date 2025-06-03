@@ -6,7 +6,7 @@
   "BUTTONS": {
     "ACTIVATE": "Extraire",
     "PRODUCE": "Formuler",
-    "SPREAD": "Répandre"
+    "SALE": "Répands"
   },
   "UNITS": {
     "ACTIF": {
@@ -143,5 +143,10 @@
       "NEW_PUBLIC": "Acquérir une nouvelle clientèle",
       "NEW_PUBLIC_DESC": "Faire une game de produits destinée aux plus jeunes, afin qu'elles puissent découvrir la marque et l'adopter dès leur plus jeune âge. Augmente la notoriété de la marque et fidélise les clients dès leur jeunesse."
     }
+  },
+  "SECTORS": {
+    "PRODUCTION": "Production",
+    "LABORATORY": "Laboratoire",
+    "PUBLICITY": "Publicité"
   }
 }
