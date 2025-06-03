@@ -4,9 +4,9 @@
     "description": "Trallallero Trallalla, porco dio e porco Allah"
   },
   "BUTTONS": {
-    "ACTIVATE": "Extrais",
-    "PRODUCE": "Formule",
-    "SPREAD": "Répands"
+    "ACTIF": "Extrais",
+    "COMPLEX": "Formule",
+    "SALE": "Répands"
   },
   "UNITS": {
     "ACTIF": {
@@ -88,5 +88,10 @@
       "BENZYL_ALCOHOL": "Benzyl alcool",
       "BENZYL_ALCOHOL_DESC": "Substance naturelle qui maintient l'hydratation des compositions. Améliore la consistance et la stabilité des formulations."
     }
+  },
+  "SECTORS": {
+    "PRODUCTION": "Production",
+    "LABORATORY": "Laboratoire",
+    "PUBLICITY": "Publicité"
   }
 }

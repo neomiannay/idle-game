@@ -40,8 +40,8 @@ export enum EStatus {
 
 export enum EGameSector {
   PRODUCTION = 'production',
-  LABORATORY = 'laboratoire',
-  PUBLICITY = 'publicité',
+  LABORATORY = 'laboratory',
+  PUBLICITY = 'publicity',
 }
 
 export interface GameUnit {
@@ -72,7 +72,7 @@ export interface GameStateUnit {
 }
 
 export interface GameStateElement {
-  _type: 'item' | 'upgrade'
+  _type: 'item' | 'upgrade' | 'sector'
   _id: string
   count: number
   purchased: boolean
@@ -88,12 +88,13 @@ export interface GameState {
   units: Record<string, GameStateUnit>
   items?: Record<string, Record<string, GameStateElement>>
   upgrades?: Record<string, Record<string, GameStateElement>>
+  sectors?: Record<string, Record<string, GameStateElement>> | null
   prices?: Record<string, GameStatePrice>
   seenMessages?: Array<string> | null
   unlockedSectors?: EGameSector[] | null
 }
 
-export type ElementType = 'item' | 'upgrade'
+export type ElementType = 'item' | 'upgrade' | 'sector'
 
 export interface ItemType {
   _type: 'item'
@@ -133,16 +134,26 @@ export interface UpgradeType {
   purchased: MotionValue<boolean>
 }
 
+export interface SectorType {
+  _type: 'sector'
+  _id: EGameSector
+  unitId: EGameUnit
+  name: string
+  description: string
+  apparitionCondition: {
+    unitId: EGameUnit
+    value: number
+  }
+  cost: {
+    unitId: EGameUnit
+    value: number
+  }
+  count: MotionValue<number>
+  purchased: MotionValue<boolean>
+}
+
 export interface ElementTypes {
   item: ItemType
   upgrade: UpgradeType
-}
-
-export interface Sector {
-  id: EGameSector
-  name: string
-}
-
-export interface Sectors {
-  sectors: Record<EGameSector, Sector>
+  sector: SectorType
 }

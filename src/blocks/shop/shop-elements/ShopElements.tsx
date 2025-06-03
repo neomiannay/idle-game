@@ -1,17 +1,17 @@
 import React from 'react'
 
-import { EGameUnit, ElementType, ItemType, UpgradeType } from 'types/store'
+import { EGameUnit, ElementType, ItemType, SectorType, UpgradeType } from 'types/store'
 
 import ShopElement from '../shop-element/ShopElement'
 
 type ShopElementsProps = {
-  className?: string
-  elements: Record<string, ItemType | UpgradeType>
+  elements: Record<string, ItemType | UpgradeType | SectorType>
   unitId: EGameUnit
   type: ElementType
+  onElementPurchased?: () => void
 }
 
-const ShopElements = ({ className, elements, unitId, type }: ShopElementsProps) => {
+const ShopElements = ({ elements, unitId, type, onElementPurchased }: ShopElementsProps) => {
   return (
     <React.Fragment key={ unitId }>
       { Object.entries(elements).map(([elementId, element]) => (
@@ -21,6 +21,7 @@ const ShopElements = ({ className, elements, unitId, type }: ShopElementsProps) 
           element={ element }
           unitId={ unitId }
           type={ type }
+          onBuyComplete={ onElementPurchased }
         />
       )) }
     </React.Fragment>

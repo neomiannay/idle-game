@@ -3,6 +3,7 @@ import React, { PropsWithChildren, useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import classNames from 'classnames'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
+import { useL10n } from 'provider/L10nProvider'
 
 import styles from './SectorsTab.module.scss'
 
@@ -12,6 +13,7 @@ type SectorsTabProps = PropsWithChildren<{
 
 const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
   const { defaultUnlockedSector, unlockedSectors, reactiveCurrentSector, setCurrentSector } = useSectorsProviderContext()
+  const l10n = useL10n()
   const [activeButtonBounds, setActiveButtonBounds] = useState<DOMRect | null>(null)
   const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({})
 
@@ -77,24 +79,26 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
         onClick={ () => setCurrentSector(defaultUnlockedSector) }
         tabIndex={ 1 }
       >
-        { defaultUnlockedSector }
+        { l10n(`SECTORS.${defaultUnlockedSector.toUpperCase()}`) }
       </motion.button>
 
-      { unlockedSectors?.map((sector, index) => (
-        <motion.button
-          key={ sector }
-          ref={ (el) => {
-            if (el) buttonRefs.current[sector] = el
-          } }
-          className={ classNames(styles.sector, {
-            [styles.active]: reactiveCurrentSector === sector
-          }) }
-          onClick={ () => setCurrentSector(sector) }
-          tabIndex={ index + 2 }
-        >
-          { sector }
-        </motion.button>
-      )) }
+      { unlockedSectors?.map((sector, index) => {
+        return (
+          <motion.button
+            key={ sector }
+            ref={ (el) => {
+              if (el) buttonRefs.current[sector] = el
+            } }
+            className={ classNames(styles.sector, {
+              [styles.active]: reactiveCurrentSector === sector
+            }) }
+            onClick={ () => setCurrentSector(sector) }
+            tabIndex={ index + 2 }
+          >
+            { l10n(`SECTORS.${sector.toUpperCase()}`) }
+          </motion.button>
+        )
+      }) }
     </motion.div>
   )
 }

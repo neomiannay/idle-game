@@ -1,0 +1,36 @@
+{
+  "sectors": {
+    "sale": [
+      {
+        "_type": "sector",
+        "_id": "laboratory",
+        "unitId": "sale",
+        "name": "Laboratoire",
+        "description": "Laboratoire, c'est le laboratoire.",
+        "apparitionCondition": {
+          "unitId": "sale",
+          "value": 1
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 1
+        }
+      },
+      {
+        "_type": "sector",
+        "_id": "publicity",
+        "unitId": "sale",
+        "name": "Publicité",
+        "description": "Publicité, c'est la publicité.",
+        "apparitionCondition": {
+          "unitId": "sale",
+          "value": 2
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 1
+        }
+      }
+    ]
+  }
+}

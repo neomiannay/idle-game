@@ -65,15 +65,17 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   }
 
   const costName = `UNITS.${unit.costUnitId?.toString().toUpperCase()}`
+  const rawUnitName = unitId.toString().toUpperCase()
+  const unitName = `UNITS.${rawUnitName}`
 
   const isUpgradePurchased = useUpgradePurchased(unitId, 'autoprod')
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
       <div className={ styles.stepCounter }>
-        <Count unit={ `UNITS.${unitId.toString().toUpperCase()}` } count={ count } />
+        <Count unit={ unitName } count={ count } />
       </div>
-      <HoldButton label='BUTTONS.PRODUCE' autoMode={ autoMode } />
+      <HoldButton label={ `BUTTONS.${rawUnitName}` } autoMode={ autoMode } />
       <div className={ styles.perfWrapper }>
         <div className={ styles.perf }>
           <p className={ styles.perfTitle }>Durée de production</p>

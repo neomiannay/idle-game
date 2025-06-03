@@ -28,6 +28,7 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
   const canBuy = canBuyUnit(unitId)
   const productionPerSecond = getItemProduction(unitId)
 
+  const rawUnitName = unitId.toString().toUpperCase()
   const unitName = `UNITS.${unitId.toString().toUpperCase()}`
 
   const handleClick = () => {
@@ -45,7 +46,7 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
             </span>
           ) } */ }
       </div>
-      <Button title='BUTTONS.ACTIVATE' onClick={ handleClick } disabled={ !canBuy } />
+      <Button title={ `BUTTONS.${rawUnitName}` } onClick={ handleClick } disabled={ !canBuy } />
 
       <Upgrades unitId={ unitId } />
       <Items unitId={ unitId } />

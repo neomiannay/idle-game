@@ -1,4 +1,4 @@
-import { Variants } from 'motion/react'
+import { Variant, Variants } from 'motion/react'
 import easing, { bezier } from 'helpers/easing'
 
 type DirectionalTransform = {
@@ -28,15 +28,21 @@ export const appear = {
   transition: baseTransition
 }
 
-export const fadeAppear = {
+export const fadeAppear = (available: boolean = true) => ({
   variants: {
     initial: ({ invert = false } = {}) => ({ y: invert ? '-30%' : '30%', opacity: 0 }),
-    animate: { y: '0%', opacity: 1 }
+    animate: { y: '0%', opacity: available ? 1 : 0.4 }
   } as Variants,
   transition: baseTransition
-}
+})
 
-fadeAppear.variants.exit = fadeAppear.variants.initial
+export const shopHoverAnimation = (isHovering: boolean, translateYValue = '-100%') => ({
+  variants: {
+    initial: { y: '0%' },
+    animate: { y: isHovering ? translateYValue : '0%' }
+  } as Variants,
+  transition: baseTransition
+})
 
 const toggleTransiton = (delay = 0) => {
   return ({ duration: .5, ease: easing.quintEaseInOut, delay })
@@ -128,7 +134,7 @@ export const cut = {
   }
 }
 
-export const stagger = (stagger = .1, delay = 0) => ({
+export const stagger = (stagger: number = .1, delay: number = 0) => ({
   variants: {
     animate: {
       transition: {
@@ -174,6 +180,11 @@ export const staggerWithExit = (stagger = .1, delay = 0) => ({
 })
 
 export const baseStagger = stagger()
+
+export const conditionalAnimation = (condition: boolean, animateOverride: Variants) => ({
+  initial: baseVariants.initial,
+  animate: (condition ? animateOverride.animate || baseVariants.animate : baseVariants.initial) as Variant
+})
 
 export const delayOrchestration = (state: string | boolean | typeof baseVariants) => {
   if (state === false || state === baseVariants.initial || (state as typeof baseVariants)?.initial === baseVariants.initial)

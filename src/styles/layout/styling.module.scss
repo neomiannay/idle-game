@@ -218,3 +218,23 @@ $styles: ();
     line-height: 1.08;
   }
 }
+
+%shop-card-effect {
+  @include rule {
+    font-size: rem(14);
+    font-stretch: normal;
+    font-variation-settings: "wght" 400, "wdth" 0;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+}
+
+%shop-card-unit-effect {
+  @include rule {
+    font-size: rem(12);
+    font-stretch: normal;
+    font-variation-settings: "wght" 500, "wdth" 0, "ital" 100;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+}
