@@ -107,6 +107,7 @@ const SearchContainer = ({
                 setSearchState={ setSearchState }
                 startProgress={ startProgress }
                 setNewItem={ setNewItem }
+                sectorId={ sectorId }
               >
                 { `${l10n(layoutInfos.buttonLabel)} (${price.value}${l10n('UNITS.EURO')})` }
               </SearchStart>
