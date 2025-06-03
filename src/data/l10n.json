@@ -106,11 +106,11 @@
       "NOT_ENOUGH_MONEY": "Pas assez de pépettes..."
     },
     "TIPS": {
-      "CLICK_0": "Cliquer.",
-      "CLICK_1": "Cliquer !",
-      "CLICK_2": "Cliquer !!",
-      "CLICK_3": "Cliquer !!!",
-      "CLICK_4": "Cliquer !!!!"
+      "CLICK_0": "*clic*",
+      "CLICK_1": "Essayes !",
+      "CLICK_2": "Cliques !",
+      "CLICK_3": "Participes !",
+      "CLICK_4": "Découvres !"
     },
     "ITEMS": {
       "SKIN_REACTION": "Réaction cutanée",

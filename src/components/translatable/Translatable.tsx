@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react'
 
 import useMouseValue from 'hooks/useMouseValue'
 import { useSpring, useMotionValue, useAnimationFrame } from 'motion/react'
+import classNames from 'classnames'
 
 type TranslatableProps = {
   children: React.ReactNode;
@@ -11,9 +12,19 @@ type TranslatableProps = {
   damping?: number;
   mass?: number;
   disabled?: boolean;
-}
+  className?: string;
+};
 
-const Translatable = ({ children, distance, stiffness, damping, mass, parentRef, disabled }: TranslatableProps) => {
+const Translatable = ({
+  children,
+  distance,
+  stiffness,
+  damping,
+  mass,
+  parentRef,
+  disabled,
+  className
+}: TranslatableProps) => {
   // Animations
   const ref = useRef<HTMLDivElement>(null)
   const currentRef = parentRef ?? ref
@@ -34,9 +45,10 @@ const Translatable = ({ children, distance, stiffness, damping, mass, parentRef,
       if (!currentRef.current || disabled) return
       rect ??= currentRef.current.getBoundingClientRect()
 
-      const normalizedValue = axis === 'x'
-        ? (value - rect.left) / rect.width
-        : (value - rect.top) / rect.height
+      const normalizedValue =
+        axis === 'x'
+          ? (value - rect.left) / rect.width
+          : (value - rect.top) / rect.height
 
       // Clamp values between 0 and 1
       const clampedValue = Math.max(0, Math.min(1, normalizedValue))
@@ -68,14 +80,14 @@ const Translatable = ({ children, distance, stiffness, damping, mass, parentRef,
   useAnimationFrame(() => {
     if (!ref.current || disabled) return
 
-    const x = (springX.get() - .5) * options.distance
-    const y = (springY.get() - .5) * options.distance
+    const x = (springX.get() - 0.5) * options.distance
+    const y = (springY.get() - 0.5) * options.distance
 
     ref.current.style.transform = `translate(${x}px, ${y}px)`
   })
 
   return (
-    <div ref={ ref }>
+    <div ref={ ref } className={ classNames(className) }>
       { children }
     </div>
   )

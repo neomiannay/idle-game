@@ -1,0 +1,10 @@
+.rabitHp {
+  display: inline-flex;
+  align-items: center;
+  padding: rem(4) rem(8);
+  gap: rem(2);
+  border-radius: rem(8);
+  background: var(--transparent-dark-16-100);
+  backdrop-filter: blur(rem(8));
+  height: rem(32);
+}

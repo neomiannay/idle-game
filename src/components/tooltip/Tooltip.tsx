@@ -114,8 +114,8 @@ const Tooltip = ({
       const parentTop = parentRect?.top || 0
       const parentLeft = parentRect?.left || 0
 
-      const width = ((mouseX - parentLeft) / vWidth) * 100
-      const height = ((mouseY - parentTop) / vHeight) * 100
+      const width = ((springXValue - parentLeft) / vWidth) * 100
+      const height = ((springYValue - parentTop) / vHeight) * 100
 
       if (width && height)
         ref.current.style.transform = `translate(${-clamp(width, 0, 100)}%, ${-clamp(height, 0, 100)}%)`

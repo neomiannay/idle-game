@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import useMouseValue from 'hooks/useMouseValue'
-import { MotionValue, useMotionValue, useSpring } from 'motion/react'
+import {
+  AnimatePresence,
+  motion,
+  MotionValue,
+  useMotionValue,
+  useSpring
+} from 'motion/react'
 import { useL10n } from 'provider/L10nProvider'
 import Translatable from 'components/translatable/Translatable'
 import { formatValue } from 'helpers/units'
@@ -10,6 +16,9 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
 import classNames from 'classnames'
 import useMotionState from 'hooks/useMotionState'
+import { baseVariants, fadeAppearRabbit } from 'core/animation'
+
+import RabitHp from '../rabit-hp/RabitHp'
 
 import styles from './Rabit.module.scss'
 import RabitImg from './components/rabit-img/RabitImg'
@@ -77,6 +86,7 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
     }
   }, [])
 
+  const canBuy = useMotionState(benefits, (v) => v >= price)
   const tips = [
     'RABIT_GAME.TIPS.CLICK_0',
     'RABIT_GAME.TIPS.CLICK_1',
@@ -85,11 +95,12 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
     'RABIT_GAME.TIPS.CLICK_4'
   ]
 
-  const canBuy = useMotionState(benefits, (v) => v >= price)
-
   return (
     <div className={ classNames(styles.rabit, { [styles.disabled]: !canBuy }) }>
-      <div ref={ gameRef }>
+      <div className={ styles.rabitHpWrapper }>
+        <RabitHp life={ life } length={ 6 } />
+      </div>
+      <div ref={ gameRef } className={ styles.rabitWrapper }>
         <Tooltip
           title={ tips[Math.floor(Math.random() * tips.length)] }
           className={ styles.rabitTooltip }
@@ -100,25 +111,32 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
         <RabitImg life={ life } attack={ attack } />
         <RabitBg opacity={ opacity } springX={ springX } springY={ springY } />
       </div>
-      { isRabitDead }
-      { isRabitDead && (
-        <div ref={ descriptionRef } className={ styles.rabitDescription }>
-          <Translatable parentRef={ gameRef } disabled={ !canBuy }>
-            <RabitBtn
-              price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
-              label={ l10n('RABIT_GAME.LAYOUT.BUY_RABIT') }
-              onClick={ onBuy }
-              disabled={ !canBuy }
-            />
-          </Translatable>
-          <Tooltip
-            title='RABIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
-            className={ styles.rabitTooltipNotEnoughMoney }
-            disabled={ canBuy }
-            parent={ descriptionRef }
-          />
-        </div>
-      ) }
+      <div
+        ref={ descriptionRef }
+        className={ styles.rabitDescription }
+        style={{ pointerEvents: !isRabitDead ? 'none' : 'auto' }}
+      >
+        <AnimatePresence>
+          { isRabitDead && (
+            <motion.div { ...baseVariants } { ...fadeAppearRabbit }>
+              <Translatable parentRef={ gameRef } disabled={ !canBuy }>
+                <RabitBtn
+                  price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
+                  label={ l10n('RABIT_GAME.LAYOUT.BUY_RABIT') }
+                  onClick={ onBuy }
+                  disabled={ !canBuy }
+                />
+              </Translatable>
+              <Tooltip
+                title='RABIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
+                className={ styles.rabitTooltipNotEnoughMoney }
+                disabled={ canBuy }
+                parent={ descriptionRef }
+              />
+            </motion.div>
+          ) }
+        </AnimatePresence>
+      </div>
     </div>
   )
 }

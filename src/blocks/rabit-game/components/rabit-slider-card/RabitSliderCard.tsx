@@ -1,10 +1,11 @@
 import React from 'react'
 
-import Droplet from 'components/icons/droplet/Droplet'
 import { useL10n } from 'provider/L10nProvider'
 import { EGamePrice, EGameUnit } from 'types/store'
+import { useMotionValue } from 'motion/react'
 
 import { TRabitSliderItem } from '../rabit-slider/RabitSlider'
+import RabitHp from '../rabit-hp/RabitHp'
 
 import styles from './RabitSliderCard.module.scss'
 
@@ -14,6 +15,7 @@ type TRabitSliderCardProps = {
 
 const RabitSliderCard = ({ item }: TRabitSliderCardProps) => {
   const l10n = useL10n()
+  const life = useMotionValue(item.power)
 
   const targetLabels: Record<string, string> = {
     [EGamePrice.PRODUCTION]: l10n('UI.LABEL_PRODUCTION'),
@@ -25,13 +27,7 @@ const RabitSliderCard = ({ item }: TRabitSliderCardProps) => {
     <div className={ styles.card }>
       <div className={ styles.cardHeader }>
         <h3 className={ styles.cardTitle }>{ l10n(item.name) }</h3>
-        <div className={ styles.cardHeaderIconWrapper }>
-          { new Array(Math.round((item.power / 100) * 10))
-            .fill(0)
-            .map((_, index) => (
-              <Droplet key={ index } />
-            )) }
-        </div>
+        <RabitHp className={ styles.cardHp } life={ life } length={ 6 } reduce />
       </div>
       <p className={ styles.cardDescription }>{ l10n(item.description) }</p>
       <div className={ styles.cardValues }>

@@ -1,0 +1,26 @@
+.droplet {
+  position: relative;
+  display: flex;
+  height: -webkit-fill-available;
+
+  &:hover {
+    .backdrop {
+      opacity: 0.75;
+    }
+  }
+
+  svg {
+    transition: opacity 0.1s ease-in-out;
+    will-change: opacity;
+  }
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: blur(6px);
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+  will-change: opacity;
+}

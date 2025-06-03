@@ -9,7 +9,7 @@
       "description": "RABIT_GAME.ITEMS.SKIN_REACTION_DESC",
       "price": 238,
       "factor": 1.15,
-      "power": 10,
+      "power": 100,
       "values": [
         {
           "value": 10,

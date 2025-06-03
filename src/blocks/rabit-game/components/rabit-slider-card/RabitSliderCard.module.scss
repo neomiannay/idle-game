@@ -22,17 +22,6 @@
     display: flex;
     align-items: center;
     gap: rem(10);
-
-    &IconWrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: rem(24);
-      padding: rem(4) rem(8);
-      gap: rem(2);
-      border-radius: rem(8);
-      background: var(--transparent-dark-8-100);
-    }
   }
 
   &Description {
@@ -66,5 +55,9 @@
       font-size: rem(14);
       font-weight: 500;
     }
+  }
+
+  &Hp {
+    height: rem(20);
   }
 }

@@ -8,6 +8,7 @@ import {
   MotionValue
 } from 'framer-motion'
 import { baseVariants, rabbitAnimation } from 'core/animation'
+import { clamp } from 'lodash-es'
 
 import styles from './RabitImg.module.scss'
 
@@ -24,11 +25,11 @@ const imagePaths = [
   'img/rabit/rabit_3.png',
   'img/rabit/rabit_2.png',
   'img/rabit/rabit_1.png'
-]
+].reverse()
 
 const RabitImg = ({ life, attack }: TRabitImg) => {
   const [images, setImages] = useState<HTMLImageElement[]>([])
-  const [index, setIndex] = useState(imagePaths.length - 1)
+  const [index, setIndex] = useState(0)
   const height = useTransform(life, [0, 100], ['100%', '0%'])
 
   // Load images
@@ -42,22 +43,31 @@ const RabitImg = ({ life, attack }: TRabitImg) => {
     setImages(loadedImages)
   }, [])
 
+  life.on('change', (value) => {
+    if (value >= 100) {
+      lifeValue = 100
+      setIndex(0)
+      height.jump('0%')
+    }
+  })
+
   // Handle rabbit click
   const onRabitClick = () => {
     const prevLifeValue = lifeValue
     lifeValue -= attack
-    const newIndex = Math.floor((lifeValue / 100) * images.length)
+    const newIndex = Math.floor(
+      ((100 - lifeValue) / 100) * (images.length - 1)
+    )
 
     if (lifeValue !== prevLifeValue) {
-      setIndex(Math.max(0, newIndex))
-      const duration = 0.2
+      setIndex(clamp(newIndex, 0, images.length - 1))
 
       // Update life value directly
-      life.set(Math.max(0, lifeValue))
+      life.set(clamp(lifeValue, 0, 100))
 
       // Animate the height value with spring
-      animate(height, `${100 - Math.max(0, lifeValue)}%`, {
-        duration,
+      animate(height, `${100 - clamp(lifeValue, 0, 100)}%`, {
+        duration: .2,
         type: 'spring'
       })
     }
