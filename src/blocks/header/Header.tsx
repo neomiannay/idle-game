@@ -37,7 +37,7 @@ const Header = ({ className }: HeaderProps) => {
 
   return (
     <div className={ classNames(styles.wrapper) }>
-      <AnimatePresence>
+      <AnimatePresence mode='wait'>
         { canDisplayUnit(EGameUnit.BENEFITS) && (
           <motion.div
             className={ classNames(styles.content, className) }
