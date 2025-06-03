@@ -11,6 +11,8 @@ import Upgrades from 'blocks/elements/upgrades/Upgrades'
 import Items from 'blocks/elements/items/Items'
 
 import styles from './ActifSection.module.scss'
+import { AnimatePresence, motion } from 'framer-motion'
+import { baseVariants, fadeAppear } from 'core/animation'
 
 type ActifSectionProps = {
   className?: string;
@@ -28,7 +30,8 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
   const canBuy = canBuyUnit(unitId)
   const productionPerSecond = getItemProduction(unitId)
 
-  const unitName = `UNITS.${unitId.toString().toUpperCase()}`
+
+  const notClickedYet = unit.totalMotionValue.get() === 0
 
   const handleClick = () => {
     if (!canBuy) return
@@ -37,17 +40,46 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
+
       <div className={ styles.stepCounter }>
-        <Count unit={ unitName } count={ count } />
+      <AnimatePresence>
+        {!notClickedYet && (
+          <motion.div
+            key='count'
+            layout
+            { ...baseVariants }
+            { ...fadeAppear }
+          >
+            <Count unitId={ unitId } count={ count } />
+          </motion.div>
+        )}
+      </AnimatePresence>
+        {notClickedYet && (
+          <div className={styles.spacing}></div>
+        )}
         { /* { productionPerSecond > 0 && (
             <span className={ styles.production }>
               [{ productionPerSecond.toFixed(1) }/s]
             </span>
           ) } */ }
       </div>
+
       <Button title='BUTTONS.ACTIVATE' onClick={ handleClick } disabled={ !canBuy } />
 
-      <Upgrades unitId={ unitId } />
+      <AnimatePresence>
+      {!notClickedYet && (
+        <motion.div
+          key='upgrades'
+          layout
+          { ...baseVariants }
+          { ...fadeAppear }
+        >
+          <Upgrades unitId={ unitId } />
+        </motion.div>
+      )}
+      </AnimatePresence>
+
+
       <Items unitId={ unitId } />
     </div>
   )

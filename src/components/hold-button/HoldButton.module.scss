@@ -1,5 +1,4 @@
 .wrapper {
-	@include apply(action2);
 	user-select: none;
 	margin: 0 auto;
 	user-select: none;
@@ -12,7 +11,22 @@
 	cursor: not-allowed;
 }
 
-.endColor {
-	color:var(--skin-100);
-	position: absolute;
+.colorContainer {
+	position: relative;
+
+	.startColor {
+		@include apply(action2);
+	}
+
+	.endColor {
+		font-size: rem(56);
+		font-stretch: normal;
+		font-variation-settings: 'wght' 800, 'wdth' 0, 'ital' 0;
+		letter-spacing: -1.2px;
+		line-height: 1.08;
+		text-transform: uppercase;
+		color:var(--skin-100);
+		position: absolute;
+		top: 0;
+	}
 }

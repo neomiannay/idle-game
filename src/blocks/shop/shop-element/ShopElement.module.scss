@@ -59,7 +59,16 @@
   }
 
   &:hover::after {
-    left: calc(-100%);
+    animation: shiny 0.3s ease-in-out forwards;
+  }
+
+  @keyframes shiny {
+    0% {
+      left: calc(100% - rem(100));
+    }
+    100% {
+      left: calc(-100%);
+    }
   }
 
   > * {

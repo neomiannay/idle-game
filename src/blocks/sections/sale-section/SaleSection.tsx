@@ -50,7 +50,7 @@ const SaleSection = ({ className, unitId }: SaleSectionProps) => {
   return (
     <div className={ classNames(styles.wrapper, className) }>
       <div className={ styles.stepCounter }>
-        <Count unit={ unitName } count={ count } />
+        <Count unitId={ unitId } count={ count } />
         { /* { productionPerSecond > 0 && (
             <span className={ styles.production }>
               [{ productionPerSecond.toFixed(1) }/s]

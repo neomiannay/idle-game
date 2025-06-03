@@ -79,7 +79,7 @@ const HoldButton: FC<HoldButtonProps> = ({
       [styles.disabled]: !canBuy
     }) }
     >
-      <div onClick={ handleClick }>
+      <div onClick={ handleClick } className={styles.colorContainer}>
         <div
           className={ styles.endColor }
           style={{

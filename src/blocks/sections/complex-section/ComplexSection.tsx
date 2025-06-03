@@ -71,7 +71,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   return (
     <div className={ classNames(styles.wrapper, className) }>
       <div className={ styles.stepCounter }>
-        <Count unit={ `UNITS.${unitId.toString().toUpperCase()}` } count={ count } />
+        <Count unitId={ unitId } count={ count } />
       </div>
       <HoldButton label='BUTTONS.PRODUCE' autoMode={ autoMode } />
       <div className={ styles.perfWrapper }>

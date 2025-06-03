@@ -1,8 +1,37 @@
 .wrapper {
+  position: relative;
   @include apply(action2);
   user-select: none;
+  cursor: pointer;
   @include apply(basic-hover);
-  filter: brightness(0.8);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-20deg);
+    pointer-events: none;
+    animation: shiny 0.5s ease-in-out forwards;
+    animation-delay: 2s;
+  }
+
+  @keyframes shiny {
+    0% {
+      left: -75%;
+    }
+    100% {
+      left: 125%;
+    }
+  }
 }
 
 .disabled {

@@ -109,10 +109,13 @@ $styles: ();
     font-size: rem(56);
     font-stretch: normal;
     font-variation-settings: 'wght' 800, 'wdth' 0, 'ital' 0;
-    letter-spacing: 0.02em;
+    letter-spacing: -1.2px;
     line-height: 1.08;
     text-transform: uppercase;
     color: var(--purple-fill-20);
+    background: linear-gradient(92deg, #5F3D73 -0.03%, #552A68 32.99%, #3C1552 66.01%, #360950 99.03%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
