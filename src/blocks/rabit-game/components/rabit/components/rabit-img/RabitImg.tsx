@@ -77,4 +77,4 @@ const RabitImg = ({ life, attack }: TRabitImg) => {
   )
 }
 
-export default React.memo(RabitImg)
+export default RabitImg

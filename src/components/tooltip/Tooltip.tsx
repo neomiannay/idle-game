@@ -1,22 +1,33 @@
-import { memo, RefObject, useEffect, useRef, useCallback } from 'react'
+import { RefObject, useEffect, useRef, useCallback } from 'react'
 
 import useMouseValue from 'hooks/useMouseValue'
 import { useL10n } from 'provider/L10nProvider'
 import { useSpring, useMotionValue, useAnimationFrame } from 'motion/react'
+import classNames from 'classnames'
+import { clamp } from 'lodash-es'
 
 import styles from './Tooltip.module.scss'
 
 interface TooltipProps {
   title: string;
   disabled: boolean;
-  parent: RefObject<HTMLElement>;
+  parent?: RefObject<HTMLElement | null>;
+  className?: string;
+  contain?: boolean;
 }
 
-const Tooltip = ({ title, disabled, parent }: TooltipProps) => {
+const Tooltip = ({
+  title,
+  disabled,
+  parent,
+  className,
+  contain
+}: TooltipProps) => {
   const mouse = useMouseValue({ absolute: true, ref: parent })
   const l10n = useL10n()
   const ttl = l10n(title)
   const ref = useRef<HTMLDivElement>(null)
+  const isParentAbsolute = useRef(false)
 
   const options = {
     stiffness: 50,
@@ -67,10 +78,11 @@ const Tooltip = ({ title, disabled, parent }: TooltipProps) => {
   }, [])
 
   useEffect(() => {
-    if (!parent.current) return
+    if (!parent?.current) return
 
     const handleMouseMove = () => {
-      if (!hasStart.current.x || !hasStart.current.x || insideRef.current) return
+      if (!hasStart.current.x || !hasStart.current.x || insideRef.current)
+        return
 
       insideRef.current = true
       animateTooltip(1, () => {
@@ -103,23 +115,61 @@ const Tooltip = ({ title, disabled, parent }: TooltipProps) => {
     if (!hasStart.current.x || !hasStart.current.y || !ref.current || disabled)
       return
 
+    let parentRect: DOMRect | undefined
+    if (parent?.current) parentRect = parent.current.getBoundingClientRect()
+
     const mouseX = Math.round(mouse.x.get())
     const mouseY = Math.round(mouse.y.get())
-    const springXValue = Math.round(springX.get())
-    const springYValue = Math.round(springY.get())
+    let springXValue = Math.round(springX.get())
+    let springYValue = Math.round(springY.get())
+
+    if (parent?.current) {
+      isParentAbsolute.current =
+        getComputedStyle(parent.current).position === 'absolute'
+
+      if (isParentAbsolute.current) {
+        springXValue -= parentRect?.left || 0
+        springYValue -= parentRect?.top || 0
+      }
+    }
 
     const hasMouseChanged = mouseX !== springXValue || mouseY !== springYValue
     unchangedRef.current = hasMouseChanged ? 0 : unchangedRef.current + 1
 
     ref.current.style.top = `${springYValue}px`
     ref.current.style.left = `${springXValue}px`
+
+    if (contain && parent?.current) {
+      const vWidth = parent?.current?.offsetWidth
+      const vHeight = parent?.current?.offsetHeight
+
+      const parentTop = parentRect?.top || 0
+      const parentLeft = parentRect?.left || 0
+
+      const width = ((mouseX - parentLeft) / vWidth) * 100
+      const height = ((mouseY - parentTop) / vHeight) * 100
+
+      if (width && height)
+        ref.current.style.transform = `translate(${-clamp(width, 0, 100)}%, ${-clamp(height, 0, 100)}%)`
+    }
   })
 
   return (
-    <div ref={ ref } className={ styles.wrapper } style={{ opacity: 0 }}>
-      <span>{ ttl }</span>
-    </div>
+    <>
+      { !disabled && (
+        <div
+          ref={ ref }
+          className={ classNames(styles.wrapper, className) }
+          style={{
+            opacity: 0,
+            transform: isParentAbsolute.current ? 'translateY(100%)' : undefined
+          }}
+        >
+          <span>{ ttl }</span>
+        </div>
+      ) }
+    </>
   )
 }
 
-export default memo(Tooltip)
+export default Tooltip

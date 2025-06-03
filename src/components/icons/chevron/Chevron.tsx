@@ -34,4 +34,4 @@ const Chevron = ({ direction, ...props }: TChevron) => {
   )
 }
 
-export default React.memo(Chevron)
+export default Chevron

@@ -10,9 +10,10 @@ type TranslatableProps = {
   stiffness?: number;
   damping?: number;
   mass?: number;
+  disabled?: boolean;
 }
 
-const Translatable = ({ children, distance, stiffness, damping, mass, parentRef }: TranslatableProps) => {
+const Translatable = ({ children, distance, stiffness, damping, mass, parentRef, disabled }: TranslatableProps) => {
   // Animations
   const ref = useRef<HTMLDivElement>(null)
   const currentRef = parentRef ?? ref
@@ -30,7 +31,7 @@ const Translatable = ({ children, distance, stiffness, damping, mass, parentRef 
   let rect: DOMRect
   const handlePositionChange = useCallback(
     (axis: 'x' | 'y', value: number) => {
-      if (!currentRef.current) return
+      if (!currentRef.current || disabled) return
       rect ??= currentRef.current.getBoundingClientRect()
 
       const normalizedValue = axis === 'x'
@@ -65,7 +66,7 @@ const Translatable = ({ children, distance, stiffness, damping, mass, parentRef 
   }, [mouse.x, mouse.y, handlePositionChange, springX, springY])
 
   useAnimationFrame(() => {
-    if (!ref.current) return
+    if (!ref.current || disabled) return
 
     const x = (springX.get() - .5) * options.distance
     const y = (springY.get() - .5) * options.distance

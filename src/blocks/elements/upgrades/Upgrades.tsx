@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import { EGameUnit } from 'types/store'
 import { useGameProviderContext } from 'provider/GameProvider'
@@ -27,4 +27,4 @@ const Upgrades = ({ className, unitId }: UpgradesProps) => {
   )
 }
 
-export default memo(Upgrades)
+export default Upgrades

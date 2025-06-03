@@ -36,4 +36,4 @@ const LaboratorySector = ({ className, ...props } : LaboratorySectorProps) => {
   )
 }
 
-export default React.memo(LaboratorySector)
+export default LaboratorySector

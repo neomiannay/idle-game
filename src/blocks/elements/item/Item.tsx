@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import classNames from 'classnames'
 import { EGameUnit, ItemType } from 'types/store'
@@ -74,4 +74,4 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
   )
 }
 
-export default memo(Item)
+export default Item

@@ -22,4 +22,4 @@ const ProductionSector = ({ className, ...props } : ProductionSectorProps) => {
   )
 }
 
-export default React.memo(ProductionSector)
+export default ProductionSector

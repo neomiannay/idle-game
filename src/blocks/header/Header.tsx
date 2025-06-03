@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
@@ -79,4 +79,4 @@ const Header = ({ className }: HeaderProps) => {
   )
 }
 
-export default memo(Header)
+export default Header

@@ -36,4 +36,4 @@ const MarketingSector = ({ className, ...props } : MarketingSectorProps) => {
   )
 }
 
-export default React.memo(MarketingSector)
+export default MarketingSector

@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import classNames from 'classnames'
 import Shop from 'blocks/shop/Shop'
@@ -10,6 +10,7 @@ import { AnimatePresence } from 'motion/react'
 import { baseVariants } from 'core/animation'
 import useTransitionType from 'hooks/useTransitionType'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
+import RabitGame from 'blocks/rabit-game/RabitGame'
 
 import styles from './Root.module.scss'
 
@@ -53,9 +54,9 @@ function Root ({ className }: RootProps) {
         ) }
       </main>
       { /* <Background /> */ }
-      { /* <RabitGame /> */ }
+      <RabitGame />
     </>
   )
 }
 
-export default memo(Root)
+export default Root

@@ -10,13 +10,29 @@ type RabitBtnProps = {
   label: string;
   className?: string;
   props?: React.HTMLAttributes<HTMLDivElement>;
+  onClick?: () => void;
+  disabled?: boolean;
 };
 
-const RabitBtn = ({ price, label, className, ...props }: RabitBtnProps) => {
+const RabitBtn = ({
+  price,
+  label,
+  className,
+  onClick,
+  disabled,
+  ...props
+}: RabitBtnProps) => {
   return (
-    <div { ...props } className={ classNames(styles.btn, className) }>
+    <button
+      type='button'
+      { ...props }
+      className={ classNames(styles.btn, className) }
+      onClick={ onClick }
+      disabled={ disabled }
+    >
       <div className={ styles.btnLeft }>{ price }</div>
       <GradientText
+        disabled={ disabled }
         className={ styles.btnRight }
         startColor='var(--fill-20-100)'
         endColor='var(--color-white)'
@@ -24,8 +40,8 @@ const RabitBtn = ({ price, label, className, ...props }: RabitBtnProps) => {
       >
         { label }
       </GradientText>
-    </div>
+    </button>
   )
 }
 
-export default React.memo(RabitBtn)
+export default RabitBtn

@@ -1,4 +1,4 @@
-import { ElementType, forwardRef, HTMLAttributes, memo, ReactNode, useMemo, useRef } from 'react'
+import { ElementType, forwardRef, HTMLAttributes, ReactNode, useMemo, useRef } from 'react'
 
 import classNames from 'classnames'
 import { useResizeObserver } from 'hooks/useResizeObserver'
@@ -48,4 +48,4 @@ const AdaptativeText = ({ className, tag: Tag = 'span', children, ...props } : A
   )
 }
 
-export default memo(forwardRef(AdaptativeText))
+export default forwardRef(AdaptativeText)

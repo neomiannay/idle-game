@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import BangerRive from 'blocks/banger-rive/BangerRive'
 import { Alignment } from '@rive-app/react-canvas'
@@ -31,4 +31,4 @@ function Background () {
   )
 }
 
-export default memo(Background)
+export default Background

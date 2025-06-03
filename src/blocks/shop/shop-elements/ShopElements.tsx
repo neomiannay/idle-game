@@ -27,4 +27,4 @@ const ShopElements = ({ className, elements, unitId, type }: ShopElementsProps) 
   )
 }
 
-export default React.memo(ShopElements)
+export default ShopElements

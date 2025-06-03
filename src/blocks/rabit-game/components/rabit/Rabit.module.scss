@@ -9,9 +9,29 @@
     left: 50%;
     transform: translateX(-50%);
     transition: transform 0.2s ease-in-out;
+  }
 
-    &:hover {
-      transform: translateX(-50%) scale(1.025);
+  &:not(.disabled) {
+    .rabitDescription {
+      &:hover {
+        transform: translateX(-50%) scale(1.025);
+      }
+    }
+  }
+
+  &Tooltip {
+    color: var(--color-black);
+    opacity: 0.75;
+    mix-blend-mode: soft-light;
+    font-family: "PP Formula";
+    font-size: rem(10);
+    font-style: normal;
+    font-weight: 700;
+
+    &NotEnoughMoney {
+      text-wrap: nowrap;
+      font-size: rem(12);
+      opacity: 0.5;
     }
   }
 }

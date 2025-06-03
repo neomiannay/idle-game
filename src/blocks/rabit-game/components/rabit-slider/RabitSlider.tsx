@@ -2,30 +2,48 @@ import React, { useState, useRef, useEffect } from 'react'
 
 import { AnimatePresence, motion } from 'motion/react'
 import Chevron from 'components/icons/chevron/Chevron'
+import { EGamePrice, EGameUnit } from 'types/store'
 
 import RabitSliderCard from '../rabit-slider-card/RabitSliderCard'
 
 import styles from './RabitSlider.module.scss'
 
-const RabitSlider = () => {
+export type TRabitSliderItemValue = {
+  value: number
+  target: EGameUnit | EGamePrice;
+}
+
+export type TRabitSliderItem = {
+  id: string
+  disabled: boolean
+  name: string
+  description: string
+  power: number
+  values: TRabitSliderItemValue[]
+}
+
+type TRabitSlider = {
+  items: TRabitSliderItem[]
+}
+
+const RabitSlider = ({ items }: TRabitSlider) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isReady, setIsReady] = useState(false)
   const [currentDir, setCurrentDir] = useState<'left' | 'right' | null>(null)
   const [height, setHeight] = useState<number | 'auto'>('auto')
   const contentRef = useRef<HTMLDivElement>(null)
-  const slides = [1, 2, 3]
 
   const nextSlide = () => {
     setCurrentDir('right')
     requestAnimationFrame(() => {
-      setCurrentIndex((p) => ((p ?? 0) + 1) % slides.length)
+      setCurrentIndex((p) => ((p ?? 0) + 1) % items.length)
     })
   }
 
   const prevSlide = () => {
     setCurrentDir('left')
     requestAnimationFrame(() => {
-      setCurrentIndex((p) => ((p ?? 0) - 1 + slides.length) % slides.length)
+      setCurrentIndex((p) => ((p ?? 0) - 1 + items.length) % items.length)
     })
   }
 
@@ -33,9 +51,11 @@ const RabitSlider = () => {
 
   return (
     <div className={ styles.rabitSlider }>
-      <button className={ styles.rabitSliderButton } onClick={ prevSlide }>
-        <Chevron direction='left' />
-      </button>
+      { items.length > 1 && (
+        <button className={ styles.rabitSliderButton } onClick={ prevSlide }>
+          <Chevron direction='left' />
+        </button>
+      ) }
       <AnimatePresence mode='wait'>
         <motion.div
           key={ currentIndex }
@@ -62,15 +82,21 @@ const RabitSlider = () => {
           onAnimationComplete={ () => {
             setHeight(contentRef.current?.offsetHeight ?? 0)
           } }
+          className={ styles.rabitSliderContent }
+          style={{
+            padding: items.length > 1 ? '0' : '0 16rem'
+          }}
         >
-          <RabitSliderCard power={ 5 } />
+          <RabitSliderCard item={ items[currentIndex] } />
         </motion.div>
       </AnimatePresence>
-      <button className={ styles.rabitSliderButton } onClick={ nextSlide }>
-        <Chevron direction='right' />
-      </button>
+      { items.length > 1 && (
+        <button className={ styles.rabitSliderButton } onClick={ nextSlide }>
+          <Chevron direction='right' />
+        </button>
+      ) }
     </div>
   )
 }
 
-export default React.memo(RabitSlider)
+export default RabitSlider

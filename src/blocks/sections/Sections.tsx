@@ -49,4 +49,4 @@ const Sections = ({ className }: { className?: string }) => {
   )
 }
 
-export default React.memo(Sections)
+export default Sections

@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
@@ -40,4 +40,4 @@ const Shop = ({ className }: { className?: string }) => {
   )
 }
 
-export default memo(Shop)
+export default Shop

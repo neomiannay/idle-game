@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 import classNames from 'classnames'
 import Count from 'components/count/Count'
@@ -78,4 +78,4 @@ const SaleSection = ({ className, unitId }: SaleSectionProps) => {
   )
 }
 
-export default memo(SaleSection)
+export default SaleSection

@@ -2,7 +2,10 @@ import React from 'react'
 
 import { useL10n } from 'provider/L10nProvider'
 import { EChoice, EGamePrice, EGameUnit } from 'types/store'
-import { TSearchGameItem, TSearchGameLayoutInfos } from 'blocks/search-game/SearchGame'
+import {
+  TSearchGameItem,
+  TSearchGameLayoutInfos
+} from 'blocks/search-game/SearchGame'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { usePricesContext } from 'provider/PricesProvider'
 
@@ -26,15 +29,22 @@ const SearchResults = ({
   const l10n = useL10n()
 
   const handleChoice = (choice: EChoice) => {
-    const itemEffects = choice === EChoice.ACCEPT ? newItem?.acceptValues : newItem?.declineValues
+    const itemEffects =
+      choice === EChoice.ACCEPT
+        ? newItem?.acceptValues
+        : newItem?.declineValues
 
     if (itemEffects) {
       itemEffects.forEach((effect) => {
         if (effect.target === EGamePrice.SELLING) {
-          const sellingPrice = priceContext.getPrice(effect.target as EGamePrice)
+          const sellingPrice = priceContext.getPrice(
+            effect.target as EGamePrice
+          )
           sellingPrice.rawValue.add(effect.value)
         } else if (effect.target === EGamePrice.PRODUCTION) {
-          const productionPrice = priceContext.getPrice(effect.target as EGamePrice)
+          const productionPrice = priceContext.getPrice(
+            effect.target as EGamePrice
+          )
           if (effect.value < 0) {
             const currentValue = productionPrice.rawValue.get()
             if (currentValue + effect.value < 0) return false
@@ -48,41 +58,44 @@ const SearchResults = ({
         }
       })
     }
-    if (newItem && choice === EChoice.ACCEPT)
-      saveNewItem(newItem)
+    if (newItem && choice === EChoice.ACCEPT) saveNewItem(newItem)
 
     setSearchState(0) // Reset to initial state
   }
 
   const targetLabels: Record<string, string> = {
-    production: 'Coût de production',
-    selling: 'Prix de vente',
-    reputation: 'Réputation'
+    [EGamePrice.PRODUCTION]: l10n('UI.LABEL_PRODUCTION'),
+    [EGamePrice.SELLING]: l10n('UI.LABEL_SELLING'),
+    [EGameUnit.REPUTATION]: l10n('UI.LABEL_REPUTATION')
   }
-
-  console.log(newItem)
 
   return (
     <div className={ styles.wrapper }>
       { newItem && (
         <>
-          <h6 className={ styles.subTitle }>
-            { l10n(layoutInfos.new) }
-          </h6>
+          <h6 className={ styles.subTitle }>{ l10n(layoutInfos.new) }</h6>
           <p className={ styles.name }>{ l10n(newItem.name) }</p>
           <p className={ styles.description }>{ l10n(newItem.description) }</p>
           <div className={ styles.effects }>
             { newItem.acceptValues
-              .filter(value => value.target !== EGameUnit.KARMA)
+              .filter((value) => value.target !== EGameUnit.KARMA)
               .map((value, index) => (
                 <p key={ index }>
-                  { targetLabels[value.target] ?? value.target }: +{ value.value.toString() }{ value.target === EGameUnit.REPUTATION ? '%' : '€' }
+                  { targetLabels[value.target] ?? value.target }: +
+                  { value.value.toString() }
+                  { value.target === EGameUnit.REPUTATION
+                    ? l10n('UNITS.PERCENT')
+                    : l10n('UNITS.EURO') }
                 </p>
               )) }
           </div>
           <div className={ styles.choices }>
-            <button onClick={ () => handleChoice(EChoice.DECLINE) }>{ l10n(layoutInfos.decline) }</button>
-            <button onClick={ () => handleChoice(EChoice.ACCEPT) }>{ l10n(layoutInfos.accept) }</button>
+            <button onClick={ () => handleChoice(EChoice.DECLINE) }>
+              { l10n(layoutInfos.decline) }
+            </button>
+            <button onClick={ () => handleChoice(EChoice.ACCEPT) }>
+              { l10n(layoutInfos.accept) }
+            </button>
           </div>
         </>
       ) }

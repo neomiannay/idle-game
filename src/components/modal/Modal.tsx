@@ -1,5 +1,3 @@
-import { memo } from 'react'
-
 import classNames from 'classnames'
 
 import { useMessageSystemContext } from '../../provider/MessageSystemProvider'
@@ -22,4 +20,4 @@ const Modal = () => {
   )
 }
 
-export default memo(Modal)
+export default Modal

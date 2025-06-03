@@ -5,6 +5,10 @@ import { MotionValue, useMotionValue, useSpring } from 'motion/react'
 import { useL10n } from 'provider/L10nProvider'
 import Translatable from 'components/translatable/Translatable'
 import { formatValue } from 'helpers/units'
+import Tooltip from 'components/tooltip/Tooltip'
+import { useGameProviderContext } from 'provider/GameProvider'
+import { EGameUnit } from 'types/store'
+import classNames from 'classnames'
 
 import styles from './Rabit.module.scss'
 import RabitImg from './components/rabit-img/RabitImg'
@@ -12,14 +16,19 @@ import RabitBg from './components/rabit-bg/RabitBg'
 import RabitBtn from './components/rabit-btn/RabitBtn'
 
 type TRabit = {
-  life: MotionValue<number>
-  price: number
-  attack: number
-}
+  life: MotionValue<number>;
+  price: number;
+  attack: number;
+  onBuy: () => void;
+};
 
-const Rabit = ({ life, price, attack }: TRabit) => {
+const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
+  const { units } = useGameProviderContext()
+  const benefits = units[EGameUnit.BENEFITS].motionValue
+
   const l10n = useL10n()
   const gameRef = useRef<HTMLDivElement>(null)
+  const descriptionRef = useRef<HTMLDivElement>(null)
   const options = {
     stiffness: 50,
     damping: 10,
@@ -66,22 +75,50 @@ const Rabit = ({ life, price, attack }: TRabit) => {
     }
   }, [])
 
+  const tips = [
+    'RABIT_GAME.TIPS.CLICK_0',
+    'RABIT_GAME.TIPS.CLICK_1',
+    'RABIT_GAME.TIPS.CLICK_2',
+    'RABIT_GAME.TIPS.CLICK_3',
+    'RABIT_GAME.TIPS.CLICK_4'
+  ]
+
+  const canBuy = () => benefits.get() >= price
+
   return (
-    <div className={ styles.rabit }>
+    <div className={ classNames(styles.rabit, { [styles.disabled]: !canBuy() }) }>
       <div ref={ gameRef }>
+        <Tooltip
+          title={ tips[Math.floor(Math.random() * tips.length)] }
+          className={ styles.rabitTooltip }
+          disabled={ false }
+          parent={ gameRef }
+          contain
+        />
         <RabitImg life={ life } attack={ attack } />
         <RabitBg opacity={ opacity } springX={ springX } springY={ springY } />
       </div>
-      <div className={ styles.rabitDescription }>
-        <Translatable parentRef={ gameRef }>
-          <RabitBtn
-            price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
-            label={ l10n('ACTIONS.BUY_RABIT') }
+      { life.get() }
+      { life.get() <= 0 && (
+        <div ref={ descriptionRef } className={ styles.rabitDescription }>
+          <Translatable parentRef={ gameRef } disabled={ !canBuy() }>
+            <RabitBtn
+              price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
+              label={ l10n('RABIT_GAME.LAYOUT.BUY_RABIT') }
+              onClick={ onBuy }
+              disabled={ !canBuy() }
+            />
+          </Translatable>
+          <Tooltip
+            title='RABIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
+            className={ styles.rabitTooltipNotEnoughMoney }
+            disabled={ canBuy() }
+            parent={ descriptionRef }
           />
-        </Translatable>
-      </div>
+        </div>
+      ) }
     </div>
   )
 }
 
-export default React.memo(Rabit)
+export default Rabit

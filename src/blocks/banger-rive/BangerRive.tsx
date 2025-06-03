@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 
 import { Alignment, Event, Fit, RiveProps } from 'rive-react'
 import { Layout, EventType, useRive } from '@rive-app/react-canvas'
@@ -73,4 +73,4 @@ function BangerRive ({
   return <RiveComponent />
 }
 
-export default memo(BangerRive)
+export default BangerRive

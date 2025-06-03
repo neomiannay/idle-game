@@ -41,7 +41,6 @@
   },
   "ACTIONS": {
     "BUY": "Acheter",
-    "BUY_RABIT": "Acheter un lapin",
     "TRY": "Tester",
     "ACCEPT": "Accepter",
     "REJECT": "Rejeter"
@@ -58,7 +57,10 @@
     "SELLING": "Prix"
   },
   "UI": {
-    "UNIT_PRODUCTION": "Afficher la production /s"
+    "UNIT_PRODUCTION": "Afficher la production /s",
+    "LABEL_PRODUCTION": "Coût de production",
+    "LABEL_SELLING": "Prix de vente",
+    "LABEL_REPUTATION": "Réputation"
   },
   "PACKS": {
     "FRIEND_X10": "Pack Ami ×10 +2 bonus"
@@ -97,7 +99,21 @@
   },
   "RABIT_GAME": {
     "LAYOUT": {
-      "NAME": "Protocole de Draize"
+      "NAME": "Protocole de Draize",
+      "BUY_RABIT": "Acheter un lapin",
+      "START_EXP": "Lancer la recherche",
+      "NOT_ENOUGH_MONEY": "Pas assez de pépettes..."
+    },
+    "TIPS": {
+      "CLICK_0": "Cliquer.",
+      "CLICK_1": "Cliquer !",
+      "CLICK_2": "Cliquer !!",
+      "CLICK_3": "Cliquer !!!",
+      "CLICK_4": "Cliquer !!!!"
+    },
+    "ITEMS": {
+      "SKIN_REACTION": "Réaction cutanée",
+      "SKIN_REACTION_DESC": "Évaluation du potentiel irritant d'une substance chimique sur la peau en mesurant les réactions inflammatoires locales"
     }
   },
   "SEARCH_TIPS": {

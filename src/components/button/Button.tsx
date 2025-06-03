@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, memo } from 'react'
+import { ButtonHTMLAttributes } from 'react'
 
 import classNames from 'classnames'
 import { useL10n } from 'provider/L10nProvider'
@@ -27,4 +27,4 @@ const Button = ({ className, title, disabled, ...props }: ButtonProps) => {
   )
 }
 
-export default memo(Button)
+export default Button

@@ -61,8 +61,6 @@ export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
     setCurrentTimePub(0)
   }
 
-  console.log(currentTimePub, searchStatePub)
-
   const saveNewItemPub = (item: TSearchGameItem | null) => {
     if (item) {
       setTips((prev) => {

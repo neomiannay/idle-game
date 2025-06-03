@@ -99,4 +99,4 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
   )
 }
 
-export default React.memo(SectorsTab)
+export default SectorsTab

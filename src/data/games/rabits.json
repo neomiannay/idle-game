@@ -1,0 +1,44 @@
+{
+  "price": 121,
+  "factor": 1.097,
+  "items": [
+    {
+      "id": "rabit-exp-1",
+      "disabled": false,
+      "name": "RABIT_GAME.ITEMS.SKIN_REACTION",
+      "description": "RABIT_GAME.ITEMS.SKIN_REACTION_DESC",
+      "price": 238,
+      "factor": 1.15,
+      "power": 10,
+      "values": [
+        {
+          "value": 10,
+          "target": "reputation"
+        },
+        {
+          "value": -20,
+          "target": "karma"
+        }
+      ]
+    },
+    {
+      "id": "rabit-exp-2",
+      "disabled": false,
+      "name": "RABIT_GAME.ITEMS.SKIN_REACTION",
+      "description": "RABIT_GAME.ITEMS.SKIN_REACTION_DESC",
+      "price": 156,
+      "factor": 1.1,
+      "power": 10,
+      "values": [
+        {
+          "value": 8,
+          "target": "reputation"
+        },
+        {
+          "value": -12,
+          "target": "karma"
+        }
+      ]
+    }
+  ]
+}

@@ -42,4 +42,4 @@ const Sector = ({ className, children, ...props } : SectorProps) => {
   )
 }
 
-export default React.memo(Sector)
+export default Sector

@@ -1,5 +1,7 @@
 .btn {
   display: flex;
+  transition: box-shadow 0.2s ease-in-out;
+  will-change: box-shadow;
   width: max-content;
   font-size: rem(10);
   text-transform: uppercase;
@@ -19,6 +21,31 @@
     );
   backdrop-filter: blur(16px);
   border-radius: rem(8);
+  user-select: none;
+
+  &:not(:disabled):hover {
+    box-shadow: 0 0 8px 0 rgba(1, 4, 3, 0.35);
+  }
+
+  &:disabled {
+    color: rgb(110, 110, 110) !important;
+
+    background: linear-gradient(
+      0deg,
+      rgba(147, 147, 147, 0.5) 0%,
+      rgba(147, 147, 147, 0.5) 100%
+    );
+
+    &,
+    & * {
+      cursor: not-allowed !important;
+    }
+
+    &,
+    .btnLeft {
+      border-color: rgba(99, 99, 99, 0.5) !important;
+    }
+  }
 
   &Left,
   &Right {

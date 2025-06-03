@@ -1,5 +1,3 @@
-import { memo } from 'react'
-
 import classNames from 'classnames'
 import { conjugate, useL10n } from 'provider/L10nProvider'
 
@@ -22,4 +20,4 @@ const Count = ({ className, unit, count, ...props }: CountProps) => {
   )
 }
 
-export default memo(Count)
+export default Count

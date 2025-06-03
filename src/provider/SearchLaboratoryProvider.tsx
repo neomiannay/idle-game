@@ -61,8 +61,6 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
     setCurrentTimeLab(0)
   }
 
-  console.log(complexComposition)
-
   const saveNewItemLab = (item: TSearchGameItem | null) => {
     if (item) {
       setComplexComposition((prev) => {

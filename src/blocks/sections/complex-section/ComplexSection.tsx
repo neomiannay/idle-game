@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { useState } from 'react'
 
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
@@ -113,4 +113,4 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   )
 }
 
-export default memo(ComplexSection)
+export default ComplexSection

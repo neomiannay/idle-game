@@ -114,6 +114,9 @@
     "no-unreachable": 1,
     "no-floating-decimal": 0,
     "prefer-arrow-callback": 1,
+    // eslint-react
+    "react-x/no-unstable-context-value": "error",
+    "react-x/no-access-state-in-setstate": "error",
     "max-nested-callbacks": [
       2,
       {

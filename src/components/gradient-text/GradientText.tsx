@@ -6,16 +6,18 @@ import styles from './GradientText.module.scss'
 
 type GradientTextProps = {
   children: React.ReactNode;
+  disabled?: boolean;
   blur?: number;
   startColor?: string;
   endColor?: string;
   duration?: number;
   className?: string;
   props?: React.HTMLAttributes<HTMLDivElement>;
-}
+};
 
 const GradientText = ({
   children,
+  disabled,
   blur,
   startColor,
   endColor,
@@ -31,30 +33,33 @@ const GradientText = ({
   const backgroundBlur = `linear-gradient(90deg, ${startColor + '00'} 0%, ${endColor} 50%, ${startColor + '00'} 100%)`
 
   return (
-    <div
-      { ...props }
-      className={ classNames(styles.gradient, className) }
-    >
-      <div
-        className={ classNames(styles.gradientOverlay, styles.gradientItem) }
-        style={{
-          background,
-          animationDuration: `${duration}s`
-        }}
-      >
-        { children }
-      </div>
-      { blur && (
-        <div
-          className={ classNames(styles.gradientBlur, styles.gradientItem) }
-          style={{
-            filter: `blur(${blur}px)`,
-            background: backgroundBlur,
-            animationDuration: `${duration}s`
-          }}
-        >
-          { children }
-        </div>
+    <div { ...props } className={ classNames(styles.gradient, className) }>
+      { disabled ? (
+        <div className={ styles.gradientOverlay }>{ children }</div>
+      ) : (
+        <>
+          <div
+            className={ classNames(styles.gradientOverlay, styles.gradientItem) }
+            style={{
+              background,
+              animationDuration: `${duration}s`
+            }}
+          >
+            { children }
+          </div>
+          { blur && (
+            <div
+              className={ classNames(styles.gradientBlur, styles.gradientItem) }
+              style={{
+                filter: `blur(${blur}px)`,
+                background: backgroundBlur,
+                animationDuration: `${duration}s`
+              }}
+            >
+              { children }
+            </div>
+          ) }
+        </>
       ) }
     </div>
   )

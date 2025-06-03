@@ -22,4 +22,4 @@ const Droplet = (props: React.SVGProps<SVGSVGElement>) => {
   )
 }
 
-export default React.memo(Droplet)
+export default Droplet

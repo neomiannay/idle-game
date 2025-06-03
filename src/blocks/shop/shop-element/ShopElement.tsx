@@ -66,4 +66,4 @@ const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopEl
   )
 }
 
-export default React.memo(ShopElement)
+export default ShopElement
