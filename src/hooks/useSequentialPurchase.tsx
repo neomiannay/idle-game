@@ -10,7 +10,7 @@ export const useSequentialPurchaseState = (unitId: EGameUnit, elementId: string,
   const elementIds = Object.keys(elements)
   const currentIndex = elementIds.indexOf(elementId)
 
-  if (currentIndex === 0) return true
+  if (currentIndex === 0 || type === 'sector') return true
 
   if (currentIndex > 0) {
     const previousElementId = elementIds[currentIndex - 1]

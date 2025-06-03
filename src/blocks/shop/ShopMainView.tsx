@@ -99,6 +99,7 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
             const items = getElementsForUnit(unitId, 'item')
             const upgrades = getElementsForUnit(unitId, 'upgrade')
             const sectors = getElementsForUnit(unitId, 'sector')
+
             const hasElements =
               Object.keys(items).length > 0 || Object.keys(upgrades).length > 0 || Object.keys(sectors).length > 0
 

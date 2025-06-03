@@ -1,9 +1,10 @@
-import React, { PropsWithChildren, useRef, useEffect, useState } from 'react'
+import React, { PropsWithChildren, useRef, useEffect, useState, useMemo } from 'react'
 
 import { motion } from 'framer-motion'
 import classNames from 'classnames'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
 import { useL10n } from 'provider/L10nProvider'
+import { fadeAppear } from 'core/animation'
 
 import styles from './SectorsTab.module.scss'
 
@@ -16,6 +17,8 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
   const l10n = useL10n()
   const [activeButtonBounds, setActiveButtonBounds] = useState<DOMRect | null>(null)
   const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({})
+
+  const hasSectors = useMemo(() => unlockedSectors?.length && unlockedSectors.length > 0, [unlockedSectors])
 
   useEffect(() => {
     const activeButton = buttonRefs.current[reactiveCurrentSector]
@@ -46,7 +49,7 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
     }
   }, [reactiveCurrentSector, defaultUnlockedSector, unlockedSectors])
 
-  return (
+  return hasSectors && (
     <motion.div
       className={ classNames(styles.wrapper, className) }
       { ...props }
@@ -78,6 +81,7 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
         }) }
         onClick={ () => setCurrentSector(defaultUnlockedSector) }
         tabIndex={ 1 }
+        { ...fadeAppear() }
       >
         { l10n(`SECTORS.${defaultUnlockedSector.toUpperCase()}`) }
       </motion.button>
@@ -94,6 +98,7 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
             }) }
             onClick={ () => setCurrentSector(sector) }
             tabIndex={ index + 2 }
+            { ...fadeAppear() }
           >
             { l10n(`SECTORS.${sector.toUpperCase()}`) }
           </motion.button>
