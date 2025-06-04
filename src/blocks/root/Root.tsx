@@ -69,7 +69,6 @@ function Root ({ className }: RootProps) {
 
             <Shop />
             { /* <Background /> */ }
-            <RabitGame />
           </>
         ) }
       </main>

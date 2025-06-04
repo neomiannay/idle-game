@@ -10,6 +10,8 @@ import Rabit from './components/rabit/Rabit'
 import RabitSlider, {
   TRabitSliderItem
 } from './components/rabit-slider/RabitSlider'
+import { useGameProviderContext } from 'provider/GameProvider'
+import { EGameUnit } from 'types/store'
 
 export type TRabitData = {
   price: number;
@@ -21,10 +23,13 @@ const RabitGame = () => {
 
   const [rabitPrice, setRabitPrice] = useState(rabits.price)
   const [currentExp, setCurrentExp] = useState<TRabitSliderItem | null>(null)
+  const { hasEnoughUnits, modifyUnitValue } = useGameProviderContext()
 
   const handleBuy = () => {
+    if(!hasEnoughUnits(rabitPrice, EGameUnit.BENEFITS)) return
     if (life.get() <= 0) {
       setRabitPrice(rabitPrice * rabits.factor)
+      modifyUnitValue(EGameUnit.BENEFITS, -rabitPrice)
       life.set(100)
     }
   }

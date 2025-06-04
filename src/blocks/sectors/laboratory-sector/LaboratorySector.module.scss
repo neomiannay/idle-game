@@ -1,5 +1,5 @@
-.wrapper {
+.container {
   position: relative;
-  border: 1px solid palegreen;
-  background-color: rgb(83, 252, 190);
+  display: flex;
+  justify-content: space-between;
 }
