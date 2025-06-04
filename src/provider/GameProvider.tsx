@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useCallback, useState } from 'react'
+import React, { createContext, useContext, useCallback, useState, useMemo } from 'react'
 
 import { MotionValue } from 'motion/react'
 import useMotionState from 'hooks/useMotionState'
@@ -247,7 +247,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
     return roll <= chance
   }
 
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     units,
     totalUnits,
     getUnit,
@@ -261,7 +261,21 @@ export function GameProvider ({ children }: BaseProviderProps) {
     modifyUnitValue,
     isSaleSuccessful,
     hasEnoughUnits
-  }
+  }), [
+    units,
+    totalUnits,
+    getUnit,
+    canDisplayUnit,
+    canBuyUnit,
+    buyUnit,
+    setUnitMultiplierGetter,
+    updateDisplayConditions,
+    updateUnitDuration,
+    updateValueByAction,
+    modifyUnitValue,
+    isSaleSuccessful,
+    hasEnoughUnits
+  ])
 
   return (
     <GameProviderContext.Provider value={ contextValue }>

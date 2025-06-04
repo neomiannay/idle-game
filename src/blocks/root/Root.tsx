@@ -10,15 +10,12 @@ import { AnimatePresence } from 'motion/react'
 import { baseVariants } from 'core/animation'
 import useTransitionType from 'hooks/useTransitionType'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
+import Background from 'blocks/background/Background'
 
 import styles from './Root.module.scss'
 
-type RootProps = {
-  className?: string;
-};
-
-function Root ({ className }: RootProps) {
-  const { isPaused, togglePause, loading } = useIterationContext()
+function Root () {
+  const { loading } = useIterationContext()
   const { reactiveCurrentSector, sectors } = useSectorsProviderContext()
 
   const custom = { type: useTransitionType(reactiveCurrentSector, sectors) }
@@ -67,12 +64,10 @@ function Root ({ className }: RootProps) {
             </button> */ }
 
             <Shop />
-            { /* <Background /> */ }
+            <Background />
           </>
         ) }
       </main>
-      { /* <Background /> */ }
-      { /* <RabbitGame /> */ }
     </>
   )
 }

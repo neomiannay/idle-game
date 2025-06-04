@@ -1,3 +1,5 @@
+import { castArray, first } from 'lodash-es'
+
 const shortestAngle = (from: number, to: number, unit = Math.PI * 2) => {
   const difference = from - to
   const halfDistance = unit / 2
@@ -9,6 +11,8 @@ const wrap = (value: number, lower: number, upper: number) => {
   const times = Math.floor((value - lower) / distance)
   return value - times * distance
 }
+
+const getFirstElement = <T>(array: T | T[]): T => first(castArray(array)) as T
 
 const round = (number:number, precision:number) => Math.round(number * Math.pow(10, precision)) / Math.pow(10, precision)
 
@@ -58,5 +62,6 @@ export default {
   scale,
   clamp,
   map,
-  mapClamp
+  mapClamp,
+  getFirstElement
 }

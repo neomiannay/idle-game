@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react'
 
-import { Alignment, Event, Fit, RiveProps } from 'rive-react'
-import { Layout, EventType, useRive } from '@rive-app/react-canvas'
+import { Alignment, EventCallback, EventType, Fit, Layout, RiveProps, StateMachineInput, useRive } from '@rive-app/react-webgl2'
+import math from 'helpers/math'
 
 type BangerRiveProps = {
   id?: string;
-  onEvent?: (event: Event) => void;
-  onStateChange?: (event: Event) => void;
+  onEvent?: EventCallback;
+  onStateChange?: EventCallback;
+  onInputsChange?: (inputs: StateMachineInput[]) => void;
   autoplay?: boolean;
   animations?: RiveProps['animations'];
   save?: boolean;
-  stateMachine?: string;
 } & RiveProps;
 
 const DEFAULT_PROPS: Partial<BangerRiveProps> = {
-  stateMachine: 'StateMachine',
+  stateMachines: ['StateMachine'],
   layout: new Layout({ fit: Fit.Contain, alignment: Alignment.TopCenter }),
   autoplay: true,
   save: true
@@ -23,30 +23,35 @@ const DEFAULT_PROPS: Partial<BangerRiveProps> = {
 /**
  * Banger Rive Component
  * @param {BangerRiveProps} props - The props for the Banger Rive component
- * @returns {React.ReactNode} The Banger Rive component
  */
 function BangerRive ({
   id,
   onEvent,
   onStateChange,
+  onInputsChange,
   animations,
   save,
-  stateMachine,
   ...props
 }: BangerRiveProps) {
-  const { RiveComponent, rive } = useRive({ ...DEFAULT_PROPS, ...props })
+  props.stateMachines ??= DEFAULT_PROPS.stateMachines ?? ['']
 
-  stateMachine ??= DEFAULT_PROPS.stateMachine ?? ''
+  const { RiveComponent, rive } = useRive({
+    ...DEFAULT_PROPS,
+    ...props,
+    useOffscreenRenderer: true // Enable WebGL2 renderer
+  })
+
   id ??= props.src
   save ??= DEFAULT_PROPS.save
   let animationName: string | undefined
+  let inputList: StateMachineInput[] | undefined
 
   useEffect(() => {
     if (!rive) return
 
     // Handlers
-    const handleStateChange = (e: Event) => onStateChange?.(e)
-    const handleEvent = (e: Event) => onEvent?.(e)
+    const handleStateChange: EventCallback = (e) => onStateChange?.(e)
+    const handleEvent: EventCallback = (e) => onEvent?.(e)
 
     rive.setupRiveListeners()
 
@@ -61,10 +66,17 @@ function BangerRive ({
   }, [rive, onStateChange, onEvent])
 
   useEffect(() => {
-    if (!animations || !rive) return
+    if (!rive) return
 
-    const inputList = rive.stateMachineInputs(stateMachine)
+    const inputs = rive.stateMachineInputs(math.getFirstElement(props.stateMachines!))
+    inputList = inputs
+    onInputsChange?.(inputs)
+  }, [rive, onInputsChange, props.stateMachines])
+
+  useEffect(() => {
+    if (!animations || !rive) return
     animationName = animations[0]
+
     const input = inputList?.find(input => input.name === animationName)
     input?.fire()
   }, [animations, rive])
