@@ -2,39 +2,39 @@ import React, { useState } from 'react'
 
 import { useMotionValue } from 'motion/react'
 import { useL10n } from 'provider/L10nProvider'
-
-import rabits from 'data/games/rabits.json'
-
-import styles from './RabitGame.module.scss'
-import Rabit from './components/rabit/Rabit'
-import RabitSlider, {
-  TRabitSliderItem
-} from './components/rabit-slider/RabitSlider'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
 
-export type TRabitData = {
+import rabbits from 'data/games/rabbits.json'
+
+import styles from './RabbitGame.module.scss'
+import Rabbit from './components/rabbit/Rabbit'
+import RabbitSlider, {
+  TRabbitSliderItem
+} from './components/rabbit-slider/RabbitSlider'
+
+export type TRabbitData = {
   price: number;
 };
 
-const RabitGame = () => {
+const RabbitGame = () => {
   const l10n = useL10n()
   const life = useMotionValue<number>(-1)
 
-  const [rabitPrice, setRabitPrice] = useState(rabits.price)
-  const [currentExp, setCurrentExp] = useState<TRabitSliderItem | null>(null)
+  const [rabbitPrice, setRabbitPrice] = useState(rabbits.price)
+  const [currentExp, setCurrentExp] = useState<TRabbitSliderItem | null>(null)
   const { hasEnoughUnits, modifyUnitValue } = useGameProviderContext()
 
   const handleBuy = () => {
-    if(!hasEnoughUnits(rabitPrice, EGameUnit.BENEFITS)) return
+    if (!hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)) return
     if (life.get() <= 0) {
-      setRabitPrice(rabitPrice * rabits.factor)
-      modifyUnitValue(EGameUnit.BENEFITS, -rabitPrice)
+      setRabbitPrice(rabbitPrice * rabbits.factor)
+      modifyUnitValue(EGameUnit.BENEFITS, -rabbitPrice)
       life.set(100)
     }
   }
 
-  const handleStart = (exp: TRabitSliderItem) => {
+  const handleStart = (exp: TRabbitSliderItem) => {
     setCurrentExp(exp)
   }
 
@@ -42,18 +42,18 @@ const RabitGame = () => {
     <div className={ styles.wrapper }>
       <h3 className={ styles.name }>{ l10n('RABIT_GAME.LAYOUT.NAME') }</h3>
       <hr className={ styles.divider } />
-      <Rabit
+      <Rabbit
         life={ life }
-        price={ rabitPrice }
+        price={ rabbitPrice }
         attack={ currentExp?.power ?? 0 }
         onBuy={ handleBuy }
       />
-      <RabitSlider
-        items={ rabits.items as TRabitSliderItem[] }
+      <RabbitSlider
+        items={ rabbits.items as TRabbitSliderItem[] }
         onStart={ handleStart }
       />
     </div>
   )
 }
 
-export default RabitGame
+export default RabbitGame

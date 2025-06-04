@@ -87,6 +87,8 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
       </motion.button>
 
       { unlockedSectors?.map((sector, index) => {
+        console.log(sector)
+
         return (
           <motion.button
             key={ sector }

@@ -3,9 +3,9 @@ import React from 'react'
 import classNames from 'classnames'
 import GradientText from 'components/gradient-text/GradientText'
 
-import styles from './RabitBtn.module.scss'
+import styles from './RabbitBtn.module.scss'
 
-type RabitBtnProps = {
+type RabbitBtnProps = {
   price: string;
   label: string;
   className?: string;
@@ -14,14 +14,14 @@ type RabitBtnProps = {
   disabled?: boolean;
 };
 
-const RabitBtn = ({
+const RabbitBtn = ({
   price,
   label,
   className,
   onClick,
   disabled,
   ...props
-}: RabitBtnProps) => {
+}: RabbitBtnProps) => {
   return (
     <button
       type='button'
@@ -44,4 +44,4 @@ const RabitBtn = ({
   )
 }
 
-export default RabitBtn
+export default RabbitBtn

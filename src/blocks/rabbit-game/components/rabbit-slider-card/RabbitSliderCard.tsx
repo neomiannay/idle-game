@@ -4,16 +4,16 @@ import { useL10n } from 'provider/L10nProvider'
 import { EGamePrice, EGameUnit } from 'types/store'
 import { useMotionValue } from 'motion/react'
 
-import { TRabitSliderItem } from '../rabit-slider/RabitSlider'
-import RabitHp from '../rabit-hp/RabitHp'
+import { TRabbitSliderItem } from '../rabbit-slider/RabbitSlider'
+import RabbitHp from '../rabbit-hp/RabbitHp'
 
-import styles from './RabitSliderCard.module.scss'
+import styles from './RabbitSliderCard.module.scss'
 
-type TRabitSliderCardProps = {
-  item: TRabitSliderItem;
+type TRabbitSliderCardProps = {
+  item: TRabbitSliderItem;
 };
 
-const RabitSliderCard = ({ item }: TRabitSliderCardProps) => {
+const RabbitSliderCard = ({ item }: TRabbitSliderCardProps) => {
   const l10n = useL10n()
   const life = useMotionValue(item.power)
 
@@ -27,7 +27,7 @@ const RabitSliderCard = ({ item }: TRabitSliderCardProps) => {
     <div className={ styles.card }>
       <div className={ styles.cardHeader }>
         <h3 className={ styles.cardTitle }>{ l10n(item.name) }</h3>
-        <RabitHp className={ styles.cardHp } life={ life } length={ 6 } reduce />
+        <RabbitHp className={ styles.cardHp } life={ life } length={ 6 } reduce />
       </div>
       <p className={ styles.cardDescription }>{ l10n(item.description) }</p>
       <div className={ styles.cardValues }>
@@ -42,4 +42,4 @@ const RabitSliderCard = ({ item }: TRabitSliderCardProps) => {
   )
 }
 
-export default RabitSliderCard
+export default RabbitSliderCard

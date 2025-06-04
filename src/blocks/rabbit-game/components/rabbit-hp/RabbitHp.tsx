@@ -5,16 +5,16 @@ import { MotionValue } from 'motion/react'
 import { clamp } from 'lodash-es'
 import classNames from 'classnames'
 
-import styles from './RabitHp.module.scss'
+import styles from './RabbitHp.module.scss'
 
-type TRabitHp = {
+type TRabbitHp = {
   life: MotionValue<number>;
   length: number;
   reduce?: boolean;
   className?: string;
 };
 
-const RabitHp = ({ life, length, reduce, className }: TRabitHp) => {
+const RabbitHp = ({ life, length, reduce, className }: TRabbitHp) => {
   const getLifeValue = () => {
     const value = life.get()
     if (value === -1) return length
@@ -26,7 +26,7 @@ const RabitHp = ({ life, length, reduce, className }: TRabitHp) => {
   )
 
   return (
-    <div className={ classNames(styles.rabitHp, className) }>
+    <div className={ classNames(styles.rabbitHp, className) }>
       { new Array(Math.round(reduce ? lifeValue : length)).fill(0).map((_, index) => (
         <Droplet key={ index } active={ index <= lifeValue - 1 } />
       )) }
@@ -34,4 +34,4 @@ const RabitHp = ({ life, length, reduce, className }: TRabitHp) => {
   )
 }
 
-export default RabitHp
+export default RabbitHp

@@ -10,24 +10,24 @@ import {
 import { baseVariants, rabbitAnimation } from 'core/animation'
 import { clamp } from 'lodash-es'
 
-import styles from './RabitImg.module.scss'
+import styles from './RabbitImg.module.scss'
 
-type TRabitImg = {
+type TRabbitImg = {
   life: MotionValue<number>;
   attack: number;
 };
 
 let lifeValue = 100
 const imagePaths = [
-  'img/rabit/rabit_6.png',
-  'img/rabit/rabit_5.png',
-  'img/rabit/rabit_4.png',
-  'img/rabit/rabit_3.png',
-  'img/rabit/rabit_2.png',
-  'img/rabit/rabit_1.png'
+  'img/rabbit/rabbit_6.png',
+  'img/rabbit/rabbit_5.png',
+  'img/rabbit/rabbit_4.png',
+  'img/rabbit/rabbit_3.png',
+  'img/rabbit/rabbit_2.png',
+  'img/rabbit/rabbit_1.png'
 ].reverse()
 
-const RabitImg = ({ life, attack }: TRabitImg) => {
+const RabbitImg = ({ life, attack }: TRabbitImg) => {
   const [images, setImages] = useState<HTMLImageElement[]>([])
   const [index, setIndex] = useState(0)
   const height = useTransform(life, [-1, 0, 100], ['0%', '100%', '0%'])
@@ -52,7 +52,7 @@ const RabitImg = ({ life, attack }: TRabitImg) => {
   })
 
   // Handle rabbit click
-  const onRabitClick = () => {
+  const onRabbitClick = () => {
     const prevLifeValue = lifeValue
     lifeValue -= attack
     const newIndex = Math.floor(
@@ -74,14 +74,14 @@ const RabitImg = ({ life, attack }: TRabitImg) => {
   }
 
   return (
-    <div className={ styles.rabitWrapper } onClick={ () => onRabitClick() }>
+    <div className={ styles.rabbitWrapper } onClick={ () => onRabbitClick() }>
       <AnimatePresence mode='wait'>
-        <div className={ styles.rabitContainer }>
+        <div className={ styles.rabbitContainer }>
           <motion.div key={ index } { ...baseVariants } { ...rabbitAnimation() }>
-            <img className={ styles.rabit } src={ images[index]?.src } alt='' />
-            <motion.div className={ styles.rabitLife } style={{ height }}>
+            <img className={ styles.rabbit } src={ images[index]?.src } alt='' />
+            <motion.div className={ styles.rabbitLife } style={{ height }}>
               <img
-                className={ styles.rabitLifeImg }
+                className={ styles.rabbitLifeImg }
                 src={ images[index]?.src }
                 alt=''
               />
@@ -93,4 +93,4 @@ const RabitImg = ({ life, attack }: TRabitImg) => {
   )
 }
 
-export default RabitImg
+export default RabbitImg

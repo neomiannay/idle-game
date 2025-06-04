@@ -72,7 +72,7 @@ function Root ({ className }: RootProps) {
         ) }
       </main>
       { /* <Background /> */ }
-      { /* <RabitGame /> */ }
+      { /* <RabbitGame /> */ }
     </>
   )
 }

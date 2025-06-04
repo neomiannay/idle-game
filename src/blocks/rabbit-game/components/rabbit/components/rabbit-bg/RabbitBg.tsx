@@ -3,9 +3,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { animate, MotionValue } from 'motion/react'
 import easing from 'helpers/easing'
 
-import { RabitBgMask } from './RabitBgMask'
+import { RabbitBgMask } from './RabbitBgMask'
 
-const RabitBg = ({
+const RabbitBg = ({
   opacity,
   springX,
   springY
@@ -60,7 +60,7 @@ const RabitBg = ({
         xmlns='http://www.w3.org/2000/svg'
       >
         { /* Svg mask */ }
-        <RabitBgMask
+        <RabbitBgMask
           width={ sizes.width }
           height={ sizes.height }
           bgScale={ sizes.bgScale }
@@ -103,4 +103,4 @@ const RabitBg = ({
   )
 }
 
-export default RabitBg
+export default RabbitBg

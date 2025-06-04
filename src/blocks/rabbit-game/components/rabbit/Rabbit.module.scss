@@ -1,4 +1,4 @@
-.rabit {
+.rabbit {
   position: relative;
   margin-bottom: rem(-32);
   margin-top: rem(-16);
@@ -12,7 +12,7 @@
   }
 
   &:not(.disabled) {
-    .rabitDescription {
+    .rabbitDescription {
       &:hover {
         transform: translateX(-50%) scale(1.025);
       }
@@ -35,7 +35,7 @@
   }
 }
 
-.rabit {
+.rabbit {
   &HpWrapper {
     position: absolute;
     top: rem(22);

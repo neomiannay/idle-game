@@ -8,31 +8,31 @@ import Translatable from 'components/translatable/Translatable'
 import { formatValue } from 'helpers/units'
 import { useL10n } from 'provider/L10nProvider'
 
-import RabitSliderCard from '../rabit-slider-card/RabitSliderCard'
-import RabitBtn from '../rabit/components/rabit-btn/RabitBtn'
+import RabbitSliderCard from '../rabbit-slider-card/RabbitSliderCard'
+import RabbitBtn from '../rabbit/components/rabbit-btn/RabbitBtn'
 
-import styles from './RabitSlider.module.scss'
+import styles from './RabbitSlider.module.scss'
 
-export type TRabitSliderItemValue = {
+export type TRabbitSliderItemValue = {
   value: number;
   target: EGameUnit | EGamePrice;
 };
 
-export type TRabitSliderItem = {
+export type TRabbitSliderItem = {
   id: string;
   disabled: boolean;
   name: string;
   description: string;
   power: number;
-  values: TRabitSliderItemValue[];
+  values: TRabbitSliderItemValue[];
 };
 
-type TRabitSlider = {
-  items: TRabitSliderItem[];
-  onStart: (exp: TRabitSliderItem) => void;
+type TRabbitSlider = {
+  items: TRabbitSliderItem[];
+  onStart: (exp: TRabbitSliderItem) => void;
 };
 
-const RabitSlider = ({ items, onStart }: TRabitSlider) => {
+const RabbitSlider = ({ items, onStart }: TRabbitSlider) => {
   const l10n = useL10n()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isReady, setIsReady] = useState(false)
@@ -64,12 +64,12 @@ const RabitSlider = ({ items, onStart }: TRabitSlider) => {
 
   return (
     <>
-      <div className={ styles.rabitSlider }>
+      <div className={ styles.rabbitSlider }>
         { items.length > 1 && (
           <button
             className={ classNames(
-              styles.rabitSliderButton,
-              styles.rabitSliderButtonLeft
+              styles.rabbitSliderButton,
+              styles.rabbitSliderButtonLeft
             ) }
             onClick={ prevSlide }
           >
@@ -100,19 +100,19 @@ const RabitSlider = ({ items, onStart }: TRabitSlider) => {
               height
             }}
             onAnimationComplete={ handleSetHeight }
-            className={ styles.rabitSliderContent }
+            className={ styles.rabbitSliderContent }
             style={{
               padding: items.length > 1 ? '0' : '0 16rem'
             }}
           >
-            <RabitSliderCard item={ items[currentIndex] } />
+            <RabbitSliderCard item={ items[currentIndex] } />
           </motion.div>
         </AnimatePresence>
         { items.length > 1 && (
           <button
             className={ classNames(
-              styles.rabitSliderButton,
-              styles.rabitSliderButtonRight
+              styles.rabbitSliderButton,
+              styles.rabbitSliderButtonRight
             ) }
             onClick={ nextSlide }
           >
@@ -120,8 +120,8 @@ const RabitSlider = ({ items, onStart }: TRabitSlider) => {
           </button>
         ) }
       </div>
-      <Translatable className={ styles.rabitSliderStart }>
-        <RabitBtn
+      <Translatable className={ styles.rabbitSliderStart }>
+        <RabbitBtn
           price={ `${formatValue(10)} ${l10n('UNITS.EURO')}` }
           label={ l10n('RABIT_GAME.LAYOUT.START_EXP') }
           onClick={ () => onStart(items[currentIndex]) }
@@ -131,4 +131,4 @@ const RabitSlider = ({ items, onStart }: TRabitSlider) => {
   )
 }
 
-export default RabitSlider
+export default RabbitSlider

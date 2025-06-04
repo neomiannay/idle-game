@@ -1,4 +1,4 @@
-export const RabitBgMask = ({
+export const RabbitBgMask = ({
   width,
   height,
   bgScale

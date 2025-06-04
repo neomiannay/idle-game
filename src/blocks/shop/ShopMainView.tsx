@@ -7,6 +7,7 @@ import { EGameUnit } from 'types/store'
 import { motion, useMotionValue, useTransform, useMotionTemplate } from 'motion/react'
 import { fadeAppear } from 'core/animation'
 import { useShopProviderContext } from 'provider/ShopProvider'
+import { useL10n } from 'provider/L10nProvider'
 
 import ShopElements from './shop-elements/ShopElements'
 import styles from './Shop.module.scss'
@@ -20,6 +21,8 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
   const { canDisplayUnit, units } = useGameProviderContext()
   const { getElementsForUnit } = useInventoryContext()
   const { shopTitleRef, translateYValue, shopOpen } = useShopProviderContext()
+
+  const l10n = useL10n()
 
   const [hasAnimated, setHasAnimated] = useState(false)
 
@@ -79,7 +82,7 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
         className={ styles.title }
         { ...fadeAppear() }
       >
-        Projets
+        { l10n('PROJECTS') }
       </motion.h2>
       <motion.div
         { ...fadeAppear() }
@@ -93,7 +96,7 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
             '--translateYValue': translateYCssVar
           } as React.CSSProperties}
         >
-          { unitIds.map((unitId) => {
+          { unitIds.slice(0, 5).map((unitId) => {
             if (!canDisplayUnit(unitId)) return null
 
             const items = getElementsForUnit(unitId, 'item')

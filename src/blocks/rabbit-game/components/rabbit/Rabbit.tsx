@@ -18,21 +18,21 @@ import classNames from 'classnames'
 import useMotionState from 'hooks/useMotionState'
 import { baseVariants, fadeAppearRabbit } from 'core/animation'
 
-import RabitHp from '../rabit-hp/RabitHp'
+import RabbitHp from '../rabbit-hp/RabbitHp'
 
-import styles from './Rabit.module.scss'
-import RabitImg from './components/rabit-img/RabitImg'
-import RabitBg from './components/rabit-bg/RabitBg'
-import RabitBtn from './components/rabit-btn/RabitBtn'
+import styles from './Rabbit.module.scss'
+import RabbitImg from './components/rabbit-img/RabbitImg'
+import RabbitBg from './components/rabbit-bg/RabbitBg'
+import RabbitBtn from './components/rabbit-btn/RabbitBtn'
 
-type TRabit = {
+type TRabbit = {
   life: MotionValue<number>;
   price: number;
   attack: number;
   onBuy: () => void;
 };
 
-const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
+const Rabbit = ({ life, price, attack, onBuy }: TRabbit) => {
   const { units } = useGameProviderContext()
   const benefits = units[EGameUnit.BENEFITS].motionValue
 
@@ -62,7 +62,7 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
     spring.set(springValue)
   }
 
-  const isRabitDead = useMotionState(life, (v) => v === -1 || v <= 0)
+  const isRabbitDead = useMotionState(life, (v) => v === -1 || v <= 0)
 
   useEffect(() => {
     mouse.x.on('change', (value) => onPositionChange('x', value))
@@ -96,31 +96,31 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
   ]
 
   return (
-    <div className={ classNames(styles.rabit, { [styles.disabled]: !canBuy || life.get() > -1 }) }>
-      <div className={ styles.rabitHpWrapper }>
-        <RabitHp life={ life } length={ 6 } />
+    <div className={ classNames(styles.rabbit, { [styles.disabled]: !canBuy || life.get() > -1 }) }>
+      <div className={ styles.rabbitHpWrapper }>
+        <RabbitHp life={ life } length={ 6 } />
       </div>
-      <div ref={ gameRef } className={ styles.rabitWrapper }>
+      <div ref={ gameRef } className={ styles.rabbitWrapper }>
         <Tooltip
           title={ tips[Math.floor(Math.random() * tips.length)] }
-          className={ styles.rabitTooltip }
+          className={ styles.rabbitTooltip }
           disabled={ false }
           parent={ gameRef }
           contain
         />
-        <RabitImg life={ life } attack={ attack } />
-        <RabitBg opacity={ opacity } springX={ springX } springY={ springY } />
+        <RabbitImg life={ life } attack={ attack } />
+        <RabbitBg opacity={ opacity } springX={ springX } springY={ springY } />
       </div>
       <div
         ref={ descriptionRef }
-        className={ styles.rabitDescription }
-        style={{ pointerEvents: !isRabitDead ? 'none' : 'auto' }}
+        className={ styles.rabbitDescription }
+        style={{ pointerEvents: !isRabbitDead ? 'none' : 'auto' }}
       >
         <AnimatePresence>
-          { (isRabitDead || life.get() === null) && (
+          { (isRabbitDead || life.get() === null) && (
             <motion.div { ...baseVariants } { ...fadeAppearRabbit }>
               <Translatable parentRef={ gameRef } disabled={ !canBuy }>
-                <RabitBtn
+                <RabbitBtn
                   price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
                   label={ l10n('RABIT_GAME.LAYOUT.BUY_RABIT') }
                   onClick={ onBuy }
@@ -129,7 +129,7 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
               </Translatable>
               <Tooltip
                 title='RABIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
-                className={ styles.rabitTooltipNotEnoughMoney }
+                className={ styles.rabbitTooltipNotEnoughMoney }
                 disabled={ canBuy }
                 parent={ descriptionRef }
               />
@@ -141,4 +141,4 @@ const Rabit = ({ life, price, attack, onBuy }: TRabit) => {
   )
 }
 
-export default Rabit
+export default Rabbit

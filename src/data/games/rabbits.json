@@ -3,7 +3,7 @@
   "factor": 1.097,
   "items": [
     {
-      "id": "rabit-exp-1",
+      "id": "rabbit-exp-1",
       "disabled": false,
       "name": "RABIT_GAME.ITEMS.SKIN_REACTION",
       "description": "RABIT_GAME.ITEMS.SKIN_REACTION_DESC",
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "id": "rabit-exp-2",
+      "id": "rabbit-exp-2",
       "disabled": false,
       "name": "RABIT_GAME.ITEMS.SKIN_REACTION",
       "description": "RABIT_GAME.ITEMS.SKIN_REACTION_DESC",
