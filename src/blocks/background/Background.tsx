@@ -8,13 +8,19 @@ import {
   Layout
 } from '@rive-app/react-webgl2'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { useMotionValue, useSpring } from 'motion/react'
+import { useSpring } from 'motion/react'
 import useMotionState from 'hooks/useMotionState'
 
 import styles from './Background.module.scss'
 
-const BENEFITS_END_STEP = 6200000
-const BENEFITS_START_STEP = BENEFITS_END_STEP / 2
+const BENEFITS_END_STEP = 6_200_000_000
+const BENEFITS_START_STEP = 100_000
+
+function getProgressFromMoney (money: number, maxMoney = BENEFITS_END_STEP, base = 1.25) {
+  const ratio = money / maxMoney
+  const progress = Math.log(ratio * (base - 1) + 1) / Math.log(base)
+  return Math.max(0, Math.min(1, progress)) * 100
+}
 
 /**
  * Background Component
@@ -36,23 +42,19 @@ function Background (): React.ReactElement {
     setInput(inputs.find(({ name }) => name === 'progress') ?? null)
   }
 
-  const testMotionValue = useMotionValue(0)
-
-  setInterval(() => {
-    testMotionValue.set(testMotionValue.get() + 10000)
-  }, 100)
-
-  useMotionState(testMotionValue, (value) => {
-    // useMotionState(units.benefits.motionValue, (value) => {
+  useMotionState(units.benefits.motionValue, (value) => {
     if (!input || value > BENEFITS_END_STEP) return
 
-    let res = (value / BENEFITS_START_STEP) * 100
+    // let res = (value / BENEFITS_START_STEP) * 100
+    let res = getProgressFromMoney(value, BENEFITS_START_STEP)
+
     if (value > BENEFITS_START_STEP && progressSpring.get() < 123) {
       res = 123
     } else if (progressSpring.get() >= 123) {
       const startValue = value - BENEFITS_START_STEP
       const endValue = BENEFITS_END_STEP - BENEFITS_START_STEP
-      res = 200 + (startValue / endValue) * 100
+      // res = 200 + (startValue / endValue) * 100
+      res = 200 + getProgressFromMoney(startValue, endValue)
     }
 
     if (progressSpring.get() >= 0) progressSpring.set(res)
@@ -67,18 +69,16 @@ function Background (): React.ReactElement {
   })
 
   return (
-    <>
-      <div className={ styles.background }>
-        <BangerRive
-          id='background'
-          src='rive/background.riv'
-          stateMachines={ ['StateMachine'] }
-          artboard='tout'
-          layout={ new Layout({ fit: Fit.Cover, alignment: Alignment.Center }) }
-          onInputsChange={ handleInputsChange }
-        />
-      </div>
-    </>
+    <div className={ styles.background }>
+      <BangerRive
+        id='background'
+        src='rive/background.riv'
+        stateMachines={ ['StateMachine'] }
+        artboard='tout'
+        layout={ new Layout({ fit: Fit.Cover, alignment: Alignment.Center }) }
+        onInputsChange={ handleInputsChange }
+      />
+    </div>
   )
 }
 
