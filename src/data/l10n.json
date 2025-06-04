@@ -4,9 +4,10 @@
     "description": "Trallallero Trallalla, porco dio e porco Allah"
   },
   "BUTTONS": {
-    "ACTIVATE": "Extraire",
+    "ACTIF": "Extrais",
     "PRODUCE": "Formuler",
-    "SALE": "Répands"
+    "SALE": "Répands",
+    "BUY": "Acheter"
   },
   "UNITS": {
     "ACTIF": {

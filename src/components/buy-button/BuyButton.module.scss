@@ -1,0 +1,11 @@
+.wrapper {
+  @include apply(action2);
+  user-select: none;
+  @include apply(basic-hover);
+  filter: brightness(0.8);
+}
+
+.disabled {
+  color: var(--color-disabled);
+  cursor: not-allowed;
+}

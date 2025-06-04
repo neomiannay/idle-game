@@ -33,22 +33,78 @@
   color: var(--purple-fill-20);
 }
 
-.buyButton {
-  width: 100%;
-  border: 1px solid rgba(4, 4, 7, 0.06);
-  padding: rem(7) rem(18);
-  border-radius: rem(24);
-  text-transform: uppercase;
-  font-size: rem(12);
-  font-variation-settings: "wght" 200, "wdth" 40;
+.button {
+  position: relative;
   display: flex;
-  justify-content: center;
-  gap: rem(6);
-  backdrop-filter: blur(16px);
+  justify-content: space-between;
+  width: 100%;
+  background: var(--gradient-button);
+  border: 1px solid var(--transparent-dark-8);
+  border-radius: var(--border-radius);
   color: var(--purple-fill-20);
-  @include apply(basic-hover);
+  backdrop-filter: blur(16px);
 
-  .costValue {
-    font-variation-settings: "wght" 800, "wdth" 40;
+  transition: all 0.2s ease-in-out;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: rem(7);
+    background: var(--gradient-button-hover);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    z-index: -1;
   }
+
+  &:not(.inactive) {
+    &:hover {
+      border-color: var(--transparent-dark-16);
+
+      &::before {
+          opacity: 1;
+      }
+    }
+  }
+
+  &.inactive {
+    border: 1px solid var(--transparent-dark-8);
+    background: var(--gradient-button-inactive);
+    color: var(--fill-20);
+    opacity: 0.4;
+  }
+}
+
+.costContainer {
+  display: flex;
+  align-items: center;
+  padding: rem(8) rem(12);
+}
+
+.cost {
+  @include apply(button-cost);
+  height: min-content;
+}
+
+.unit {
+  @include apply(button-cost-unit);
+  height: min-content;
+  text-transform: lowercase;
+}
+
+.actionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // padding: rem(8) rem(12);
+  border-left: rem(1) solid var(--transparent-dark-8);
+}
+
+.action {
+  position: relative;
+  @include apply(button-action);
+  padding: rem(12);
+  text-transform: uppercase;
 }

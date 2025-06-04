@@ -2,7 +2,7 @@ import React from 'react'
 
 import classNames from 'classnames'
 import Count from 'components/count/Count'
-import Button from 'components/button/Button'
+import Button from 'components/buy-button/BuyButton'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'

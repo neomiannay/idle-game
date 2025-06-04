@@ -8,6 +8,7 @@ import { useSequentialPurchaseState } from 'hooks/useSequentialPurchase'
 import useElementPurchased from 'hooks/useElementPurchased'
 import useCanBuyElement from 'hooks/useCanBuyElement'
 import useItemCount from 'hooks/useItemCount'
+import Button from 'components/button/Button'
 
 import styles from './Item.module.scss'
 
@@ -62,14 +63,15 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
         </div>
         <span className={ styles.count }>{ itemCount }</span>
       </div>
-      <button
-        className={ styles.buyButton }
+      <Button
         onClick={ () => buyElement(unitId, itemId, 'item') }
         disabled={ !canPurchase }
-      >
-        <span className={ styles.costValue }>{ item.cost.value }</span>
-        <span>{ costName }</span>
-      </button>
+        cost={{
+          value: item.cost.value,
+          unit: costName
+        }}
+        action={ l10n('BUTTONS.BUY') }
+      />
     </div>
   )
 }
