@@ -99,10 +99,10 @@
       "PMMA_DESC": "Effet “soft focus” qui masque instantanément les imperfections.Lisse visuellement la surface de la peau. Texture aérienne au toucher. Fini mat élégant sans brillance. Microplastique non biodégradable, s'accumule dans les écosystèmes marins et contamine la chaîne alimentaire."
     }
   },
-  "RABIT_GAME": {
+  "RABBIT_GAME": {
     "LAYOUT": {
       "NAME": "Protocole de Draize",
-      "BUY_RABIT": "Acheter un lapin",
+      "BUY_RABBIT": "Acheter un lapin",
       "START_EXP": "Lancer la recherche",
       "NOT_ENOUGH_MONEY": "Pas assez de pépettes..."
     },

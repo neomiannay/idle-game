@@ -40,7 +40,7 @@ const RabbitGame = () => {
 
   return (
     <div className={ styles.wrapper }>
-      <h3 className={ styles.name }>{ l10n('RABIT_GAME.LAYOUT.NAME') }</h3>
+      <h3 className={ styles.name }>{ l10n('RABBIT_GAME.LAYOUT.NAME') }</h3>
       <hr className={ styles.divider } />
       <Rabbit
         life={ life }

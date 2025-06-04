@@ -5,8 +5,8 @@
     {
       "id": "rabbit-exp-1",
       "disabled": false,
-      "name": "RABIT_GAME.ITEMS.SKIN_REACTION",
-      "description": "RABIT_GAME.ITEMS.SKIN_REACTION_DESC",
+      "name": "RABBIT_GAME.ITEMS.SKIN_REACTION",
+      "description": "RABBIT_GAME.ITEMS.SKIN_REACTION_DESC",
       "price": 238,
       "factor": 1.15,
       "power": 75,
@@ -24,8 +24,8 @@
     {
       "id": "rabbit-exp-2",
       "disabled": false,
-      "name": "RABIT_GAME.ITEMS.SKIN_REACTION",
-      "description": "RABIT_GAME.ITEMS.SKIN_REACTION_DESC",
+      "name": "RABBIT_GAME.ITEMS.SKIN_REACTION",
+      "description": "RABBIT_GAME.ITEMS.SKIN_REACTION_DESC",
       "price": 156,
       "factor": 1.1,
       "power": 10,

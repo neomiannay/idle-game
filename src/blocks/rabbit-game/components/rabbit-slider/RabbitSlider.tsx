@@ -123,7 +123,7 @@ const RabbitSlider = ({ items, onStart }: TRabbitSlider) => {
       <Translatable className={ styles.rabbitSliderStart }>
         <RabbitBtn
           price={ `${formatValue(10)} ${l10n('UNITS.EURO')}` }
-          label={ l10n('RABIT_GAME.LAYOUT.START_EXP') }
+          label={ l10n('RABBIT_GAME.LAYOUT.START_EXP') }
           onClick={ () => onStart(items[currentIndex]) }
         />
       </Translatable>

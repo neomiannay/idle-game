@@ -88,11 +88,11 @@ const Rabbit = ({ life, price, attack, onBuy }: TRabbit) => {
 
   const canBuy = useMotionState(benefits, (v) => v >= price)
   const tips = [
-    'RABIT_GAME.TIPS.CLICK_0',
-    'RABIT_GAME.TIPS.CLICK_1',
-    'RABIT_GAME.TIPS.CLICK_2',
-    'RABIT_GAME.TIPS.CLICK_3',
-    'RABIT_GAME.TIPS.CLICK_4'
+    'RABBIT_GAME.TIPS.CLICK_0',
+    'RABBIT_GAME.TIPS.CLICK_1',
+    'RABBIT_GAME.TIPS.CLICK_2',
+    'RABBIT_GAME.TIPS.CLICK_3',
+    'RABBIT_GAME.TIPS.CLICK_4'
   ]
 
   return (
@@ -122,13 +122,13 @@ const Rabbit = ({ life, price, attack, onBuy }: TRabbit) => {
               <Translatable parentRef={ gameRef } disabled={ !canBuy }>
                 <RabbitBtn
                   price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
-                  label={ l10n('RABIT_GAME.LAYOUT.BUY_RABIT') }
+                  label={ l10n('RABBIT_GAME.LAYOUT.BUY_RABBIT') }
                   onClick={ onBuy }
                   disabled={ !canBuy }
                 />
               </Translatable>
               <Tooltip
-                title='RABIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
+                title='RABBIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
                 className={ styles.rabbitTooltipNotEnoughMoney }
                 disabled={ canBuy }
                 parent={ descriptionRef }
