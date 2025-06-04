@@ -1,11 +1,107 @@
 .wrapper {
-  @include apply(action2);
-  user-select: none;
-  @include apply(basic-hover);
-  filter: brightness(0.8);
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--gradient-button);
+  outline: 1px solid var(--transparent-dark-8);
+  border-radius: var(--border-radius);
+  color: var(--purple-fill-20);
+  backdrop-filter: blur(16px);
+
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: rem(8);
+    background: var(--gradient-button-hover);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    z-index: -1;
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      outline-color: var(--transparent-dark-16);
+
+      &::before {
+          opacity: 1;
+      }
+    }
+  }
+
+  &:focus {
+    outline: 1px solid var(--transparent-dark-8);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    outline: 1px solid var(--transparent-dark-8);
+    background: var(--gradient-button-inactive);
+    color: var(--fill-20);
+    opacity: 0.4;
+  }
+
+  &.variant {
+    width: auto;
+    gap: rem(12);
+
+    .left {
+      border-radius: var(--border-radius);
+      background: var(--transparent-dark-8);
+      background-blend-mode: color-burn;
+      backdrop-filter: blur(2px);
+
+      .variantCost {
+        @include apply(button-variant-action);
+      }
+    }
+
+    .right {
+      padding: rem(8) rem(12);
+      padding-left: 0;
+
+      .cost, .unit {
+        @include apply(button-cost);
+      }
+    }
+  }
 }
 
-.disabled {
-  color: var(--color-disabled);
-  cursor: not-allowed;
+.left {
+  display: flex;
+  align-items: center;
+  padding: rem(8) rem(12);
+}
+
+.cost {
+  @include apply(button-cost);
+  height: min-content;
+}
+
+.unit {
+  @include apply(button-cost-unit);
+  height: min-content;
+  text-transform: lowercase;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.hasCost {
+    border-left: rem(1) solid var(--transparent-dark-8);
+  }
+}
+
+.action {
+  position: relative;
+  @include apply(button-action);
+  padding: rem(12);
+  text-transform: uppercase;
 }

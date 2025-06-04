@@ -6,7 +6,8 @@
   "BUTTONS": {
     "ACTIF": "Extrais",
     "COMPLEX": "Formule",
-    "SALE": "Répands"
+    "SALE": "Répands",
+    "BUY": "Acheter"
   },
   "UNITS": {
     "ACTIF": {

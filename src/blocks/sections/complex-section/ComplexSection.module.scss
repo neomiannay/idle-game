@@ -3,21 +3,31 @@
   flex-direction: column;
   align-items: center;
   gap: rem(32);
-  width: grid(3, 0);
+  width: grid(5, 0);
 }
 
 .perfWrapper {
+  width: 100%;
   display: flex;
-  gap: rem(20);
+  justify-content: center;
+  gap: var(--grid-gutter);
 }
 
 .perf {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: rem(10);
-  width: rem(160);
-  padding: rem(12);
+  justify-content: space-between;
+  gap: rem(20);
+  width: grid(1, 4);
+
+  .perfHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: rem(12);
+  }
 
   .perfTitle {
     text-align: center;

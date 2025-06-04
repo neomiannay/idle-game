@@ -1,30 +1,60 @@
-import { ButtonHTMLAttributes, memo } from 'react'
+import React, { ButtonHTMLAttributes, PropsWithChildren } from 'react'
 
 import classNames from 'classnames'
-import { useL10n } from 'provider/L10nProvider'
 
 import styles from './Button.module.scss'
 
-type ButtonProps = {
+type ButtonProps = PropsWithChildren<{
   className?: string
-  title: string
+  isVariant?: boolean
   disabled?: boolean
-} & ButtonHTMLAttributes<HTMLButtonElement>
+  cost?: {
+    value: number
+    unit: string
+  }
+  action: string
+  onClick?: () => void
+} & ButtonHTMLAttributes<HTMLButtonElement>>
 
-const Button = ({ className, title, disabled, ...props }: ButtonProps) => {
-  const l10n = useL10n()
-
-  // console.log('🔘 ' + l10n(title) + ' Button rendered')
-
+const Button = ({ className, cost, action, disabled, isVariant, onClick, ...props } : ButtonProps) => {
   return (
     <button
       className={ classNames(styles.wrapper, className, {
-        [styles.disabled]: disabled
-      }) } { ...props }
+        [styles.variant]: isVariant
+      }) }
+      disabled={ disabled }
+      onClick={ onClick }
+      { ...props }
     >
-      { l10n(title) }
+      { isVariant && (
+        <>
+          <div className={ styles.left }>
+            <span className={ styles.variantCost }>{ action }</span>
+          </div>
+
+          <div className={ styles.right }>
+            <span className={ styles.cost }>{ cost?.value }&nbsp;</span>
+            <span className={ styles.unit }>{ cost?.unit }</span>
+          </div>
+        </>
+      ) }
+
+      { !isVariant && cost && (
+        <>
+          <div className={ styles.left }>
+            <span className={ styles.cost }>{ cost?.value }&nbsp;</span>
+            <span className={ styles.unit }>{ cost?.unit }</span>
+          </div>
+          <div className={ classNames(styles.right, {
+            [styles.hasCost]: cost
+          }) }
+          >
+            <span className={ styles.action }>{ action }</span>
+          </div>
+        </>
+      ) }
     </button>
   )
 }
 
-export default memo(Button)
+export default React.memo(Button)
