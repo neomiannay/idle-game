@@ -27,7 +27,7 @@ const RabbitHp = ({ life, length, reduce, className }: TRabbitHp) => {
 
   return (
     <div className={ classNames(styles.rabbitHp, className) }>
-      { new Array(Math.round(reduce ? lifeValue : length)).fill(0).map((_, index) => (
+      { new Array(Math.floor(reduce ? lifeValue : length)).fill(0).map((_, index) => (
         <Droplet key={ index } active={ index <= lifeValue - 1 } />
       )) }
     </div>
