@@ -67,16 +67,16 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
       <Button title='BUTTONS.ACTIVATE' onClick={ handleClick } disabled={ !canBuy } />
 
       <AnimatePresence>
-      {!notClickedYet && (
-        <motion.div
-          key='upgrades'
-          layout
-          { ...baseVariants }
-          { ...fadeAppear }
-        >
-          <Upgrades unitId={ unitId } />
-        </motion.div>
-      )}
+        {!notClickedYet && (
+          <motion.div
+            key='upgrades'
+            layout
+            { ...baseVariants }
+            { ...fadeAppear }
+          >
+            <Upgrades unitId={ unitId } />
+          </motion.div>
+        )}
       </AnimatePresence>
 
 
