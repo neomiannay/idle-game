@@ -16,7 +16,11 @@ import styles from './Background.module.scss'
 const BENEFITS_END_STEP = 6_200_000_000
 const BENEFITS_START_STEP = 100_000
 
-function getProgressFromMoney (money: number, maxMoney = BENEFITS_END_STEP, base = 1.25) {
+function getProgressFromMoney (
+  money: number,
+  maxMoney = BENEFITS_END_STEP,
+  base = 1.25
+) {
   const ratio = money / maxMoney
   const progress = Math.log(ratio * (base - 1) + 1) / Math.log(base)
   return Math.max(0, Math.min(1, progress)) * 100
@@ -42,7 +46,14 @@ function Background (): React.ReactElement {
     setInput(inputs.find(({ name }) => name === 'progress') ?? null)
   }
 
-  useMotionState(units.benefits.motionValue, (value) => {
+  const handleProgressChange = (v: number) => {
+    if (!input) return
+
+    if (v > 100 && v < 123) v = Math.floor(v)
+    input.value = v
+  }
+
+  const handleBenefitsChange = (value: number) => {
     if (!input || value > BENEFITS_END_STEP) return
 
     // let res = (value / BENEFITS_START_STEP) * 100
@@ -57,16 +68,17 @@ function Background (): React.ReactElement {
       res = 200 + getProgressFromMoney(startValue, endValue)
     }
 
-    if (progressSpring.get() >= 0) progressSpring.set(res)
-    else progressSpring.jump(res)
-  })
+    if (progressSpring.get() >= 0) {
+      progressSpring.set(res)
+    } else {
+      progressSpring.jump(res)
+      handleProgressChange(res)
+    }
+  }
 
-  progressSpring.on('change', (value) => {
-    if (!input) return
+  useMotionState(units.benefits.motionValue, handleBenefitsChange)
 
-    if (value > 100 && value < 123) value = Math.floor(value)
-    input.value = value
-  })
+  progressSpring.on('change', handleProgressChange)
 
   return (
     <div className={ styles.background }>
