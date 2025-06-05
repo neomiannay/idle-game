@@ -16,8 +16,8 @@ import { formatBenefits } from 'helpers/units'
 import styles from './Header.module.scss'
 
 type HeaderProps = {
-  className?: string
-}
+  className?: string;
+};
 
 const Header = ({ className }: HeaderProps) => {
   const { getUnit, canDisplayUnit } = useGameProviderContext()
@@ -29,11 +29,22 @@ const Header = ({ className }: HeaderProps) => {
 
   const l10n = useL10n()
 
-  const benefitsCount = benefits ? useMotionState(benefits.motionValue, (value) => value) : 0
-  const productionCount = useMotionState(productionPrice.motionValue, (value) => value)
-  const sellingCount = useMotionState(sellingPrice.motionValue, (value) => value)
+  const benefitsCount = benefits
+    ? useMotionState(benefits.motionValue, (value) => value)
+    : 0
+  const productionCount = useMotionState(
+    productionPrice.motionValue,
+    (value) => value
+  )
+  const sellingCount = useMotionState(
+    sellingPrice.motionValue,
+    (value) => value
+  )
 
-  const benefitsMemo = useMemo(() => formatBenefits(benefitsCount), [benefitsCount])
+  const benefitsMemo = useMemo(
+    () => formatBenefits(benefitsCount),
+    [benefitsCount]
+  )
 
   return (
     <div className={ classNames(styles.wrapper) }>
@@ -47,7 +58,9 @@ const Header = ({ className }: HeaderProps) => {
             <div className={ styles.pricesContainer }>
               <motion.div className={ styles.prices } { ...fadeAppear() }>
                 <div className={ styles.price }>
-                  <span className={ styles.title }>{ l10n('PRICES.PRODUCTION') }</span>
+                  <span className={ styles.title }>
+                    { l10n('PRICES.PRODUCTION') }
+                  </span>
                   <span className={ styles.count }>{ productionCount } €</span>
                 </div>
                 <div className={ styles.price }>
@@ -67,11 +80,16 @@ const Header = ({ className }: HeaderProps) => {
 
             <div className={ classNames(styles.benefits) }>
               <motion.div { ...fadeAppear() }>
-                <AdaptativeText className={ classNames(styles.money, styles.blur) }>{ benefitsMemo } €</AdaptativeText>
-                <AdaptativeText className={ styles.money }>{ benefitsMemo } €</AdaptativeText>
+                <AdaptativeText
+                  className={ classNames(styles.money, styles.blur) }
+                >
+                  { benefitsMemo } €
+                </AdaptativeText>
+                <AdaptativeText className={ classNames(styles.money, styles.base) }>
+                  { benefitsMemo } €
+                </AdaptativeText>
               </motion.div>
             </div>
-
           </motion.div>
         ) }
       </AnimatePresence>
