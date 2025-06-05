@@ -1,11 +1,15 @@
 import React from 'react'
 
+import GradientText from 'components/gradient-text/GradientText'
+
 import styles from './Loading.module.scss'
 
 function Loading () {
   return (
     <div className={ styles.loading }>
-      Loading...
+      <GradientText>
+        Loading...
+      </GradientText>
     </div>
   )
 }
