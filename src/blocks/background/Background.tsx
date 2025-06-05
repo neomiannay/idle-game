@@ -56,19 +56,21 @@ function Background (): React.ReactElement {
   const handleBenefitsChange = (value: number) => {
     if (!input || value > BENEFITS_END_STEP) return
 
+    const sprVal = progressSpring.get()
+
     // let res = (value / BENEFITS_START_STEP) * 100
     let res = getProgressFromMoney(value, BENEFITS_START_STEP)
 
-    if (value > BENEFITS_START_STEP && progressSpring.get() < 123) {
+    if (value > BENEFITS_START_STEP && sprVal < 123) {
       res = 123
-    } else if (progressSpring.get() >= 123) {
+    } else if (sprVal >= 123) {
       const startValue = value - BENEFITS_START_STEP
       const endValue = BENEFITS_END_STEP - BENEFITS_START_STEP
       // res = 200 + (startValue / endValue) * 100
       res = 200 + getProgressFromMoney(startValue, endValue)
     }
 
-    if (progressSpring.get() >= 0) {
+    if (sprVal >= 0 && (sprVal < 123 || sprVal > 200)) {
       progressSpring.set(res)
     } else {
       progressSpring.jump(res)
