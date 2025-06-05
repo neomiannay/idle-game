@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, PropsWithChildren, SetStateAction, Dispatch } from 'react'
+import React, { createContext, useContext, PropsWithChildren } from 'react'
 
 import { L10nProvider } from './L10nProvider'
 import { ViewportProvider } from './ViewportProvider'
@@ -12,23 +12,19 @@ import { SectorsProvider } from './SectorsProvider'
 import { SearchLaboratoryProvider } from './SearchLaboratoryProvider'
 import { SearchPublicityProvider } from './SearchPublicityProvider'
 import { ShopProvider } from './ShopProvider'
+import { LoaderProvider } from './LoaderProvider'
 
-type GlobalContextType = {
-  loading: boolean
-  setLoading: Dispatch<SetStateAction<boolean>>
-}
+type GlobalContextType = {};
 
 export const GlobalContext = createContext<GlobalContextType | null>(null)
 
-export type BaseProviderProps = PropsWithChildren<{
-}>
+export type BaseProviderProps = PropsWithChildren<{}>;
 
 let context: GlobalContextType
 
 export const GlobalProvider = ({ children }: BaseProviderProps) => {
-  const [loading, setLoading] = useState<boolean>(true)
-
   const providers = [
+    LoaderProvider,
     ViewportProvider,
     L10nProvider,
     PricesProvider, // PricesProvider should be before GameProvider to ensure prices are available
@@ -43,27 +39,24 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
     IterationProvider
   ]
 
-  context = {
-    loading,
-    setLoading
-  }
+  context = {}
 
   return (
-    <GlobalContext.Provider
-      value={ context }
-    >
-      { providers.reverse().reduce((children, Provider) => (
-        <Provider>
-          { children }
-        </Provider>
-      ), children) }
+    <GlobalContext.Provider value={ context }>
+      { providers.reverse().reduce(
+        (children, Provider) => (
+          <Provider>{ children }</Provider>
+        ),
+        children
+      ) }
     </GlobalContext.Provider>
   )
 }
 
 export const useGlobalContext = () => {
   const context = useContext(GlobalContext)
-  if (!context) throw Error('useGlobalContext must be used inside a `GlobalProvider`')
+  if (!context)
+    throw Error('useGlobalContext must be used inside a `GlobalProvider`')
   return context
 }
 

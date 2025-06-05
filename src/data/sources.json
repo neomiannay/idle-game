@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "type": "rive",
+      "name": "background",
+      "src": "/rive/background.riv"
+    },
+    {
+      "type": "img",
+      "name": "rabbit1",
+      "src": "/img/rabbit/rabbit-1.png"
+    },
+    {
+      "type": "img",
+      "name": "rabbit2",
+      "src": "/img/rabbit/rabbit-2.png"
+    },
+    {
+      "type": "img",
+      "name": "rabbit3",
+      "src": "/img/rabbit/rabbit-3.png"
+    },
+    {
+      "type": "img",
+      "name": "rabbit4",
+      "src": "/img/rabbit/rabbit-4.png"
+    },
+    {
+      "type": "img",
+      "name": "rabbit5",
+      "src": "/img/rabbit/rabbit-5.png"
+    },
+    {
+      "type": "img",
+      "name": "rabbit6",
+      "src": "/img/rabbit/rabbit-6.png"
+    }
+  ]
+}

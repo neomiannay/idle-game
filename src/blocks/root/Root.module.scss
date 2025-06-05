@@ -1,13 +1,9 @@
-
 .wrapper {
   position: relative;
   z-index: 1;
   min-height: var(--ivh);
   overflow: hidden;
-
-  &.loading {
-    background-color: hotpink;
-  }
+  cursor: none;
 }
 
 .buttons {

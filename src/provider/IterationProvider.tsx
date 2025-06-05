@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useCallback, useState, useMemo, useEffect } from 'react'
+import React, { createContext, useContext, useCallback, useMemo, useEffect } from 'react'
 
 import { useGameLoop } from 'hooks/useGameLoop'
 import { useGamePersistence } from 'hooks/useGamePersistence'
@@ -14,20 +14,18 @@ import { useFeedbackContext } from './FeedbackProvider'
 import { useSectorsProviderContext } from './SectorsProvider'
 import { useSearchLaboratoryContext } from './SearchLaboratoryProvider'
 import { useSearchPublicityContext } from './SearchPublicityProvider'
+import { useLoaderContext } from './LoaderProvider'
 
 type IterationContextType = {
   isPaused: boolean
   togglePause: () => void
-  loading: boolean
   saveGameState: () => void
 }
 
 const IterationContext = createContext<IterationContextType | null>(null)
 
 export function IterationProvider ({ children }: BaseProviderProps) {
-  const [loading, setLoading] = useState(true)
-  // const emitter = useTinyEmitter()
-
+  const { setLoadingStates } = useLoaderContext()
   const { units, getUnit, updateDisplayConditions, buyUnit, isSaleSuccessful, hasEnoughUnits } = useGameProviderContext()
   const { getItemProduction, getElementsForUnit, loadElements } = useInventoryContext()
   const { prices } = usePricesContext()
@@ -247,15 +245,14 @@ export function IterationProvider ({ children }: BaseProviderProps) {
       updateDisplayConditions()
     }
 
-    setLoading(false)
+    setLoadingStates(prev => ({ ...prev, data: false }))
   }, [])
 
   const contextValue = useMemo<IterationContextType>(() => ({
     isPaused,
     togglePause,
-    loading,
     saveGameState
-  }), [isPaused, togglePause, loading, saveGameState])
+  }), [isPaused, togglePause, saveGameState])
 
   return (
     <IterationContext.Provider value={ contextValue }>

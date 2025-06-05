@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import {
   motion,
@@ -9,6 +9,7 @@ import {
 } from 'framer-motion'
 import { baseVariants, rabbitAnimation } from 'core/animation'
 import { clamp } from 'lodash-es'
+import { useLoaderContext } from 'provider/LoaderProvider'
 
 import styles from './RabbitImg.module.scss'
 
@@ -18,30 +19,20 @@ type TRabbitImg = {
 };
 
 let lifeValue = 100
-const imagePaths = [
-  'img/rabbit/rabbit_6.png',
-  'img/rabbit/rabbit_5.png',
-  'img/rabbit/rabbit_4.png',
-  'img/rabbit/rabbit_3.png',
-  'img/rabbit/rabbit_2.png',
-  'img/rabbit/rabbit_1.png'
-].reverse()
 
 const RabbitImg = ({ life, attack }: TRabbitImg) => {
-  const [images, setImages] = useState<HTMLImageElement[]>([])
+  const { resources } = useLoaderContext()
   const [index, setIndex] = useState(0)
   const height = useTransform(life, [-1, 0, 100], ['0%', '100%', '0%'])
 
-  // Load images
-  useEffect(() => {
-    const loadedImages = imagePaths.map((src) => {
-      const img = new Image()
-      img.src = src
-      return img
-    })
-
-    setImages(loadedImages)
-  }, [])
+  const images = [
+    resources.rabbit1,
+    resources.rabbit2,
+    resources.rabbit3,
+    resources.rabbit4,
+    resources.rabbit5,
+    resources.rabbit6
+  ] as HTMLImageElement[]
 
   life.on('change', (value) => {
     if (value >= 100 || value === -1) {
@@ -78,11 +69,11 @@ const RabbitImg = ({ life, attack }: TRabbitImg) => {
       <AnimatePresence mode='wait'>
         <div className={ styles.rabbitContainer }>
           <motion.div key={ index } { ...baseVariants } { ...rabbitAnimation() }>
-            <img className={ styles.rabbit } src={ images[index]?.src } alt='' />
+            <img className={ styles.rabbit } src={ images[index].src } alt='' />
             <motion.div className={ styles.rabbitLife } style={{ height }}>
               <img
                 className={ styles.rabbitLifeImg }
-                src={ images[index]?.src }
+                src={ images[index].src }
                 alt=''
               />
             </motion.div>
