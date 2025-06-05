@@ -68,7 +68,7 @@ export function LoaderProvider ({ children }: BaseProviderProps) {
     if (!(name in resources)) res[name] = value
 
     // Check if all resources are loaded
-    if (Object.keys(res).length === sources.length) {
+    if (Object.keys(res).length === sources.length && loadingStates.assets) {
       setResources(res)
       setLoadingStates((p) => ({
         ...p,
@@ -95,10 +95,10 @@ export function LoaderProvider ({ children }: BaseProviderProps) {
         const img = new Image()
         img.src = s.src
 
-        useEffect(() => {
-          const isLoaded = img.complete
-          if (isLoaded) setResource(s.name, img)
-        }, [img.complete])
+        img.onload = () => {
+          img.onload = null
+          setResource(s.name, img)
+        }
         break
       }
       default:

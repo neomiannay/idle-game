@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import classNames from 'classnames'
 import Shop from 'blocks/shop/Shop'
@@ -21,13 +21,15 @@ function Root () {
 
   const custom = { type: useTransitionType(reactiveCurrentSector, sectors) }
 
+  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false)
+
   return (
     <main
       className={ classNames(styles.wrapper, {
         [styles.loading]: isLoading
       }) }
     >
-      { isLoading ? (
+      { isLoading || !isBackgroundLoaded ? (
         <Loading />
       ) : (
         <>
@@ -48,9 +50,14 @@ function Root () {
             </button> */ }
 
           <Shop />
-          <Background />
         </>
       ) }
+
+      <Background
+        onLoad={ () => requestAnimationFrame(() => {
+          setIsBackgroundLoaded(true)
+        }) }
+      />
     </main>
   )
 }

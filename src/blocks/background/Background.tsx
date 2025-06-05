@@ -26,11 +26,15 @@ function getProgressFromMoney (
   return Math.max(0, Math.min(1, progress)) * 100
 }
 
+type BackgroundProps = {
+  onLoad?: () => void
+}
+
 /**
  * Background Component
  * @returns {React.ReactNode} The Background component
  */
-function Background (): React.ReactElement {
+function Background ({ onLoad }: BackgroundProps): React.ReactElement {
   // Providers
   const { units } = useGameProviderContext()
 
@@ -91,6 +95,7 @@ function Background (): React.ReactElement {
         artboard='tout'
         layout={ new Layout({ fit: Fit.Cover, alignment: Alignment.Center }) }
         onInputsChange={ handleInputsChange }
+        onLoad={ onLoad }
       />
     </div>
   )

@@ -11,6 +11,7 @@ type BangerRiveProps = {
   autoplay?: boolean;
   animations?: RiveProps['animations'];
   save?: boolean;
+  onLoad?: () => void;
 } & RiveProps;
 
 const DEFAULT_PROPS: Partial<BangerRiveProps> = {
@@ -31,6 +32,7 @@ function BangerRive ({
   onInputsChange,
   animations,
   save,
+  onLoad,
   ...props
 }: BangerRiveProps) {
   props.stateMachines ??= DEFAULT_PROPS.stateMachines ?? ['']
@@ -38,7 +40,7 @@ function BangerRive ({
   const { RiveComponent, rive } = useRive({
     ...DEFAULT_PROPS,
     ...props,
-    useOffscreenRenderer: true // Enable WebGL2 renderer
+    onLoad
   })
 
   id ??= props.src
