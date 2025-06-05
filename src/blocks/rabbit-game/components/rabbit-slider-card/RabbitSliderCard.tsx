@@ -31,12 +31,20 @@ const RabbitSliderCard = ({ item }: TRabbitSliderCardProps) => {
       </div>
       <p className={ styles.cardDescription }>{ l10n(item.description) }</p>
       <div className={ styles.cardValues }>
-        { item.values.map((value) => (
-          <div key={ value.target } className={ styles.cardValuesItem }>
-            <h5 className={ styles.cardValuesTitle }>{ targetLabels[value.target] ?? value.target }</h5>
-            <h6 className={ styles.cardValuesLabel }>{ value.value }%</h6>
-          </div>
-        )) }
+        { item.values
+          .filter((value) => value.target !== EGameUnit.KARMA)
+          .map((value, index) => (
+            <div key={ value.target } className={ styles.cardValuesItem }>
+              <h5 className={ styles.cardValuesTitle }>{ targetLabels[value.target] ?? value.target }</h5>
+              <h6 className={ styles.cardValuesLabel }>
+                +
+                { value.value.toString() }
+                { value.target === EGameUnit.REPUTATION
+                  ? l10n('UNITS.PERCENT')
+                  : l10n('UNITS.EURO') }
+              </h6>
+            </div>
+          )) }
       </div>
     </div>
   )

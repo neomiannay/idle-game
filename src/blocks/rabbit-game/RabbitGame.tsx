@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
-import { useMotionValue } from 'motion/react'
+import { useMotionValue } from 'framer-motion'
 import { useL10n } from 'provider/L10nProvider'
-import { useGameProviderContext } from 'provider/GameProvider'
-import { EGameUnit } from 'types/store'
 
 import rabbits from 'data/games/rabbits.json'
 
@@ -12,6 +10,7 @@ import Rabbit from './components/rabbit/Rabbit'
 import RabbitSlider, {
   TRabbitSliderItem
 } from './components/rabbit-slider/RabbitSlider'
+import useMotionState from 'hooks/useMotionState'
 
 export type TRabbitData = {
   price: number;
@@ -23,20 +22,10 @@ const RabbitGame = () => {
 
   const [rabbitPrice, setRabbitPrice] = useState(rabbits.price)
   const [currentExp, setCurrentExp] = useState<TRabbitSliderItem | null>(null)
-  const { hasEnoughUnits, modifyUnitValue } = useGameProviderContext()
 
-  const handleBuy = () => {
-    if (!hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)) return
-    if (life.get() <= 0) {
-      setRabbitPrice(rabbitPrice * rabbits.factor)
-      modifyUnitValue(EGameUnit.BENEFITS, -rabbitPrice)
-      life.set(100)
-    }
-  }
+  const isRabbitDead = useMotionState(life, (v) => v === -1 || v <= 0)
 
-  const handleStart = (exp: TRabbitSliderItem) => {
-    setCurrentExp(exp)
-  }
+  const attack = useMemo(() => currentExp?.power ?? 0, [currentExp]);
 
   return (
     <div className={ styles.wrapper }>
@@ -45,12 +34,17 @@ const RabbitGame = () => {
       <Rabbit
         life={ life }
         price={ rabbitPrice }
-        attack={ currentExp?.power ?? 0 }
-        onBuy={ handleBuy }
+        attack={ attack }
+        isRabbitDead={ isRabbitDead }
       />
       <RabbitSlider
         items={ rabbits.items as TRabbitSliderItem[] }
-        onStart={ handleStart }
+        setCurrentExp={ setCurrentExp }
+        isRabbitDead={ isRabbitDead }
+        life={ life }
+        rabbitPrice={ rabbitPrice }
+        testPrice={ rabbits.testPrice }
+        setRabbitPrice={ setRabbitPrice }
       />
     </div>
   )

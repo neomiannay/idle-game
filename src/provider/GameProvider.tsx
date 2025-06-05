@@ -1,9 +1,16 @@
-import React, { createContext, useContext, useCallback, useState, useMemo } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useMemo
+} from 'react'
 
 import { MotionValue } from 'motion/react'
 import useMotionState from 'hooks/useMotionState'
 import { EGamePrice, EGameUnit, GameUnit } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
+import { TSearchGameItemValue } from 'blocks/search-game/SearchGame'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { usePricesContext } from './PricesProvider'
@@ -13,20 +20,21 @@ export type UnitMultiplierGetter = (unitId: EGameUnit) => number;
 const defaultUnitMultiplier: UnitMultiplierGetter = () => 1
 
 type GameProviderType = {
-  units: Record<EGameUnit, GameUnit>
-  totalUnits: Record<EGameUnit, MotionValue<number>>
-  getUnit: (unitId: EGameUnit) => GameUnit | null
-  canDisplayUnit: (unitId: EGameUnit) => boolean
-  canBuyUnit: (unitId: EGameUnit) => boolean
-  buyUnit: (unitId: EGameUnit, multiplierGetter?: UnitMultiplierGetter) => void
-  setUnitMultiplierGetter: (getter: UnitMultiplierGetter) => void
-  updateDisplayConditions: () => void
-  updateUnitDuration: (unitId: EGameUnit) => void
-  updateValueByAction: (unitId: EGameUnit, addedValue: number) => void
-  modifyUnitValue: (unitId: EGameUnit, value: number) => boolean | void,
-  isSaleSuccessful: () => boolean
-  hasEnoughUnits: (amountNeeded: number, unitNeeded: EGameUnit) => boolean
-}
+  units: Record<EGameUnit, GameUnit>;
+  totalUnits: Record<EGameUnit, MotionValue<number>>;
+  getUnit: (unitId: EGameUnit) => GameUnit | null;
+  canDisplayUnit: (unitId: EGameUnit) => boolean;
+  canBuyUnit: (unitId: EGameUnit) => boolean;
+  buyUnit: (unitId: EGameUnit, multiplierGetter?: UnitMultiplierGetter) => void;
+  setUnitMultiplierGetter: (getter: UnitMultiplierGetter) => void;
+  updateDisplayConditions: () => void;
+  updateUnitDuration: (unitId: EGameUnit) => void;
+  updateValueByAction: (unitId: EGameUnit, addedValue: number) => void;
+  modifyUnitValue: (unitId: EGameUnit, value: number) => boolean | void;
+  isSaleSuccessful: () => boolean;
+  hasEnoughUnits: (amountNeeded: number, unitNeeded: EGameUnit) => boolean;
+  applyChoiceEffects: (effects: TSearchGameItemValue[]) => void;
+};
 
 export const GameProviderContext = createContext<GameProviderType | null>(null)
 
@@ -45,10 +53,22 @@ export function GameProvider ({ children }: BaseProviderProps) {
 
   // Purchase conditions
   const canBuyActif = true
-  const canBuyComplex = useMotionState(actifUnit.value, () => actifUnit.get() >= 10)
-  const canBuySale = useMotionState(complexUnit.value, () => complexUnit.get() >= 1)
-  const canBuyWithBenefits = useMotionState(benefitsUnit.value, () => benefitsUnit.get() >= 10) // 10 = how much benefits you need to fund a project/mini-game
-  const canBuyWithReputation = useMotionState(reputationUnit.value, () => reputationUnit.get() >= 10) // 10 = how much reputation you need to fund a project/mini-game
+  const canBuyComplex = useMotionState(
+    actifUnit.value,
+    () => actifUnit.get() >= 10
+  )
+  const canBuySale = useMotionState(
+    complexUnit.value,
+    () => complexUnit.get() >= 1
+  )
+  const canBuyWithBenefits = useMotionState(
+    benefitsUnit.value,
+    () => benefitsUnit.get() >= 10
+  ) // 10 = how much benefits you need to fund a project/mini-game
+  const canBuyWithReputation = useMotionState(
+    reputationUnit.value,
+    () => reputationUnit.get() >= 10
+  ) // 10 = how much reputation you need to fund a project/mini-game
 
   // Display conditions
   const canDisplayActif = true
@@ -136,20 +156,29 @@ export function GameProvider ({ children }: BaseProviderProps) {
     [EGameUnit.KARMA]: karmaUnit.total
   }
 
-  const getUnit = useCallback((unitId: EGameUnit): GameUnit | null => {
-    return units[unitId] || null
-  }, [units])
+  const getUnit = useCallback(
+    (unitId: EGameUnit): GameUnit | null => {
+      return units[unitId] || null
+    },
+    [units]
+  )
 
-  const canDisplayUnit = useCallback((unitId: EGameUnit): boolean => {
-    const unit = getUnit(unitId)
-    return unit ? unit.displayCondition : false
-  }, [getUnit])
+  const canDisplayUnit = useCallback(
+    (unitId: EGameUnit): boolean => {
+      const unit = getUnit(unitId)
+      return unit ? unit.displayCondition : false
+    },
+    [getUnit]
+  )
 
-  const canBuyUnit = useCallback((unitId: EGameUnit): boolean => {
-    const unit = getUnit(unitId)
+  const canBuyUnit = useCallback(
+    (unitId: EGameUnit): boolean => {
+      const unit = getUnit(unitId)
 
-    return unit ? unit.purchaseCondition : false
-  }, [getUnit])
+      return unit ? unit.purchaseCondition : false
+    },
+    [getUnit]
+  )
 
   const hasEnoughUnits = (amountNeeded: number, unitNeeded: EGameUnit) => {
     const unit = getUnit(unitNeeded)
@@ -158,59 +187,72 @@ export function GameProvider ({ children }: BaseProviderProps) {
     return amountNeeded <= unitNeededValue
   }
 
-  const buyUnit = useCallback((unitId: EGameUnit) => {
-    const unit = getUnit(unitId)
-    if (!unit) return
+  const buyUnit = useCallback(
+    (unitId: EGameUnit) => {
+      const unit = getUnit(unitId)
+      if (!unit) return
 
-    // If the unit has a cost, subtract it
-    if (unit.costUnitId && unit.costAmount) {
-      const costUnit = getUnit(unit.costUnitId)
-      if (!costUnit) return
-      if (!hasEnoughUnits(unit.costAmount, costUnit.id)) return
-      if (unitId === EGameUnit.COMPLEX && !costUnit.rawValue.subtract(unit.costAmount)) return
-    }
-
-    let multiplier = 1
-    if (unit.valueByAction)
-      multiplier = unit.valueByAction.get()
-
-    if (unit.id !== EGameUnit.SALE)
-      unit.rawValue.add(1 * multiplier)
-
-    if (unit.id === EGameUnit.SALE) {
-      const benefitsUnit = getUnit(EGameUnit.BENEFITS)
-      const productionCost = getPrice(EGamePrice.PRODUCTION).motionValue.get()
-      const sellingCost = getPrice(EGamePrice.SELLING).motionValue.get()
-
+      // If the unit has a cost, subtract it
       if (unit.costUnitId && unit.costAmount) {
         const costUnit = getUnit(unit.costUnitId)
-        if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+        if (!costUnit) return
+        if (!hasEnoughUnits(unit.costAmount, costUnit.id)) return
+        if (
+          unitId === EGameUnit.COMPLEX &&
+          !costUnit.rawValue.subtract(unit.costAmount)
+        )
+          return
       }
 
-      benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
-      unit.rawValue.add(1 * multiplier)
-    }
-  }, [getUnit, getPrice])
+      let multiplier = 1
+      if (unit.valueByAction) multiplier = unit.valueByAction.get()
 
-  const modifyUnitValue = useCallback((unitId: EGameUnit, value: number) => {
-    const unit = getUnit(unitId)
-    if (!unit) return false
+      if (unit.id !== EGameUnit.SALE) unit.rawValue.add(1 * multiplier)
 
-    if (value < 0) {
-      // On vérifie qu'on peut soustraire (qu'on ne tombe pas en dessous de 0)
-      const currentValue = unit.rawValue.get()
-      if (currentValue + value < 0) return false
-      return unit.rawValue.subtract(Math.abs(value))
-    } else if (value > 0) {
-      return unit.rawValue.add(value)
-    }
+      if (unit.id === EGameUnit.SALE) {
+        const benefitsUnit = getUnit(EGameUnit.BENEFITS)
+        const productionCost = getPrice(
+          EGamePrice.PRODUCTION
+        ).motionValue.get()
+        const sellingCost = getPrice(EGamePrice.SELLING).motionValue.get()
 
-    return true
-  }, [getUnit])
+        if (unit.costUnitId && unit.costAmount) {
+          const costUnit = getUnit(unit.costUnitId)
+          if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+        }
 
-  const setUnitMultiplierGetter = useCallback((getter: UnitMultiplierGetter) => {
-    currentUnitMultiplierGetter = getter
-  }, [])
+        benefitsUnit?.rawValue.add((sellingCost - productionCost) * multiplier)
+        unit.rawValue.add(1 * multiplier)
+      }
+    },
+    [getUnit, getPrice]
+  )
+
+  const modifyUnitValue = useCallback(
+    (unitId: EGameUnit, value: number) => {
+      const unit = getUnit(unitId)
+      if (!unit) return false
+
+      if (value < 0) {
+        // On vérifie qu'on peut soustraire (qu'on ne tombe pas en dessous de 0)
+        const currentValue = unit.rawValue.get()
+        if (currentValue + value < 0) return false
+        return unit.rawValue.subtract(Math.abs(value))
+      } else if (value > 0) {
+        return unit.rawValue.add(value)
+      }
+
+      return true
+    },
+    [getUnit]
+  )
+
+  const setUnitMultiplierGetter = useCallback(
+    (getter: UnitMultiplierGetter) => {
+      currentUnitMultiplierGetter = getter
+    },
+    []
+  )
 
   const updateUnitDuration = useCallback((unitId: EGameUnit) => {
     const unit = getUnit(unitId)
@@ -224,20 +266,27 @@ export function GameProvider ({ children }: BaseProviderProps) {
     }
   }, [])
 
-  const updateValueByAction = useCallback((unitId: EGameUnit, addedValue: number) => {
-    const unit = getUnit(unitId)
+  const updateValueByAction = useCallback(
+    (unitId: EGameUnit, addedValue: number) => {
+      const unit = getUnit(unitId)
 
-    if (unit && unit.valueByAction) {
-      if (unitId === EGameUnit.COMPLEX && unit.costUnitId && unit.costAmount) {
-        const costUnit = getUnit(unit.costUnitId)
-        if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+      if (unit && unit.valueByAction) {
+        if (
+          unitId === EGameUnit.COMPLEX &&
+          unit.costUnitId &&
+          unit.costAmount
+        ) {
+          const costUnit = getUnit(unit.costUnitId)
+          if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+        }
+        const unitValue = unit.valueByAction.get()
+        const newValue = unitValue + addedValue
+
+        unit.valueByAction.set(newValue)
       }
-      const unitValue = unit.valueByAction.get()
-      const newValue = unitValue + addedValue
-
-      unit.valueByAction.set(newValue)
-    }
-  }, [])
+    },
+    []
+  )
 
   const isSaleSuccessful = () => {
     const reputation = getUnit(EGameUnit.REPUTATION)?.motionValue.get() ?? 0
@@ -247,35 +296,61 @@ export function GameProvider ({ children }: BaseProviderProps) {
     return roll <= chance
   }
 
-  const contextValue = useMemo(() => ({
-    units,
-    totalUnits,
-    getUnit,
-    canDisplayUnit,
-    canBuyUnit,
-    buyUnit,
-    setUnitMultiplierGetter,
-    updateDisplayConditions,
-    updateUnitDuration,
-    updateValueByAction,
-    modifyUnitValue,
-    isSaleSuccessful,
-    hasEnoughUnits
-  }), [
-    units,
-    totalUnits,
-    getUnit,
-    canDisplayUnit,
-    canBuyUnit,
-    buyUnit,
-    setUnitMultiplierGetter,
-    updateDisplayConditions,
-    updateUnitDuration,
-    updateValueByAction,
-    modifyUnitValue,
-    isSaleSuccessful,
-    hasEnoughUnits
-  ])
+  const applyChoiceEffects = (effects: TSearchGameItemValue[]) => {
+    effects.forEach((effect) => {
+      if (effect.target === EGamePrice.SELLING) {
+        const sellingPrice = getPrice(effect.target as EGamePrice)
+        sellingPrice.rawValue.add(effect.value)
+      } else if (effect.target === EGamePrice.PRODUCTION) {
+        const productionPrice = getPrice(effect.target as EGamePrice)
+        if (effect.value < 0) {
+          const currentValue = productionPrice.rawValue.get()
+          if (currentValue + effect.value < 0) return false
+          return productionPrice.rawValue.subtract(Math.abs(effect.value))
+        } else {
+          productionPrice.rawValue.add(effect.value)
+        }
+      } else {
+        // Pour les unités standards (reputation, actif, complex, etc.)
+        modifyUnitValue(effect.target as EGameUnit, effect.value)
+      }
+    })
+  }
+
+  const contextValue = useMemo(
+    () => ({
+      units,
+      totalUnits,
+      getUnit,
+      canDisplayUnit,
+      canBuyUnit,
+      buyUnit,
+      setUnitMultiplierGetter,
+      updateDisplayConditions,
+      updateUnitDuration,
+      updateValueByAction,
+      modifyUnitValue,
+      isSaleSuccessful,
+      hasEnoughUnits,
+      applyChoiceEffects
+    }),
+    [
+      units,
+      totalUnits,
+      getUnit,
+      canDisplayUnit,
+      canBuyUnit,
+      buyUnit,
+      setUnitMultiplierGetter,
+      updateDisplayConditions,
+      updateUnitDuration,
+      updateValueByAction,
+      modifyUnitValue,
+      isSaleSuccessful,
+      hasEnoughUnits,
+      applyChoiceEffects
+    ]
+  )
 
   return (
     <GameProviderContext.Provider value={ contextValue }>
@@ -286,6 +361,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
 
 export const useGameProviderContext = () => {
   const context = useContext(GameProviderContext)
-  if (!context) throw Error('useGameProviderContext must be used inside a `GameProvider`')
+  if (!context)
+    throw Error('useGameProviderContext must be used inside a `GameProvider`')
   return context
 }

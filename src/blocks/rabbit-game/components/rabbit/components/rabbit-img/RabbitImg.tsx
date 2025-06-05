@@ -4,26 +4,23 @@ import {
   motion,
   AnimatePresence,
   useTransform,
-  animate,
-  MotionValue
+  MotionValue,
+  useMotionValueEvent
 } from 'framer-motion'
 import { baseVariants, rabbitAnimation } from 'core/animation'
-import { clamp } from 'lodash-es'
 import { useLoaderContext } from 'provider/LoaderProvider'
+import { RABBIT_LIFE } from 'data/constants'
 
 import styles from './RabbitImg.module.scss'
 
 type TRabbitImg = {
   life: MotionValue<number>;
-  attack: number;
 };
 
-let lifeValue = 100
-
-const RabbitImg = ({ life, attack }: TRabbitImg) => {
+const RabbitImg = ({ life }: TRabbitImg) => {
   const { resources } = useLoaderContext()
   const [index, setIndex] = useState(0)
-  const height = useTransform(life, [-1, 0, 100], ['0%', '100%', '0%'])
+  const height = useTransform(life, [0, RABBIT_LIFE], ['100%', '0%'])
 
   const images = [
     resources.rabbit1,
@@ -34,38 +31,19 @@ const RabbitImg = ({ life, attack }: TRabbitImg) => {
     resources.rabbit6
   ] as HTMLImageElement[]
 
-  life.on('change', (value) => {
-    if (value >= 100 || value === -1) {
-      lifeValue = 100
+  useMotionValueEvent(life, 'change', (value) => {
+    if (value >= RABBIT_LIFE || value <= -1) {
       setIndex(0)
-      height.jump('0%')
+    } else {
+      const newIndex = Math.floor(
+        ((RABBIT_LIFE - value) / RABBIT_LIFE) * (images.length - 1)
+      )
+      setIndex(Math.max(0, Math.min(newIndex, images.length - 1)))
     }
   })
 
-  // Handle rabbit click
-  const onRabbitClick = () => {
-    const prevLifeValue = lifeValue
-    lifeValue -= attack
-    const newIndex = Math.floor(
-      ((100 - lifeValue) / 100) * (images.length - 1)
-    )
-
-    if (lifeValue !== prevLifeValue) {
-      setIndex(clamp(newIndex, 0, images.length - 1))
-
-      // Update life value directly
-      life.set(clamp(lifeValue, 0, 100))
-
-      // Animate the height value with spring
-      animate(height, `${100 - clamp(lifeValue, 0, 100)}%`, {
-        duration: 0.2,
-        type: 'spring'
-      })
-    }
-  }
-
   return (
-    <div className={ styles.rabbitWrapper } onClick={ () => onRabbitClick() }>
+    <div className={ styles.rabbitWrapper }>
       <AnimatePresence mode='wait'>
         <div className={ styles.rabbitContainer }>
           <motion.div key={ index } { ...baseVariants } { ...rabbitAnimation() }>

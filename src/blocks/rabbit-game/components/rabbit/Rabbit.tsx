@@ -16,7 +16,7 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
 import classNames from 'classnames'
 import useMotionState from 'hooks/useMotionState'
-import { baseVariants, fadeAppearRabbit } from 'core/animation'
+import { fadeAppear } from 'core/animation'
 
 import RabbitHp from '../rabbit-hp/RabbitHp'
 
@@ -29,10 +29,10 @@ type TRabbit = {
   life: MotionValue<number>;
   price: number;
   attack: number;
-  onBuy: () => void;
+  isRabbitDead: boolean;
 };
 
-const Rabbit = ({ life, price, attack, onBuy }: TRabbit) => {
+const Rabbit = ({ life, price, attack, isRabbitDead }: TRabbit) => {
   const { units } = useGameProviderContext()
   const benefits = units[EGameUnit.BENEFITS].motionValue
 
@@ -61,8 +61,6 @@ const Rabbit = ({ life, price, attack, onBuy }: TRabbit) => {
 
     spring.set(springValue)
   }
-
-  const isRabbitDead = useMotionState(life, (v) => v === -1 || v <= 0)
 
   useEffect(() => {
     mouse.x.on('change', (value) => onPositionChange('x', value))
@@ -98,7 +96,11 @@ const Rabbit = ({ life, price, attack, onBuy }: TRabbit) => {
   return (
     <div className={ classNames(styles.rabbit, { [styles.disabled]: !canBuy || life.get() > -1 }) }>
       <div className={ styles.rabbitHpWrapper }>
-        <RabbitHp life={ life } length={ 6 } />
+        { !isRabbitDead && (
+          <motion.div { ...fadeAppear() }>
+            <RabbitHp life={ life } length={ 6 } />
+          </motion.div>
+        )}
       </div>
       <div ref={ gameRef } className={ styles.rabbitWrapper }>
         <Tooltip
@@ -116,26 +118,6 @@ const Rabbit = ({ life, price, attack, onBuy }: TRabbit) => {
         className={ styles.rabbitDescription }
         style={{ pointerEvents: !isRabbitDead ? 'none' : 'auto' }}
       >
-        <AnimatePresence>
-          { (isRabbitDead || life.get() === null) && (
-            <motion.div { ...baseVariants } { ...fadeAppearRabbit }>
-              <Translatable parentRef={ gameRef } disabled={ !canBuy }>
-                <RabbitBtn
-                  price={ `${formatValue(price)} ${l10n('UNITS.EURO')}` }
-                  label={ l10n('RABBIT_GAME.LAYOUT.BUY_RABBIT') }
-                  onClick={ onBuy }
-                  disabled={ !canBuy }
-                />
-              </Translatable>
-              <Tooltip
-                title='RABBIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
-                className={ styles.rabbitTooltipNotEnoughMoney }
-                disabled={ canBuy }
-                parent={ descriptionRef }
-              />
-            </motion.div>
-          ) }
-        </AnimatePresence>
       </div>
     </div>
   )

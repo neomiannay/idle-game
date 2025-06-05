@@ -24,7 +24,7 @@ const SearchResults = ({
   setSearchState,
   saveNewItem
 }: SearchResultsProps) => {
-  const { modifyUnitValue } = useGameProviderContext()
+  const { modifyUnitValue, applyChoiceEffects } = useGameProviderContext()
   const priceContext = usePricesContext()
   const l10n = useL10n()
 
@@ -35,28 +35,7 @@ const SearchResults = ({
         : newItem?.declineValues
 
     if (itemEffects) {
-      itemEffects.forEach((effect) => {
-        if (effect.target === EGamePrice.SELLING) {
-          const sellingPrice = priceContext.getPrice(
-            effect.target as EGamePrice
-          )
-          sellingPrice.rawValue.add(effect.value)
-        } else if (effect.target === EGamePrice.PRODUCTION) {
-          const productionPrice = priceContext.getPrice(
-            effect.target as EGamePrice
-          )
-          if (effect.value < 0) {
-            const currentValue = productionPrice.rawValue.get()
-            if (currentValue + effect.value < 0) return false
-            return productionPrice.rawValue.subtract(Math.abs(effect.value))
-          } else {
-            productionPrice.rawValue.add(effect.value)
-          }
-        } else {
-          // Pour les unités standards (reputation, actif, complex, etc.)
-          modifyUnitValue(effect.target as EGameUnit, effect.value)
-        }
-      })
+      applyChoiceEffects(itemEffects)
     }
     if (newItem && choice === EChoice.ACCEPT) saveNewItem(newItem)
 

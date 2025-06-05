@@ -105,15 +105,15 @@
     "LAYOUT": {
       "NAME": "Protocole de Draize",
       "BUY_RABBIT": "Acheter un lapin",
-      "START_EXP": "Lancer la recherche",
+      "START_EXP": "Tester",
       "NOT_ENOUGH_MONEY": "Pas assez de pépettes..."
     },
     "TIPS": {
-      "CLICK_0": "*clic*",
-      "CLICK_1": "Essayes !",
-      "CLICK_2": "Cliques !",
-      "CLICK_3": "Participes !",
-      "CLICK_4": "Découvres !"
+      "CLICK_0": "*caresse*",
+      "CLICK_1": "Essaye !",
+      "CLICK_2": "Teste-moi !",
+      "CLICK_3": "Caresse !",
+      "CLICK_4": "Découvre !"
     },
     "ITEMS": {
       "SKIN_REACTION": "Réaction cutanée",
