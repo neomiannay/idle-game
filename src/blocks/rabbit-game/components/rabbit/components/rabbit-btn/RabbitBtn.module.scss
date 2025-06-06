@@ -1,41 +1,28 @@
+.wrapper {
+  position: relative;
+}
+
 .btn {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: auto;
+  margin-bottom: -4px;
+  width: grid(1.5);
   transition: box-shadow 0.2s ease-in-out;
   will-change: box-shadow;
-  width: max-content;
   font-size: rem(10);
   text-transform: uppercase;
   color: var(--color-white);
   font-weight: 800;
-  border: rem(1) solid black;
-  background:
-    linear-gradient(0deg, rgba(1, 4, 3, 0.8) 0%, rgba(1, 4, 3, 0.8) 100%),
-    linear-gradient(
-      287deg,
-      rgba(0, 119, 63, 0) -5.89%,
-      rgba(116, 180, 150, 0.3) 47.54%,
-      rgba(144, 179, 162, 0.35) 65.24%,
-      rgba(177, 210, 195, 0.45) 74.25%,
-      rgba(217, 226, 222, 0.54) 82.57%,
-      rgba(232, 240, 236, 0.6) 100.96%
-    );
-  backdrop-filter: blur(16px);
-  border-radius: rem(8);
   user-select: none;
 
-  &:not(:disabled):hover {
-    box-shadow: 0 0 8px 0 rgba(1, 4, 3, 0.35);
+  &:focus, &:hover {
+		@include apply(basic-hover);
   }
 
   &:disabled {
-    color: rgb(110, 110, 110) !important;
-
-    background: linear-gradient(
-      0deg,
-      rgba(147, 147, 147, 0.5) 0%,
-      rgba(147, 147, 147, 0.5) 100%
-    );
-
     &,
     & * {
       cursor: not-allowed !important;
@@ -50,10 +37,23 @@
   &Left,
   &Right {
     cursor: pointer;
-    padding: rem(8) rem(12);
+    padding: rem(14) rem(12) rem(12) rem(12);
+    width: 100%;
+    text-align: center;
   }
 
   &Left {
     border-right: rem(1) solid black;
+  }
+
+  .background {
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    height: 100%;
+    background: url("/img/rabbit/button_background.svg");
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: bottom;
   }
 }

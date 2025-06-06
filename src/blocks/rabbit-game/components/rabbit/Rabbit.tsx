@@ -36,7 +36,6 @@ const Rabbit = ({ life, price, attack, isRabbitDead }: TRabbit) => {
   const { units } = useGameProviderContext()
   const benefits = units[EGameUnit.BENEFITS].motionValue
 
-  const l10n = useL10n()
   const gameRef = useRef<HTMLDivElement>(null)
   const descriptionRef = useRef<HTMLDivElement>(null)
   const options = {
@@ -94,7 +93,7 @@ const Rabbit = ({ life, price, attack, isRabbitDead }: TRabbit) => {
   ]
 
   return (
-    <div className={ classNames(styles.rabbit, { [styles.disabled]: !canBuy || life.get() > -1 }) }>
+    <div className={ classNames(styles.rabbit, { [styles.disabled]: !canBuy || life.get() > 0 }) }>
       <div className={ styles.rabbitHpWrapper }>
         { !isRabbitDead && (
           <motion.div { ...fadeAppear() }>

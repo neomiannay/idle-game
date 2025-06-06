@@ -28,10 +28,19 @@ const RabbitHp = ({ life, length, reduce = false, className }: TRabbitHp) => {
   const totalDroplets = reduce ? Math.floor(lifeValue) : length;
 
   return (
-    <div className={classNames(styles.rabbitHp, className)}>
+    <div className={classNames(styles.rabbitHp, className, {
+      [styles.rabbitHpCard]: reduce
+    })}>
       {Array.from({ length: totalDroplets }).map((_, index) => (
         <Droplet key={index} active={index < lifeValue} />
       ))}
+
+      {!reduce && (
+        <img
+          src={`img/rabbit/hp_wire.svg`}
+          className={styles.hpWire}
+        />
+      )}
     </div>
   );
 };

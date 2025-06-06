@@ -10,6 +10,75 @@
       "description": "RABBIT_GAME.ITEMS.SKIN_REACTION_DESC",
       "price": 238,
       "factor": 1.15,
+      "power": 2,
+      "values": [
+        {
+          "value": 10,
+          "target": "reputation"
+        },
+        {
+          "value": -20,
+          "target": "karma"
+        },
+        {
+          "value": 8,
+          "target": "selling"
+        }
+      ]
+    },
+    {
+      "id": "rabbit-exp-2",
+      "disabled": false,
+      "name": "RABBIT_GAME.ITEMS.OCULAR_SENSITIVITY",
+      "description": "RABBIT_GAME.ITEMS.OCULAR_SENSITIVITY_DESC",
+      "price": 238,
+      "factor": 1.15,
+      "power": 3,
+      "values": [
+        {
+          "value": 16,
+          "target": "reputation"
+        },
+        {
+          "value": -20,
+          "target": "karma"
+        },
+        {
+          "value": 10,
+          "target": "selling"
+        }
+      ]
+    },
+    {
+      "id": "rabbit-exp-3",
+      "disabled": false,
+      "name": "RABBIT_GAME.ITEMS.INGESTION",
+      "description": "RABBIT_GAME.ITEMS.INGESTION_DESC",
+      "price": 238,
+      "factor": 1.15,
+      "power": 5,
+      "values": [
+        {
+          "value": 24,
+          "target": "reputation"
+        },
+        {
+          "value": -20,
+          "target": "karma"
+        },
+        {
+          "value": 14,
+          "target": "selling"
+        }
+      ]
+    },
+    {
+      "id": "buy-rabbit-item",
+      "disabled": false,
+      "name": "RABBIT_GAME.BUY_RABBIT_ITEM.NAME",
+      "description": "RABBIT_GAME.BUY_RABBIT_ITEM.DESCRIPTION",
+      "price": 238,
+      "factor": 1.15,
       "power": 4,
       "values": [
         {
@@ -23,25 +92,6 @@
         {
           "value": 20,
           "target": "selling"
-        }
-      ]
-    },
-    {
-      "id": "rabbit-exp-2",
-      "disabled": false,
-      "name": "RABBIT_GAME.ITEMS.SKIN_REACTION",
-      "description": "RABBIT_GAME.ITEMS.SKIN_REACTION_DESC",
-      "price": 156,
-      "factor": 1.1,
-      "power": 1,
-      "values": [
-        {
-          "value": 8,
-          "target": "reputation"
-        },
-        {
-          "value": -12,
-          "target": "karma"
         }
       ]
     }

@@ -23,24 +23,26 @@ const RabbitBtn = ({
   ...props
 }: RabbitBtnProps) => {
   return (
-    <button
-      type='button'
-      { ...props }
-      className={ classNames(styles.btn, className) }
-      onClick={ onClick }
-      disabled={ disabled }
-    >
-      <div className={ styles.btnLeft }>{ price }</div>
-      <GradientText
+    <div className={ styles.wrapper}>
+      <button
+        type='button'
+        { ...props }
+        className={ classNames(styles.btn, className) }
+        onClick={ onClick }
         disabled={ disabled }
-        className={ styles.btnRight }
-        startColor='var(--fill-40-100)'
-        endColor='var(--color-white)'
-        duration={ 3 }
       >
-        { label }
-      </GradientText>
-    </button>
+        <GradientText
+          disabled={ disabled }
+          className={ styles.btnRight }
+          startColor='var(--fill-40-100)'
+          endColor='var(--color-white)'
+          duration={ 3 }
+        >
+          { label }
+        </GradientText>
+        <img src='img/rabbit/button_background.svg' className={styles.background} />
+      </button>
+    </div>
   )
 }
 

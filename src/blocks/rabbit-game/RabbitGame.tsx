@@ -18,12 +18,12 @@ export type TRabbitData = {
 
 const RabbitGame = () => {
   const l10n = useL10n()
-  const life = useMotionValue<number>(-1)
+  const life = useMotionValue<number>(6)
 
   const [rabbitPrice, setRabbitPrice] = useState(rabbits.price)
   const [currentExp, setCurrentExp] = useState<TRabbitSliderItem | null>(null)
 
-  const isRabbitDead = useMotionState(life, (v) => v === -1 || v <= 0)
+  const isRabbitDead = useMotionState(life, (v) => v <= 0)
 
   const attack = useMemo(() => currentExp?.power ?? 0, [currentExp]);
 

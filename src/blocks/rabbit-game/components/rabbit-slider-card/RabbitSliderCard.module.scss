@@ -1,11 +1,20 @@
 .card {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100%;
-  background-color: var(--transparent-dark-50-0);
-  border-radius: rem(8);
-  padding: rem(12);
-  backdrop-filter: blur(rem(20));
-  backdrop-filter: blur(20px);
+
+  &Information {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6);
+
+    .deadRabbitLogo {
+      margin: auto;
+      width: rem(30);
+      height: rem(30);
+    }
+  }
 
   &Title {
     color: var(--fill-10-100);
@@ -28,12 +37,16 @@
 
   &Description {
     color: var(--fill-40-100);
-    font-family: "PP Formula";
     font-size: rem(12);
     font-style: normal;
-    font-weight: 220;
     line-height: 148%;
-    margin-bottom: rem(20);
+    margin: 0;
+    font-variation-settings: "wght" 220, "wdth" 20;
+  }
+
+  .valuesContainer {
+    display: flex;
+    justify-content: space-between;
   }
 
   &Values {
@@ -44,10 +57,10 @@
     &Title {
       color: var(--fill-40-100);
       font-family: "PP Formula";
-      font-size: rem(8);
-      font-weight: 500;
+      font-size: rem(12);
       text-transform: uppercase;
       margin-bottom: rem(4);
+      font-variation-settings: "wght" 400, "wdth" 10;
     }
 
     &Label {
@@ -55,11 +68,33 @@
       font-variant-numeric: lining-nums tabular-nums;
       font-family: "PP Formula";
       font-size: rem(14);
-      font-weight: 500;
+      font-variation-settings: "wght" 500, "wdth" 20;
     }
   }
 
   &Hp {
     height: rem(20);
   }
+}
+
+.cardDead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+    .cardTitle {
+      width: 100%;
+      text-align: center;
+    }
+
+    .cardValuesItem {
+      display: flex;
+      gap: rem(10);
+
+      .cardValuesTitle {
+        font-size: rem(14);
+        margin: 0;
+      }
+    }
 }

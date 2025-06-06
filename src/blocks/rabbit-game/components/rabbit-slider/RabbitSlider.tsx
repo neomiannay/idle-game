@@ -15,7 +15,7 @@ import styles from './RabbitSlider.module.scss'
 import { baseVariants, fadeAppearRabbit } from 'core/animation'
 import { useGameProviderContext } from 'provider/GameProvider'
 import rabbits from 'data/games/rabbits.json'
-import { RABBIT_LIFE } from 'data/constants'
+import { BUY_RABBIT_ITEM_ID, RABBIT_LIFE } from 'data/constants'
 import { clamp } from 'lodash-es'
 
 export type TRabbitSliderItemValue = {
@@ -110,10 +110,38 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
   const  canBuyRabbit = hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)
   const  canBuyTest = hasEnoughUnits(testPrice, EGameUnit.BENEFITS)
 
+
+  if(isRabbitDead)
+    items = items.filter((item) => item.id === BUY_RABBIT_ITEM_ID)
+  else
+    items = items.filter((item) => item.id !== BUY_RABBIT_ITEM_ID)
+
+  useEffect(() => {
+    if (currentIndex >= items.length) {
+      setCurrentIndex(0)
+    }
+  }, [items, currentIndex, isRabbitDead])
+
+  const price = isRabbitDead ? rabbitPrice : testPrice
+
   return (
-    <>
+    <div className={ styles.controlPanel }>
+      { (isRabbitDead || life.get() === null) ? (
+        <RabbitBtn
+          price={ `${formatValue(rabbitPrice)} ${l10n('UNITS.EURO')}` }
+          label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
+          onClick={ handleBuy }
+          disabled={ !canBuyRabbit }
+        />
+      ) : (
+        <RabbitBtn
+          price={ `${formatValue(testPrice)} ${l10n('UNITS.EURO')}` }
+          label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
+          onClick={ () => handleStart(items[currentIndex]) }
+          disabled={ !canBuyTest }
+        />
+      ) }
       <div className={ styles.rabbitSlider }>
-        { items.length > 1 && (
           <button
             className={ classNames(
               styles.rabbitSliderButton,
@@ -123,40 +151,36 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
           >
             <Chevron direction='left' />
           </button>
-        ) }
-        <AnimatePresence mode='wait'>
-          <motion.div
-            key={ currentIndex }
-            ref={ contentRef }
-            transition={{
-              duration: isReady ? 0.25 : 0,
-              ease: 'easeInOut'
-            }}
-            initial={{
-              x: currentDir === 'left' ? '100%' : '-100%',
-              opacity: 0,
-              height
-            }}
-            animate={{
-              x: 0,
-              opacity: 1,
-              height: 'auto'
-            }}
-            exit={{
-              x: currentDir === 'left' ? '-100%' : '100%',
-              opacity: 0,
-              height
-            }}
-            onAnimationComplete={ handleSetHeight }
-            className={ styles.rabbitSliderContent }
-            style={{
-              padding: items.length > 1 ? '0' : '0 16rem'
-            }}
-          >
-            <RabbitSliderCard item={ items[currentIndex] } />
-          </motion.div>
-        </AnimatePresence>
-        { items.length > 1 && (
+        <div className={styles.sliderBackground}>
+          <AnimatePresence mode='wait'>
+            <motion.div
+              key={ currentIndex }
+              ref={ contentRef }
+              transition={{
+                duration: isReady ? 0.25 : 0,
+                ease: 'easeInOut'
+              }}
+              initial={{
+                x: currentDir === 'left' ? '5%' : '-5%',
+                opacity: 0,
+              }}
+              animate={{
+                x: 0,
+                opacity: 1,
+              }}
+              exit={{
+                x: currentDir === 'left' ? '-5%' : '5%',
+                opacity: 0,
+              }}
+              onAnimationComplete={ handleSetHeight }
+              className={ styles.rabbitSliderContent }
+            >
+              { items[currentIndex] && (
+                <RabbitSliderCard item={ items[currentIndex] } isRabbitDead={isRabbitDead} price={price} />
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
           <button
             className={ classNames(
               styles.rabbitSliderButton,
@@ -166,37 +190,8 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
           >
             <Chevron direction='right' />
           </button>
-        ) }
       </div>
-      <Translatable className={ styles.rabbitSliderStart }>
-
-        { (isRabbitDead || life.get() === null) ? (
-          <motion.div { ...baseVariants } { ...fadeAppearRabbit }>
-            {/* <Translatable parentRef={ gameRef } disabled={ !canBuy }> */}
-              <RabbitBtn
-                price={ `${formatValue(rabbitPrice)} ${l10n('UNITS.EURO')}` }
-                label={ l10n('RABBIT_GAME.LAYOUT.BUY_RABBIT') }
-                onClick={ handleBuy }
-                disabled={ !canBuyRabbit }
-              />
-            {/* </Translatable> */}
-            {/* <Tooltip
-              title='RABBIT_GAME.LAYOUT.NOT_ENOUGH_MONEY'
-              className={ styles.rabbitTooltipNotEnoughMoney }
-              disabled={ canBuy }
-              parent={ descriptionRef }
-            /> */}
-          </motion.div>
-        ) : (
-        <RabbitBtn
-          price={ `${formatValue(testPrice)} ${l10n('UNITS.EURO')}` }
-          label={ l10n('RABBIT_GAME.LAYOUT.START_EXP') }
-          onClick={ () => handleStart(items[currentIndex]) }
-          disabled={ !canBuyTest }
-        />
-        ) }
-      </Translatable>
-    </>
+    </div>
   )
 }
 

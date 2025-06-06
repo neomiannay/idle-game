@@ -32,7 +32,7 @@ const RabbitImg = ({ life }: TRabbitImg) => {
   ] as HTMLImageElement[]
 
   useMotionValueEvent(life, 'change', (value) => {
-    if (value >= RABBIT_LIFE || value <= -1) {
+    if (value >= RABBIT_LIFE || value < 0) {
       setIndex(0)
     } else {
       const newIndex = Math.floor(
@@ -46,8 +46,8 @@ const RabbitImg = ({ life }: TRabbitImg) => {
     <div className={ styles.rabbitWrapper }>
       <AnimatePresence mode='wait'>
         <div className={ styles.rabbitContainer }>
-          <motion.div key={ index } { ...baseVariants } { ...rabbitAnimation() }>
-            <img className={ styles.rabbit } src={ images[index].src } alt='' />
+          <motion.div key={ height.get() } { ...baseVariants } { ...rabbitAnimation() }>
+            <img className={ styles.rabbit } src={ images[index]?.src } alt='' />
             <motion.div className={ styles.rabbitLife } style={{ height }}>
               <img
                 className={ styles.rabbitLifeImg }

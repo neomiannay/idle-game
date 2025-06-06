@@ -1,36 +1,31 @@
+import classNames from 'classnames'
 import React from 'react'
 
+import styles from './Chevron.module.scss'
+
 type TChevron = {
-  direction: 'left' | 'right' | 'up' | 'down'
+  direction: 'left' | 'right'
+  className?: string
+  style?: React.CSSProperties
 }
 
-const Chevron = ({ direction, ...props }: TChevron) => {
-  const transform = {
-    left: 'rotate(180deg)',
-    right: 'rotate(0deg)',
-    up: 'rotate(90deg)',
-    down: 'rotate(-90deg)'
+const Chevron = ({ direction, className, style }: TChevron) => {
+  const imageSrcMap: Record<TChevron['direction'], string> = {
+    left: '/img/rabbit/slider_button_left.svg',
+    right: '/img/rabbit/slider_button_right.svg'
   }
 
   return (
-    <svg
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-      style={{
-        transform: transform[direction]
-      }}
-      { ...props }
-    >
-      <path
-        d='M9 18L15 12L9 6'
-        stroke='#88AA9A'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
-    </svg>
+    <img
+      src={imageSrcMap[direction]}
+      alt={`Chevron ${direction}`}
+      width={42}
+      className={classNames(styles.wrapper, className, {
+        [styles.left]: direction === 'left',
+        [styles.right]: direction === 'right'
+      })}
+      style={style}
+    />
   )
 }
 

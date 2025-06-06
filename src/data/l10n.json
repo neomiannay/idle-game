@@ -104,20 +104,28 @@
   "RABBIT_GAME": {
     "LAYOUT": {
       "NAME": "Protocole de Draize",
-      "BUY_RABBIT": "Acheter un lapin",
-      "START_EXP": "Tester",
-      "NOT_ENOUGH_MONEY": "Pas assez de pépettes..."
+      "LAUNCH": "Lancer",
+      "NOT_ENOUGH_MONEY": "Pas assez de pépettes...",
+      "COST": "Coût"
     },
     "TIPS": {
       "CLICK_0": "*caresse*",
       "CLICK_1": "Essaye !",
       "CLICK_2": "Teste-moi !",
-      "CLICK_3": "Caresse !",
-      "CLICK_4": "Découvre !"
+      "CLICK_3": "Caresse moi !",
+      "CLICK_4": " Expérimente !"
     },
     "ITEMS": {
       "SKIN_REACTION": "Réaction cutanée",
-      "SKIN_REACTION_DESC": "Évaluation du potentiel irritant d'une substance chimique sur la peau en mesurant les réactions inflammatoires locales"
+      "SKIN_REACTION_DESC": "Évaluation du potentiel irritant d'une substance chimique sur la peau en mesurant les réactions inflammatoires locales",
+      "OCULAR_SENSITIVITY": "Sensibilité oculaire",
+      "OCULAR_SENSITIVITY_DESC": "Évaluation de l'irritation oculaire pour détecter les réactions inflammatoires de la cornée, de l'iris et de la conjonctive",
+      "INGESTION": "Ingestion",
+      "INGESTION_DESC": "Détermination de la toxicité orale par doses croissantes pour établir la dose létale médiane et les effets systémiques"
+    },
+    "BUY_RABBIT_ITEM": {
+      "NAME": "Changer de sujet",
+      "DESCRIPTION": "Le sujet ne répond plus. Un remplacement est nécessaire."
     }
   },
   "SEARCH_TIPS": {
