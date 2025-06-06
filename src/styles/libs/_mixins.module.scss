@@ -26,6 +26,16 @@
   }
 }
 
+@mixin shiny-button {
+  @keyframes shiny {
+    0% {
+      left: calc(100% - rem(10));
+    }
+    100% {
+      left: calc(-100%);
+    }
+  }
+}
 
 @mixin arrow {
   display: block;

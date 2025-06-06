@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
 
-  background-color: red;
+  // background-color: red;
 }
 
 .wrapper {
@@ -29,10 +29,11 @@
 .wrapperMainShop {
   position: relative;
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   padding: rem(18) var(--grid-margin) calc(var(--grid-margin) + var(--extraBottom, 0px));
   // overflow-x: scroll;
-  scrollbar-width: none;
+  // scrollbar-width: none;
   gap: var(--grid-gutter);
 
   &::before {
@@ -44,6 +45,10 @@
     height: 100%;
     // background-color: red;
     transform: translateY(calc(var(--translateYValue)));
+  }
+
+  & > :nth-child(n+6) {
+    display: none;
   }
 }
 
@@ -58,6 +63,7 @@
 
 .title {
   @include apply(shop-title);
+  color: var(--fill-20);
   margin: 0 auto;
   text-transform: uppercase;
 }

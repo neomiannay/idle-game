@@ -46,15 +46,18 @@ const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopEl
     initial: { y: '30%', opacity: 0 },
     animate: {
       y: '0%',
-      opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
+      // opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
+      opacity: 1
     },
     hover: {
       y: `${translateYValue}px`,
-      opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
+      // opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
+      opacity: 1
     },
     normal: {
       y: '0%',
-      opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
+      // opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
+      opacity: 1
     },
     exit: {
       y: '30%',
@@ -89,6 +92,8 @@ const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopEl
     onBuyComplete?.()
   }
 
+  const hasTarget = !isSector
+
   return (
     <motion.div
       className={ styles.wrapper }
@@ -97,28 +102,30 @@ const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopEl
     >
       <motion.button
         className={ classNames(styles.container, {
-          [styles.unavailable]: !sequentiallyPurchasable || !canPurchase
+          [styles.unavailable]: !sequentiallyPurchasable || !canPurchase,
+          [styles.isSector]: isSector
         }) }
         { ...baseVariants }
-        { ...fadeAppear(sequentiallyPurchasable && canPurchase) }
+        { ...fadeAppear() }
         onClick={ handleBuyClick }
         disabled={ !sequentiallyPurchasable || !canPurchase }
       >
-        <div className={ styles.whiteBackground }>
-          <div className={ styles.inner }>
-            <div className={ styles.content }>
-              <h4 className={ styles.title }>{ l10n(element.name) }</h4>
-              <span className={ styles.effect }>{ getEffectText() }</span>
-              <p className={ styles.text }>{ element.description }</p>
-            </div>
-            <div className={ styles.bottom }>
-              <span className={ styles.cost }>
-                { element.cost.value } <span>({ l10n(conjugate(unitName, element.cost.value)) })</span>
-              </span>
+        <div className={ styles.whiteBackground } />
+        <div className={ styles.inner }>
+          <div className={ styles.content }>
+            <h4 className={ styles.title }>{ l10n(element.name) }</h4>
+            <span className={ styles.effect }>{ getEffectText() }</span>
+            <p className={ styles.text }>{ element.description }</p>
+          </div>
+          <div className={ styles.bottom }>
+            <span className={ styles.cost }>
+              { element.cost.value } <span>({ l10n(conjugate(unitName, element.cost.value)) })</span>
+            </span>
+            { hasTarget && (
               <span className={ styles.unitEffect }>
                 { l10n(buttonTitle).toLowerCase() }
               </span>
-            </div>
+            ) }
           </div>
         </div>
       </motion.button>

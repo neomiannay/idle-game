@@ -22,6 +22,10 @@ html {
   font-size: var(--rem);
   overscroll-behavior-x: none;
 
+  &.dark-mode {
+    @include darkMode;
+  }
+
   &.no-desktop.no-scroll {
     &, body {
       overflow: hidden;

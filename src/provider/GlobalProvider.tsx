@@ -1,4 +1,4 @@
-import React, { createContext, useContext, PropsWithChildren } from 'react'
+import React, { createContext, useContext, PropsWithChildren, Dispatch, SetStateAction, useState, useEffect } from 'react'
 
 import { L10nProvider } from './L10nProvider'
 import { ViewportProvider } from './ViewportProvider'
@@ -14,7 +14,10 @@ import { SearchPublicityProvider } from './SearchPublicityProvider'
 import { ShopProvider } from './ShopProvider'
 import { LoaderProvider } from './LoaderProvider'
 
-type GlobalContextType = {};
+type GlobalContextType = {
+  darkMode: boolean
+  setDarkMode: Dispatch<SetStateAction<boolean>>
+}
 
 export const GlobalContext = createContext<GlobalContextType | null>(null)
 
@@ -23,6 +26,16 @@ export type BaseProviderProps = PropsWithChildren<{}>;
 let context: GlobalContextType
 
 export const GlobalProvider = ({ children }: BaseProviderProps) => {
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false
+    const isDarkModeEnabled = localStorage.getItem('dark-mode') === 'true'
+    return isDarkModeEnabled ?? false
+  })
+
+  useEffect(() => {
+    localStorage.setItem('dark-mode', darkMode.toString())
+  }, [darkMode])
+
   const providers = [
     LoaderProvider,
     ViewportProvider,
@@ -39,7 +52,10 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
     IterationProvider
   ]
 
-  context = {}
+  context = {
+    darkMode,
+    setDarkMode
+  }
 
   return (
     <GlobalContext.Provider value={ context }>

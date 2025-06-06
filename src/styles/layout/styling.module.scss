@@ -118,7 +118,7 @@ $styles: ();
     font-variation-settings: 'wght' 400, 'wdth' 0, 'ital' 0;
     letter-spacing: -0.04em;
     line-height: 1.08;
-    color: var(--purple-fill-20);
+    color: var(--fill-20);
   }
 }
 
@@ -146,14 +146,14 @@ $styles: ();
 
 %action2 {
   @include rule {
-    font-size: rem(56);
+    font-size: rem(64);
     font-stretch: normal;
     font-variation-settings: 'wght' 800, 'wdth' 0, 'ital' 0;
-    letter-spacing: -1.2px;
+    letter-spacing: -0.02em;
     line-height: 1.08;
     text-transform: uppercase;
-    color: var(--purple-fill-20);
-    background: linear-gradient(92deg, #5F3D73 -0.03%, #552A68 32.99%, #3C1552 66.01%, #360950 99.03%);
+    color: var(--fill-20);
+    background: var(--buy-button);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -190,6 +190,16 @@ $styles: ();
   }
 }
 
+%complex-perf-value {
+  @include rule {
+    font-size: rem(24);
+    font-stretch: normal;
+    font-variation-settings: "wght" 700, "wdth" 65, "ital" 100;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+  }
+}
+
 %cost-value {
   @include rule {
     font-size: rem(12);
@@ -215,7 +225,7 @@ $styles: ();
     font-size: rem(16);
     font-variation-settings: "wght" 400, "wdth" 0;
     text-transform: uppercase;
-    color: var(--purple-fill-40);
+    color: var(--fill-40);
   }
 }
 %subtitle-uppercase {
