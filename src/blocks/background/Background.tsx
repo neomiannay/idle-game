@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import BangerRive from 'blocks/banger-rive/BangerRive'
 import {
@@ -8,13 +8,13 @@ import {
   Layout
 } from '@rive-app/react-webgl2'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { useSpring } from 'motion/react'
-import useMotionState from 'hooks/useMotionState'
+import { useMotionValueEvent, useSpring } from 'motion/react'
+import { useGlobalContext } from 'provider/GlobalProvider'
 
 import styles from './Background.module.scss'
 
 const BENEFITS_END_STEP = 6_200_000_000
-const BENEFITS_START_STEP = 100_000
+const BENEFITS_START_STEP = 1_000
 
 function getProgressFromMoney (
   money: number,
@@ -36,6 +36,7 @@ type BackgroundProps = {
  */
 function Background ({ onLoad }: BackgroundProps): React.ReactElement {
   // Providers
+  const { setDarkMode } = useGlobalContext()
   const { units } = useGameProviderContext()
 
   // States
@@ -66,6 +67,7 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement {
     let res = getProgressFromMoney(value, BENEFITS_START_STEP)
 
     if (value > BENEFITS_START_STEP && sprVal < 123) {
+      setDarkMode(true)
       res = 123
     } else if (sprVal >= 123) {
       const startValue = value - BENEFITS_START_STEP
@@ -82,7 +84,13 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement {
     }
   }
 
-  useMotionState(units.benefits.motionValue, handleBenefitsChange)
+  useMotionValueEvent(units.benefits.motionValue, 'change', handleBenefitsChange)
+
+  // Sync once after the Rive input is available to ensure correct initial state
+  useEffect(() => {
+    if (!input) return
+    handleBenefitsChange(units.benefits.motionValue.get())
+  }, [input])
 
   progressSpring.on('change', handleProgressChange)
 

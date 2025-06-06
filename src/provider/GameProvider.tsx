@@ -3,7 +3,9 @@ import React, {
   useContext,
   useCallback,
   useState,
-  useMemo
+  useMemo,
+  Dispatch,
+  SetStateAction
 } from 'react'
 
 import { MotionValue } from 'motion/react'
@@ -22,6 +24,8 @@ const defaultUnitMultiplier: UnitMultiplierGetter = () => 1
 type GameProviderType = {
   units: Record<EGameUnit, GameUnit>;
   totalUnits: Record<EGameUnit, MotionValue<number>>;
+  complexAutoMode: boolean;
+  setComplexAutoMode: Dispatch<SetStateAction<boolean>>;
   getUnit: (unitId: EGameUnit) => GameUnit | null;
   canDisplayUnit: (unitId: EGameUnit) => boolean;
   canBuyUnit: (unitId: EGameUnit) => boolean;
@@ -75,6 +79,9 @@ export function GameProvider ({ children }: BaseProviderProps) {
   const [displayComplex, setDisplayComplex] = useState(false)
   const [displaySale, setDisplaySale] = useState(false)
   const [displayBenefits, setDisplayBenefits] = useState(false)
+
+  // COMPLEX AUTO MODE
+  const [complexAutoMode, setComplexAutoMode] = useState(false)
 
   const complexDuration = useUnitMotionValue(5000)
   const actifValueByAction = useUnitMotionValue(1)
@@ -321,6 +328,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
     () => ({
       units,
       totalUnits,
+      complexAutoMode,
+      setComplexAutoMode,
       getUnit,
       canDisplayUnit,
       canBuyUnit,
@@ -337,6 +346,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
     [
       units,
       totalUnits,
+      complexAutoMode,
+      setComplexAutoMode,
       getUnit,
       canDisplayUnit,
       canBuyUnit,

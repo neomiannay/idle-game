@@ -21,24 +21,12 @@ const Components = {
 }
 
 const Sectors = ({ className, ...props } : SectorsProps) => {
-  const { reactiveCurrentSector, setCurrentSector, setUnlockedSectors, unlockedSectors } = useSectorsProviderContext()
+  const { reactiveCurrentSector } = useSectorsProviderContext()
 
   const Component = Components[reactiveCurrentSector]
 
   return (
     <motion.div className={ classNames(styles.wrapper, className) } { ...props }>
-      { /* <button
-        className={ styles.unlock }
-        onClick={ () => setUnlockedSectors([...(unlockedSectors || []), EGameSector.LABORATORY]) }
-      >
-        unlock LABORATOIRE
-      </button>
-      <button
-        className={ styles.unlock }
-        onClick={ () => setUnlockedSectors([...(unlockedSectors || []), EGameSector.PUBLICITY]) }
-      >
-        unlock PUBLICITY
-      </button> */ }
       <Component />
     </motion.div>
   )

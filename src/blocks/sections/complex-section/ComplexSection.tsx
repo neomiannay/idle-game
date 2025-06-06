@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
@@ -20,9 +20,7 @@ type ComplexSectionProps = {
 
 const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   const l10n = useL10n()
-  const { getUnit, hasEnoughUnits, updateUnitDuration, updateValueByAction } = useGameProviderContext()
-
-  const [autoMode, setAutoMode] = useState(false)
+  const { getUnit, hasEnoughUnits, updateUnitDuration, updateValueByAction, complexAutoMode, setComplexAutoMode } = useGameProviderContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null
@@ -78,7 +76,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
       <div className={ styles.stepCounter }>
         <Count unitId={ unitId } count={ count } />
       </div>
-      <HoldButton label='BUTTONS.PRODUCE' autoMode={ autoMode } />
+      <HoldButton label='BUTTONS.PRODUCE' autoMode={ complexAutoMode } />
       <div className={ styles.perfWrapper }>
         <div className={ styles.perf }>
           <div className={ styles.perfHeader }>
@@ -114,7 +112,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
         </div>
       </div>
       { isUpgradePurchased && (
-        <AutoSwitch value={ autoMode } onToggle={ () => setAutoMode(prev => !prev) } />
+        <AutoSwitch value={ complexAutoMode } onToggle={ () => setComplexAutoMode(prev => !prev) } />
       ) }
     </div>
   )

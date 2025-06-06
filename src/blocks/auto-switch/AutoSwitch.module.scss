@@ -6,13 +6,13 @@
 }
 
 .switchTrack {
-  width: rem(40);
-  height: rem(20);
-  background-color: var(--skin-100);
-  border-radius: 999px;
   position: relative;
-  transition: background-color 0.3s ease;
   cursor: pointer;
+  width: grid(0, 5);
+  height: rem(32);
+  background-color: var(--skin-100);
+  border-radius: var(--border-radius-xl);
+  transition: background-color 0.3s ease;
 }
 
 .switchTrack.on {
@@ -20,25 +20,25 @@
 }
 
 .switchThumb {
-  width: rem(16);
-  height: rem(16);
-  background-color: white;
-  border-radius: 50%;
   position: absolute;
-  top: rem(2);
-  left: rem(2);
+  top: rem(3);
+  left: rem(3);
+  width: rem(40);
+  height: calc(100% - rem(6));
+  background-color: white;
+  border-radius: var(--border-radius-xl);
   transition: left 0.3s ease;
 }
 
 .switchTrack.on .switchThumb {
-  left: rem(22);
+  left: calc(100% - rem(40) - rem(3));
 }
 
 .switchLabel {
   width: rem(80);
-  text-align: center;
+  color: var(--fill-40);
   font-size: rem(10);
-  color: var(--fill-20);
+  text-align: center;
   font-variation-settings: "wght" 700, "wdth" 60;
   letter-spacing:0cap;
   text-transform: none;
