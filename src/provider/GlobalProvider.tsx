@@ -1,4 +1,6 @@
-import React, { createContext, useContext, PropsWithChildren, Dispatch, SetStateAction, useState, useEffect } from 'react'
+import React, { createContext, useContext, PropsWithChildren, Dispatch, SetStateAction, useState, useMemo } from 'react'
+
+import { getStorageKey } from 'hooks/useGamePersistence'
 
 import { L10nProvider } from './L10nProvider'
 import { ViewportProvider } from './ViewportProvider'
@@ -28,12 +30,16 @@ let context: GlobalContextType
 export const GlobalProvider = ({ children }: BaseProviderProps) => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false
-    const isDarkModeEnabled = localStorage.getItem('dark-mode') === 'true'
-    return isDarkModeEnabled ?? false
+    const storage = localStorage.getItem(getStorageKey())
+    if (!storage) return false
+
+    const parsedStorage = JSON.parse(storage)
+    return parsedStorage.darkMode ?? false
   })
 
-  useEffect(() => {
-    localStorage.setItem('dark-mode', darkMode.toString())
+  useMemo(() => {
+    if (typeof window === 'undefined') return
+    document.documentElement.classList.toggle('dark-mode', darkMode)
   }, [darkMode])
 
   const providers = [
