@@ -23,7 +23,7 @@ const RabbitBtn = ({
   ...props
 }: RabbitBtnProps) => {
   return (
-    <div className={ styles.wrapper}>
+    <div className={ styles.wrapper }>
       <button
         type='button'
         { ...props }
@@ -34,13 +34,13 @@ const RabbitBtn = ({
         <GradientText
           disabled={ disabled }
           className={ styles.btnRight }
-          startColor='var(--fill-40-100)'
+          startColor='var(--fill-40)'
           endColor='var(--color-white)'
           duration={ 3 }
         >
           { label }
         </GradientText>
-        <img src='img/rabbit/button_background.svg' className={styles.background} />
+        <img src='img/rabbit/button_background.svg' className={ styles.background } />
       </button>
     </div>
   )

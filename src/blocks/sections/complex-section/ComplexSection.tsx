@@ -83,7 +83,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
         <div className={ styles.perf }>
           <div className={ styles.perfHeader }>
             <p className={ styles.perfTitle }>{ l10n('UI.PRODUCTION_DURATION') }</p>
-            <span className={ styles.perfValue }>{ formattedSeconds } { l10n('UI.SEC') }</span>
+            <span className={ styles.perfValue }>{ formattedSeconds } { l10n('UNITS.SEC') }</span>
           </div>
           <Button
             onClick={ improveTime }

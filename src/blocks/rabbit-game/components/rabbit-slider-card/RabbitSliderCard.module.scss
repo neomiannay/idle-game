@@ -17,7 +17,7 @@
   }
 
   &Title {
-    color: var(--fill-10-100);
+    color: var(--fill-10);
     font-family: "PP Formula";
     font-size: rem(12);
     font-style: normal;
@@ -36,7 +36,7 @@
   }
 
   &Description {
-    color: var(--fill-40-100);
+    color: var(--fill-40);
     font-size: rem(12);
     font-style: normal;
     line-height: 148%;
@@ -55,7 +55,7 @@
     gap: rem(10);
 
     &Title {
-      color: var(--fill-40-100);
+      color: var(--fill-40);
       font-family: "PP Formula";
       font-size: rem(12);
       text-transform: uppercase;
@@ -64,7 +64,7 @@
     }
 
     &Label {
-      color: var(--fill-20-100);
+      color: var(--fill-20);
       font-variant-numeric: lining-nums tabular-nums;
       font-family: "PP Formula";
       font-size: rem(14);
