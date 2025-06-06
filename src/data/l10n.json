@@ -60,9 +60,11 @@
   },
   "UI": {
     "UNIT_PRODUCTION": "Afficher la production /s",
-    "LABEL_PRODUCTION": "Coût de production",
-    "LABEL_SELLING": "Prix de vente",
-    "LABEL_REPUTATION": "Réputation"
+    "PRODUCTION_COST": "Coût de production",
+    "PRODUCTION_DURATION": "Durée de production",
+    "SELLING": "Prix de vente",
+    "REPUTATION": "Réputation",
+    "EXECUTED_QUANTITY": "Quantité exécutée"
   },
   "PACKS": {
     "FRIEND_X10": "Pack Ami ×10 +2 bonus"

@@ -18,9 +18,9 @@ const RabbitSliderCard = ({ item }: TRabbitSliderCardProps) => {
   const life = useMotionValue(item.power)
 
   const targetLabels: Record<string, string> = {
-    [EGamePrice.PRODUCTION]: l10n('UI.LABEL_PRODUCTION'),
-    [EGamePrice.SELLING]: l10n('UI.LABEL_SELLING'),
-    [EGameUnit.REPUTATION]: l10n('UI.LABEL_REPUTATION')
+    [EGamePrice.PRODUCTION]: l10n('UI.PRODUCTION_COST'),
+    [EGamePrice.SELLING]: l10n('UI.SELLING'),
+    [EGameUnit.REPUTATION]: l10n('UI.REPUTATION')
   }
 
   return (

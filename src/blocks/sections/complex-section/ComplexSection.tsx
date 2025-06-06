@@ -82,8 +82,8 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
       <div className={ styles.perfWrapper }>
         <div className={ styles.perf }>
           <div className={ styles.perfHeader }>
-            <p className={ styles.perfTitle }>Durée de production</p>
-            <span className={ styles.perfValue }>{ formattedSeconds }s</span>
+            <p className={ styles.perfTitle }>{ l10n('UI.PRODUCTION_DURATION') }</p>
+            <span className={ styles.perfValue }>{ formattedSeconds } { l10n('UI.SEC') }</span>
           </div>
           <Button
             onClick={ improveTime }
@@ -98,7 +98,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
         </div>
         <div className={ styles.perf }>
           <div className={ styles.perfHeader }>
-            <p className={ styles.perfTitle }>Quantité exécutée</p>
+            <p className={ styles.perfTitle }>{ l10n('UI.EXECUTED_QUANTITY') }</p>
             <span className={ styles.perfValue }>{ quantity }</span>
           </div>
           <Button
