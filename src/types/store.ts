@@ -101,6 +101,7 @@ export interface GameState {
   unlockedSectors?: EGameSector[] | null
   complexComposition?: TSearchGameItem[] | null
   tips?: TSearchGameItem[] | null
+  rabbitPrice?: number | null
 }
 
 export type ElementType = 'item' | 'upgrade' | 'sector'

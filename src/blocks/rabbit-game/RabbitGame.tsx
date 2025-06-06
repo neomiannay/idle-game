@@ -11,6 +11,7 @@ import RabbitSlider, {
   TRabbitSliderItem
 } from './components/rabbit-slider/RabbitSlider'
 import useMotionState from 'hooks/useMotionState'
+import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
 
 export type TRabbitData = {
   price: number;
@@ -19,8 +20,8 @@ export type TRabbitData = {
 const RabbitGame = () => {
   const l10n = useL10n()
   const life = useMotionValue<number>(6)
+  const { rabbitPrice, setRabbitPrice } = useSearchLaboratoryContext()
 
-  const [rabbitPrice, setRabbitPrice] = useState(rabbits.price)
   const [currentExp, setCurrentExp] = useState<TRabbitSliderItem | null>(null)
 
   const isRabbitDead = useMotionState(life, (v) => v <= 0)

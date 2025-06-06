@@ -37,7 +37,7 @@ type TRabbitSlider = {
   setCurrentExp: (exp: TRabbitSliderItem) => void;
   isRabbitDead: boolean;
   life: MotionValue<number>;
-  rabbitPrice: number;
+  rabbitPrice: number | null;
   testPrice: number;
   setRabbitPrice: (price: number) => void;
 };
@@ -78,15 +78,16 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
   useEffect(() => handleSetHeight(), [])
 
   const handleBuy = () => {
-    if (!hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)) return
-    if (life.get() <= 0) {
+    if (rabbitPrice && !hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)) return
+    if (life.get() <= 0 && rabbitPrice) {
       setRabbitPrice(rabbitPrice * rabbits.factor)
       modifyUnitValue(EGameUnit.BENEFITS, -rabbitPrice)
       life.set(RABBIT_LIFE)
+      setCurrentExp(items[0])
     }
   }
 
-    const handleStart = (exp: TRabbitSliderItem) => {
+  const handleStart = (exp: TRabbitSliderItem) => {
     if (!hasEnoughUnits(testPrice, EGameUnit.BENEFITS)) return
 
     modifyUnitValue(EGameUnit.BENEFITS, -testPrice)
@@ -97,7 +98,6 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
     if(lifeValue <= 0)
       lifeValue = RABBIT_LIFE
 
-
     const prevLifeValue = lifeValue
     lifeValue -= exp.power
 
@@ -107,7 +107,7 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
     }
   }
 
-  const  canBuyRabbit = hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)
+  const  canBuyRabbit = rabbitPrice && hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)
   const  canBuyTest = hasEnoughUnits(testPrice, EGameUnit.BENEFITS)
 
 
@@ -126,7 +126,7 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
 
   return (
     <div className={ styles.controlPanel }>
-      { (isRabbitDead || life.get() === null) ? (
+      { ((isRabbitDead || life.get() === null) && rabbitPrice) ? (
         <RabbitBtn
           price={ `${formatValue(rabbitPrice)} ${l10n('UNITS.EURO')}` }
           label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
@@ -154,7 +154,7 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
         <div className={styles.sliderBackground}>
           <AnimatePresence mode='wait'>
             <motion.div
-              key={ currentIndex }
+              key={`${currentIndex}-${items.map(item => item.id).join('-')}`}
               ref={ contentRef }
               transition={{
                 duration: isReady ? 0.25 : 0,

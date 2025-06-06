@@ -79,7 +79,7 @@
       "description": "RABBIT_GAME.BUY_RABBIT_ITEM.DESCRIPTION",
       "price": 238,
       "factor": 1.15,
-      "power": 4,
+      "power": 0,
       "values": [
         {
           "value": 10,

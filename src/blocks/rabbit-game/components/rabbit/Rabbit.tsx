@@ -27,7 +27,7 @@ import RabbitBtn from './components/rabbit-btn/RabbitBtn'
 
 type TRabbit = {
   life: MotionValue<number>;
-  price: number;
+  price: number | null;
   attack: number;
   isRabbitDead: boolean;
 };
@@ -83,7 +83,7 @@ const Rabbit = ({ life, price, attack, isRabbitDead }: TRabbit) => {
     }
   }, [])
 
-  const canBuy = useMotionState(benefits, (v) => v >= price)
+  const canBuy = useMotionState(benefits, (v) => price && v >= price)
   const tips = [
     'RABBIT_GAME.TIPS.CLICK_0',
     'RABBIT_GAME.TIPS.CLICK_1',
@@ -109,7 +109,7 @@ const Rabbit = ({ life, price, attack, isRabbitDead }: TRabbit) => {
           parent={ gameRef }
           contain
         />
-        <RabbitImg life={ life } attack={ attack } />
+        <RabbitImg life={ life } />
         <RabbitBg opacity={ opacity } springX={ springX } springY={ springY } />
       </div>
       <div

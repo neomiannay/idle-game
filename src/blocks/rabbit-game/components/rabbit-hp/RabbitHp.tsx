@@ -4,6 +4,7 @@ import { MotionValue } from 'motion/react';
 import classNames from 'classnames';
 
 import styles from './RabbitHp.module.scss';
+import useMotionState from 'hooks/useMotionState';
 
 type TRabbitHp = {
   life: MotionValue<number>;
@@ -13,19 +14,9 @@ type TRabbitHp = {
 };
 
 const RabbitHp = ({ life, length, reduce = false, className }: TRabbitHp) => {
-  const [lifeValue, setLifeValue] = useState<number>(life.get());
+  const lifeValue = useMotionState(life, (v) => v);
 
-  useEffect(() => {
-    const unsubscribe = life.on('change', (value) => {
-      setLifeValue(value);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [life]);
-
-  const totalDroplets = reduce ? Math.floor(lifeValue) : length;
+  const totalDroplets = reduce ? lifeValue : length;
 
   return (
     <div className={classNames(styles.rabbitHp, className, {

@@ -13,7 +13,7 @@ import classNames from 'classnames'
 type TRabbitSliderCardProps = {
   item: TRabbitSliderItem;
   isRabbitDead: boolean;
-  price: number;
+  price: number | null;
 };
 
 const RabbitSliderCard = ({ item, isRabbitDead, price }: TRabbitSliderCardProps) => {
@@ -64,7 +64,7 @@ const RabbitSliderCard = ({ item, isRabbitDead, price }: TRabbitSliderCardProps)
         <div className={ styles.cardValuesItem }>
           <h5 className={ styles.cardValuesTitle }>{ l10n('RABBIT_GAME.LAYOUT.COST') }</h5>
           <h6 className={ styles.cardValuesLabel }>
-            { price.toLocaleString() }
+            { price && (price.toLocaleString()) }
             { l10n('UNITS.EURO') }
           </h6>
         </div>

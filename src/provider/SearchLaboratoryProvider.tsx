@@ -17,6 +17,9 @@ type SearchLaboratoryContextType = {
   setComplexComposition: (items: TSearchGameItem[] | null) => void
   saveNewItemLab: (item: TSearchGameItem | null) => void
   loadComplexComposition: (data: TSearchGameItem[]) => void
+  rabbitPrice: number | null
+  setRabbitPrice: (price: number) => void
+  loadRabbitPrice: (data: number) => void
 }
 
 const SearchLaboratoryContext = createContext<SearchLaboratoryContextType | undefined>(undefined)
@@ -31,6 +34,7 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
   const [searchStateLab, setSearchStateLab] = useState(0)
   const [newItemLab, setNewItemLab] = useState<TSearchGameItem | null>(null)
   const [complexComposition, setComplexComposition] = useState<TSearchGameItem[] | null>(null)
+  const [rabbitPrice, setRabbitPrice] = useState<number | null>(null)
 
   useEffect(() => {
     if (!isRunningLab) return
@@ -75,6 +79,10 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
     setComplexComposition(data)
   }
 
+  const loadRabbitPrice = (data: number) => {
+    setRabbitPrice(data)
+  }
+
   context = {
     currentTimeLab,
     startProgressLab,
@@ -87,7 +95,10 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
     complexComposition,
     setComplexComposition,
     saveNewItemLab,
-    loadComplexComposition
+    loadComplexComposition,
+    rabbitPrice,
+    setRabbitPrice,
+    loadRabbitPrice
   }
 
   return (
