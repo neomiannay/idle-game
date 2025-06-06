@@ -6,7 +6,7 @@ import { floor } from 'lodash-es'
 import { EGamePrice, EGameUnit, EStatus, GameState, GameStateElement, GameStatePrice, GameStateUnit } from 'types/store'
 
 import { useMessageSystemContext } from './MessageSystemProvider'
-import { BaseProviderProps } from './GlobalProvider'
+import { BaseProviderProps, useGlobalContext } from './GlobalProvider'
 import { useGameProviderContext } from './GameProvider'
 import { useInventoryContext } from './InventoryProvider'
 import { usePricesContext } from './PricesProvider'
@@ -26,6 +26,7 @@ const IterationContext = createContext<IterationContextType | null>(null)
 
 export function IterationProvider ({ children }: BaseProviderProps) {
   const { setLoadingStates } = useLoaderContext()
+  const { darkMode, setDarkMode } = useGlobalContext()
   const { units, getUnit, updateDisplayConditions, buyUnit, isSaleSuccessful, hasEnoughUnits } = useGameProviderContext()
   const { getItemProduction, getElementsForUnit, loadElements } = useInventoryContext()
   const { prices } = usePricesContext()
@@ -82,6 +83,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const handleSaveState = useCallback(() => {
     return {
       lastPlayedTime: Date.now(),
+      darkMode,
       units: Object.entries(units).reduce((acc, [unitId, unit]) => {
         const unitData: GameStateUnit = {
           motionValue: unit.motionValue.get(),
@@ -154,11 +156,14 @@ export function IterationProvider ({ children }: BaseProviderProps) {
       complexComposition,
       tips
     }
-  }, [units, getElementsForUnit, seenMessages, unlockedSectors, complexComposition, tips, prices])
+  }, [darkMode, units, getElementsForUnit, seenMessages, unlockedSectors, complexComposition, tips, prices])
 
   // Fonction pour charger l'état du jeu
   const handleLoadState = useCallback((gameState: GameState) => {
     // Charger les unités
+    if (gameState.darkMode)
+      setDarkMode(gameState.darkMode)
+
     Object.entries(gameState.units || {}).forEach(([unitId, value]) => {
       const unit = getUnit(unitId as EGameUnit)
       if (unit) {

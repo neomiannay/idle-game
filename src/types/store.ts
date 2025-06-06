@@ -91,6 +91,7 @@ export interface GameStatePrice {
 
 export interface GameState {
   lastPlayedTime: number
+  darkMode: boolean | null
   units: Record<string, GameStateUnit>
   items?: Record<string, Record<string, GameStateElement>>
   upgrades?: Record<string, Record<string, GameStateElement>>

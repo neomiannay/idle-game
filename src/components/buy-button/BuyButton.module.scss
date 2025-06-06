@@ -1,8 +1,30 @@
 .wrapper {
+  position: relative;
   @include apply(action2);
-  user-select: none;
   @include apply(basic-hover);
   filter: brightness(0.8);
+  user-select: none;
+  overflow: hidden;
+  @include shiny-button;
+
+  &:hover {
+    &::after {
+      animation: shiny 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 90%;
+    height: rem(200);
+    width: rem(150);
+    background: var(--gradient-white);
+    transform: rotate(-60deg);
+    aspect-ratio: 21 / 10;
+    transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
 }
 
 .disabled {

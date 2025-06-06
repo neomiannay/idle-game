@@ -3,8 +3,8 @@
 }
 
 .container {
-  $card-width: grid(2, 3);
-  min-width: $card-width;
+  position: relative;
+  $card-width: 100%;
   width: $card-width;
   min-height: rem(160);
   border-radius: rem(10);
@@ -13,13 +13,58 @@
 
   &.unavailable {
     cursor: not-allowed;
+    background: var(--gradient-border-inactive);
+
+    &.isSector {
+      background: var(--shop-item-gold-border-inactive);
+    }
+
+    .whiteBackground {
+      background: var(--shop-item-unavailable-overlay);
+    }
+
+    &.isSector .whiteBackground {
+      background: var(--shop-item-unavailable-overlay-light);
+    }
+  }
+
+  &.isSector {
+    background: var(--shop-item-gold-border);
+
+    .inner {
+      background: var(--shop-item-gold-background);
+
+      &::before {
+        background: var(--shop-item-gold-background-hover);
+      }
+    }
+
+    .title, .effect, .text, .bottom {
+      color: var(--shop-item-gold-text);
+    }
+  }
+
+  &:hover {
+    &:not(.unavailable) {
+      .inner::before {
+        opacity: 1;
+      }
+
+      .inner::after {
+        animation: shiny 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      }
+    }
   }
 }
 
 .whiteBackground {
-  height: 100%;
+  position: absolute;
+  z-index: 10;
+  top: rem(2);
+  left: rem(2);
+  width: calc(100% - rem(4));
+  height: calc(100% - rem(4));
   border-radius: var(--border-radius);
-  background: rgba(255, 255, 255, 0.6);
 }
 
 .inner {
@@ -32,7 +77,7 @@
   height: 100%;
   background: var(--gradient-40);
   overflow: hidden;
-  transition: background 0.2s ease-in-out;
+  transition: background 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 
   &::before {
     content: '';
@@ -40,7 +85,7 @@
     inset: 0;
     background: var(--gradient-hover);
     opacity: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     z-index: 0;
   }
 
@@ -54,16 +99,7 @@
     background: var(--gradient-white);
     transform: rotate(-60deg);
     aspect-ratio: 21 / 10;
-    transition: left 0.3s ease-in-out;
-    // border: 1px solid red;
-  }
-
-  &:hover::before {
-    opacity: 1;
-  }
-
-  &:hover::after {
-    animation: shiny 0.3s ease-in-out forwards;
+    transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   @keyframes shiny {
@@ -101,17 +137,18 @@
 
 .title {
   @include apply(card-title);
-  color: var(--purple-fill-20);
+  color: var(--fill-20);
   text-transform: uppercase;
 }
 
 .effect {
   @include apply(shop-card-effect);
+  color: var(--fill-20);
 }
 
 .text {
   @include apply(card-text);
-  color: var(--purple-fill-20);
+  color: var(--fill-20);
   text-transform: uppercase;
   margin: 0;
   @include ellipsis(3, 1.16);
@@ -124,6 +161,7 @@
   padding: rem(10) var(--grid-margin);
   padding-top: 0;
   padding-right: 0;
+  color: var(--fill-20);
 }
 
 .cost {
@@ -139,5 +177,5 @@
   text-transform: uppercase;
   padding: rem(8);
   border-radius: rem(4) 0 0 rem(4);
-  background: var(--color-dark-8);
+  background: var(--transparent-dark-8);
 }

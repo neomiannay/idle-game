@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: rem(32);
-  width: grid(5, 0);
+  width: grid(3, 0);
 }
 
 .perfWrapper {
@@ -30,46 +30,15 @@
   }
 
   .perfTitle {
+    @include apply(button-action);
     text-align: center;
-    font-size: rem(10);
-    font-variation-settings: "wght" 700, "wdth" 60;
     width: 100%;
-    color: var(--purple-fill-40);
-    margin: 0
+    margin: 0;
+    color: var(--fill-20);
   }
 
   .perfValue {
-    font-size: rem(24);
-    font-variation-settings: "wght" 800, "wdth" 50, "ital" 100;
-    color: var(--purple-fill-20);
-  }
-}
-
-.improvePerf {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  border-radius: 999px;
-  border: 2px solid var(--vert-transparent);
-  backdrop-filter: blur(16px);
-  color: var(--purple-fill-20);
-  @include apply(basic-hover);
-
-  p {
-    padding: rem(8);
-    margin: 0;
-    @include apply(cost-value)
-  }
-
-  .gain {
-    padding: rem(8);
-    border-radius: 999px;
-    background-color: var(--vert-transparent);
-    background-blend-mode: color-burn;
-    backdrop-filter: blur(2px);
-  }
-
-  span {
-    @include apply(cost-unit)
+    @include apply(complex-perf-value);
+    color: var(--fill-20);
   }
 }

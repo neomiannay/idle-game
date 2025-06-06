@@ -1,12 +1,13 @@
 .wrapper {
+  inset: 0;
   position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
   background: var(--gradient-button);
-  outline: 1px solid var(--transparent-dark-8);
+  outline: 1px solid var(--transparent-dark-16);
   border-radius: var(--border-radius);
-  color: var(--purple-fill-20);
+  color: var(--fill-20);
   backdrop-filter: blur(16px);
 
   transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
@@ -29,18 +30,18 @@
       outline-color: var(--transparent-dark-16);
 
       &::before {
-          opacity: 1;
+        opacity: 1;
       }
     }
   }
 
   &:focus {
-    outline: 1px solid var(--transparent-dark-8);
+    outline: 1px solid var(--transparent-dark-16);
   }
 
   &:disabled {
     cursor: not-allowed;
-    outline: 1px solid var(--transparent-dark-8);
+    outline: 1px solid var(--transparent-dark-16);
     background: var(--gradient-button-inactive);
     color: var(--fill-20);
     opacity: 0.4;
@@ -51,6 +52,7 @@
     gap: rem(12);
 
     .left {
+      padding: rem(10.5) rem(13.5);
       border-radius: var(--border-radius);
       background: var(--transparent-dark-8);
       background-blend-mode: color-burn;
@@ -95,7 +97,7 @@
   justify-content: center;
 
   &.hasCost {
-    border-left: rem(1) solid var(--transparent-dark-8);
+    border-left: 1px solid var(--transparent-dark-8);
   }
 }
 

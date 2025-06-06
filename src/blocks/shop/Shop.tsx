@@ -16,7 +16,7 @@ const Shop = ({ className }: { className?: string }) => {
   const { canDisplayUnit, units } = useGameProviderContext()
   const { getElementsForUnit, getItemPurchased } = useInventoryContext()
   const { checkForNewUpgrades } = useUpgradeObserver()
-  const { motionWrapperRef, shopOpen, setShopOpen } = useShopProviderContext()
+  const { motionWrapperRef, setShopOpen } = useShopProviderContext()
 
   const firstAvailableElement = (Object.keys(units) as EGameUnit[])
     .filter(unitId => canDisplayUnit(unitId))

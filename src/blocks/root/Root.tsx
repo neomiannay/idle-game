@@ -11,12 +11,17 @@ import useTransitionType from 'hooks/useTransitionType'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
 import Background from 'blocks/background/Background'
 import { useLoaderContext } from 'provider/LoaderProvider'
+import { useGlobalContext } from 'provider/GlobalProvider'
 
 import styles from './Root.module.scss'
 import Loading from './components/loading/Loading'
 
-function Root () {
+type RootProps = {
+  className?: string;
+};
+function Root ({ className }: RootProps) {
   const { isLoading } = useLoaderContext()
+  const { darkMode, setDarkMode } = useGlobalContext()
   const { reactiveCurrentSector, sectors } = useSectorsProviderContext()
 
   const custom = { type: useTransitionType(reactiveCurrentSector, sectors) }
@@ -33,6 +38,7 @@ function Root () {
         <Loading />
       ) : (
         <>
+          <button className={ styles.darkModeButton } onClick={ () => setDarkMode(!darkMode) }>Dark mode { darkMode ? 'on' : 'off' }</button>
           <Meta />
           <Header />
 

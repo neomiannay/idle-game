@@ -40,7 +40,7 @@
 }
 
 .money {
-  color: rgb(209, 147, 240);
+  color: var(--color-money);
   font-variation-settings: "wdth" 65, "wght" 500;
   font-variant-numeric: lining-nums tabular-nums;
   letter-spacing: -0.09em;

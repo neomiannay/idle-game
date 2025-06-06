@@ -71,7 +71,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
 
   const isUpgradePurchased = useUpgradePurchased(unitId, 'autoprod')
 
-  const canPurchase = !canPurchaseTime(10, EGameUnit.ACTIF) && hasEnoughUnits(10, EGameUnit.ACTIF)
+  const canPurchase = canPurchaseTime(10, EGameUnit.ACTIF) && hasEnoughUnits(10, EGameUnit.ACTIF)
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
@@ -109,7 +109,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
               value: unit.costAmount ?? 0,
               unit: '$'
             }}
-            action='+1'
+            action='+20'
           />
         </div>
       </div>
