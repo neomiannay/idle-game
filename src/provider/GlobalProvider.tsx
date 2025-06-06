@@ -1,6 +1,7 @@
 import React, { createContext, useContext, PropsWithChildren, Dispatch, SetStateAction, useState, useMemo } from 'react'
 
 import { getStorageKey } from 'hooks/useGamePersistence'
+import { GameState } from 'types/store'
 
 import { L10nProvider } from './L10nProvider'
 import { ViewportProvider } from './ViewportProvider'
@@ -33,7 +34,7 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
     const storage = localStorage.getItem(getStorageKey())
     if (!storage) return false
 
-    const parsedStorage = JSON.parse(storage)
+    const parsedStorage = JSON.parse(storage) as GameState
     return parsedStorage.darkMode ?? false
   })
 

@@ -51,6 +51,7 @@ function Root ({ className }: RootProps) {
                 [styles.paused]: isPaused
               }) }
               onClick={ togglePause }
+
             >
               { isPaused ? 'Paused' : 'Running' }
             </button> */ }
