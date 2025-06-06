@@ -144,9 +144,11 @@ $styles: ();
   }
 }
 
+$action2-font-size: rem(64);
+
 %action2 {
   @include rule {
-    font-size: rem(64);
+    font-size: $action2-font-size;
     font-stretch: normal;
     font-variation-settings: 'wght' 800, 'wdth' 0, 'ital' 0;
     letter-spacing: -0.02em;

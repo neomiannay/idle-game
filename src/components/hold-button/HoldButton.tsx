@@ -13,11 +13,7 @@ interface HoldButtonProps {
   autoMode?: boolean;
 }
 
-const HoldButton: FC<HoldButtonProps> = ({
-  className,
-  label,
-  autoMode
-}) => {
+const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode }) => {
   const l10n = useL10n()
   const { getUnit, buyUnit, canBuyUnit } = useGameProviderContext()
 
@@ -31,29 +27,26 @@ const HoldButton: FC<HoldButtonProps> = ({
   const handleClick = () => {
     if (isAnimating || !canBuy) return
 
-    setProgress(0)
+    setProgress(20)
     setIsAnimating(true)
 
     const interval = 100
     const steps = duration / interval
     const increment = 100 / steps
 
-    let currentProgress = 0
+    let currentProgress = 20
     timerRef.current = setInterval(() => {
       currentProgress += increment
 
       if (currentProgress >= 100) {
-        if (timerRef.current)
-          clearInterval(timerRef.current)
+        if (timerRef.current) clearInterval(timerRef.current)
 
         setProgress(100)
 
         setTimeout(() => {
           buyUnit(EGameUnit.COMPLEX)
           setIsAnimating(false)
-          setTimeout(() => {
-            setProgress(100)
-          }, 200)
+          setTimeout(() => setProgress(100), 200)
         }, 50)
       } else {
         setProgress(currentProgress)
@@ -63,8 +56,7 @@ const HoldButton: FC<HoldButtonProps> = ({
 
   useEffect(() => {
     return () => {
-      if (timerRef.current)
-        clearInterval(timerRef.current)
+      if (timerRef.current) clearInterval(timerRef.current)
     }
   }, [])
 
@@ -75,11 +67,12 @@ const HoldButton: FC<HoldButtonProps> = ({
   }, [autoMode, isAnimating, canBuy])
 
   return (
-    <div className={ classNames(styles.wrapper, className, {
-      [styles.disabled]: !canBuy
-    }) }
+    <div
+      className={ classNames(styles.wrapper, className, {
+        [styles.disabled]: !canBuy
+      }) }
     >
-      <div onClick={ handleClick } className={styles.colorContainer}>
+      <div onClick={ handleClick } className={ styles.colorContainer }>
         <div
           className={ styles.endColor }
           style={{

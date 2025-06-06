@@ -52,11 +52,11 @@
     gap: rem(12);
 
     .left {
-      padding: rem(10.5) rem(13.5);
+      padding: rem(10) rem(13);
       border-radius: var(--border-radius);
       background: var(--transparent-dark-8);
       background-blend-mode: color-burn;
-      backdrop-filter: blur(2px);
+      // backdrop-filter: blur(2px);
 
       .variantCost {
         @include apply(button-variant-action);
