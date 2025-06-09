@@ -1,10 +1,11 @@
 import React, { PropsWithChildren, useRef, useEffect, useState, useMemo } from 'react'
 
-import { motion } from 'framer-motion'
 import classNames from 'classnames'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
 import { useL10n } from 'provider/L10nProvider'
 import { fadeAppear } from 'core/animation'
+import GradientText from 'components/gradient-text/GradientText'
+import { motion } from 'motion/react'
 
 import styles from './SectorsTab.module.scss'
 
@@ -52,6 +53,7 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
   return hasSectors && (
     <motion.div
       className={ classNames(styles.wrapper, className) }
+      { ...fadeAppear() }
       { ...props }
     >
       { (activeButtonBounds) && (
@@ -81,9 +83,14 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
         }) }
         onClick={ () => setCurrentSector(defaultUnlockedSector) }
         tabIndex={ 1 }
-        { ...fadeAppear() }
       >
-        { l10n(`SECTORS.${defaultUnlockedSector.toUpperCase()}`) }
+        <GradientText
+          startColor={ defaultUnlockedSector === reactiveCurrentSector ? 'var(--fill-60)' : 'var(--color-money)' }
+          endColor={ defaultUnlockedSector === reactiveCurrentSector ? 'var(--fill-100)' : 'var(--fill-60)' }
+          duration={ 1.5 }
+        >
+          { l10n(`SECTORS.${defaultUnlockedSector.toUpperCase()}`) }
+        </GradientText>
       </motion.button>
 
       { unlockedSectors?.map((sector, index) => {
@@ -100,10 +107,17 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
             tabIndex={ index + 2 }
             { ...fadeAppear() }
           >
-            { l10n(`SECTORS.${sector.toUpperCase()}`) }
+            <GradientText
+              startColor={ reactiveCurrentSector === sector ? 'var(--fill-60)' : 'var(--color-money)' }
+              endColor={ reactiveCurrentSector === sector ? 'var(--fill-100)' : 'var(--fill-60)' }
+              duration={ 1.5 }
+            >
+              { l10n(`SECTORS.${sector.toUpperCase()}`) }
+            </GradientText>
           </motion.button>
         )
       }) }
+
     </motion.div>
   )
 }

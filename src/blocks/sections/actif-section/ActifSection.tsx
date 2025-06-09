@@ -47,7 +47,7 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
               key='count'
               layout
               { ...baseVariants }
-              { ...fadeAppear }
+              { ...fadeAppear() }
             >
               <Count unitId={ unitId } count={ count } />
             </motion.div>
@@ -71,7 +71,7 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
             key='upgrades'
             layout
             { ...baseVariants }
-            { ...fadeAppear }
+            { ...fadeAppear() }
           >
             <Upgrades unitId={ unitId } />
           </motion.div>

@@ -21,6 +21,7 @@ html {
   font-family: $main-font;
   font-size: var(--rem);
   overscroll-behavior-x: none;
+  user-select: none;
 
   &.dark-mode {
     @include darkMode;

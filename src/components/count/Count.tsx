@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import { conjugate, useL10n } from 'provider/L10nProvider'
-
-import styles from './Count.module.scss'
 import { EGameUnit } from 'types/store'
 import { useGameProviderContext } from 'provider/GameProvider'
+
+import styles from './Count.module.scss'
 
 type CountProps = {
   className?: string
@@ -22,23 +22,24 @@ const Count = ({ className, unitId, count, ...props }: CountProps) => {
   if (!saleUnit || !unit) return null
   const tripleSections = saleUnit.displayCondition
 
-  let alignItems;
-  if(tripleSections) {
+  let alignItems
+  if (tripleSections) {
     switch (unitId) {
       case EGameUnit.ACTIF:
-        alignItems = 'flex-start';
-        break;
+        alignItems = 'flex-start'
+        break
       case EGameUnit.SALE:
-        alignItems = 'flex-end';
-        break;
+        alignItems = 'flex-end'
+        break
       default:
-        alignItems = 'center';
-        break;
+        alignItems = 'center'
+        break
     }
   }
 
   return (
-    <div className={ classNames(styles.wrapper, className) } { ...props }
+    <div
+      className={ classNames(styles.wrapper, className) } { ...props }
       style={{ alignItems }}
     >
       <span className={ styles.count }>{ count }</span>

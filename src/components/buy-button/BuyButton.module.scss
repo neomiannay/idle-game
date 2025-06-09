@@ -2,7 +2,7 @@
   position: relative;
   @include apply(action2);
   @include apply(basic-hover);
-  filter: brightness(0.8);
+  // filter: brightness(0.8);
   user-select: none;
   overflow: hidden;
   @include shiny-button;
@@ -29,5 +29,5 @@
 
 .disabled {
   color: var(--color-disabled);
-  cursor: not-allowed;
+  filter: brightness(0.8);
 }

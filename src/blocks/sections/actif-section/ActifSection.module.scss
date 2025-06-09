@@ -4,7 +4,6 @@
   align-items: center;
   gap: rem(32);
   width: grid(2, 0);
-  max-width: rem(220);
 }
 
 .spacing {
@@ -13,7 +12,6 @@
 
 .disabled {
   color: var(--color-disabled);
-  cursor: not-allowed;
 }
 
 .stepCounter {
@@ -32,7 +30,6 @@
   gap: rem(8);
 
   & .line {
-    // border: 1px solid red;
     display: flex;
     justify-content: space-between;
   }

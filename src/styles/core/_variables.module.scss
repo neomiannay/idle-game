@@ -23,6 +23,9 @@ $rem-reference: 1px;
   --transparent-dark-24: rgba(191, 228, 211, 0.24);
   --transparent-light-40: rgb(147, 240, 197);
 
+  --purple-transparent-24: rgb(19 132 69 / 34%);
+  --purple-transparent-count: linear-gradient(0deg, var(--purple-transparent-24) 0%, var(--purple-transparent-24) 100%), linear-gradient(287deg, rgba(0, 2, 119, 0.00) -5.89%, rgba(145, 180, 116, 0.12) 47.54%, rgba(165, 179, 144, 0.14) 65.24%, rgba(210, 177, 206, 0.18) 74.25%, rgba(224, 217, 226, 0.22) 82.57%, rgba(232, 240, 238, 0.24) 100.96%);
+
   /* BUTTONS */
   --buy-button: linear-gradient(94deg, #DFF5EB 1.53%, #D4EFDD 49.71%, #D8F1E8 98.47%);
 
@@ -70,6 +73,7 @@ $rem-reference: 1px;
   --transparent-light-40: #D193F0;
 
   --purple-transparent-24: rgba(28, 28, 66, 0.24);
+  --purple-transparent-count: linear-gradient(0deg, var(--purple-transparent-24) 0%, var(--purple-transparent-24) 100%), linear-gradient(287deg, rgba(0, 2, 119, 0.00) -5.89%, rgba(145, 180, 116, 0.12) 47.54%, rgba(165, 179, 144, 0.14) 65.24%, rgba(210, 177, 206, 0.18) 74.25%, rgba(224, 217, 226, 0.22) 82.57%, rgba(232, 240, 238, 0.24) 100.96%);
 
   /* GRADIENTS */
   --translucent-24:

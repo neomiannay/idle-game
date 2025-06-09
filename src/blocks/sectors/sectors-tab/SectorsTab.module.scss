@@ -16,7 +16,7 @@
   text-transform: uppercase;
   padding: var(--gap-s) var(--grid-margin);
   border-radius: var(--border-radius-xl);
-  transition: color 0.3s ease, font-variation-settings 0.3s ease;
+  transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1), font-variation-settings 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
   &.active {
     color: var(--fill-100);

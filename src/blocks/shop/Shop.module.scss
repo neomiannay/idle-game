@@ -3,10 +3,10 @@
   z-index: 100;
   top: calc(var(--ivh) - (rem(15) + rem(34)) );
   left: 0;
-  width: 100%;
-  height: fit-content;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: fit-content;
 
   // background-color: red;
 }

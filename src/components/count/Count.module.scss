@@ -9,7 +9,11 @@
   font-size: rem(48);
   font-variation-settings: "wght" 400, "wdth" 20;
   letter-spacing: -0.96px;
-  color: var(--purple-transparent-24);
+  background: var(--purple-transparent-count);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  backdrop-filter: blur(8px);
 }
 
 .title {

@@ -82,7 +82,9 @@ const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode }) => {
         >
           { l10n(label) }
         </div>
-        <div className={ styles.startColor }>{ l10n(label) }</div>
+        <div className={ styles.startColor }>
+          { l10n(label) }
+        </div>
       </div>
     </div>
   )
