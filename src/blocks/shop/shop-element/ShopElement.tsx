@@ -134,7 +134,7 @@ const ShopElement = ({
             { !isSector && (
               <span className={ styles.effect }>{ getEffectText() }</span>
             ) }
-            <p className={ styles.text }>{ element.description }</p>
+            <p className={ styles.text }>{ l10n(element.description) }</p>
           </div>
           <div className={ styles.bottom }>
             <span className={ styles.cost }>

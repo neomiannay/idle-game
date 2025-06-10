@@ -5,27 +5,27 @@
   },
   "PROJECTS": "Projets",
   "BUTTONS": {
-    "ACTIVATE": "EXTRAIRE",
-    "PRODUCE": "FORMULER",
-    "SALE": "RÉPANDRE",
-    "BUY": "ACHETER"
+    "ACTIF": "Extraire",
+    "COMPLEX": "Formuler",
+    "SALE": "Répandre",
+    "BUY": "Acheter"
   },
   "UNITS": {
     "ACTIF": {
-      "singular": "actif",
-      "plural": "actifs"
+      "SINGULAR": "actif",
+      "PLURAL": "actifs"
     },
     "COMPLEX": {
-      "singular": "complexe",
-      "plural": "complexes"
+      "SINGULAR": "complexe",
+      "PLURAL": "complexes"
     },
     "SALE": {
-      "singular": "vente",
-      "plural": "ventes"
+      "SINGULAR": "vente",
+      "PLURAL": "ventes"
     },
     "MONEY": {
-      "singular": "pépette",
-      "plural": "pépettes"
+      "SINGULAR": "pépette",
+      "PLURAL": "pépettes"
     },
     "REPUTATION": "Réputation",
     "MIN": "min",

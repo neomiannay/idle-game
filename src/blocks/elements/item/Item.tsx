@@ -67,7 +67,7 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
         <div className={ styles.information }>
           <h4 className={ styles.title }>{ l10n(item.name) }</h4>
           <p className={ styles.description }>
-            { item.description } +{ item.unitByTime }/{ l10n('UNITS.SEC') }
+            { l10n(item.description) } +{ item.unitByTime }/{ l10n('UNITS.SEC') }
           </p>
         </div>
         <span className={ styles.count }>{ itemCount }</span>
