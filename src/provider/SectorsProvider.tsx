@@ -43,7 +43,7 @@ export const SectorsProvider = ({ children }: BaseProviderProps) => {
     currentSector.set(sector)
   }
 
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     defaultUnlockedSector,
     sectors,
     unlockedSectors,
@@ -52,7 +52,16 @@ export const SectorsProvider = ({ children }: BaseProviderProps) => {
     reactiveCurrentSector,
     setCurrentSector,
     loadSectors
-  }
+  }), [
+    defaultUnlockedSector,
+    sectors,
+    unlockedSectors,
+    setUnlockedSectors,
+    currentSector,
+    reactiveCurrentSector,
+    setCurrentSector,
+    loadSectors
+  ])
 
   return (
     <SectorsProdivderContext.Provider value={ contextValue }>

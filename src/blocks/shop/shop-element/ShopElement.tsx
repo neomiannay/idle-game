@@ -1,7 +1,13 @@
 import React from 'react'
 
 import classNames from 'classnames'
-import { EGameUnit, ElementType, ItemType, SectorType, UpgradeType } from 'types/store'
+import {
+  EGameUnit,
+  ElementType,
+  ItemType,
+  SectorType,
+  UpgradeType
+} from 'types/store'
 import { useSequentialPurchaseState } from 'hooks/useSequentialPurchase'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { conjugate, useL10n } from 'provider/L10nProvider'
@@ -12,26 +18,40 @@ import useCanBuyElement from 'hooks/useCanBuyElement'
 import { motion } from 'motion/react'
 import { baseTransition, baseVariants, fadeAppear } from 'core/animation'
 import { bezier } from 'helpers/easing'
+import useItemCount from 'hooks/useItemCount'
 
 import styles from './ShopElement.module.scss'
 
 type ShopElementProps = {
-  elementId: string
-  element: ItemType | UpgradeType | SectorType
-  unitId: EGameUnit
-  type: ElementType
-  onBuyComplete?: () => void
-}
+  className?: string;
+  elementId: string;
+  element: ItemType | UpgradeType | SectorType;
+  unitId: EGameUnit;
+  type: ElementType;
+  onBuyComplete?: () => void;
+};
 
-const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopElementProps) => {
+const ShopElement = ({
+  className,
+  elementId,
+  element,
+  unitId,
+  type,
+  onBuyComplete
+}: ShopElementProps) => {
   const { shopOpen, translateYValue } = useShopProviderContext()
   const { buyElementFromShop, shouldDisplayElement } = useInventoryContext()
   const { setUnlockedSectors, unlockedSectors } = useSectorsProviderContext()
   const l10n = useL10n()
   const isPurchased = useElementPurchased(unitId, elementId, type)
-  const canPurchase = useCanBuyElement(unitId, elementId, type)
+  const count = useItemCount(unitId, elementId)
+  const canPurchase = useCanBuyElement(unitId, elementId, type, count)
   const shouldDisplay = shouldDisplayElement(unitId, elementId, type)
-  const sequentiallyPurchasable = useSequentialPurchaseState(unitId, elementId, type)
+  const sequentiallyPurchasable = useSequentialPurchaseState(
+    unitId,
+    elementId,
+    type
+  )
 
   if (!shouldDisplay || isPurchased) return null
 
@@ -91,11 +111,9 @@ const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopEl
     onBuyComplete?.()
   }
 
-  const hasTarget = !isSector
-
   return (
     <motion.div
-      className={ styles.wrapper }
+      className={ classNames(styles.wrapper, className) }
       variants={ shopElementVariants }
       transition={ baseTransition }
     >
@@ -122,9 +140,9 @@ const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopEl
             <span className={ styles.cost }>
               { element.cost.value } <span>({ l10n(conjugate(unitName, element.cost.value)) })</span>
             </span>
-            { hasTarget && (
+            { !isSector && (
               <span className={ styles.unitEffect }>
-                { l10n(buttonTitle).toLowerCase() }
+                { l10n(buttonTitle) }
               </span>
             ) }
           </div>

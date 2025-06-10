@@ -39,7 +39,6 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
-
       <div className={ styles.stepCounter }>
         <AnimatePresence>
           { !notClickedYet && (
@@ -63,7 +62,7 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
           ) } */ }
       </div>
 
-      <Button title='BUTTONS.ACTIVATE' onClick={ handleClick } disabled={ !canBuy } />
+      <Button title='BUTTONS.ACTIF' onClick={ handleClick } disabled={ !canBuy } />
 
       <AnimatePresence>
         { !notClickedYet && (

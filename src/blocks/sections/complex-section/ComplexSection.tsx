@@ -10,17 +10,21 @@ import Count from 'components/count/Count'
 import { useL10n } from 'provider/L10nProvider'
 import { useUpgradePurchased } from 'hooks/useUpgradePurchased'
 import Button from 'components/button/Button'
+import { getItemPrice } from 'helpers/units'
 
 import styles from './ComplexSection.module.scss'
 
 type ComplexSectionProps = {
-  className?: string
-  unitId: EGameUnit
-}
+  className?: string;
+  unitId: EGameUnit;
+};
+
+const DEFAULT_SUBSTRACTION_VALUE = 500
+const DEFAULT_TIME_PRICE = 56
 
 const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   const l10n = useL10n()
-  const { getUnit, hasEnoughUnits, updateUnitDuration, updateValueByAction, complexAutoMode, setComplexAutoMode } = useGameProviderContext()
+  const { getUnit, hasEnoughUnits, modifyUnitValue, updateUnitDuration, updateValueByAction, complexAutoMode, setComplexAutoMode } = useGameProviderContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null
@@ -29,6 +33,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
 
   let formattedSeconds = ''
   let duration = 0
+
   const complexDuration = unit.duration
   if (complexDuration) {
     duration = useMotionState(complexDuration, (v) => v)
@@ -39,37 +44,53 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
 
   let quantity = 1
   const valueByAction = unit.valueByAction
-  if (valueByAction)
-    quantity = useMotionState(valueByAction, (value) => value)
+  if (valueByAction) quantity = useMotionState(valueByAction, (value) => value)
 
   const canPurchaseTime = (unitsNeeded: number, unitId: EGameUnit) => {
-    if (duration <= 500) return false
+    if (duration <= DEFAULT_SUBSTRACTION_VALUE) return false
     return hasEnoughUnits(unitsNeeded, unitId)
   }
 
   const improveTime = () => {
-    if (!canPurchaseTime(10, EGameUnit.ACTIF)) return
-    updateUnitDuration(EGameUnit.COMPLEX)
+    if (!canPurchaseTime(reactiveTimeCost, EGameUnit.ACTIF)) return
+    updateUnitDuration(EGameUnit.COMPLEX, DEFAULT_SUBSTRACTION_VALUE)
+    modifyUnitValue(EGameUnit.ACTIF, -reactiveTimeCost)
   }
 
   const improveValueByAction = (
-    unitsNeeded: number,
     unitId: EGameUnit,
     requiredUnitId: EGameUnit
   ) => {
-    if (!hasEnoughUnits(unitsNeeded, requiredUnitId)) return
+    if (!hasEnoughUnits(quantityCost, requiredUnitId)) return
     const unit = getUnit(unitId)
     if (!unit) return
-    updateValueByAction(unitId, 1)
+
+    updateValueByAction(unitId, 1, quantityCost)
   }
 
-  const costName = `UNITS.${unit.costUnitId?.toString().toUpperCase()}`
-  const rawUnitName = unitId.toString().toUpperCase()
-  const unitName = `UNITS.${rawUnitName}`
-
+  const costName = `UNITS.${unit.costUnitId?.toString().toUpperCase()}.PLURAL`
   const isUpgradePurchased = useUpgradePurchased(unitId, 'autoprod')
 
-  const canPurchase = canPurchaseTime(10, EGameUnit.ACTIF) && hasEnoughUnits(10, EGameUnit.ACTIF)
+  const quantityCost = getItemPrice(
+    unit.costAmount ?? DEFAULT_TIME_PRICE,
+    quantity
+  )
+
+  const timeCount = (duration: number) => (1 - duration / 5000) * 100
+
+  const getActifUnit = getUnit(EGameUnit.ACTIF)
+  if (!getActifUnit) return null
+
+  const reactiveTimeCost = useMotionState(unit.motionValue, () => getItemPrice(
+    DEFAULT_TIME_PRICE,
+    timeCount(unit.duration?.get() ?? 1) || 1
+  )
+  )
+  const reactiveCanPurchaseTime = useMotionState(getActifUnit.motionValue, () => canPurchaseTime(reactiveTimeCost, EGameUnit.ACTIF)
+  )
+  const reactiveHasEnoughUnits = useMotionState(getActifUnit.motionValue, () => hasEnoughUnits(reactiveTimeCost, EGameUnit.ACTIF)
+  )
+  const reactiveCanPurshaseQuantity = useMotionState(getActifUnit.motionValue, () => hasEnoughUnits(quantityCost, EGameUnit.ACTIF))
 
   return (
     <div className={ classNames(styles.wrapper, className) }>
@@ -81,17 +102,19 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
         <div className={ styles.perf }>
           <div className={ styles.perfHeader }>
             <p className={ styles.perfTitle }>{ l10n('UI.PRODUCTION_DURATION') }</p>
-            <span className={ styles.perfValue }>{ formattedSeconds } { l10n('UNITS.SEC') }</span>
+            <span className={ styles.perfValue }>
+              { formattedSeconds } { l10n('UNITS.SEC') }
+            </span>
           </div>
           <Button
-            onClick={ improveTime }
-            disabled={ !canPurchase }
             isVariant
+            onClick={ improveTime }
+            disabled={ !reactiveHasEnoughUnits || !reactiveCanPurchaseTime }
+            action={ `-${DEFAULT_SUBSTRACTION_VALUE / 1000} ${l10n('UNITS.SEC')}` }
             cost={{
-              value: unit.costAmount ?? 0,
-              unit: '$'
+              value: reactiveTimeCost,
+              unit: l10n(costName)
             }}
-            action='-0.5 s'
           />
         </div>
         <div className={ styles.perf }>
@@ -100,12 +123,15 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
             <span className={ styles.perfValue }>{ quantity }</span>
           </div>
           <Button
-            onClick={ () => improveValueByAction(10, EGameUnit.COMPLEX, EGameUnit.ACTIF) }
-            disabled={ !hasEnoughUnits(10, EGameUnit.ACTIF) }
+            onClick={ () => improveValueByAction(
+              EGameUnit.COMPLEX,
+              EGameUnit.ACTIF
+            ) }
+            disabled={ !reactiveCanPurshaseQuantity }
             isVariant
             cost={{
-              value: unit.costAmount ?? 0,
-              unit: '$'
+              value: quantityCost,
+              unit: l10n(costName)
             }}
             action='+20'
           />

@@ -98,3 +98,13 @@ export const timeToHHMMSS = (duration: number) => {
 
   return `${hStr}${mStr}${sStr}`
 }
+
+/**
+ * @param base - The base price
+ * @param factor - The factor
+ * @param count - The count
+ * @returns The price
+ */
+export const getItemPrice = (base: number, count: number, factor: number = 1.4) => {
+  return Math.round(base * Math.pow(count, factor))
+}

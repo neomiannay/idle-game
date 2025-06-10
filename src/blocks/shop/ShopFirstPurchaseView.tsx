@@ -19,9 +19,10 @@ const ShopFirstPurchaseView = ({ unitId, elementId, className }: Props) => {
 
   return (
     <aside
-      className={ classNames(styles.wrapper, className) }
+      className={ classNames(styles.wrapperMainShop, className) }
     >
       <ShopElement
+        className={ styles.firstPurchaseItem }
         elementId={ elementId }
         element={ element }
         unitId={ unitId }

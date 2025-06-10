@@ -7,7 +7,7 @@
       "name": "UNITS.ACTIVE",
       "action": {
         "valueByAction": 1,
-        "name": "BUTTONS.ACTIVATE",
+        "name": "BUTTONS.ACTIF",
         "gesture": "click",
         "duration": null,
         "animationDirection": null

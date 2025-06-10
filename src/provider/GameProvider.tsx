@@ -32,8 +32,8 @@ type GameProviderType = {
   buyUnit: (unitId: EGameUnit, multiplierGetter?: UnitMultiplierGetter) => void;
   setUnitMultiplierGetter: (getter: UnitMultiplierGetter) => void;
   updateDisplayConditions: () => void;
-  updateUnitDuration: (unitId: EGameUnit) => void;
-  updateValueByAction: (unitId: EGameUnit, addedValue: number) => void;
+  updateUnitDuration: (unitId: EGameUnit, substractValue: number) => void;
+  updateValueByAction: (unitId: EGameUnit, addedValue: number, cost?: number) => void;
   modifyUnitValue: (unitId: EGameUnit, value: number) => boolean | void;
   isSaleSuccessful: () => boolean;
   hasEnoughUnits: (amountNeeded: number, unitNeeded: EGameUnit) => boolean;
@@ -261,7 +261,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
     []
   )
 
-  const updateUnitDuration = useCallback((unitId: EGameUnit) => {
+  const updateUnitDuration = useCallback((unitId: EGameUnit, substractValue: number) => {
     const unit = getUnit(unitId)
 
     if (unit && unitId === 'complex') {
@@ -269,12 +269,12 @@ export function GameProvider ({ children }: BaseProviderProps) {
         const costUnit = getUnit(unit.costUnitId)
         if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
       }
-      complexDuration.subtract(500)
+      complexDuration.subtract(substractValue)
     }
   }, [])
 
   const updateValueByAction = useCallback(
-    (unitId: EGameUnit, addedValue: number) => {
+    (unitId: EGameUnit, addedValue: number, cost?: number) => {
       const unit = getUnit(unitId)
 
       if (unit && unit.valueByAction) {
@@ -284,7 +284,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
           unit.costAmount
         ) {
           const costUnit = getUnit(unit.costUnitId)
-          if (!costUnit || !costUnit.rawValue.subtract(unit.costAmount)) return
+          if (!costUnit || !costUnit.rawValue.subtract(cost ?? unit.costAmount)) return
         }
         const unitValue = unit.valueByAction.get()
         const newValue = unitValue + addedValue

@@ -1,29 +1,17 @@
-.motionWrapper {
+.wrapper {
   position: absolute;
   z-index: 100;
   top: calc(var(--ivh) - (rem(15) + rem(34)) );
   left: 0;
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  height: fit-content;
-
-  // background-color: red;
 }
 
-.wrapper {
-  position: absolute;
-  z-index: 100;
-  bottom: 0;
-  left: 0;
+.motionWrapper {
+  position: relative;
   width: 100%;
+  height: fit-content;
   display: flex;
-  padding: rem(24) var(--grid-margin) var(--grid-margin);
-  overflow-y: auto;
-  scrollbar-width: none;
-  gap: var(--grid-gutter);
-
-  // background-color: rgba(255, 105, 180, 0.301);
+  flex-direction: column;
 }
 
 .wrapperMainShop {
@@ -31,9 +19,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  padding: rem(18) var(--grid-margin) calc(var(--grid-margin) + var(--extraBottom, 0px));
-  // overflow-x: scroll;
-  // scrollbar-width: none;
+  grid-template-areas: '. . shop . .';
+  padding: rem(18) var(--grid-margin);
   gap: var(--grid-gutter);
 
   &::before {
@@ -59,6 +46,14 @@
 
 .first-purchase {
   justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas: '. . shop . .';
+  gap: var(--grid-gutter);
+}
+
+.firstPurchaseItem {
+  grid-area: shop;
 }
 
 .title {

@@ -1,10 +1,11 @@
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit, ElementType } from 'types/store'
+import { getItemPrice } from 'helpers/units'
 
 import useMotionState from './useMotionState'
 
-const useCanBuyElement = (unitId: EGameUnit, elementId: string, type: ElementType) => {
+const useCanBuyElement = (unitId: EGameUnit, elementId: string, type: ElementType, count: number) => {
   const { getElement, shouldDisplayElement } = useInventoryContext()
   const { getUnit } = useGameProviderContext()
 
@@ -17,7 +18,8 @@ const useCanBuyElement = (unitId: EGameUnit, elementId: string, type: ElementTyp
   const resource = getUnit(element.cost.unitId)?.motionValue
   if (!resource) return false
 
-  return useMotionState(resource, (value) => value >= element.cost.value)
+  const cost = getItemPrice(element.cost.value, count)
+  return useMotionState(resource, (value) => value >= cost)
 }
 
 export default useCanBuyElement

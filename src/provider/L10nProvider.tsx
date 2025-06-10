@@ -14,7 +14,7 @@ export const conjugate = (key: string, count: number) => {
   const parts = key.split('.')
   if (parts.length > 1) {
     const lastPart = parts.pop()
-    return count > 1 ? `${parts.join('.')}.${lastPart}.plural` : `${parts.join('.')}.${lastPart}.singular`
+    return count > 1 ? `${parts.join('.')}.${lastPart}.PLURAL` : `${parts.join('.')}.${lastPart}.SINGULAR`
   }
   return key
 }

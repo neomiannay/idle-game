@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react'
 
 import { MotionValue, useMotionValue } from 'motion/react'
 import { EGameUnit, ElementTypes, GameStateElement, ItemType, SectorType, UpgradeType } from 'types/store'
+import { getItemPrice } from 'helpers/units'
 
 import itemsData from '../data/items.json'
 import upgradesData from '../data/upgrades.json'
@@ -142,7 +143,9 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     const resource = getResourceByUnitId(element.cost.unitId)
     if (!resource) return false
 
-    return resource.get() >= element.cost.value
+    const count = getItemCount(unitId, id)
+    const cost = getItemPrice(element.cost.value, count)
+    return resource.get() >= cost
   }
 
   const buyElement = <T extends keyof ElementTypes>(unitId: EGameUnit, id: string, type: T): void => {
@@ -153,7 +156,9 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     if (!resource) return
 
     // Deduct cost
-    resource.set(resource.get() - element.cost.value)
+    const count = getItemCount(unitId, id)
+    const cost = getItemPrice(element.cost.value, count)
+    resource.set(resource.get() - cost)
 
     // Increment item count or mark as purchased
     if (type === 'item') {
@@ -263,7 +268,9 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     const resource = getResourceByUnitId(element.cost.unitId)
     if (!resource) return
 
-    resource.set(resource.get() - element.cost.value)
+    const count = getItemCount(unitId, id)
+    const cost = getItemPrice(element.cost.value, count)
+    resource.set(resource.get() - cost)
 
     if (type === 'item') setItemPurchased(unitId, id)
     else if (type === 'upgrade') setUpgradePurchased(unitId, id)
