@@ -21,20 +21,16 @@
     {
       "id": "search-actif-1",
       "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.GLYCERIN",
-      "description": "SEARCH_ACTIFS.ITEMS.GLYCERIN_DESC",
+      "name": "SEARCH_ACTIFS.ITEMS.TRICLOSAN",
+      "description": "SEARCH_ACTIFS.ITEMS.TRICLOSAN_DESC",
       "acceptValues": [
         {
-          "value": 8,
+          "value": 0.01,
           "target": "production"
         },
         {
-          "value": 64,
+          "value": 1,
           "target": "selling"
-        },
-        {
-          "value": 40,
-          "target": "reputation"
         },
         {
           "value": -40,
@@ -51,20 +47,16 @@
     {
       "id": "search-actif-2",
       "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.HA",
-      "description": "SEARCH_ACTIFS.ITEMS.HA_DESC",
+      "name": "SEARCH_ACTIFS.ITEMS.OXYBENZONE",
+      "description": "SEARCH_ACTIFS.ITEMS.OXYBENZONE_DESC",
       "acceptValues": [
         {
-          "value": 10,
+          "value": 0.08,
           "target": "production"
         },
         {
-          "value": 22,
+          "value": 2.4,
           "target": "selling"
-        },
-        {
-          "value": 15,
-          "target": "reputation"
         },
         {
           "value": -40,
@@ -81,29 +73,25 @@
     {
       "id": "search-actif-3",
       "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.AL",
-      "description": "SEARCH_ACTIFS.ITEMS.AL_DESC",
+      "name": "SEARCH_ACTIFS.ITEMS.ALOE_VERA",
+      "description": "SEARCH_ACTIFS.ITEMS.ALOE_VERA_DESC",
       "acceptValues": [
         {
-          "value": 12,
+          "value": 0.1,
           "target": "production"
         },
         {
-          "value": 24,
+          "value": 2.5,
           "target": "selling"
         },
         {
-          "value": 18,
-          "target": "reputation"
-        },
-        {
-          "value": -40,
+          "value": 40,
           "target": "karma"
         }
       ],
       "declineValues": [
         {
-          "value": 40,
+          "value": 0,
           "target": "karma"
         }
       ]
@@ -111,20 +99,16 @@
     {
       "id": "search-actif-4",
       "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.ORCHID_EXTRACT",
-      "description": "SEARCH_ACTIFS.ITEMS.ORCHID_EXTRACT_DESC",
+      "name": "SEARCH_ACTIFS.ITEMS.POLYMETHYL_METHACRYLATE",
+      "description": "SEARCH_ACTIFS.ITEMS.POLYMETHYL_METHACRYLATE_DESC",
       "acceptValues": [
         {
-          "value": 14,
+          "value": 0.1,
           "target": "production"
         },
         {
-          "value": 26,
+          "value": 2.6,
           "target": "selling"
-        },
-        {
-          "value": 20,
-          "target": "reputation"
         },
         {
           "value": -40,
@@ -141,15 +125,15 @@
     {
       "id": "search-actif-5",
       "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL",
-      "description": "SEARCH_ACTIFS.ITEMS.BENZYL_ALCOHOL_DESC",
+      "name": "SEARCH_ACTIFS.ITEMS.AHA_BHA",
+      "description": "SEARCH_ACTIFS.ITEMS.AHA_BHA_DESC",
       "acceptValues": [
         {
-          "value": 16,
+          "value": 0.12,
           "target": "production"
         },
         {
-          "value": 26,
+          "value": 6,
           "target": "selling"
         },
         {
@@ -167,25 +151,155 @@
     {
       "id": "search-actif-6",
       "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.PMMA",
-      "description": "SEARCH_ACTIFS.ITEMS.PMMA_DESC",
+      "name": "SEARCH_ACTIFS.ITEMS.NIACINAMIDE",
+      "description": "SEARCH_ACTIFS.ITEMS.NIACINAMIDE_DESC",
       "acceptValues": [
         {
-          "value": 16,
+          "value": 0.15,
           "target": "production"
         },
         {
-          "value": 26,
+          "value": 8,
           "target": "selling"
         },
         {
-          "value": -40,
+          "value": 40,
           "target": "karma"
         }
       ],
       "declineValues": [
         {
+          "value": 0,
+          "target": "karma"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-7",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.VITAMINE_C",
+      "description": "SEARCH_ACTIFS.ITEMS.VITAMINE_C_DESC",
+      "acceptValues": [
+        {
+          "value": 0.2,
+          "target": "production"
+        },
+        {
+          "value": 12,
+          "target": "selling"
+        },
+        {
           "value": 40,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 0,
+          "target": "karma"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-8",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.ACIDE_HYALURONIQUE",
+      "description": "SEARCH_ACTIFS.ITEMS.ACIDE_HYALURONIQUE_DESC",
+      "acceptValues": [
+        {
+          "value": 4.5,
+          "target": "production"
+        },
+        {
+          "value": 15,
+          "target": "selling"
+        },
+        {
+          "value": 40,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 0,
+          "target": "karma"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-9",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.RETINOL",
+      "description": "SEARCH_ACTIFS.ITEMS.RETINOL_DESC",
+      "acceptValues": [
+        {
+          "value": 12,
+          "target": "production"
+        },
+        {
+          "value": 25,
+          "target": "selling"
+        },
+        {
+          "value": 0,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 0,
+          "target": "karma"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-10",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.MUCUS_ESCARGOT",
+      "description": "SEARCH_ACTIFS.ITEMS.MUCUS_ESCARGOT_DESC",
+      "acceptValues": [
+        {
+          "value": 3.5,
+          "target": "production"
+        },
+        {
+          "value": 35,
+          "target": "selling"
+        },
+        {
+          "value": 0,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 0,
+          "target": "karma"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-11",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.GELEE_ROYALE",
+      "description": "SEARCH_ACTIFS.ITEMS.GELEE_ROYALE_DESC",
+      "acceptValues": [
+        {
+          "value": 8.25,
+          "target": "production"
+        },
+        {
+          "value": 120,
+          "target": "selling"
+        },
+        {
+          "value": 0,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": 0,
           "target": "karma"
         }
       ]
