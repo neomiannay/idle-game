@@ -40,7 +40,6 @@
   }
 
   &:disabled {
-    cursor: not-allowed;
     outline: 1px solid var(--transparent-dark-16);
     background: var(--gradient-button-inactive);
     color: var(--fill-20);

@@ -9,10 +9,8 @@
   min-height: rem(160);
   border-radius: rem(10);
   background: var(--gradient-border);
-  padding: rem(2);
 
   &.unavailable {
-    cursor: not-allowed;
     background: var(--gradient-border-inactive);
 
     &.isSector {

@@ -24,11 +24,6 @@
 
   &:disabled {
     &,
-    & * {
-      cursor: not-allowed !important;
-    }
-
-    &,
     .btnLeft {
       border-color: rgba(99, 99, 99, 0.5) !important;
     }
