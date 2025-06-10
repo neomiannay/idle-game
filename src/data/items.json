@@ -3,10 +3,10 @@
     "actif": [
       {
         "_type": "item",
-        "_id": "ami",
+        "_id": "garden",
         "unitId": "actif",
-        "name": "ITEMS.FRIEND",
-        "description": "Un ami qui vous aide à faire des choses.",
+        "name": "ITEMS.GARDEN",
+        "description": "ITEMS.GARDEN_DESC",
         "unitByTime": 1,
         "apparitionCondition": {
           "unitId": "actif",
@@ -19,10 +19,26 @@
       },
       {
         "_type": "item",
-        "_id": "stagiaire",
+        "_id": "land",
         "unitId": "actif",
-        "name": "ITEMS.TRAINEE",
-        "description": "Un stagiaire qui vous aide à faire des choses.",
+        "name": "ITEMS.LAND",
+        "description": "ITEMS.LAND_DESC",
+        "unitByTime": 5,
+        "apparitionCondition": {
+          "unitId": "actif",
+          "value": 10
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 20
+        }
+      },
+      {
+        "_type": "item",
+        "_id": "mine",
+        "unitId": "actif",
+        "name": "ITEMS.MINE",
+        "description": "ITEMS.MINE_DESC",
         "unitByTime": 5,
         "apparitionCondition": {
           "unitId": "actif",
@@ -37,10 +53,10 @@
     "sale": [
       {
         "_type": "item",
-        "_id": "vendeur1",
+        "_id": "women",
         "unitId": "sale",
-        "name": "ITEMS.SELLER1",
-        "description": "Un vendeur basique qui ne fait pas grand chose.",
+        "name": "ITEMS.WOMEN",
+        "description": "ITEMS.WOMEN_DESC",
         "unitByTime": 1,
         "apparitionCondition": {
           "unitId": "sale",
@@ -53,10 +69,26 @@
       },
       {
         "_type": "item",
-        "_id": "vendeur2",
+        "_id": "teens",
         "unitId": "sale",
-        "name": "ITEMS.SELLER2",
-        "description": "Un vendeur senior qui fait un peu plus de choses.",
+        "name": "ITEMS.TEENS",
+        "description": "ITEMS.TEENS_DESC",
+        "unitByTime": 5,
+        "apparitionCondition": {
+          "unitId": "sale",
+          "value": 10
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 2000
+        }
+      },
+      {
+        "_type": "item",
+        "_id": "kids",
+        "unitId": "sale",
+        "name": "ITEMS.KIDS",
+        "description": "ITEMS.KIDS_DESC",
         "unitByTime": 5,
         "apparitionCondition": {
           "unitId": "sale",
