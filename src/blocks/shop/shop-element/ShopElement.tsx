@@ -74,7 +74,6 @@ const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopEl
       const nextLevel = elementId.replace(/\d+/, (n) => String(Number(n) + 1))
       return `${elementId.toUpperCase()} => ${nextLevel.toUpperCase()}`
     }
-    if (isSector) return 'je sais pas encore'
 
     return `1 ${element.cost.unitId}/s`
   }
@@ -114,7 +113,9 @@ const ShopElement = ({ elementId, element, unitId, type, onBuyComplete }: ShopEl
         <div className={ styles.inner }>
           <div className={ styles.content }>
             <h4 className={ styles.title }>{ l10n(element.name) }</h4>
-            <span className={ styles.effect }>{ getEffectText() }</span>
+            { !isSector && (
+              <span className={ styles.effect }>{ getEffectText() }</span>
+            ) }
             <p className={ styles.text }>{ element.description }</p>
           </div>
           <div className={ styles.bottom }>

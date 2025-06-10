@@ -12,6 +12,8 @@ export const frameToS = (frame: number) => {
   return frame / 60
 }
 
+export const removeUndefined = (obj: any) => Object.keys(obj).reduce((acc, key) => obj[key] ? { ...acc, [key]: obj[key] } : acc, {})
+
 export const baseVariants = {
   initial: 'initial',
   animate: 'animate',
@@ -59,6 +61,18 @@ export const fadeAppearRabbit = {
     })
   } as Variants,
   transition: baseTransition
+}
+
+export const maskTextVariants = {
+  initial: { y: 0 },
+  animate: {
+    y: '-101%',
+    transition: baseTransition
+  },
+  exit: {
+    y: '-202%',
+    transition: baseTransition
+  }
 }
 
 const toggleTransiton = (delay = 0) => {

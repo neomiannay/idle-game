@@ -203,18 +203,15 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
   }
 
   const setItemCount = (unitId: EGameUnit, itemId: string, count: number): void => {
-    if (items[unitId]?.[itemId])
-      items[unitId][itemId].count.set(count)
+    if (items[unitId]?.[itemId]) items[unitId][itemId].count.set(count)
   }
 
   const setUpgradeCount = (unitId: EGameUnit, upgradeId: string, count: number): void => {
-    if (upgrades[unitId]?.[upgradeId])
-      upgrades[unitId][upgradeId].count.set(count)
+    if (upgrades[unitId]?.[upgradeId]) upgrades[unitId][upgradeId].count.set(count)
   }
 
   const setSectorCount = (unitId: EGameUnit, sectorId: string, count: number): void => {
-    if (sectors[unitId]?.[sectorId])
-      sectors[unitId][sectorId].count.set(count)
+    if (sectors[unitId]?.[sectorId]) sectors[unitId][sectorId].count.set(count)
   }
 
   const setElementCount = (unitId: EGameUnit, elementId: string, count: number): void => {
