@@ -50,8 +50,6 @@ const SectorsTab = ({ className, ...props }: SectorsTabProps) => {
     }
   }, [reactiveCurrentSector, defaultUnlockedSector, unlockedSectors])
 
-  console.log(l10n('SECTORS.PRODUCTION'))
-
   return hasSectors && (
     <motion.div
       className={ classNames(styles.wrapper, className) }
