@@ -55,6 +55,14 @@ export function GameProvider ({ children }: BaseProviderProps) {
   const reputationUnit = useUnitMotionValue(50)
   const karmaUnit = useUnitMotionValue(0)
 
+  // @ts-ignore
+  window.give = (unitId: EGameUnit, value: number) => {
+    const unit = getUnit(unitId)
+    if (!unit) return console.error('Unit not found')
+    unit.rawValue.add(value)
+    console.info(`Units added (${unitId})`, unit.rawValue.get())
+  }
+
   // Purchase conditions
   const canBuyActif = true
   const canBuyComplex = useMotionState(
