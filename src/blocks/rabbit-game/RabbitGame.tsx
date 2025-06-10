@@ -2,6 +2,8 @@ import React, { useMemo, useState } from 'react'
 
 import { useMotionValue } from 'framer-motion'
 import { useL10n } from 'provider/L10nProvider'
+import useMotionState from 'hooks/useMotionState'
+import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
 
 import rabbits from 'data/games/rabbits.json'
 
@@ -10,8 +12,6 @@ import Rabbit from './components/rabbit/Rabbit'
 import RabbitSlider, {
   TRabbitSliderItem
 } from './components/rabbit-slider/RabbitSlider'
-import useMotionState from 'hooks/useMotionState'
-import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
 
 export type TRabbitData = {
   price: number;
@@ -26,7 +26,7 @@ const RabbitGame = () => {
 
   const isRabbitDead = useMotionState(life, (v) => v <= 0)
 
-  const attack = useMemo(() => currentExp?.power ?? 0, [currentExp]);
+  const attack = useMemo(() => currentExp?.power ?? 0, [currentExp])
 
   return (
     <div className={ styles.wrapper }>

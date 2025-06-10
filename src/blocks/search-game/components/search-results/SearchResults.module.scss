@@ -1,8 +1,9 @@
 .wrapper {
-display: flex;
-flex-direction: column;
-gap: rem(12);
-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: rem(12);
+  width: 100%;
+  color: var(--fill-20);
 }
 
 .subTitle {
@@ -11,19 +12,23 @@ width: 100%;
 }
 
 .name {
-font-size: rem(14);
-text-transform: uppercase;
-letter-spacing: 1px;
-font-variation-settings: "wght" 400;
-margin: 0;
+  font-size: rem(14);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-variation-settings: "wght" 400;
+  margin: 0;
 }
 
 .description {
   font-size: rem(12);
   letter-spacing: -0.24px;
-  font-variation-settings: "wght" 240, "wdth" 24, "ital" 0;
+  font-variation-settings:
+    "wght" 240,
+    "wdth" 24,
+    "ital" 0;
   margin: 0;
   max-width: 300px;
+  color: var(--fill-40);
 }
 
 .effects {
@@ -31,11 +36,15 @@ margin: 0;
   gap: rem(12);
   font-size: rem(12);
   letter-spacing: -0.24px;
-  font-variation-settings: "wght" 240, "wdth" 24, "ital" 0;
+  font-variation-settings:
+    "wght" 240,
+    "wdth" 24,
+    "ital" 0;
   margin: 0;
+  color: var(--fill-30);
 
   p {
-	margin: 0;
+    margin: 0;
   }
 }
 
@@ -44,13 +53,22 @@ margin: 0;
   gap: rem(12);
 
   button {
-    font-variation-settings: "wght" 700, "wdth" 20, "ital" 0;
+    font-variation-settings:
+      "wght" 700,
+      "wdth" 20,
+      "ital" 0;
     text-transform: uppercase;
-	padding: rem(8) rem(12);
+    padding: rem(8) rem(12);
 
-	&:hover {
-		@include apply(basic-hover);
-		cursor: pointer;
-	}
+    &:hover {
+      @include apply(basic-hover);
+      cursor: pointer;
+    }
+
+    color: var(--fill-30);
+
+    &:first-child {
+      color: var(--fill-40);
+    }
   }
 }

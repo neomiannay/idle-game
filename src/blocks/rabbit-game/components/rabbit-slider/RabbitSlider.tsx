@@ -1,22 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-import { animate, AnimatePresence, motion, MotionValue } from 'framer-motion'
+import { AnimatePresence, motion, MotionValue } from 'framer-motion'
 import Chevron from 'components/icons/chevron/Chevron'
 import { EGamePrice, EGameUnit } from 'types/store'
 import classNames from 'classnames'
-import Translatable from 'components/translatable/Translatable'
 import { formatValue } from 'helpers/units'
 import { useL10n } from 'provider/L10nProvider'
-
-import RabbitSliderCard from '../rabbit-slider-card/RabbitSliderCard'
-import RabbitBtn from '../rabbit/components/rabbit-btn/RabbitBtn'
-
-import styles from './RabbitSlider.module.scss'
-import { baseVariants, fadeAppearRabbit } from 'core/animation'
 import { useGameProviderContext } from 'provider/GameProvider'
-import rabbits from 'data/games/rabbits.json'
 import { BUY_RABBIT_ITEM_ID, RABBIT_LIFE } from 'data/constants'
 import { clamp } from 'lodash-es'
+
+import rabbits from 'data/games/rabbits.json'
+
+import RabbitBtn from '../rabbit/components/rabbit-btn/RabbitBtn'
+import RabbitSliderCard from '../rabbit-slider-card/RabbitSliderCard'
+
+import styles from './RabbitSlider.module.scss'
 
 export type TRabbitSliderItemValue = {
   value: number;
@@ -44,7 +43,15 @@ type TRabbitSlider = {
 
 let lifeValue = RABBIT_LIFE
 
-const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, testPrice, setRabbitPrice }: TRabbitSlider) => {
+const RabbitSlider = ({
+  items,
+  setCurrentExp,
+  isRabbitDead,
+  life,
+  rabbitPrice,
+  testPrice,
+  setRabbitPrice
+}: TRabbitSlider) => {
   const l10n = useL10n()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isReady, setIsReady] = useState(false)
@@ -52,8 +59,8 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
   const [height, setHeight] = useState<string | number>('auto')
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const { hasEnoughUnits, modifyUnitValue, applyChoiceEffects } = useGameProviderContext()
-
+  const { hasEnoughUnits, modifyUnitValue, applyChoiceEffects } =
+    useGameProviderContext()
 
   const nextSlide = () => {
     setCurrentDir('right')
@@ -95,8 +102,7 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
 
     setCurrentExp(exp)
 
-    if(lifeValue <= 0)
-      lifeValue = RABBIT_LIFE
+    if (lifeValue <= 0) lifeValue = RABBIT_LIFE
 
     const prevLifeValue = lifeValue
     lifeValue -= exp.power
@@ -107,26 +113,24 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
     }
   }
 
-  const  canBuyRabbit = rabbitPrice && hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)
-  const  canBuyTest = hasEnoughUnits(testPrice, EGameUnit.BENEFITS)
+  const canBuyRabbit =
+    rabbitPrice && hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)
+  const canBuyTest = hasEnoughUnits(testPrice, EGameUnit.BENEFITS)
 
-
-  if(isRabbitDead)
+  if (isRabbitDead)
     items = items.filter((item) => item.id === BUY_RABBIT_ITEM_ID)
-  else
-    items = items.filter((item) => item.id !== BUY_RABBIT_ITEM_ID)
+  else items = items.filter((item) => item.id !== BUY_RABBIT_ITEM_ID)
 
   useEffect(() => {
-    if (currentIndex >= items.length) {
+    if (currentIndex >= items.length)
       setCurrentIndex(0)
-    }
   }, [items, currentIndex, isRabbitDead])
 
   const price = isRabbitDead ? rabbitPrice : testPrice
 
   return (
     <div className={ styles.controlPanel }>
-      { ((isRabbitDead || life.get() === null) && rabbitPrice) ? (
+      { (isRabbitDead || life.get() === null) && rabbitPrice ? (
         <RabbitBtn
           price={ `${formatValue(rabbitPrice)} ${l10n('UNITS.EURO')}` }
           label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
@@ -142,19 +146,19 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
         />
       ) }
       <div className={ styles.rabbitSlider }>
-          <button
-            className={ classNames(
-              styles.rabbitSliderButton,
-              styles.rabbitSliderButtonLeft
-            ) }
-            onClick={ prevSlide }
-          >
-            <Chevron direction='left' />
-          </button>
-        <div className={styles.sliderBackground}>
+        <button
+          className={ classNames(
+            styles.rabbitSliderButton,
+            styles.rabbitSliderButtonLeft
+          ) }
+          onClick={ prevSlide }
+        >
+          <Chevron direction='left' />
+        </button>
+        <div className={ styles.sliderBackground }>
           <AnimatePresence mode='wait'>
             <motion.div
-              key={`${currentIndex}-${items.map(item => item.id).join('-')}`}
+              key={ `${currentIndex}-${items.map((item) => item.id).join('-')}` }
               ref={ contentRef }
               transition={{
                 duration: isReady ? 0.25 : 0,
@@ -162,34 +166,38 @@ const RabbitSlider = ({ items, setCurrentExp, isRabbitDead, life, rabbitPrice, t
               }}
               initial={{
                 x: currentDir === 'left' ? '5%' : '-5%',
-                opacity: 0,
+                opacity: 0
               }}
               animate={{
                 x: 0,
-                opacity: 1,
+                opacity: 1
               }}
               exit={{
                 x: currentDir === 'left' ? '-5%' : '5%',
-                opacity: 0,
+                opacity: 0
               }}
               onAnimationComplete={ handleSetHeight }
               className={ styles.rabbitSliderContent }
             >
               { items[currentIndex] && (
-                <RabbitSliderCard item={ items[currentIndex] } isRabbitDead={isRabbitDead} price={price} />
-              )}
+                <RabbitSliderCard
+                  item={ items[currentIndex] }
+                  isRabbitDead={ isRabbitDead }
+                  price={ price }
+                />
+              ) }
             </motion.div>
           </AnimatePresence>
         </div>
-          <button
-            className={ classNames(
-              styles.rabbitSliderButton,
-              styles.rabbitSliderButtonRight
-            ) }
-            onClick={ nextSlide }
-          >
-            <Chevron direction='right' />
-          </button>
+        <button
+          className={ classNames(
+            styles.rabbitSliderButton,
+            styles.rabbitSliderButtonRight
+          ) }
+          onClick={ nextSlide }
+        >
+          <Chevron direction='right' />
+        </button>
       </div>
     </div>
   )

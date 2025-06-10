@@ -1,12 +1,12 @@
 {
- "upgrades": {
+  "upgrades": {
     "actif": [
       {
         "_type": "upgrade",
         "_id": "lvl1",
         "unitId": "actif",
         "name": "UPGRADES.LEVEL1",
-        "description": "Vraiment la le poulet la font avec le flou et tout genre on est pense quoi de cette DA genre la y’a du texte et c’est cool en plus mais",
+        "description": "UPGRADES.LEVEL1_DESC",
         "valueByAction": 2,
         "apparitionCondition": {
           "unitId": "actif",
@@ -22,7 +22,7 @@
         "_id": "lvl2",
         "unitId": "actif",
         "name": "UPGRADES.LEVEL2",
-        "description": "Niveau 2",
+        "description": "UPGRADES.LEVEL2_DESC",
         "valueByAction": 8,
         "apparitionCondition": {
           "unitId": "actif",

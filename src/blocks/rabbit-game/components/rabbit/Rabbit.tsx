@@ -2,15 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import useMouseValue from 'hooks/useMouseValue'
 import {
-  AnimatePresence,
   motion,
   MotionValue,
   useMotionValue,
   useSpring
 } from 'motion/react'
-import { useL10n } from 'provider/L10nProvider'
-import Translatable from 'components/translatable/Translatable'
-import { formatValue } from 'helpers/units'
 import Tooltip from 'components/tooltip/Tooltip'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
@@ -23,7 +19,6 @@ import RabbitHp from '../rabbit-hp/RabbitHp'
 import styles from './Rabbit.module.scss'
 import RabbitImg from './components/rabbit-img/RabbitImg'
 import RabbitBg from './components/rabbit-bg/RabbitBg'
-import RabbitBtn from './components/rabbit-btn/RabbitBtn'
 
 type TRabbit = {
   life: MotionValue<number>;
@@ -99,7 +94,7 @@ const Rabbit = ({ life, price, attack, isRabbitDead }: TRabbit) => {
           <motion.div { ...fadeAppear() }>
             <RabbitHp life={ life } length={ 6 } />
           </motion.div>
-        )}
+        ) }
       </div>
       <div ref={ gameRef } className={ styles.rabbitWrapper }>
         <Tooltip
@@ -116,8 +111,7 @@ const Rabbit = ({ life, price, attack, isRabbitDead }: TRabbit) => {
         ref={ descriptionRef }
         className={ styles.rabbitDescription }
         style={{ pointerEvents: !isRabbitDead ? 'none' : 'auto' }}
-      >
-      </div>
+      />
     </div>
   )
 }

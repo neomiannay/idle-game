@@ -1,6 +1,4 @@
 .wrapper {
-  width: 33vw;
-  background-color: var(--color-white);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,7 +14,7 @@
 }
 
 .name {
-  color: var(--skin-20);
+  color: var(--fill-20);
   text-align: start;
   font-size: rem(15);
   font-style: italic;

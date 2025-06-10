@@ -22,6 +22,7 @@
   &Tooltip {
     color: var(--color-black);
     mix-blend-mode: soft-light;
+    text-wrap: nowrap;
     font-family: "PP Formula";
     font-size: rem(10);
     font-style: normal;

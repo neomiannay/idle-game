@@ -45,7 +45,9 @@ const RabbitBg = ({
       style={{
         width: `${sizes.width}px`,
         height: `${sizes.height}px`,
-        transition: 'opacity 0.3s ease-in-out'
+        transition: 'opacity 0.3s ease-in-out',
+        zIndex: -1,
+        position: 'relative'
       }}
     >
       <svg
@@ -85,19 +87,33 @@ const RabbitBg = ({
             fill='url(#gradient)'
           />
         </g>
-        <circle
+        <g
           id='cursor-mouse'
           mask='url(#mask-bg)'
-          style={{
-            filter: 'blur(50px)',
-            opacity,
-            transition: 'opacity 0.3s ease-in-out'
-          }}
-          cx={ springX.get() }
-          cy={ springY.get() }
-          r={ pulse * sizes.pulse.cursorScale }
-          fill='#133946'
-        />
+        >
+          <circle
+            style={{
+              filter: 'blur(50px)'
+            }}
+            width={ sizes.width }
+            height={ sizes.height }
+            cx={ sizes.width / 2 }
+            cy={ sizes.height / 2 }
+            r={ Math.max(sizes.width, sizes.height) / 2 }
+            fill='#13394626'
+          />
+          <circle
+            style={{
+              filter: 'blur(50px)',
+              opacity,
+              transition: 'opacity 0.3s ease-in-out'
+            }}
+            cx={ springX.get() }
+            cy={ springY.get() }
+            r={ pulse * sizes.pulse.cursorScale }
+            fill='#133946'
+          />
+        </g>
       </svg>
     </div>
   )

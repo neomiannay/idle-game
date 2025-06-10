@@ -56,10 +56,18 @@
     "NOT_INCLUDE": "Ne pas inclure"
   },
   "UPGRADES": {
-    "LEVEL1": "Niveau 1",
-    "LEVEL2": "Niveau 2",
-    "LEVEL3": "Niveau 3",
-    "LEVEL4": "Niveau 4",
+    "LEVEL1": "Niveau 2",
+    "LEVEL1_DESC": "Passer la production au niveau 3",
+    "LEVEL2": "Niveau 3",
+    "LEVEL2_DESC": "Passer la production au niveau 4",
+    "LEVEL3": "Niveau 4",
+    "LEVEL3_DESC": "Passer la production au niveau 5",
+    "LEVEL4": "Niveau 5",
+    "LEVEL4_DESC": "Passer la production au niveau 6",
+    "LEVEL5": "Niveau 6",
+    "LEVEL5_DESC": "Passer la production au niveau 7",
+    "LEVEL6": "Niveau 7",
+    "LEVEL6_DESC": "Passer la production au niveau 8",
     "AUTOPROD": "Formulation\nautomatisée"
   },
   "PRICES": {
@@ -116,63 +124,63 @@
       "MUCUS_ESCARGOT_DESC": "Hydrate la peau, favorise la cicatrisation et améliore son élasticité. Procure un effet lissant et réparateur visible. Pour en extraire de grandes quantités, des décharges électriques sont utilisées pour stresser les escargots.",
       "GELEE_ROYALE": "GELÉE ROYALE",
       "GELEE_ROYALE_DESC": "Riche en vitamines, minéraux et acides aminés. Stimule la régénération cellulaire, redonne de l’éclat et tonifie la peau. Produite par les abeilles nourricières, sa récolte fragilise les colonies en perturbant leur cycle de développement. "
+    }
+  },
+  "RABBIT_GAME": {
+    "LAYOUT": {
+      "NAME": "Protocole de Draize",
+      "LAUNCH": "Lancer",
+      "NOT_ENOUGH_MONEY": "Pas assez de pépettes...",
+      "COST": "Coût"
     },
-    "RABBIT_GAME": {
-      "LAYOUT": {
-        "NAME": "Protocole de Draize",
-        "LAUNCH": "Lancer",
-        "NOT_ENOUGH_MONEY": "Pas assez de pépettes...",
-        "COST": "Coût"
-      },
-      "TIPS": {
-        "CLICK_0": "*caresse*",
-        "CLICK_1": "Essaye !",
-        "CLICK_2": "Teste-moi !",
-        "CLICK_3": "Caresse moi !",
-        "CLICK_4": " Expérimente !"
-      },
-      "ITEMS": {
-        "SKIN_REACTION": "Réaction cutanée",
-        "SKIN_REACTION_DESC": "Évaluation du potentiel irritant d'une substance chimique sur la peau en mesurant les réactions inflammatoires locales",
-        "OCULAR_SENSITIVITY": "Sensibilité oculaire",
-        "OCULAR_SENSITIVITY_DESC": "Évaluation de l'irritation oculaire pour détecter les réactions inflammatoires de la cornée, de l'iris et de la conjonctive",
-        "INGESTION": "Ingestion",
-        "INGESTION_DESC": "Détermination de la toxicité orale par doses croissantes pour établir la dose létale médiane et les effets systémiques"
-      },
-      "BUY_RABBIT_ITEM": {
-        "NAME": "Changer de sujet",
-        "DESCRIPTION": "Le sujet ne répond plus. Un remplacement est nécessaire."
-      }
+    "TIPS": {
+      "CLICK_0": "*caresse*",
+      "CLICK_1": "Essaye !",
+      "CLICK_2": "Teste-moi !",
+      "CLICK_3": "Caresse moi !",
+      "CLICK_4": "Expérimente !"
+    },
+    "ITEMS": {
+      "SKIN_REACTION": "Réaction cutanée",
+      "SKIN_REACTION_DESC": "Évaluation du potentiel irritant d'une substance chimique sur la peau en mesurant les réactions inflammatoires locales",
+      "OCULAR_SENSITIVITY": "Sensibilité oculaire",
+      "OCULAR_SENSITIVITY_DESC": "Évaluation de l'irritation oculaire pour détecter les réactions inflammatoires de la cornée, de l'iris et de la conjonctive",
+      "INGESTION": "Ingestion",
+      "INGESTION_DESC": "Détermination de la toxicité orale par doses croissantes pour établir la dose létale médiane et les effets systémiques"
+    },
+    "BUY_RABBIT_ITEM": {
+      "NAME": "Changer de sujet",
+      "DESCRIPTION": "Le sujet ne répond plus. Un remplacement est nécessaire."
     }
   },
   "SEARCH_TIPS": {
-      "LAYOUT": {
-        "NAME": "Stratégie commerciale",
-        "TITLE": "Elèphe Antivre",
-        "SUBTITLE": "Experte en stratégie commerciale et optimisation budgétaire",
-        "DESCRIPTION": "Je navigue à la confluence des flux budgétaires et des dynamiques commerciales, décryptant les oscillations des marchés émergents avec une précision quasi-quantique.",
-        "BUTTON_LABEL": "Chercher une stratégie",
-        "NEW": "Nouvelle stratégie trouvée",
-        "LIST": "Liste des stratégies",
-        "PROBABILITY": "Probabilité de trouver une stratégie",
-        "DURATION": "Durée de la recherche",
-        "IN_PROGRESS": "Recherche en cours...",
-        "DECLINE": "Refuser",
-        "ADD": "Appliquer"
-      },
-      "ITEMS": {
-        "PINK_TAX": "Taxe rose",
-        "PINK_TAX_DESC": "Stratégie commerciale qui exploite les stéréotypes de genre pour maximiser les profits. Augmente la perception de valeur des produits destinés aux femmes, justifiant des prix plus élevés.",
-        "PACKAGING_OPTIMIZATION": "Optimisation du packaging",
-        "PACKAGING_OPTIMIZATION_DESC": "Stratégie commerciale qui améliore l'efficacité des emballages pour réduire les coûts de production et de transport. Augmente la durabilité des produits tout en réduisant l'empreinte carbone.",
-        "LOCAL_SOURCING": "Approvisionnement local",
-        "LOCAL_SOURCING_DESC": "Stratégie commerciale qui privilégie les fournisseurs locaux pour réduire les coûts de transport et soutenir l'économie locale. Améliore la traçabilité des produits et réduit l'empreinte carbone.",
-        "SALES_TRAINING": "Formation des vendeurs",
-        "SALES_TRAINING_DESC": "Stratégie commerciale qui améliore les compétences des vendeurs pour augmenter les ventes et la satisfaction client. Formations sur les techniques de vente, la connaissance des produits et le service client.",
-        "NEW_PUBLIC": "Acquérir une nouvelle clientèle",
-        "NEW_PUBLIC_DESC": "Faire une game de produits destinée aux plus jeunes, afin qu'elles puissent découvrir la marque et l'adopter dès leur plus jeune âge. Augmente la notoriété de la marque et fidélise les clients dès leur jeunesse."
-      }
+    "LAYOUT": {
+      "NAME": "Stratégie commerciale",
+      "TITLE": "Elèphe Antivre",
+      "SUBTITLE": "Experte en stratégie commerciale et optimisation budgétaire",
+      "DESCRIPTION": "Je navigue à la confluence des flux budgétaires et des dynamiques commerciales, décryptant les oscillations des marchés émergents avec une précision quasi-quantique.",
+      "BUTTON_LABEL": "Chercher une stratégie",
+      "NEW": "Nouvelle stratégie trouvée",
+      "LIST": "Liste des stratégies",
+      "PROBABILITY": "Probabilité de trouver une stratégie",
+      "DURATION": "Durée de la recherche",
+      "IN_PROGRESS": "Recherche en cours...",
+      "DECLINE": "Refuser",
+      "ADD": "Appliquer"
     },
+    "ITEMS": {
+      "PINK_TAX": "Taxe rose",
+      "PINK_TAX_DESC": "Stratégie commerciale qui exploite les stéréotypes de genre pour maximiser les profits. Augmente la perception de valeur des produits destinés aux femmes, justifiant des prix plus élevés.",
+      "PACKAGING_OPTIMIZATION": "Optimisation du packaging",
+      "PACKAGING_OPTIMIZATION_DESC": "Stratégie commerciale qui améliore l'efficacité des emballages pour réduire les coûts de production et de transport. Augmente la durabilité des produits tout en réduisant l'empreinte carbone.",
+      "LOCAL_SOURCING": "Approvisionnement local",
+      "LOCAL_SOURCING_DESC": "Stratégie commerciale qui privilégie les fournisseurs locaux pour réduire les coûts de transport et soutenir l'économie locale. Améliore la traçabilité des produits et réduit l'empreinte carbone.",
+      "SALES_TRAINING": "Formation des vendeurs",
+      "SALES_TRAINING_DESC": "Stratégie commerciale qui améliore les compétences des vendeurs pour augmenter les ventes et la satisfaction client. Formations sur les techniques de vente, la connaissance des produits et le service client.",
+      "NEW_PUBLIC": "Acquérir une nouvelle clientèle",
+      "NEW_PUBLIC_DESC": "Faire une game de produits destinée aux plus jeunes, afin qu'elles puissent découvrir la marque et l'adopter dès leur plus jeune âge. Augmente la notoriété de la marque et fidélise les clients dès leur jeunesse."
+    }
+  },
   "SECTORS": {
     "PRODUCTION": "Production",
     "LABORATORY": "Laboratoire",
