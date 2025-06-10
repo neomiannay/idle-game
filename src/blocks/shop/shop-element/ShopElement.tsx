@@ -66,17 +66,14 @@ const ShopElement = ({
     initial: { y: '30%', opacity: 0 },
     animate: {
       y: '0%',
-      // opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
       opacity: 1
     },
     hover: {
       y: `${translateYValue}px`,
-      // opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
       opacity: 1
     },
     normal: {
       y: '0%',
-      // opacity: sequentiallyPurchasable && canPurchase ? 1 : 0.4
       opacity: 1
     },
     exit: {

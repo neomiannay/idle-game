@@ -3,6 +3,7 @@ import React, { ButtonHTMLAttributes, PropsWithChildren, useState } from 'react'
 import classNames from 'classnames'
 import MaskText from 'components/mask-text/MaskText'
 import { motion } from 'motion/react'
+import { formatValue } from 'helpers/units'
 
 import styles from './Button.module.scss'
 
@@ -48,7 +49,7 @@ const Button = ({ className, cost, action, disabled, isVariant, onClick } : Butt
           <div className={ styles.right }>
             <span className={ styles.cost }>
               <MaskText opened={ isHovered } replayKey={ replayKey }>
-                { cost?.value }&nbsp;
+                { formatValue(cost?.value ?? 0) }&nbsp;
               </MaskText>
             </span>
             <span className={ styles.unit }>

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 
 import classNames from 'classnames'
 import { useGameProviderContext } from 'provider/GameProvider'
@@ -12,6 +12,9 @@ import { AnimatePresence, motion } from 'motion/react'
 import { baseVariants, fadeAppear, stagger } from 'core/animation'
 import AdaptativeText from 'components/adaptative-text/AdaptativeText'
 import { formatBenefits } from 'helpers/units'
+import { useResizeObserver } from 'hooks/useResizeObserver'
+import { useViewportContext } from 'provider/ViewportProvider'
+import MaskText from 'components/mask-text/MaskText'
 
 import styles from './Header.module.scss'
 
@@ -20,6 +23,8 @@ type HeaderProps = {
 };
 
 const Header = ({ className }: HeaderProps) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const { sizes } = useViewportContext()
   const { getUnit, canDisplayUnit } = useGameProviderContext()
   const { getPrice } = usePricesContext()
 
@@ -46,8 +51,19 @@ const Header = ({ className }: HeaderProps) => {
     [benefitsCount]
   )
 
+  useEffect(() => {
+    if (!ref.current) return
+    if (!canDisplayUnit(EGameUnit.BENEFITS)) ref.current.style.height = 'var(--header-height)'
+    else if (canDisplayUnit(EGameUnit.BENEFITS)) ref.current.style.height = 'auto'
+  }, [canDisplayUnit])
+
+  useResizeObserver(ref as any, () => {
+    const height = ref.current?.offsetHeight as number
+    sizes.headerHeight.set(height)
+  })
+
   return (
-    <div className={ classNames(styles.wrapper) }>
+    <div ref={ ref } className={ classNames(styles.wrapper) }>
       <AnimatePresence mode='wait'>
         { canDisplayUnit(EGameUnit.BENEFITS) && (
           <motion.div
@@ -61,11 +77,19 @@ const Header = ({ className }: HeaderProps) => {
                   <span className={ styles.title }>
                     { l10n('PRICES.PRODUCTION') }
                   </span>
-                  <span className={ styles.count }>{ productionCount } €</span>
+                  <span className={ styles.count }>
+                    <MaskText opened={ false } replayKey={ productionCount }>
+                      { productionCount } €
+                    </MaskText>
+                  </span>
                 </div>
                 <div className={ styles.price }>
                   <span className={ styles.title }>{ l10n('PRICES.SELLING') }</span>
-                  <span className={ styles.count }>{ sellingCount } €</span>
+                  <span className={ styles.count }>
+                    <MaskText opened={ false } replayKey={ sellingCount }>
+                      { sellingCount } €
+                    </MaskText>
+                  </span>
                 </div>
               </motion.div>
 

@@ -216,7 +216,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     if (gameState.tips)
       loadTips(gameState.tips)
 
-    if(gameState.rabbitPrice)
+    if (gameState.rabbitPrice)
       loadRabbitPrice(gameState.rabbitPrice)
 
     // Charger les prix
@@ -236,8 +236,8 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   // Hook pour la persistance de l'état du jeu
   const { saveGameState, loadGameState } = useGamePersistence({
     onSave: handleSaveState,
-    onLoad: handleLoadState,
-    autoSaveInterval: 10000
+    onLoad: handleLoadState
+    // autoSaveInterval: 10000
   })
 
   // Charger l'état du jeu au montage

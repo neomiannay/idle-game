@@ -11,6 +11,7 @@ import { useL10n } from 'provider/L10nProvider'
 import { useUpgradePurchased } from 'hooks/useUpgradePurchased'
 import Button from 'components/button/Button'
 import { getItemPrice } from 'helpers/units'
+import MaskText from 'components/mask-text/MaskText'
 
 import styles from './ComplexSection.module.scss'
 
@@ -103,7 +104,9 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
           <div className={ styles.perfHeader }>
             <p className={ styles.perfTitle }>{ l10n('UI.PRODUCTION_DURATION') }</p>
             <span className={ styles.perfValue }>
-              { formattedSeconds } { l10n('UNITS.SEC') }
+              <MaskText opened={ false } replayKey={ formattedSeconds }>
+                { formattedSeconds } { l10n('UNITS.SEC') }
+              </MaskText>
             </span>
           </div>
           <Button
@@ -120,7 +123,11 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
         <div className={ styles.perf }>
           <div className={ styles.perfHeader }>
             <p className={ styles.perfTitle }>{ l10n('UI.EXECUTED_QUANTITY') }</p>
-            <span className={ styles.perfValue }>{ quantity }</span>
+            <span className={ styles.perfValue }>
+              <MaskText opened={ false } replayKey={ quantity }>
+                { quantity }
+              </MaskText>
+            </span>
           </div>
           <Button
             onClick={ () => improveValueByAction(
@@ -138,7 +145,10 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
         </div>
       </div>
       { isUpgradePurchased && (
-        <AutoSwitch value={ complexAutoMode } onToggle={ () => setComplexAutoMode(prev => !prev) } />
+        <AutoSwitch
+          value={ complexAutoMode }
+          onToggle={ () => setComplexAutoMode(prev => !prev) }
+        />
       ) }
     </div>
   )

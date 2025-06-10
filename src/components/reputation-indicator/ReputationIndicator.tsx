@@ -3,6 +3,7 @@ import React from 'react'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
 import useMotionState from 'hooks/useMotionState'
+import MaskText from 'components/mask-text/MaskText'
 
 import styles from './ReputationIndicator.module.scss'
 
@@ -27,7 +28,11 @@ const ReputationIndicator = () => {
   return (
     <div className={ styles.wrapper }>
       <span className={ styles.title }>Réputation</span>
-      <span className={ styles.label }>{ label }</span>
+      <span className={ styles.label }>
+        <MaskText opened={ false } replayKey={ clampedValue }>
+          { label }
+        </MaskText>
+      </span>
       <div className={ styles.tooltip }>
         { clampedValue }% de chance de réussir une vente
       </div>

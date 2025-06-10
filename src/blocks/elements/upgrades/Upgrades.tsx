@@ -4,6 +4,7 @@ import { EGameUnit } from 'types/store'
 import { useGameProviderContext } from 'provider/GameProvider'
 import useMotionState from 'hooks/useMotionState'
 import classNames from 'classnames'
+import MaskText from 'components/mask-text/MaskText'
 
 import styles from './Upgrades.module.scss'
 
@@ -14,7 +15,6 @@ type UpgradesProps = {
 
 const Upgrades = ({ className, unitId }: UpgradesProps) => {
   const { getUnit } = useGameProviderContext()
-
   const unit = getUnit(unitId)
   if (!unit) return
   if (!unit.valueByAction) return
@@ -23,7 +23,11 @@ const Upgrades = ({ className, unitId }: UpgradesProps) => {
   if (!valueByAction) return
 
   return (
-    <p className={ classNames(styles.upgradesCount, className) }>x{ valueByAction }</p>
+    <div className={ classNames(styles.upgradesCount, className) }>
+      <MaskText tag='span' opened={ false } replayKey={ valueByAction }>
+        x{ valueByAction }
+      </MaskText>
+    </div>
   )
 }
 

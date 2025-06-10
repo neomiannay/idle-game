@@ -35,8 +35,6 @@ const Mask = forwardRef<HTMLElement, GenericMaskProps>(({
   if (opened !== null) {
     otherProps.animate = controls
     otherProps.onAnimationComplete = (variant:string) => {
-      console.log(variant)
-
       if (variant === 'exit') controls.set('initial')
       onAnimationComplete && onAnimationComplete(variant)
     }
@@ -56,7 +54,6 @@ const Mask = forwardRef<HTMLElement, GenericMaskProps>(({
   useEffect(() => {
     if (replayKey === undefined) return
     if (replayKey > 0) {
-      console.log('replayKey', replayKey)
       controls.set('initial')
       controls.start('animate')
     }

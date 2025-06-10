@@ -111,6 +111,15 @@ $styles: ();
   }
 }
 
+%count-item {
+  @include rule {
+    font-size: rem(16);
+    font-stretch: normal;
+    font-variation-settings: 'wght' 600, 'wdth' 40;
+    letter-spacing: 0.04em;
+    line-height: 1.08;
+  }
+}
 
 %label-light {
   @include rule {

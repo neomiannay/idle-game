@@ -10,6 +10,7 @@ import useCanBuyElement from 'hooks/useCanBuyElement'
 import useItemCount from 'hooks/useItemCount'
 import Button from 'components/button/Button'
 import { getItemPrice } from 'helpers/units'
+import MaskText from 'components/mask-text/MaskText'
 
 import styles from './Item.module.scss'
 
@@ -66,13 +67,19 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
       <div className={ styles.line }>
         <div className={ styles.information }>
           <h4 className={ styles.title }>{ l10n(item.name) }</h4>
-          <p className={ styles.description }>
-            { l10n(item.description) } +{ item.unitByTime }/{ l10n('UNITS.SEC') }
-          </p>
+          <span className={ styles.count }>
+            <MaskText opened={ false } replayKey={ itemCount }>
+              { itemCount }
+            </MaskText>
+          </span>
         </div>
-        <span className={ styles.count }>{ itemCount }</span>
+        <p className={ styles.description }>
+          { l10n(item.description) }
+          { /* +{ item.unitByTime }/{ l10n('UNITS.SEC') } */ }
+        </p>
       </div>
       <Button
+        className={ styles.button }
         onClick={ () => buyElement(unitId, itemId, 'item') }
         disabled={ !canPurchase }
         cost={{
