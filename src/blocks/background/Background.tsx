@@ -8,7 +8,8 @@ import {
   Layout
 } from '@rive-app/react-webgl2'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { useMotionValueEvent, useSpring } from 'motion/react'
+import { useMotionValue, useMotionValueEvent, useSpring } from 'motion/react'
+import { animate } from 'motion'
 import { useGlobalContext } from 'provider/GlobalProvider'
 
 import styles from './Background.module.scss'
@@ -27,8 +28,8 @@ function getProgressFromMoney (
 }
 
 type BackgroundProps = {
-  onLoad?: () => void
-}
+  onLoad?: () => void;
+};
 
 /**
  * Background Component
@@ -43,40 +44,46 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement {
   const [input, setInput] = useState<StateMachineInput | null>(null)
 
   // Springs
-  const progressSpring = useSpring(-1, {
-    stiffness: 22
-  })
+  const progressSpring = useSpring(-1, { stiffness: 22 })
+  const transitionMotion = useMotionValue(100)
 
   const handleInputsChange = (inputs: StateMachineInput[]) => {
     setInput(inputs.find(({ name }) => name === 'progress') ?? null)
   }
 
+  const isTransitionning = () => transitionMotion.get() > 100 || transitionMotion.get() < 123
+
   const handleProgressChange = (v: number) => {
     if (!input) return
 
-    if (v > 100 && v < 123) v = Math.floor(v)
-    input.value = v
+    input.value = isTransitionning() ? Math.round(v) : v
   }
 
   const handleBenefitsChange = (value: number) => {
     if (!input || value > BENEFITS_END_STEP) return
-
     const sprVal = progressSpring.get()
+    const transVal = transitionMotion.get()
 
     // let res = (value / BENEFITS_START_STEP) * 100
     let res = getProgressFromMoney(value, BENEFITS_START_STEP)
 
-    if (value > BENEFITS_START_STEP && sprVal < 123) {
+    if (value > BENEFITS_START_STEP && transVal < 123) {
       setDarkMode(true)
-      res = 123
-    } else if (sprVal >= 123) {
+
+      progressSpring.jump(123)
+      animate(transitionMotion.get(), 123, {
+        duration: .22 * 3,
+        ease: 'linear',
+        onUpdate: (v) => transitionMotion.set(v)
+      })
+    } else if (transVal >= 123) {
       const startValue = value - BENEFITS_START_STEP
       const endValue = BENEFITS_END_STEP - BENEFITS_START_STEP
-      // res = 200 + (startValue / endValue) * 100
+
       res = 200 + getProgressFromMoney(startValue, endValue)
     }
 
-    if (sprVal >= 0 && (sprVal < 123 || sprVal > 200)) {
+    if (sprVal >= 0 && !isTransitionning()) {
       progressSpring.set(res)
     } else {
       progressSpring.jump(res)
@@ -84,7 +91,11 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement {
     }
   }
 
-  useMotionValueEvent(units.benefits.motionValue, 'change', handleBenefitsChange)
+  useMotionValueEvent(
+    units.benefits.motionValue,
+    'change',
+    handleBenefitsChange
+  )
 
   // Sync once after the Rive input is available to ensure correct initial state
   useEffect(() => {
@@ -93,6 +104,7 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement {
   }, [input])
 
   progressSpring.on('change', handleProgressChange)
+  transitionMotion.on('change', handleProgressChange)
 
   return (
     <div className={ styles.background }>

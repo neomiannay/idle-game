@@ -63,6 +63,15 @@ export function GameProvider ({ children }: BaseProviderProps) {
     console.info(`Units added (${unitId})`, unit.rawValue.get())
   }
 
+  // @ts-ignore
+  window.set = (unitId: EGameUnit, value: number) => {
+    const unit = getUnit(unitId)
+    if (!unit) return console.error('Unit not found')
+    unit.motionValue.jump(value)
+    unit.totalMotionValue.jump(value)
+    console.info(`Units set (${unitId})`, unit.rawValue.get())
+  }
+
   // Purchase conditions
   const canBuyActif = true
   const canBuyComplex = useMotionState(
