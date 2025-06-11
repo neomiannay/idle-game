@@ -101,13 +101,13 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
       <HoldButton label='BUTTONS.COMPLEX' autoMode={ complexAutoMode } value={ quantity } />
       <div className={ styles.equivalence }>
         <div className={ styles.unitWrapper }>
-          <p className={ styles.count }>5</p>
-          <p className={ styles.unit }>{ l10n(conjugate('UNITS.ACTIF', 5)) }</p>
+          <p className={ styles.count }>1</p>
+          <p className={ styles.unit }>{ l10n('UNITS.FORMULATION.SINGULAR') }</p>
         </div>
         <p className={ styles.equal }>=</p>
         <div className={ styles.unitWrapper }>
-          <p className={ styles.count }>1</p>
-          <p className={ styles.unit }>{ l10n('UNITS.FORMULATION.SINGULAR') }</p>
+          <p className={ styles.count }>5</p>
+          <p className={ styles.unit }>{ l10n(conjugate('UNITS.ACTIF', 5)) }</p>
         </div>
       </div>
       <div className={ styles.perfWrapper }>
@@ -151,7 +151,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
               value: quantityCost,
               unit: l10n(costName)
             }}
-            action='+20'
+            action='+1'
           />
         </div>
       </div>
