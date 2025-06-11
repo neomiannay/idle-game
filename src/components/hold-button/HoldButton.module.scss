@@ -28,7 +28,8 @@
 }
 
 .disabled {
-	color: var(--color-disabled);
+  pointer-events: none;
+  opacity: 0.75;
 }
 
 .colorContainer {

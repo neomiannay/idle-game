@@ -98,7 +98,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
       <div className={ styles.stepCounter }>
         <Count unitId={ unitId } count={ count } />
       </div>
-      <HoldButton label='BUTTONS.COMPLEX' autoMode={ complexAutoMode } />
+      <HoldButton label='BUTTONS.COMPLEX' autoMode={ complexAutoMode } value={ quantity } />
       <div className={ styles.perfWrapper }>
         <div className={ styles.perf }>
           <div className={ styles.perfHeader }>

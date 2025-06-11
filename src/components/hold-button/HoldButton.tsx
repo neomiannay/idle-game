@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { useL10n } from 'provider/L10nProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
+import useMotionState from 'hooks/useMotionState'
 
 import styles from './HoldButton.module.scss'
 
@@ -11,21 +12,27 @@ interface HoldButtonProps {
   className?: string;
   label: string;
   autoMode?: boolean;
+  value: number;
 }
 
-const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode }) => {
+const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode, value }) => {
   const l10n = useL10n()
   const { getUnit, buyUnit, canBuyUnit } = useGameProviderContext()
+  const activeUnit = getUnit(EGameUnit.ACTIF)
+  const duration = getUnit(EGameUnit.COMPLEX)?.duration?.get() ?? 5000
+
+  if (!activeUnit) return
 
   const [progress, setProgress] = useState<number>(100)
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
+  const canAfford = useMotionState(activeUnit?.motionValue, () => (activeUnit?.rawValue.get() ?? 0) > value)
+
   const canBuy = canBuyUnit(EGameUnit.COMPLEX)
-  const duration = getUnit(EGameUnit.COMPLEX)?.duration?.get() ?? 5000
 
   const handleClick = () => {
-    if (!canBuy || isAnimating) return
+    if (!canBuy || isAnimating || !canAfford) return
 
     setProgress(20)
     setIsAnimating(true)
@@ -61,15 +68,15 @@ const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode }) => {
   }, [])
 
   useEffect(() => {
-    if (!autoMode || isAnimating || !canBuy) return
+    if (!autoMode || isAnimating) return
 
     handleClick()
-  }, [autoMode, isAnimating, canBuy])
+  }, [autoMode, isAnimating])
 
   return (
     <div
       className={ classNames(styles.wrapper, className, {
-        [styles.disabled]: !canBuy
+        [styles.disabled]: !canBuy || !canAfford
       }) }
     >
       <div onClick={ handleClick } className={ styles.colorContainer }>
@@ -82,9 +89,7 @@ const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode }) => {
         >
           { l10n(label) }
         </div>
-        <div className={ styles.startColor }>
-          { l10n(label) }
-        </div>
+        <div className={ styles.startColor }>{ l10n(label) }</div>
       </div>
     </div>
   )
