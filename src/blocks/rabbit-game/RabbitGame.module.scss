@@ -1,8 +1,7 @@
 .wrapper {
-  width: 33vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: end;
   position: relative;
   overflow: visible;
 }
@@ -12,8 +11,7 @@
   height: 1px;
   border: 0 !important;
   background: linear-gradient(90deg, rgba(107, 107, 148, 0.00) 0%, rgba(107, 107, 148, 0.24) 100%);
-  margin-top: rem(9);
-  margin-bottom: rem(12);
+  margin: rem(24) 0;
 }
 
 .name {

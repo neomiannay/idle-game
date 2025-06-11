@@ -4,7 +4,7 @@ import { EGamePrice, EGameSector, EGameUnit } from 'types/store'
 import { useL10n } from 'provider/L10nProvider'
 import classNames from 'classnames'
 import Translatable from 'components/translatable/Translatable'
-import { getRoundedTime } from 'helpers/units'
+import { DEFAULT_SCALE_FACTOR, getRoundedTime } from 'helpers/units'
 import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
 import { useSearchPublicityContext } from 'provider/SearchPublicityProvider'
 
@@ -140,7 +140,7 @@ const SearchGame: React.FC<SearchGameProps> = ({
         duration={ duration }
         price={{
           unit: EGameUnit.BENEFITS,
-          value: price
+          value: price * ((itemList?.length || 0) * DEFAULT_SCALE_FACTOR + 1)
         }}
         items={ items }
         sectorId={ sectorId }
@@ -156,7 +156,7 @@ const SearchGame: React.FC<SearchGameProps> = ({
               { itemList?.map((item, index) => (
                 <span key={ item.id }>
                   { l10n(item.name) }
-                  { index !== items.length - 1 ? ', ' : '.' }
+                  { index !== itemList.length - 1 ? ', ' : '.' }
                 </span>
               )) }
             </small>

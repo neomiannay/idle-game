@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-import { useL10n } from 'provider/L10nProvider'
 import { EGameSector, EGameUnit } from 'types/store'
 import { SearchGameProps, TSearchGameItem } from 'blocks/search-game/SearchGame'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -31,7 +30,6 @@ const SearchContainer = ({
   items,
   sectorId
 }: SearchContainerProps) => {
-  const l10n = useL10n()
   const [contentHeight, setContentHeight] = useState<number | 'auto'>('auto')
   const contentRef = useRef<HTMLDivElement>(null)
   const { searchStateLab, setSearchStateLab, newItemLab, startProgressLab, setNewItemLab, saveNewItemLab, currentTimeLab } = useSearchLaboratoryContext()
@@ -108,9 +106,7 @@ const SearchContainer = ({
                 startProgress={ startProgress }
                 setNewItem={ setNewItem }
                 sectorId={ sectorId }
-              >
-                { `${l10n(layoutInfos.buttonLabel)} (${price.value}${l10n('UNITS.EURO')})` }
-              </SearchStart>
+              />
             </div>
           </motion.div>
         ) }
@@ -133,7 +129,7 @@ const SearchContainer = ({
               <SearchProgress
                 colors={{
                   background: 'var(--color-white)',
-                  progress: '#D5E9E7'
+                  progress: 'var(--transparent-light-40)'
                 }}
                 currentTime={ currentTime }
               />

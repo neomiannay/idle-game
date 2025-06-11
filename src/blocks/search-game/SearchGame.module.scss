@@ -54,7 +54,7 @@
 .gameInfos {
   display: flex;
   align-items: center;
-  gap: rem(26);
+  gap: rem(50);
 
   &Item {
     position: relative;
@@ -96,7 +96,7 @@
     flex-direction: column;
     height: fit-content;
     gap: rem(8);
-    background: linear-gradient(180deg, #FCFCFD 0%, #F1F1F6 100%);
+    background: var(--fill-100);
     box-shadow: 0px 4px 28px 0px rgba(0, 0, 0, 0.04);
     padding: rem(16);
     border-radius: rem(8);

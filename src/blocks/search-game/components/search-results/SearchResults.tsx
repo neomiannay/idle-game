@@ -7,7 +7,6 @@ import {
   TSearchGameLayoutInfos
 } from 'blocks/search-game/SearchGame'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { usePricesContext } from 'provider/PricesProvider'
 
 import styles from './SearchResults.module.scss'
 
@@ -24,8 +23,7 @@ const SearchResults = ({
   setSearchState,
   saveNewItem
 }: SearchResultsProps) => {
-  const { modifyUnitValue, applyChoiceEffects } = useGameProviderContext()
-  const priceContext = usePricesContext()
+  const { applyChoiceEffects } = useGameProviderContext()
   const l10n = useL10n()
 
   const handleChoice = (choice: EChoice) => {
@@ -34,9 +32,9 @@ const SearchResults = ({
         ? newItem?.acceptValues
         : newItem?.declineValues
 
-    if (itemEffects) {
+    if (itemEffects)
       applyChoiceEffects(itemEffects)
-    }
+
     if (newItem && choice === EChoice.ACCEPT) saveNewItem(newItem)
 
     setSearchState(0) // Reset to initial state

@@ -2,15 +2,13 @@ import React from 'react'
 
 import { EGameSector, EGameUnit } from 'types/store'
 import { useGameProviderContext } from 'provider/GameProvider'
-import classNames from 'classnames'
 import { TSearchGameItem } from 'blocks/search-game/SearchGame'
 import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
 import { useSearchPublicityContext } from 'provider/SearchPublicityProvider'
-
-import styles from './SearchStart.module.scss'
+import Button from 'components/button/Button'
+import { useL10n } from 'provider/L10nProvider'
 
 export type SearchStartProps = {
-  children: React.ReactNode;
   price: {
     unit: EGameUnit;
     value: number;
@@ -24,7 +22,6 @@ export type SearchStartProps = {
 };
 
 const SearchStart = ({
-  children,
   price,
   duration,
   items,
@@ -36,6 +33,7 @@ const SearchStart = ({
   const { hasEnoughUnits, modifyUnitValue } = useGameProviderContext()
   const { complexComposition } = useSearchLaboratoryContext()
   const { tips } = useSearchPublicityContext()
+  const l10n = useL10n()
 
   let filteredItems: TSearchGameItem[] = items
   if (sectorId === EGameSector.LABORATORY && complexComposition)
@@ -57,15 +55,13 @@ const SearchStart = ({
   const disabled = !hasEnoughUnits(price.value, price.unit)
 
   return (
-    <button
-      className={ classNames(styles.button, {
-        [styles.disabled]: disabled
-      }) }
+    <Button
+      type='button'
       disabled={ disabled }
+      cost={ price }
+      action={ l10n('SEARCH_ACTIFS.LAYOUT.BUTTON_LABEL') }
       onClick={ handleClick }
-    >
-      { children }
-    </button>
+    />
   )
 }
 

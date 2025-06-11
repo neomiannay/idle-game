@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 import GradientText from 'components/gradient-text/GradientText'
 import { useL10n } from 'provider/L10nProvider'
 import { timeToHHMMSS } from 'helpers/units'
+import Translatable from 'components/translatable/Translatable'
 
 import styles from './SearchProgress.module.scss'
 
@@ -19,12 +20,13 @@ const SearchProgress = ({
   currentTime
 }: SearchProgressProps) => {
   const l10n = useL10n()
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   const progressPath =
     'M299.5 150C299.5 130.367 295.633 110.927 288.12 92.7888C280.607 74.6507 269.595 58.1699 255.712 44.2876C241.83 30.4052 225.349 19.3931 207.211 11.88C189.073 4.36694 169.633 0.500003 150 0.5C130.367 0.499997 110.927 4.36693 92.7888 11.88C74.6507 19.3931 58.1699 30.4052 44.2875 44.2875C30.4052 58.1699 19.3931 74.6506 11.88 92.7888C4.36694 110.927 0.500002 130.367 0.5 150C0.499998 169.633 4.36693 189.073 11.88 207.211C19.3931 225.349 30.4052 241.83 44.2875 255.712C58.1699 269.595 74.6506 280.607 92.7888 288.12C110.927 295.633 130.367 299.5 150 299.5C169.633 299.5 189.073 295.633 207.211 288.12C225.349 280.607 241.83 269.595 255.712 255.712C269.595 241.83 280.607 225.349 288.12 207.211C295.633 189.073 299.5 169.633 299.5 150L299.5 150Z'
 
   return (
-    <div className={ styles.wrapper }>
+    <div className={ styles.wrapper } ref={ wrapperRef }>
       <div className={ styles.progressWrapper }>
         <svg
           width='300'
@@ -59,7 +61,7 @@ const SearchProgress = ({
             width='300'
             height='300'
           >
-            <circle cx='150' cy='150' r='150' fill='#D9D9D9' />
+            <circle cx='150' cy='150' r='150' fill='#fff' />
           </mask>
           <g mask='url(#mask0_1694_4000)'>
             <mask
@@ -75,7 +77,7 @@ const SearchProgress = ({
                 fillRule='evenodd'
                 clipRule='evenodd'
                 d='M300 0H0V300H300V0ZM150 251.835C206.242 251.835 251.835 206.242 251.835 150C251.835 93.7582 206.242 48.1651 150 48.1651C93.7582 48.1651 48.1651 93.7582 48.1651 150C48.1651 206.242 93.7582 251.835 150 251.835Z'
-                fill='var(--color-white)'
+                fill='#fff'
               />
             </mask>
             <g mask='url(#mask1_1694_4000)'>
@@ -110,17 +112,19 @@ const SearchProgress = ({
       </div>
       <div className={ styles.container }>
         <div className={ styles.inProgressWrapper }>
-          <GradientText startColor='#bbbbbb' endColor='#746C67'>
-            <p className={ styles.inProgressContainer }>
-              <small className={ styles.inProgress }>
-                { l10n('SEARCH_ACTIFS.LAYOUT.IN_PROGRESS') }
-              </small>
-              <br />
-              <small className={ styles.inProgress }>
-                { `(${timeToHHMMSS(currentTime)})` }
-              </small>
-            </p>
-          </GradientText>
+          <Translatable parentRef={ wrapperRef } distance={ 10 } stiffness={ 200 }>
+            <GradientText startColor='var(--fill-20)' endColor='var(--transparent-light-40)'>
+              <p className={ styles.inProgressContainer }>
+                <small className={ styles.inProgress }>
+                  { l10n('SEARCH_ACTIFS.LAYOUT.IN_PROGRESS') }
+                </small>
+                <br />
+                <small className={ styles.inProgress }>
+                  { `(${timeToHHMMSS(currentTime)})` }
+                </small>
+              </p>
+            </GradientText>
+          </Translatable>
         </div>
       </div>
     </div>

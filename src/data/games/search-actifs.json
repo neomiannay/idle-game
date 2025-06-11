@@ -1,8 +1,8 @@
 {
   "settings": {
-    "duration": 5000,
+    "duration": 60000,
     "price": 30,
-    "efficiency": 90
+    "efficiency": 76
   },
   "layout": {
     "name": "SEARCH_ACTIFS.LAYOUT.NAME",

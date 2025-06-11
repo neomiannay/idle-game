@@ -1,4 +1,5 @@
 const UNITS = ['', 'k', 'M', 'B', 'T']
+export const DEFAULT_SCALE_FACTOR = 1.4
 
 /**
  * Format a number with units
@@ -93,7 +94,7 @@ export const timeToHHMMSS = (duration: number) => {
   const seconds = duration % 60
 
   const hStr = timeToPrint(hours)
-  const mStr = timeToPrint(minutes, !!hStr.length)
+  const mStr = timeToPrint(minutes, !!hStr.length) || '00:'
   const sStr = seconds.toString().padStart(2, '0')
 
   return `${hStr}${mStr}${sStr}`
@@ -105,6 +106,6 @@ export const timeToHHMMSS = (duration: number) => {
  * @param count - The count
  * @returns The price
  */
-export const getItemPrice = (base: number, count: number, factor: number = 1.4) => {
+export const getItemPrice = (base: number, count: number, factor: number = DEFAULT_SCALE_FACTOR) => {
   return Math.round(base * Math.pow(count, factor))
 }

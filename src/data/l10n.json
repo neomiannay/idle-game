@@ -57,17 +57,17 @@
   },
   "UPGRADES": {
     "LEVEL1": "Niveau 2",
-    "LEVEL1_DESC": "Passer la production au niveau 3",
+    "LEVEL1_DESC": "Passer la production au niveau 2",
     "LEVEL2": "Niveau 3",
-    "LEVEL2_DESC": "Passer la production au niveau 4",
+    "LEVEL2_DESC": "Passer la production au niveau 3",
     "LEVEL3": "Niveau 4",
-    "LEVEL3_DESC": "Passer la production au niveau 5",
+    "LEVEL3_DESC": "Passer la production au niveau 4",
     "LEVEL4": "Niveau 5",
-    "LEVEL4_DESC": "Passer la production au niveau 6",
+    "LEVEL4_DESC": "Passer la production au niveau 5",
     "LEVEL5": "Niveau 6",
-    "LEVEL5_DESC": "Passer la production au niveau 7",
+    "LEVEL5_DESC": "Passer la production au niveau 6",
     "LEVEL6": "Niveau 7",
-    "LEVEL6_DESC": "Passer la production au niveau 8",
+    "LEVEL6_DESC": "Passer la production au niveau 7",
     "AUTOPROD": "Formulation\nautomatisée"
   },
   "PRICES": {

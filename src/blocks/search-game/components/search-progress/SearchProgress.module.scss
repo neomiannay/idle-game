@@ -11,7 +11,7 @@
   height: rem(300);
   padding: rem(20);
   border-radius: 50%;
-  background-color: var(--color-white);
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,7 +23,7 @@
   top: 0;
   left: 50%;
   border-radius: 50%;
-  transform: translateX(-50%) scale(.75);
+  transform: translateX(-50%);
 }
 
 .inProgress {
