@@ -34,6 +34,11 @@
       "type": "img",
       "name": "rabbit6",
       "src": "/img/rabbit/rabbit-6.png"
+    },
+    {
+      "type": "img",
+      "name": "influenceurBlur",
+      "src": "/img/influenceurs/influenceurs_blur.png"
     }
   ]
 }
