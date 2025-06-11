@@ -1,3 +1,14 @@
-.wrapper {
+.container {
   position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: space-between;
+  padding: rem(30);
+  height: 100%;
+}
+
+.rabbitBlur {
+  min-width: rem(450);
+  justify-self: flex-end;
+  -webkit-user-drag: none;
 }

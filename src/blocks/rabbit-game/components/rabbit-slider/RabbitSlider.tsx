@@ -85,17 +85,23 @@ const RabbitSlider = ({
   useEffect(() => handleSetHeight(), [])
 
   const handleBuy = () => {
+
     if (rabbitPrice && !hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)) return
+
     if (life.get() <= 0 && rabbitPrice) {
       setRabbitPrice(rabbitPrice * rabbits.factor)
       modifyUnitValue(EGameUnit.BENEFITS, -rabbitPrice)
       life.set(RABBIT_LIFE)
       setCurrentExp(items[0])
     }
+
   }
 
   const handleStart = (exp: TRabbitSliderItem) => {
-    if (!hasEnoughUnits(testPrice, EGameUnit.BENEFITS)) return
+
+    if (!hasEnoughUnits(testPrice, EGameUnit.BENEFITS)) {
+
+    }
 
     modifyUnitValue(EGameUnit.BENEFITS, -testPrice)
     applyChoiceEffects(exp.values)
@@ -111,6 +117,7 @@ const RabbitSlider = ({
       // Update life value directly
       life.set(clamp(lifeValue, 0, RABBIT_LIFE))
     }
+
   }
 
   const canBuyRabbit =
@@ -128,19 +135,22 @@ const RabbitSlider = ({
 
   const price = isRabbitDead ? rabbitPrice : testPrice
 
+  console.log('RabbitSlider render', rabbitPrice);
+
+
   return (
     <div className={ styles.controlPanel }>
       { (isRabbitDead || life.get() === null) && rabbitPrice ? (
         <RabbitBtn
           price={ `${formatValue(rabbitPrice)} ${l10n('UNITS.EURO')}` }
-          label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
-          onClick={ handleBuy }
+          label='exécuter le lapin'
+          onClick={handleBuy}
           disabled={ !canBuyRabbit }
         />
       ) : (
         <RabbitBtn
           price={ `${formatValue(testPrice)} ${l10n('UNITS.EURO')}` }
-          label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
+          label='exécuter'
           onClick={ () => handleStart(items[currentIndex]) }
           disabled={ !canBuyTest }
         />

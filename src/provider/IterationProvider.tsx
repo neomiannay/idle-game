@@ -235,8 +235,6 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     if (gameState.tips)
       loadTips(gameState.tips)
 
-    if (gameState.rabbitPrice)
-      loadRabbitPrice(gameState.rabbitPrice)
 
     // Charger les prix
     if (gameState.prices) {

@@ -24,14 +24,17 @@ const MarketingSector = ({ className, ...props } : MarketingSectorProps) => {
       className={ classNames(styles.wrapper, className) }
       { ...props }
     >
-      <SearchGame
-        duration={ searchGameData.settings.duration }
-        price={ searchGameData.settings.price }
-        efficiency={ searchGameData.settings.efficiency }
-        layoutInfos={ searchGameData.layout }
-        items={ searchGameData.items as SearchGameProps['items'] }
-        sectorId={ EGameSector.PUBLICITY }
-      />
+      <div className={ styles.container }>
+        <SearchGame
+          duration={ searchGameData.settings.duration }
+          price={ searchGameData.settings.price }
+          efficiency={ searchGameData.settings.efficiency }
+          layoutInfos={ searchGameData.layout }
+          items={ searchGameData.items as SearchGameProps['items'] }
+          sectorId={ EGameSector.PUBLICITY }
+        />
+        <img src="/img/influenceurs/influenceurs_blur.png" alt="" className={styles.rabbitBlur} />
+      </div>
     </Sector>
   )
 }

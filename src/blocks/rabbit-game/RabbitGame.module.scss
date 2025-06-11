@@ -1,9 +1,11 @@
 .wrapper {
+  min-width: rem(450);
   display: flex;
   flex-direction: column;
   align-items: end;
   position: relative;
   overflow: visible;
+  justify-self: flex-end;
 }
 
 .divider {
@@ -27,10 +29,7 @@
 }
 
 .rabbitBlur {
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 1000;
   width: 100%;
-
+  -webkit-user-drag: none;
 }

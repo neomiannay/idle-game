@@ -103,7 +103,7 @@ export interface GameState {
   unlockedSectors?: EGameSector[] | null
   complexComposition?: TSearchGameItem[] | null
   tips?: TSearchGameItem[] | null
-  rabbitPrice?: number | null
+  rabbitPrice?: number | null | undefined
 }
 
 export type ElementType = 'item' | 'upgrade' | 'sector' | 'otherShopElement'
