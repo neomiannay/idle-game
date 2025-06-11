@@ -10,3 +10,18 @@
   gap: rem(30);
   height: 100%;
 }
+
+.error {
+  color: var(--fill-10);
+  font-size: rem(10);
+  font-weight: 600;
+  letter-spacing: rem(2);
+  text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

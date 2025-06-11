@@ -11,6 +11,8 @@ import { useL10n } from 'provider/L10nProvider'
 import styles from './SearchStart.module.scss'
 
 export type SearchStartProps = {
+  isError: boolean;
+  setIsError?: (isError: boolean) => void
   price: {
     unit: EGameUnit;
     value: number;
@@ -24,6 +26,8 @@ export type SearchStartProps = {
 };
 
 const SearchStart = ({
+  isError,
+  setIsError,
   price,
   duration,
   items,
@@ -50,6 +54,7 @@ const SearchStart = ({
 
   const handleClick = () => {
     if (!hasEnoughUnits(price.value, price.unit)) return
+    setIsError?.(false)
 
     setSearchState(1)
     startProgress(duration, () => setSearchState(2))
@@ -64,22 +69,26 @@ const SearchStart = ({
 
   return (
     <div className={ styles.container }>
-      <svg
-        width='80'
-        height='80'
-        viewBox='0 0 80 80'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-        className={ styles.microscope }
-      >
-        <path
-          d='M20 59.9998H46.6667M10 73.3332H70M46.6667 73.3332C52.8551 73.3332 58.79 70.8748 63.1658 66.499C67.5417 62.1231 70 56.1882 70 49.9998C70 43.8115 67.5417 37.8765 63.1658 33.5007C58.79 29.1248 52.8551 26.6665 46.6667 26.6665H43.3333M30 46.6665H36.6667M40 19.9998V9.99984C40 9.11578 39.6488 8.26794 39.0237 7.64281C38.3986 7.01769 37.5507 6.6665 36.6667 6.6665H30C29.1159 6.6665 28.2681 7.01769 27.643 7.64281C27.0179 8.26794 26.6667 9.11578 26.6667 9.99984V19.9998M30 39.9998C28.2319 39.9998 26.5362 39.2975 25.286 38.0472C24.0357 36.797 23.3333 35.1013 23.3333 33.3332V19.9998H43.3333V33.3332C43.3333 35.1013 42.631 36.797 41.3807 38.0472C40.1305 39.2975 38.4348 39.9998 36.6667 39.9998H30Z'
-          stroke='var(--color-money)'
-          strokeWidth='4'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        />
-      </svg>
+      <div className={ styles.microscopeWrapper }>
+        { isError && (<div className={ styles.error }>{ l10n('SEARCH_ACTIFS.LAYOUT.ERROR') }</div>) }
+        <svg
+          width='80'
+          height='80'
+          viewBox='0 0 80 80'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+          className={ styles.microscope }
+        >
+          <path
+            d='M20 59.9998H46.6667M10 73.3332H70M46.6667 73.3332C52.8551 73.3332 58.79 70.8748 63.1658 66.499C67.5417 62.1231 70 56.1882 70 49.9998C70 43.8115 67.5417 37.8765 63.1658 33.5007C58.79 29.1248 52.8551 26.6665 46.6667 26.6665H43.3333M30 46.6665H36.6667M40 19.9998V9.99984C40 9.11578 39.6488 8.26794 39.0237 7.64281C38.3986 7.01769 37.5507 6.6665 36.6667 6.6665H30C29.1159 6.6665 28.2681 7.01769 27.643 7.64281C27.0179 8.26794 26.6667 9.11578 26.6667 9.99984V19.9998M30 39.9998C28.2319 39.9998 26.5362 39.2975 25.286 38.0472C24.0357 36.797 23.3333 35.1013 23.3333 33.3332V19.9998H43.3333V33.3332C43.3333 35.1013 42.631 36.797 41.3807 38.0472C40.1305 39.2975 38.4348 39.9998 36.6667 39.9998H30Z'
+            stroke='var(--color-money)'
+            strokeOpacity={ isError ? 0.25 : 1 }
+            strokeWidth='4'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          />
+        </svg>
+      </div>
 
       <Button
         className={ styles.button }

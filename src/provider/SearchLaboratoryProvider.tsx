@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 
 import { TSearchGameItem } from 'blocks/search-game/SearchGame'
+
 import rabbits from 'data/games/rabbits.json'
 
 import { BaseProviderProps } from './GlobalProvider'
@@ -24,6 +25,8 @@ type SearchLaboratoryContextType = {
   killedRabbits: number
   setKilledRabbits: React.Dispatch<React.SetStateAction<number>>
   loadKilledRabbits: (data: number) => void
+  isErrorLab: boolean
+  setIsErrorLab: (isError: boolean) => void
 }
 
 const SearchLaboratoryContext = createContext<SearchLaboratoryContextType | undefined>(undefined)
@@ -39,15 +42,14 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
   const [newItemLab, setNewItemLab] = useState<TSearchGameItem | null>(null)
   const [complexComposition, setComplexComposition] = useState<TSearchGameItem[] | null>(null)
   const [rabbitPrice, setRabbitPrice] = useState<number>(() => {
-    const saved = localStorage.getItem('rabbitPrice');
-    if (saved !== null) return Number(saved);
-    return rabbits.price;
-  });
-  const [killedRabbits, setKilledRabbits] = useState<number>(0);
+    const saved = localStorage.getItem('rabbitPrice')
+    if (saved !== null) return Number(saved)
+    return rabbits.price
+  })
+  const [killedRabbits, setKilledRabbits] = useState<number>(0)
+  const [isErrorLab, setIsErrorLab] = useState(false)
 
-  useEffect(() => {
-    localStorage.setItem('rabbitPrice', String(rabbitPrice));
-  }, [rabbitPrice]);
+  useEffect(() => localStorage.setItem('rabbitPrice', String(rabbitPrice)), [rabbitPrice])
 
   useEffect(() => {
     if (!isRunningLab) return
@@ -96,11 +98,10 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
   }
 
   const loadRabbitPrice = (data: number | null | undefined) => {
-    if (data === undefined || data === null) {
+    if (data === undefined || data === null)
       setRabbitPrice(rabbits.price)
-    } else {
+    else
       setRabbitPrice(data)
-    }
   }
 
   context = {
@@ -121,7 +122,9 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
     loadRabbitPrice,
     killedRabbits,
     setKilledRabbits,
-    loadKilledRabbits
+    loadKilledRabbits,
+    isErrorLab,
+    setIsErrorLab
   }
 
   return (

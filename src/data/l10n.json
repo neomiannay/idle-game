@@ -94,6 +94,7 @@
   "SEARCH_ACTIFS": {
     "LAYOUT": {
       "NAME": "Recherche d’actifs",
+      "ERROR": "AUCUN actif trouvé",
       "TITLE": "Michael Scott",
       "SUBTITLE": "Scientifique Expert Quantique",
       "DESCRIPTION": "Depuis tant d'années je décrypte les phénomènes photoniques, à l'échelle de l'infiniment petit, l'échelle quantique.",

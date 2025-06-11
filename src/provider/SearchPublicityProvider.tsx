@@ -17,6 +17,8 @@ type SearchPublicityContextType = {
   setTips: (items: TSearchGameItem[] | null) => void
   saveNewItemPub: (item: TSearchGameItem | null) => void
   loadTips: (data: TSearchGameItem[]) => void
+  isErrorPub: boolean
+  setIsErrorPub: (isError: boolean) => void
 }
 
 const SearchPublicityContext = createContext<SearchPublicityContextType | undefined>(undefined)
@@ -31,6 +33,7 @@ export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
   const [searchStatePub, setSearchStatePub] = useState(0)
   const [newItemPub, setNewItemPub] = useState<TSearchGameItem | null>(null)
   const [tips, setTips] = useState<TSearchGameItem[] | null>(null)
+  const [isErrorPub, setIsErrorPub] = useState(false)
 
   useEffect(() => {
     if (!isRunningPub) return
@@ -87,7 +90,9 @@ export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
     tips,
     setTips,
     saveNewItemPub,
-    loadTips
+    loadTips,
+    isErrorPub,
+    setIsErrorPub
   }
 
   return (

@@ -48,7 +48,9 @@ const SearchContainer = ({
     startProgressLab,
     setNewItemLab,
     saveNewItemLab,
-    currentTimeLab
+    currentTimeLab,
+    isErrorLab,
+    setIsErrorLab
   } = useSearchLaboratoryContext()
   const {
     searchStatePub,
@@ -57,7 +59,9 @@ const SearchContainer = ({
     startProgressPub,
     setNewItemPub,
     saveNewItemPub,
-    currentTimePub
+    currentTimePub,
+    isErrorPub,
+    setIsErrorPub
   } = useSearchPublicityContext()
 
   let searchState
@@ -67,6 +71,8 @@ const SearchContainer = ({
   let setNewItem
   let saveNewItem
   let currentTime
+  let isError
+  let setIsError
 
   switch (sectorId) {
     case EGameSector.LABORATORY:
@@ -77,6 +83,8 @@ const SearchContainer = ({
       setNewItem = setNewItemLab
       saveNewItem = saveNewItemLab
       currentTime = currentTimeLab
+      isError = isErrorLab
+      setIsError = setIsErrorLab
       break
 
     case EGameSector.PUBLICITY:
@@ -87,6 +95,8 @@ const SearchContainer = ({
       setNewItem = setNewItemPub
       saveNewItem = saveNewItemPub
       currentTime = currentTimePub
+      isError = isErrorPub
+      setIsError = setIsErrorPub
       break
 
     default:
@@ -118,6 +128,7 @@ const SearchContainer = ({
               roundedTime={ roundedTime }
             />
             <SearchStart
+              isError={ !!isError }
               price={ price }
               duration={ duration }
               items={ items }
@@ -125,6 +136,7 @@ const SearchContainer = ({
               startProgress={ startProgress }
               setNewItem={ setNewItem }
               sectorId={ sectorId }
+              setIsError={ setIsError }
             />
           </motion.div>
         ) }
