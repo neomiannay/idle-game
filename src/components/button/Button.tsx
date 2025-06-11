@@ -65,7 +65,7 @@ const Button = ({ className, cost, action, disabled, isVariant, onClick } : Butt
           <div className={ styles.left }>
             <span className={ styles.cost }>
               <MaskText opened={ false } replayKey={ replayKey }>
-                { cost?.value }&nbsp;
+                { formatValue(cost?.value) }&nbsp;
               </MaskText>
             </span>
             <span className={ styles.unit }>

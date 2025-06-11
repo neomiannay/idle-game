@@ -58,7 +58,10 @@ const SearchStart = ({
     <Button
       type='button'
       disabled={ disabled }
-      cost={ price }
+      cost={{
+        value: price.value,
+        unit: l10n('UNITS.EURO')
+      }}
       action={ l10n('SEARCH_ACTIFS.LAYOUT.BUTTON_LABEL') }
       onClick={ handleClick }
     />
