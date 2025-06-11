@@ -9,7 +9,7 @@ import styles from './Button.module.scss'
 
 type ButtonProps = PropsWithChildren<{
   className?: string
-  isVariant?: boolean
+  variant?: 'simple' | 'variant' | null
   disabled?: boolean
   cost?: {
     value: number
@@ -19,14 +19,14 @@ type ButtonProps = PropsWithChildren<{
   onClick?: () => void
 } & ButtonHTMLAttributes<HTMLButtonElement>>
 
-const Button = ({ className, cost, action, disabled, isVariant, onClick } : ButtonProps) => {
+const Button = ({ className, cost, action, disabled, variant = null, onClick } : ButtonProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const [replayKey, setReplayKey] = useState(0)
 
   return (
     <motion.button
       className={ classNames(styles.wrapper, className, {
-        [styles.variant]: isVariant
+        [styles.variant]: variant === 'variant'
       }) }
       disabled={ disabled }
       onClick={ (e) => {
@@ -35,9 +35,8 @@ const Button = ({ className, cost, action, disabled, isVariant, onClick } : Butt
       } }
       onHoverStart={ () => setIsHovered(true) }
       onHoverEnd={ () => setIsHovered(false) }
-      // { ...baseVariants }
     >
-      { isVariant && (
+      { variant === 'variant' && (
         <>
           <div className={ styles.left }>
             <span className={ styles.variantCost }>
@@ -60,7 +59,7 @@ const Button = ({ className, cost, action, disabled, isVariant, onClick } : Butt
         </>
       ) }
 
-      { !isVariant && cost && (
+      { !variant && cost && (
         <>
           <div className={ styles.left }>
             <span className={ styles.cost }>
@@ -85,6 +84,14 @@ const Button = ({ className, cost, action, disabled, isVariant, onClick } : Butt
             </span>
           </div>
         </>
+      ) }
+
+      { variant === 'simple' && (
+        <span className={ styles.action }>
+          <MaskText opened={ isHovered } replayKey={ replayKey }>
+            { action }
+          </MaskText>
+        </span>
       ) }
     </motion.button>
   )

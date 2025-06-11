@@ -110,7 +110,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
             </span>
           </div>
           <Button
-            isVariant
+            variant='variant'
             onClick={ improveTime }
             disabled={ !reactiveHasEnoughUnits || !reactiveCanPurchaseTime }
             action={ `-${DEFAULT_SUBSTRACTION_VALUE / 1000} ${l10n('UNITS.SEC')}` }
@@ -135,7 +135,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
               EGameUnit.ACTIF
             ) }
             disabled={ !reactiveCanPurshaseQuantity }
-            isVariant
+            variant='variant'
             cost={{
               value: quantityCost,
               unit: l10n(costName)
