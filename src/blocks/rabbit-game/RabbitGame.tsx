@@ -33,7 +33,7 @@ const RabbitGame = () => {
   return (
     <div className={ styles.wrapper }>
       <AnimatePresence mode='wait'>
-        { !isRabbitGamePurchased ? (
+        { isRabbitGamePurchased ? (
           <motion.div
             key='game'
             initial={{ opacity: 0 }}

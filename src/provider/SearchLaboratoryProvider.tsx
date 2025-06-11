@@ -21,6 +21,9 @@ type SearchLaboratoryContextType = {
   rabbitPrice: number | null
   setRabbitPrice: (price: number) => void
   loadRabbitPrice: (data: number | null | undefined) => void
+  killedRabbits: number
+  setKilledRabbits: React.Dispatch<React.SetStateAction<number>>
+  loadKilledRabbits: (data: number) => void
 }
 
 const SearchLaboratoryContext = createContext<SearchLaboratoryContextType | undefined>(undefined)
@@ -40,6 +43,7 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
     if (saved !== null) return Number(saved);
     return rabbits.price;
   });
+  const [killedRabbits, setKilledRabbits] = useState<number>(0);
 
   useEffect(() => {
     localStorage.setItem('rabbitPrice', String(rabbitPrice));
@@ -87,6 +91,9 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
   const loadComplexComposition = (data: TSearchGameItem[]) => {
     setComplexComposition(data)
   }
+  const loadKilledRabbits = (data: number) => {
+    setKilledRabbits(data)
+  }
 
   const loadRabbitPrice = (data: number | null | undefined) => {
     if (data === undefined || data === null) {
@@ -111,7 +118,10 @@ export const SearchLaboratoryProvider = ({ children }: BaseProviderProps) => {
     loadComplexComposition,
     rabbitPrice,
     setRabbitPrice,
-    loadRabbitPrice
+    loadRabbitPrice,
+    killedRabbits,
+    setKilledRabbits,
+    loadKilledRabbits
   }
 
   return (

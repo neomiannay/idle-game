@@ -16,6 +16,7 @@ import RabbitBtn from '../rabbit/components/rabbit-btn/RabbitBtn'
 import RabbitSliderCard from '../rabbit-slider-card/RabbitSliderCard'
 
 import styles from './RabbitSlider.module.scss'
+import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
 
 export type TRabbitSliderItemValue = {
   value: number;
@@ -61,6 +62,7 @@ const RabbitSlider = ({
 
   const { hasEnoughUnits, modifyUnitValue, applyChoiceEffects } =
     useGameProviderContext()
+  const { setKilledRabbits } = useSearchLaboratoryContext()
 
   const nextSlide = () => {
     setCurrentDir('right')
@@ -87,6 +89,7 @@ const RabbitSlider = ({
   const handleBuy = () => {
     if (rabbitPrice && !hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)) return
 
+    setKilledRabbits((prev: number) => prev + 1)
     if (life.get() <= 0 && rabbitPrice) {
       setRabbitPrice(rabbitPrice * rabbits.factor)
       modifyUnitValue(EGameUnit.BENEFITS, -rabbitPrice)
@@ -130,9 +133,6 @@ const RabbitSlider = ({
   }, [items, currentIndex, isRabbitDead])
 
   const price = isRabbitDead ? rabbitPrice : testPrice
-
-  console.log('RabbitSlider render', rabbitPrice);
-
 
   return (
     <div className={ styles.controlPanel }>

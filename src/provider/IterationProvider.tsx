@@ -33,7 +33,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const { seenMessages, loadMessages, setSeenMessagesLoaded } = useMessageSystemContext()
   const { triggerFeedback, successCount, setSuccessCount, failCount, setFailCount } = useFeedbackContext()
   const { loadSectors, unlockedSectors } = useSectorsProviderContext()
-  const { complexComposition, loadComplexComposition, rabbitPrice, loadRabbitPrice } = useSearchLaboratoryContext()
+  const { complexComposition, loadComplexComposition, rabbitPrice, killedRabbits, loadKilledRabbits } = useSearchLaboratoryContext()
   const { tips, loadTips } = useSearchPublicityContext()
 
   // Fonction pour traiter un tick de jeu (production d'items)
@@ -170,7 +170,8 @@ export function IterationProvider ({ children }: BaseProviderProps) {
       unlockedSectors,
       complexComposition,
       tips,
-      rabbitPrice
+      rabbitPrice,
+      killedRabbits
     }
   }, [darkMode, units, getElementsForUnit, seenMessages, unlockedSectors, complexComposition, tips, prices, rabbitPrice])
 
@@ -234,6 +235,9 @@ export function IterationProvider ({ children }: BaseProviderProps) {
 
     if (gameState.tips)
       loadTips(gameState.tips)
+
+    if(gameState.killedRabbits)
+      loadKilledRabbits(gameState.killedRabbits)
 
 
     // Charger les prix

@@ -104,6 +104,7 @@ export interface GameState {
   complexComposition?: TSearchGameItem[] | null
   tips?: TSearchGameItem[] | null
   rabbitPrice?: number | null | undefined
+  killedRabbits?: number | null
 }
 
 export type ElementType = 'item' | 'upgrade' | 'sector' | 'otherShopElement'
