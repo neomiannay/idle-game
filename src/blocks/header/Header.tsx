@@ -11,7 +11,7 @@ import SectorsTab from 'blocks/sectors/sectors-tab/SectorsTab'
 import { AnimatePresence, motion } from 'motion/react'
 import { baseVariants, fadeAppear, stagger } from 'core/animation'
 import AdaptativeText from 'components/adaptative-text/AdaptativeText'
-import { formatBenefits } from 'helpers/units'
+import { formatBenefits, formatValue } from 'helpers/units'
 import { useResizeObserver } from 'hooks/useResizeObserver'
 import { useViewportContext } from 'provider/ViewportProvider'
 import MaskText from 'components/mask-text/MaskText'
@@ -79,7 +79,7 @@ const Header = ({ className }: HeaderProps) => {
                   </span>
                   <span className={ styles.count }>
                     <MaskText opened={ false } replayKey={ productionCount }>
-                      { productionCount } €
+                      { formatValue(productionCount) } €
                     </MaskText>
                   </span>
                 </div>
@@ -87,7 +87,7 @@ const Header = ({ className }: HeaderProps) => {
                   <span className={ styles.title }>{ l10n('PRICES.SELLING') }</span>
                   <span className={ styles.count }>
                     <MaskText opened={ false } replayKey={ sellingCount }>
-                      { sellingCount } €
+                      { formatValue(sellingCount) } €
                     </MaskText>
                   </span>
                 </div>
