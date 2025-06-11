@@ -1,8 +1,8 @@
 {
   "settings": {
-    "duration": 6000,
+    "duration": 60000,
     "price": 40,
-    "efficiency": 90
+    "efficiency": 100
   },
   "layout": {
     "name": "SEARCH_TIPS.LAYOUT.NAME",
@@ -48,7 +48,7 @@
         }
       ]
     },
-	{
+    {
       "id": "search-tips-2",
       "disabled": true,
       "name": "SEARCH_TIPS.ITEMS.PACKAGING_OPTIMIZATION",
@@ -78,7 +78,7 @@
         }
       ]
     },
-		{
+    {
       "id": "search-tips-3",
       "disabled": true,
       "name": "SEARCH_TIPS.ITEMS.LOCAL_SOURCING",

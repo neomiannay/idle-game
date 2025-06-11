@@ -20,7 +20,7 @@ export type SearchStartProps = {
   duration: number;
   items: TSearchGameItem[];
   setSearchState: (searchState: number) => void;
-  startProgress: (duration: number, callback: () => void) => void;
+  startProgress: (duration: number) => void;
   setNewItem: (item: TSearchGameItem) => void;
   sectorId: EGameSector;
 };
@@ -57,7 +57,7 @@ const SearchStart = ({
     setIsError?.(false)
 
     setSearchState(1)
-    startProgress(duration, () => setSearchState(2))
+    startProgress(duration)
     modifyUnitValue(price.unit, -price.value)
 
     const randomItem =

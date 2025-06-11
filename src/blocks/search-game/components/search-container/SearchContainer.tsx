@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { EGameSector, EGameUnit } from 'types/store'
 import {
@@ -19,7 +19,6 @@ import styles from './SearchContainer.module.scss'
 export type SearchContainerProps = {
   layoutInfos: SearchGameProps['layoutInfos'];
   duration: number;
-  efficiency: number;
   roundedTime: {
     value: number;
     unit: string;
@@ -35,7 +34,6 @@ export type SearchContainerProps = {
 const SearchContainer = ({
   layoutInfos,
   duration,
-  efficiency,
   roundedTime,
   price,
   items,
@@ -50,7 +48,9 @@ const SearchContainer = ({
     saveNewItemLab,
     currentTimeLab,
     isErrorLab,
-    setIsErrorLab
+    setIsErrorLab,
+    efficiencyLab,
+    setEfficiencyLab
   } = useSearchLaboratoryContext()
   const {
     searchStatePub,
@@ -61,7 +61,9 @@ const SearchContainer = ({
     saveNewItemPub,
     currentTimePub,
     isErrorPub,
-    setIsErrorPub
+    setIsErrorPub,
+    efficiencyPub,
+    setEfficiencyPub
   } = useSearchPublicityContext()
 
   let searchState
@@ -73,6 +75,8 @@ const SearchContainer = ({
   let currentTime
   let isError
   let setIsError
+  let efficiency
+  let setEfficiency
 
   switch (sectorId) {
     case EGameSector.LABORATORY:
@@ -85,6 +89,8 @@ const SearchContainer = ({
       currentTime = currentTimeLab
       isError = isErrorLab
       setIsError = setIsErrorLab
+      setEfficiency = setEfficiencyLab
+      efficiency = efficiencyLab
       break
 
     case EGameSector.PUBLICITY:
@@ -97,6 +103,8 @@ const SearchContainer = ({
       currentTime = currentTimePub
       isError = isErrorPub
       setIsError = setIsErrorPub
+      setEfficiency = setEfficiencyPub
+      efficiency = efficiencyPub
       break
 
     default:
@@ -107,8 +115,12 @@ const SearchContainer = ({
       setNewItem = setNewItemLab
       saveNewItem = saveNewItemLab
       currentTime = currentTimeLab
+      setEfficiency = setEfficiencyPub
+      efficiency = efficiencyPub
       break
   }
+
+  useEffect(() => setEfficiency(efficiency), [efficiency, setEfficiency])
 
   return (
     <div className={ styles.container }>

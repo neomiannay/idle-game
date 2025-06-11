@@ -2,11 +2,15 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 
 import { TSearchGameItem } from 'blocks/search-game/SearchGame'
 
+import searchTips from 'data/games/search-tips.json'
+
 import { BaseProviderProps } from './GlobalProvider'
 
 type SearchPublicityContextType = {
   currentTimePub: number
-  startProgressPub: (duration: number, onEnd: () => void) => void
+  efficiencyPub: number
+  setEfficiencyPub: (efficiency: number) => void
+  startProgressPub: (duration: number) => void
   stopProgressPub: () => void
   isRunningPub: boolean
   searchStatePub: number
@@ -27,13 +31,20 @@ let context: SearchPublicityContextType
 
 export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
   const [currentTimePub, setCurrentTimePub] = useState(0)
+  const [efficiencyPub, setEfficiencyPub] = useState<number>(() => {
+    const saved = localStorage.getItem('efficiencyPub')
+    if (saved !== null) return Number(saved)
+    return searchTips.settings.efficiency
+  })
   const [isRunningPub, setIsRunningPub] = useState(false)
-  // eslint-disable-next-line no-extra-parens
-  const [onEndCallbackPub, setOnEndCallbackPub] = useState<() => void>(() => () => {})
   const [searchStatePub, setSearchStatePub] = useState(0)
   const [newItemPub, setNewItemPub] = useState<TSearchGameItem | null>(null)
   const [tips, setTips] = useState<TSearchGameItem[] | null>(null)
   const [isErrorPub, setIsErrorPub] = useState(false)
+
+  useEffect(() => {
+    localStorage.setItem('efficiencyPub', String(efficiencyPub))
+  }, [efficiencyPub])
 
   useEffect(() => {
     if (!isRunningPub) return
@@ -42,26 +53,34 @@ export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
       setCurrentTimePub((prev) => {
         const newTime = Math.max(prev - 1000, 0)
         if (newTime === 0) {
+          const evalEfficiency = Math.round(Math.random() * 100)
+          const isError = evalEfficiency > efficiencyPub
+
+          setIsErrorPub(isError)
+          setEfficiencyPub(50 + Math.round(Math.random() * 50))
+
+          setSearchStatePub(isError ? 0 : 2)
+
           clearInterval(timer)
           setIsRunningPub(false)
-          onEndCallbackPub()
         }
+
         return newTime
       })
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [isRunningPub, onEndCallbackPub])
+  }, [isRunningPub])
 
-  const startProgressPub = (duration: number, onEnd: () => void) => {
+  const startProgressPub = (duration: number) => {
     setCurrentTimePub(duration)
     setIsRunningPub(true)
-    setOnEndCallbackPub(() => onEnd)
   }
 
   const stopProgressPub = () => {
     setIsRunningPub(false)
     setCurrentTimePub(0)
+    setEfficiencyPub(0)
   }
 
   const saveNewItemPub = (item: TSearchGameItem | null) => {
@@ -80,6 +99,8 @@ export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
 
   context = {
     currentTimePub,
+    efficiencyPub,
+    setEfficiencyPub,
     startProgressPub,
     stopProgressPub,
     isRunningPub,
@@ -96,9 +117,7 @@ export const SearchPublicityProvider = ({ children }: BaseProviderProps) => {
   }
 
   return (
-    <SearchPublicityContext.Provider
-      value={ context }
-    >
+    <SearchPublicityContext.Provider value={ context }>
       { children }
     </SearchPublicityContext.Provider>
   )

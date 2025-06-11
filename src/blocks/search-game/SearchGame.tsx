@@ -84,7 +84,6 @@ const SearchGame: React.FC<SearchGameProps> = ({
       <SearchContainer
         layoutInfos={ layoutInfos }
         duration={ duration }
-        efficiency={ efficiency }
         roundedTime={ roundedTime }
         price={{
           unit: EGameUnit.BENEFITS,
