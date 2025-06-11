@@ -11,9 +11,6 @@ import Rabbit from './components/rabbit/Rabbit'
 import RabbitSlider, {
   TRabbitSliderItem
 } from './components/rabbit-slider/RabbitSlider'
-import useMotionState from 'hooks/useMotionState'
-import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
-import { useInventoryContext } from 'provider/InventoryProvider'
 import { EGameUnit } from 'types/store'
 import useElementPurchased from 'hooks/useElementPurchased'
 
