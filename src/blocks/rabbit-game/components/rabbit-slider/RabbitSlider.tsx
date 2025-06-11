@@ -85,7 +85,6 @@ const RabbitSlider = ({
   useEffect(() => handleSetHeight(), [])
 
   const handleBuy = () => {
-
     if (rabbitPrice && !hasEnoughUnits(rabbitPrice, EGameUnit.BENEFITS)) return
 
     if (life.get() <= 0 && rabbitPrice) {
@@ -98,10 +97,7 @@ const RabbitSlider = ({
   }
 
   const handleStart = (exp: TRabbitSliderItem) => {
-
-    if (!hasEnoughUnits(testPrice, EGameUnit.BENEFITS)) {
-
-    }
+    if (!hasEnoughUnits(testPrice, EGameUnit.BENEFITS)) return
 
     modifyUnitValue(EGameUnit.BENEFITS, -testPrice)
     applyChoiceEffects(exp.values)
