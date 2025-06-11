@@ -1,13 +1,7 @@
 import React from 'react'
 
 import classNames from 'classnames'
-import {
-  EGameUnit,
-  ElementType,
-  ItemType,
-  SectorType,
-  UpgradeType
-} from 'types/store'
+import { EGameUnit, ElementType, ItemType, OtherShopElementType, SectorType, UpgradeType } from 'types/store'
 import { useSequentialPurchaseState } from 'hooks/useSequentialPurchase'
 import { useInventoryContext } from 'provider/InventoryProvider'
 import { conjugate, useL10n } from 'provider/L10nProvider'
@@ -25,7 +19,7 @@ import styles from './ShopElement.module.scss'
 type ShopElementProps = {
   className?: string;
   elementId: string;
-  element: ItemType | UpgradeType | SectorType;
+  element: ItemType | UpgradeType | SectorType | OtherShopElementType;
   unitId: EGameUnit;
   type: ElementType;
   onBuyComplete?: () => void;

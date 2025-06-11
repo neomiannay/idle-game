@@ -102,6 +102,7 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
             const items = getElementsForUnit(unitId, 'item')
             const upgrades = getElementsForUnit(unitId, 'upgrade')
             const sectors = getElementsForUnit(unitId, 'sector')
+            const otherShopElements = getElementsForUnit(unitId, 'otherShopElement')
 
             const hasElements =
               Object.keys(items).length > 0 || Object.keys(upgrades).length > 0 || Object.keys(sectors).length > 0
@@ -124,6 +125,11 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
                   elements={ sectors }
                   unitId={ unitId }
                   type='sector'
+                />
+                <ShopElements
+                  elements={ otherShopElements }
+                  unitId={ unitId }
+                  type='otherShopElement'
                 />
               </React.Fragment>
             )

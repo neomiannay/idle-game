@@ -79,7 +79,7 @@ export interface GameStateUnit {
 }
 
 export interface GameStateElement {
-  _type: 'item' | 'upgrade' | 'sector'
+  _type: 'item' | 'upgrade' | 'sector' | 'otherShopElement'
   _id: string
   count: number
   purchased: boolean
@@ -97,6 +97,7 @@ export interface GameState {
   items?: Record<string, Record<string, GameStateElement>>
   upgrades?: Record<string, Record<string, GameStateElement>>
   sectors?: Record<string, Record<string, GameStateElement>> | null
+  otherShopElements?: Record<string, Record<string, GameStateElement>> | null
   prices?: Record<string, GameStatePrice>
   seenMessages?: Array<string> | null
   unlockedSectors?: EGameSector[] | null
@@ -105,7 +106,7 @@ export interface GameState {
   rabbitPrice?: number | null
 }
 
-export type ElementType = 'item' | 'upgrade' | 'sector'
+export type ElementType = 'item' | 'upgrade' | 'sector' | 'otherShopElement'
 
 export interface ItemType {
   _type: 'item'
@@ -163,8 +164,26 @@ export interface SectorType {
   purchased: MotionValue<boolean>
 }
 
+export interface OtherShopElementType {
+  _type: 'otherShopElement'
+  _id: EGameSector
+  name: string
+  description: string
+  apparitionCondition: {
+    unitId: EGameUnit
+    value: number
+  }
+  cost: {
+    unitId: EGameUnit
+    value: number
+  }
+  count: MotionValue<number>
+  purchased: MotionValue<boolean>
+}
+
 export interface ElementTypes {
   item: ItemType
   upgrade: UpgradeType
   sector: SectorType
+  otherShopElement: OtherShopElementType
 }

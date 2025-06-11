@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { EGameUnit, ElementType, ItemType, SectorType, UpgradeType } from 'types/store'
+import { EGameUnit, ElementType, ItemType, OtherShopElementType, SectorType, UpgradeType } from 'types/store'
 
 import ShopElement from '../shop-element/ShopElement'
 
 type ShopElementsProps = {
-  elements: Record<string, ItemType | UpgradeType | SectorType>
+  elements: Record<string, ItemType | UpgradeType | SectorType | OtherShopElementType>
   unitId: EGameUnit
   type: ElementType
   onElementPurchased?: () => void

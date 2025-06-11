@@ -1,0 +1,20 @@
+{
+  "otherShopElements": {
+    "sale": [
+      {
+        "_type": "otherShopElement",
+        "_id": "rabbitGame",
+        "name": "Lapin",
+        "description": "Débloquer le gros machin.",
+        "apparitionCondition": {
+          "unitId": "benefits",
+          "value": 100
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 100
+        }
+      }
+    ]
+  }
+}

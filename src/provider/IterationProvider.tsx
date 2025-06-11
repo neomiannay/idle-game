@@ -144,6 +144,21 @@ export function IterationProvider ({ children }: BaseProviderProps) {
         }
         return acc
       }, {} as Record<string, Record<string, GameStateElement>>),
+      otherShopElements: Object.keys(units).reduce((acc, unitId) => {
+        const shopElements = getElementsForUnit(unitId as EGameUnit, 'otherShopElement')
+        if (Object.keys(shopElements).length > 0) {
+          acc[unitId] = {}
+          Object.entries(shopElements).forEach(([shopElementId, shopElement]) => {
+            acc[unitId][shopElementId] = {
+              _type: 'otherShopElement',
+              _id: shopElementId,
+              count: shopElement.count.get(),
+              purchased: shopElement.purchased.get()
+            }
+          })
+        }
+        return acc
+      }, {} as Record<string, Record<string, GameStateElement>>),
       prices: Object.entries(prices).reduce((acc, [priceId, price]) => {
         acc[priceId] = {
           motionValue: price.motionValue.get(),
@@ -203,6 +218,10 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     // Charger les secteurs
     if (gameState.sectors)
       loadElements(gameState.sectors)
+
+    // Charger les autres éléments du shop
+    if (gameState.otherShopElements)
+      loadElements(gameState.otherShopElements)
 
     // Charger les messages déjà vus
     if (gameState.seenMessages)
