@@ -27,7 +27,6 @@ const MarketingSector = ({ className, ...props }: MarketingSectorProps) => {
         <SearchGame
           duration={ searchGameData.settings.duration }
           price={ searchGameData.settings.price }
-          efficiency={ searchGameData.settings.efficiency }
           layoutInfos={ searchGameData.layout }
           items={ searchGameData.items as SearchGameProps['items'] }
           sectorId={ EGameSector.PUBLICITY }
