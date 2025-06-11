@@ -35,6 +35,7 @@ const Button = ({ className, cost, action, disabled, isVariant, onClick } : Butt
       } }
       onHoverStart={ () => setIsHovered(true) }
       onHoverEnd={ () => setIsHovered(false) }
+      // { ...baseVariants }
     >
       { isVariant && (
         <>

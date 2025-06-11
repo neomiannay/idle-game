@@ -64,11 +64,14 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
 
       <Button title='BUTTONS.ACTIF' onClick={ handleClick } disabled={ !canBuy } />
 
-      <AnimatePresence>
+      { /* <motion.div
+        key='upgrades'
+        { ...stagger(0.1, 0.5) }
+      > */ }
+      <AnimatePresence mode='wait'>
         { !notClickedYet && (
           <motion.div
             key='upgrades'
-            layout
             { ...baseVariants }
             { ...fadeAppear() }
           >
@@ -76,6 +79,7 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
           </motion.div>
         ) }
       </AnimatePresence>
+      { /* </motion.div> */ }
 
       <Items unitId={ unitId } />
     </div>

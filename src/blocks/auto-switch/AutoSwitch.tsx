@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { motion } from 'framer-motion'
 import MaskText from 'components/mask-text/MaskText'
 import { useL10n } from 'provider/L10nProvider'
+import { bezier } from 'helpers/easing'
 
 import styles from './AutoSwitch.module.scss'
 
@@ -22,7 +23,7 @@ const AutoSwitch: React.FC<AutoSwitchProps> = ({ value, onToggle }) => {
       initial={{ opacity: 0, y: 10, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.9 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      transition={{ duration: 0.3, ease: bezier.quintEaseOut }}
     >
       <div className={ styles.switchLabel }>
         <MaskText opened={ false } replayKey={ value ? 1 : 0 }>

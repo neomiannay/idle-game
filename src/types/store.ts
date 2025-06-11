@@ -166,7 +166,8 @@ export interface SectorType {
 
 export interface OtherShopElementType {
   _type: 'otherShopElement'
-  _id: EGameSector
+  _id: string
+  sectorId: EGameSector
   name: string
   description: string
   apparitionCondition: {

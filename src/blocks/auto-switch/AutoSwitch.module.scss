@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: rem(12);
+  margin-top: rem(32);
 }
 
 .switchTrack {
@@ -11,7 +12,7 @@
   width: grid(0, 5);
   height: rem(32);
   opacity: 0.75;
-  background-color: var(--fill-100);
+  background-color: var(--transparent-dark-24);
   border-radius: var(--border-radius-xl);
   transition: background-color 0.3s ease;
 }

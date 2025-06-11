@@ -35,6 +35,16 @@
   width: 100%;
 }
 
+.left {
+  display: flex;
+  gap: rem(4);
+}
+
+.unitByTime {
+  @include apply(card-text);
+  text-transform: uppercase;
+}
+
 .count {
   @include apply(count-item);
   color: var(--fill-20);

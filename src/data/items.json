@@ -39,7 +39,7 @@
         "unitId": "actif",
         "name": "ITEMS.MINE",
         "description": "ITEMS.MINE_DESC",
-        "unitByTime": 5,
+        "unitByTime": 10,
         "apparitionCondition": {
           "unitId": "actif",
           "value": 10
@@ -89,7 +89,7 @@
         "unitId": "sale",
         "name": "ITEMS.KIDS",
         "description": "ITEMS.KIDS_DESC",
-        "unitByTime": 5,
+        "unitByTime": 10,
         "apparitionCondition": {
           "unitId": "sale",
           "value": 10

@@ -11,6 +11,8 @@ import useItemCount from 'hooks/useItemCount'
 import Button from 'components/button/Button'
 import { getItemPrice } from 'helpers/units'
 import MaskText from 'components/mask-text/MaskText'
+import { motion } from 'motion/react'
+import { baseVariants, fadeAppear, stagger } from 'core/animation'
 
 import styles from './Item.module.scss'
 
@@ -59,36 +61,61 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
   if (!isPurchased) return null
 
   return (
-    <div
+    <motion.div
       className={ classNames(styles.wrapper, className, {
         [styles.unavailable]: !sequentiallyPurchasable
       }) }
+      { ...baseVariants }
+      { ...stagger(0.1, 0.6) }
     >
       <div className={ styles.line }>
         <div className={ styles.information }>
-          <h4 className={ styles.title }>{ l10n(item.name) }</h4>
-          <span className={ styles.count }>
+          <div className={ styles.left }>
+            <motion.h4
+              className={ styles.title }
+              { ...fadeAppear() }
+            >
+              { l10n(item.name) }
+            </motion.h4>
+            <motion.span
+              className={ styles.unitByTime }
+              { ...fadeAppear() }
+            >
+              [ { item.unitByTime }/{ l10n('UNITS.SEC') } ]
+            </motion.span>
+          </div>
+          <motion.span
+            className={ styles.count }
+            { ...fadeAppear() }
+          >
             <MaskText opened={ false } replayKey={ itemCount }>
               { itemCount }
             </MaskText>
-          </span>
+          </motion.span>
         </div>
-        <p className={ styles.description }>
+        <motion.p
+          className={ styles.description }
+          { ...fadeAppear() }
+        >
           { l10n(item.description) }
           { /* +{ item.unitByTime }/{ l10n('UNITS.SEC') } */ }
-        </p>
+        </motion.p>
       </div>
-      <Button
-        className={ styles.button }
-        onClick={ () => buyElement(unitId, itemId, 'item') }
-        disabled={ !canPurchase }
-        cost={{
-          value: cost,
-          unit: costName
-        }}
-        action={ l10n('BUTTONS.BUY') }
-      />
-    </div>
+      <motion.div
+        { ...fadeAppear() }
+      >
+        <Button
+          className={ styles.button }
+          onClick={ () => buyElement(unitId, itemId, 'item') }
+          disabled={ !canPurchase }
+          cost={{
+            value: cost,
+            unit: costName
+          }}
+          action={ l10n('BUTTONS.BUY') }
+        />
+      </motion.div>
+    </motion.div>
   )
 }
 

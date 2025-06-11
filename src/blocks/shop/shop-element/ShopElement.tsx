@@ -25,14 +25,7 @@ type ShopElementProps = {
   onBuyComplete?: () => void;
 };
 
-const ShopElement = ({
-  className,
-  elementId,
-  element,
-  unitId,
-  type,
-  onBuyComplete
-}: ShopElementProps) => {
+const ShopElement = ({ className, elementId, element, unitId, type, onBuyComplete }: ShopElementProps) => {
   const { shopOpen, translateYValue } = useShopProviderContext()
   const { buyElementFromShop, shouldDisplayElement } = useInventoryContext()
   const { setUnlockedSectors, unlockedSectors } = useSectorsProviderContext()
@@ -49,11 +42,21 @@ const ShopElement = ({
 
   if (!shouldDisplay || isPurchased) return null
 
+  const isItem = type === 'item'
   const isUpgrade = type === 'upgrade'
   const isSector = type === 'sector'
+  const isOther = type === 'otherShopElement'
   const rawUnitName = element.cost.unitId.toString().toUpperCase()
   const unitName = `UNITS.${rawUnitName}`
-  const buttonTitle = `BUTTONS.${rawUnitName}`
+
+  const elementSector = () => {
+    if (isItem) return `BUTTONS.${rawUnitName}`
+    if (isUpgrade) return `BUTTONS.${rawUnitName}`
+    if (isSector) return `SECTORS.${(element as SectorType)._id.toString().toUpperCase()}`
+    if (isOther) return `SECTORS.${(element as OtherShopElementType).sectorId.toString().toUpperCase()}`
+
+    return ''
+  }
 
   // Variants qui respectent le stagger du parent
   const shopElementVariants = {
@@ -84,9 +87,13 @@ const ShopElement = ({
     if (isUpgrade) {
       const nextLevel = elementId.replace(/\d+/, (n) => String(Number(n) + 1))
       return `${elementId.toUpperCase()} => ${nextLevel.toUpperCase()}`
+    } else {
+      const item = element as ItemType
+      return `${item.unitByTime} ${item.cost.unitId}/s`
     }
 
-    return `1 ${element.cost.unitId}/s`
+    // const upgrade = element as UpgradeType
+    // return `${upgrade.valueByAction} ${upgrade.cost.unitId}/s`
   }
 
   const handleSectorClick = () => {
@@ -122,7 +129,7 @@ const ShopElement = ({
         <div className={ styles.inner }>
           <div className={ styles.content }>
             <h4 className={ styles.title }>{ l10n(element.name) }</h4>
-            { !isSector && (
+            { (!isSector && !isOther) && (
               <span className={ styles.effect }>{ getEffectText() }</span>
             ) }
             <p className={ styles.text }>{ l10n(element.description) }</p>
@@ -131,11 +138,9 @@ const ShopElement = ({
             <span className={ styles.cost }>
               { element.cost.value } <span>({ l10n(conjugate(unitName, element.cost.value)) })</span>
             </span>
-            { !isSector && (
-              <span className={ styles.unitEffect }>
-                { l10n(buttonTitle) }
-              </span>
-            ) }
+            <span className={ styles.unitEffect }>
+              { elementSector() && l10n(elementSector()) }
+            </span>
           </div>
         </div>
       </motion.button>
