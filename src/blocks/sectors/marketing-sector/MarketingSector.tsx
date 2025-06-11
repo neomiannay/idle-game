@@ -33,7 +33,7 @@ const MarketingSector = ({ className, ...props } : MarketingSectorProps) => {
           items={ searchGameData.items as SearchGameProps['items'] }
           sectorId={ EGameSector.PUBLICITY }
         />
-        <img src='/img/influenceurs/influenceurs_blur.png' alt='' className={ styles.rabbitBlur } />
+        <img src='/img/influenceurs/influenceurs_blur.png' alt='' className={ styles.influenceurBlur } />
       </div>
     </Sector>
   )

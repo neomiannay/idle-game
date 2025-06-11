@@ -7,7 +7,7 @@ import HoldButton from 'components/hold-button/HoldButton'
 import AutoSwitch from 'blocks/auto-switch/AutoSwitch'
 import useMotionState from 'hooks/useMotionState'
 import Count from 'components/count/Count'
-import { useL10n } from 'provider/L10nProvider'
+import { conjugate, useL10n } from 'provider/L10nProvider'
 import { useUpgradePurchased } from 'hooks/useUpgradePurchased'
 import Button from 'components/button/Button'
 import { getItemPrice } from 'helpers/units'
@@ -99,6 +99,17 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
         <Count unitId={ unitId } count={ count } />
       </div>
       <HoldButton label='BUTTONS.COMPLEX' autoMode={ complexAutoMode } value={ quantity } />
+      <div className={ styles.equivalence }>
+        <div className={ styles.unitWrapper }>
+          <p className={ styles.count }>5</p>
+          <p className={ styles.unit }>{ l10n(conjugate('UNITS.ACTIF', 5)) }</p>
+        </div>
+        <p className={ styles.equal }>=</p>
+        <div className={ styles.unitWrapper }>
+          <p className={ styles.count }>1</p>
+          <p className={ styles.unit }>{ l10n('UNITS.FORMULATION.SINGULAR') }</p>
+        </div>
+      </div>
       <div className={ styles.perfWrapper }>
         <div className={ styles.perf }>
           <div className={ styles.perfHeader }>
