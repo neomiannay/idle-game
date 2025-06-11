@@ -2,14 +2,13 @@ import React from 'react'
 
 import { EGamePrice, EGameSector, EGameUnit } from 'types/store'
 import { useL10n } from 'provider/L10nProvider'
-import classNames from 'classnames'
-import Translatable from 'components/translatable/Translatable'
 import { DEFAULT_SCALE_FACTOR, getRoundedTime } from 'helpers/units'
 import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
 import { useSearchPublicityContext } from 'provider/SearchPublicityProvider'
 
 import styles from './SearchGame.module.scss'
 import SearchContainer from './components/search-container/SearchContainer'
+import SearchListItem from './components/search-list-item/SearchListItem'
 
 export type TSearchGameItemValue = {
   value: number;
@@ -45,7 +44,7 @@ export type SearchGameProps = {
   efficiency: number; // In percentage
   layoutInfos: TSearchGameLayoutInfos;
   items: TSearchGameItem[];
-  sectorId: EGameSector
+  sectorId: EGameSector;
 };
 
 const SearchGame: React.FC<SearchGameProps> = ({
@@ -82,62 +81,11 @@ const SearchGame: React.FC<SearchGameProps> = ({
     <div className={ styles.wrapper }>
       <h3 className={ styles.name }>{ l10n(layoutInfos.name) }</h3>
       <hr className={ styles.divider } />
-      <div className={ styles.gameInfos }>
-        <div className={ styles.gameInfosItem }>
-          <h4 className={ styles.gameInfosItemLabel }>
-            { l10n(layoutInfos.title) }
-          </h4>
-          <h5 className={ styles.gameInfosItemValue }>
-            { l10n(layoutInfos.subtitle) }
-          </h5>
-          <p className={ styles.gameInfosItemDesc }>
-            { l10n(layoutInfos.description) }
-          </p>
-        </div>
-        <div
-          className={ classNames(
-            styles.gameInfosItem,
-            styles.gameInfosItemComposition
-          ) }
-        >
-          <div
-            style={{
-              transform: 'rotate(5deg)',
-              zIndex: 1
-            }}
-          >
-            <Translatable>
-              <div className={ styles.gameInfosCard }>
-                <h4 className={ styles.gameInfosCardValue }>
-                  { efficiency + l10n('UNITS.PERCENT') }
-                </h4>
-                <p className={ styles.gameInfosCardDesc }>
-                  { l10n(layoutInfos.probability) }
-                </p>
-              </div>
-            </Translatable>
-          </div>
-          <div
-            style={{
-              transform: 'translate(-10px, -5px) rotate(-4deg)'
-            }}
-          >
-            <Translatable>
-              <div className={ styles.gameInfosCard }>
-                <h4 className={ styles.gameInfosCardValue }>
-                  { roundedTime.value + l10n(roundedTime.unit) }
-                </h4>
-                <p className={ styles.gameInfosCardDesc }>
-                  { l10n(layoutInfos.duration) }
-                </p>
-              </div>
-            </Translatable>
-          </div>
-        </div>
-      </div>
       <SearchContainer
         layoutInfos={ layoutInfos }
         duration={ duration }
+        efficiency={ efficiency }
+        roundedTime={ roundedTime }
         price={{
           unit: EGameUnit.BENEFITS,
           value: price * ((itemList?.length || 0) * DEFAULT_SCALE_FACTOR + 1)
@@ -149,17 +97,14 @@ const SearchGame: React.FC<SearchGameProps> = ({
         <>
           <hr className={ styles.divider } />
           <div className={ styles.itemsContainer }>
-            <h6 className={ styles.subTitle }>
-              { l10n(layoutInfos.list) }
-            </h6>
-            <small className={ styles.itemsWrapper }>
+            <h6 className={ styles.subTitle }>{ l10n(layoutInfos.list) }</h6>
+            <div className={ styles.itemsWrapper }>
               { itemList?.map((item, index) => (
-                <span key={ item.id }>
-                  { l10n(item.name) }
-                  { index !== itemList.length - 1 ? ', ' : '.' }
-                </span>
+                <React.Fragment key={ item.id }>
+                  <SearchListItem item={ item } index={ index } list={ itemList } />
+                </React.Fragment>
               )) }
-            </small>
+            </div>
           </div>
         </>
       ) }

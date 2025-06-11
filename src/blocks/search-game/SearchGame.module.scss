@@ -1,7 +1,8 @@
 .wrapper {
-  display: flex;
+  display: grid;
   flex-direction: column;
   align-items: start;
+  grid-template-rows: auto auto 1fr auto auto;
   gap: rem(24);
 }
 
@@ -25,102 +26,12 @@
   padding: 0.25rem 0;
 }
 
-.searchButton {
-  transition: all 0.3s ease;
-  margin-top: 15rem;
-  background-color: var(--color-black);
-  color: var(--color-white);
-
-  &:hover {
-    background-color: var(--color-white);
-    color: var(--color-black);
-  }
-}
-
 .itemsWrapper {
   color: var(--fill-10);
-  text-align: center;
-  font-family: "PP Formula";
-  font-size: rem(12);
-  font-style: normal;
-  font-weight: 400;
-  text-transform: uppercase;
+  display: flex;
+  gap: rem(6);
 }
 
 .subTitle {
   @include apply(subtitle-uppercase);
-}
-
-.gameInfos {
-  display: flex;
-  align-items: center;
-  gap: rem(50);
-
-  &Item {
-    position: relative;
-
-    &Label {
-      color: var(--fill-10);
-      font-family: "PP Formula";
-      font-size: rem(18);
-      font-style: normal;
-      font-weight: 500;
-      margin-bottom: rem(8);
-    }
-
-    &Value {
-      color: var(--fill-10);
-      font-family: "PP Formula";
-      font-size: rem(12);
-      font-style: normal;
-      font-weight: 500;
-      text-transform: uppercase;
-    }
-
-    &Desc {
-      color: var(--fill-40);
-      font-family: "PP Formula";
-      font-size: rem(10);
-      font-style: normal;
-      font-weight: 220;
-      max-width: rem(400);
-    }
-
-    &Composition {
-      display: flex;
-    }
-  }
-
-  &Card {
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    gap: rem(8);
-    background: var(--fill-100);
-    box-shadow: 0px 4px 28px 0px rgba(0, 0, 0, 0.04);
-    padding: rem(16);
-    border-radius: rem(8);
-    transform: translateX(rem(-20));
-    width: rem(105);
-
-    &Value {
-      background: linear-gradient(94deg, #0f1426 3.27%, #7db9b8 48.26%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: center;
-      font-family: "PP Formula";
-      font-size: rem(20);
-      font-style: normal;
-      font-weight: 500;
-    }
-
-    &Desc {
-      color: var(--Gris-bleut, #3f4868);
-      text-align: center;
-      font-family: "PP Formula";
-      font-size: rem(10);
-      margin: 0 !important;
-    }
-  }
 }

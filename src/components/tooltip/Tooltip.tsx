@@ -1,17 +1,24 @@
-import { RefObject, useEffect, useRef } from 'react'
+import { ReactNode, RefObject, useEffect, useRef, useState } from 'react'
 
 import useMouseValue from 'hooks/useMouseValue'
 import { useL10n } from 'provider/L10nProvider'
-import { useSpring, useMotionValue, useAnimationFrame, motion, AnimatePresence } from 'motion/react'
-import classNames from 'classnames'
+import {
+  useSpring,
+  useMotionValue,
+  useAnimationFrame,
+  AnimatePresence,
+  motion
+} from 'motion/react'
 import { clamp } from 'lodash-es'
+import classNames from 'classnames'
 import { baseVariants, tooltipAnimation } from 'core/animation'
 
 import styles from './Tooltip.module.scss'
 
 interface TooltipProps {
-  title: string;
-  disabled: boolean;
+  children?: ReactNode;
+  title?: string;
+  disabled?: boolean;
   parent?: RefObject<HTMLElement | null>;
   className?: string;
   contain?: boolean;
@@ -22,11 +29,12 @@ const Tooltip = ({
   disabled,
   parent,
   className,
-  contain
+  contain,
+  children
 }: TooltipProps) => {
   const mouse = useMouseValue({ absolute: true, ref: parent })
   const l10n = useL10n()
-  const ttl = l10n(title)
+  const ttl = title ? l10n(title) : undefined
   const ref = useRef<HTMLDivElement>(null)
   const isParentAbsolute = useRef(false)
 
@@ -39,7 +47,8 @@ const Tooltip = ({
   const springX = useSpring(useMotionValue(0), options)
   const springY = useSpring(useMotionValue(0), options)
 
-  const insideRef = useRef(false)
+  const [insideState, setInsideState] = useState(false)
+
   const hasStart = useRef({ x: false, y: false })
   const unchangedRef = useRef(0)
 
@@ -61,13 +70,8 @@ const Tooltip = ({
   useEffect(() => {
     if (!parent?.current) return
 
-    const handleMouseMove = () => {
-      insideRef.current = true
-    }
-
-    const handleMouseLeave = () => {
-      insideRef.current = false
-    }
+    const handleMouseMove = () => { setInsideState(true) }
+    const handleMouseLeave = () => { setInsideState(false) }
 
     const element = parent.current
     element.addEventListener('mousemove', handleMouseMove)
@@ -124,7 +128,7 @@ const Tooltip = ({
 
   return (
     <AnimatePresence>
-      { !disabled && insideRef.current && (
+      { !disabled && insideState && (
         <motion.div
           ref={ ref }
           className={ classNames(styles.wrapper, className) }
@@ -136,7 +140,7 @@ const Tooltip = ({
           { ...baseVariants }
           { ...tooltipAnimation() }
         >
-          <span>{ ttl }</span>
+          { children || <span>{ ttl }</span> }
         </motion.div>
       ) }
     </AnimatePresence>

@@ -1,9 +1,41 @@
 .container {
-  position: relative;
   display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
+  flex-direction: column;
+  position: relative;
+  gap: rem(10);
   width: 100%;
+  height: -webkit-fill-available;
+}
+
+.infos {
+  display: flex;
+  align-items: center;
+  gap: rem(50);
+}
+
+.start {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: -webkit-fill-available;
+}
+
+.progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: -webkit-fill-available;
+}
+
+.results {
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: -webkit-fill-available;
 }

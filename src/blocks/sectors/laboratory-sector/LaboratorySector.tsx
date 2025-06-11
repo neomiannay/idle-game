@@ -22,7 +22,7 @@ const LaboratorySector = ({ className, ...props } : LaboratorySectorProps) => {
 
   return (
     <Sector
-      className={ classNames(styles.wrapper, className) }
+      className={ classNames(className) }
       { ...props }
     >
       <div className={ styles.container }>

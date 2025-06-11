@@ -4,5 +4,6 @@
   grid-template-columns: repeat(2, 1fr);
   justify-content: space-between;
   padding: rem(30);
+  padding-bottom: max(5%, rem(30));
   height: 100%;
 }
