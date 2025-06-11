@@ -25,7 +25,7 @@ const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode }) => {
   const duration = getUnit(EGameUnit.COMPLEX)?.duration?.get() ?? 5000
 
   const handleClick = () => {
-    if (isAnimating || !canBuy) return
+    if (!canBuy || isAnimating) return
 
     setProgress(20)
     setIsAnimating(true)
