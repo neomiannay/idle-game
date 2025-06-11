@@ -17,7 +17,7 @@
   }
 
   &Title {
-    color: var(--fill-10);
+    color:  rgba(237, 253, 245, 1);
     font-family: "PP Formula";
     font-size: rem(12);
     font-style: normal;
@@ -36,7 +36,7 @@
   }
 
   &Description {
-    color: var(--fill-40);
+    color: rgba(136, 170, 154, 1);
     font-size: rem(12);
     font-style: normal;
     line-height: 148%;
@@ -55,7 +55,7 @@
     gap: rem(10);
 
     &Title {
-      color: var(--fill-40);
+      color: rgba(136, 170, 154, 1);
       font-family: "PP Formula";
       font-size: rem(12);
       text-transform: uppercase;
@@ -64,7 +64,7 @@
     }
 
     &Label {
-      color: var(--fill-20);
+      color: rgba(221, 247, 235, 1);
       font-variant-numeric: lining-nums tabular-nums;
       font-family: "PP Formula";
       font-size: rem(14);

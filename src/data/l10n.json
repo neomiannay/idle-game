@@ -28,6 +28,10 @@
       "SINGULAR": "pépette",
       "PLURAL": "pépettes"
     },
+    "FORMULATION": {
+      "SINGULAR": "formulation",
+      "PLURAL": "formulations"
+    },
     "REPUTATION": "Réputation",
     "MIN": "min",
     "SEC": "s",
@@ -78,10 +82,10 @@
   "UI": {
     "UNIT_PRODUCTION": "Afficher la production /s",
     "PRODUCTION_COST": "Coût de production",
-    "PRODUCTION_DURATION": "Durée de production",
+    "PRODUCTION_DURATION": "Durée de formulation d'un complexe",
     "SELLING": "Prix de vente",
     "REPUTATION": "Réputation",
-    "EXECUTED_QUANTITY": "Quantité exécutée",
+    "EXECUTED_QUANTITY": "Nombre de complexes créés par formulation",
     "AUTOMATIC_PRODUCTION": "Production automatique"
   },
   "PACKS": {
