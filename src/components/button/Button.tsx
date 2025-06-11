@@ -40,9 +40,7 @@ const Button = ({ className, cost, action, disabled, isVariant, onClick } : Butt
         <>
           <div className={ styles.left }>
             <span className={ styles.variantCost }>
-              <MaskText opened={ false } replayKey={ replayKey }>
-                { action }
-              </MaskText>
+              { action }
             </span>
           </div>
 
