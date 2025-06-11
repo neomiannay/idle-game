@@ -9,7 +9,7 @@ import { BaseProviderProps } from './GlobalProvider'
 
 type SearchLaboratoryContextType = {
   currentTimeLab: number
-  startProgressLab: (duration: number, onEnd: () => void) => void
+  startProgressLab: (duration: number) => void
   stopProgressLab: () => void
   isRunningLab: boolean
   searchStateLab: number

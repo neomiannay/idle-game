@@ -41,7 +41,6 @@ export type TSearchGameLayoutInfos = {
 export type SearchGameProps = {
   duration: number; // In seconds
   price: number; // In euros
-  efficiency: number; // In percentage
   layoutInfos: TSearchGameLayoutInfos;
   items: TSearchGameItem[];
   sectorId: EGameSector;
@@ -50,7 +49,6 @@ export type SearchGameProps = {
 const SearchGame: React.FC<SearchGameProps> = ({
   duration,
   price,
-  efficiency,
   layoutInfos,
   items,
   sectorId
