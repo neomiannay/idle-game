@@ -4,6 +4,7 @@ import { useGameProviderContext } from 'provider/GameProvider'
 import { EGameUnit } from 'types/store'
 import useMotionState from 'hooks/useMotionState'
 import MaskText from 'components/mask-text/MaskText'
+import { useL10n } from 'provider/L10nProvider'
 
 import styles from './ReputationIndicator.module.scss'
 
@@ -16,6 +17,7 @@ const getReputationLabel = (value: number): string => {
 }
 
 const ReputationIndicator = () => {
+  const l10n = useL10n()
   const { getUnit } = useGameProviderContext()
 
   const reputation = getUnit(EGameUnit.REPUTATION)
@@ -27,14 +29,11 @@ const ReputationIndicator = () => {
 
   return (
     <div className={ styles.wrapper }>
-      <span className={ styles.title }>Réputation</span>
-      <span className={ styles.label }>
+      <span className={ styles.title }>{ l10n('UNITS.REPUTATION') }</span>
+      <div className={ styles.label }>
         <MaskText opened={ false } replayKey={ clampedValue }>
-          { label }
+          { label } - { clampedValue }%
         </MaskText>
-      </span>
-      <div className={ styles.tooltip }>
-        { clampedValue }% de chance de réussir une vente
       </div>
     </div>
   )

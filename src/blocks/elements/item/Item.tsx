@@ -58,6 +58,8 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
   const unitName = `UNITS.${item.cost.unitId.toString().toUpperCase()}`
   const costName = `(${l10n(conjugate(unitName, cost))})`
 
+  const label = l10n((unitId === EGameUnit.SALE) ? 'BUTTONS.TARGET' : 'BUTTONS.BUY')
+
   if (!isPurchased) return null
 
   return (
@@ -112,7 +114,7 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
             value: cost,
             unit: costName
           }}
-          action={ l10n('BUTTONS.BUY') }
+          action={ label }
         />
       </motion.div>
     </motion.div>

@@ -14,23 +14,6 @@
 
 .label {
   @include apply(label-light);
-}
-
-.tooltip {
-  position: absolute;
-  bottom: -32px;
-  right: 0;
-  background: #fff;
-  font-size: rem(10);
-  padding: rem(10);
-  border-radius: 10px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 10;
-}
-
-.wrapper:hover .tooltip {
-  opacity: 1;
+  display: flex;
+  gap: rem(8);
 }

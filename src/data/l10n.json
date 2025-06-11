@@ -8,7 +8,8 @@
     "ACTIF": "Extraire",
     "COMPLEX": "Formuler",
     "SALE": "Répandre",
-    "BUY": "Acheter"
+    "BUY": "Acheter",
+    "TARGET": "Cibler"
   },
   "UNITS": {
     "ACTIF": {
@@ -71,8 +72,8 @@
     "AUTOPROD": "Formulation\nautomatisée"
   },
   "PRICES": {
-    "PRODUCTION": "Coût",
-    "SELLING": "Prix"
+    "PRODUCTION": "Coût de production",
+    "SELLING": "Prix de vente"
   },
   "UI": {
     "UNIT_PRODUCTION": "Afficher la production /s",
