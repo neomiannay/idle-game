@@ -79,7 +79,7 @@ const Header = ({ className }: HeaderProps) => {
                   </span>
                   <span className={ styles.count }>
                     <MaskText opened={ false } replayKey={ productionCount }>
-                      { formatValue(productionCount) } €
+                      { formatValue(productionCount, 2) } €
                     </MaskText>
                   </span>
                 </div>
@@ -87,7 +87,7 @@ const Header = ({ className }: HeaderProps) => {
                   <span className={ styles.title }>{ l10n('PRICES.SELLING') }</span>
                   <span className={ styles.count }>
                     <MaskText opened={ false } replayKey={ sellingCount }>
-                      { formatValue(sellingCount) } €
+                      { formatValue(sellingCount, 2) } €
                     </MaskText>
                   </span>
                 </div>
