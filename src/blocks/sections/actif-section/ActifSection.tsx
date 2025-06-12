@@ -11,6 +11,7 @@ import Upgrades from 'blocks/elements/upgrades/Upgrades'
 import Items from 'blocks/elements/items/Items'
 import { AnimatePresence, motion } from 'framer-motion'
 import { baseVariants, fadeAppear } from 'core/animation'
+import { useAudioContext } from 'provider/AudioProvider'
 
 import styles from './ActifSection.module.scss'
 
@@ -22,6 +23,7 @@ type ActifSectionProps = {
 const ActifSection = ({ className, unitId }: ActifSectionProps) => {
   const { getUnit, canBuyUnit, buyUnit } = useGameProviderContext()
   const { getItemProduction } = useInventoryContext()
+  const { playSound } = useAudioContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null
@@ -61,7 +63,6 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
             </span>
           ) } */ }
       </div>
-
       <Button title='BUTTONS.ACTIF' onClick={ handleClick } disabled={ !canBuy } />
 
       { /* <motion.div

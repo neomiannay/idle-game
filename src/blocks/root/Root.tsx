@@ -11,6 +11,7 @@ import useTransitionType from 'hooks/useTransitionType'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
 import Background from 'blocks/background/Background'
 import { useLoaderContext } from 'provider/LoaderProvider'
+import ActivateSound from 'blocks/activate-sound/ActivateSound'
 
 import styles from './Root.module.scss'
 import Loading from './components/loading/Loading'
@@ -52,6 +53,8 @@ function Root ({ className }: RootProps) {
             >
               { isPaused ? 'Paused' : 'Running' }
             </button> */ }
+
+          <ActivateSound />
 
           <Shop />
         </>

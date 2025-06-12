@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes, PropsWithChildren, useState } from 'react'
 
 import classNames from 'classnames'
 import MaskText from 'components/mask-text/MaskText'
-import { motion } from 'motion/react'
+import { motion, MotionProps, Variants } from 'motion/react'
 import { formatValue } from 'helpers/units'
 
 import styles from './Button.module.scss'
@@ -17,16 +17,18 @@ type ButtonProps = PropsWithChildren<{
   }
   action: string
   onClick?: () => void
+  motionProps?: Variants | MotionProps
 } & ButtonHTMLAttributes<HTMLButtonElement>>
 
-const Button = ({ className, cost, action, disabled, variant = null, onClick } : ButtonProps) => {
+const Button = ({ className, cost, action, disabled, variant = null, onClick, motionProps } : ButtonProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const [replayKey, setReplayKey] = useState(0)
 
   return (
     <motion.button
       className={ classNames(styles.wrapper, className, {
-        [styles.variant]: variant === 'variant'
+        [styles.variant]: variant === 'variant',
+        [styles.simple]: variant === 'simple'
       }) }
       disabled={ disabled }
       onClick={ (e) => {
@@ -35,6 +37,7 @@ const Button = ({ className, cost, action, disabled, variant = null, onClick } :
       } }
       onHoverStart={ () => setIsHovered(true) }
       onHoverEnd={ () => setIsHovered(false) }
+      { ...motionProps }
     >
       { variant === 'variant' && (
         <>

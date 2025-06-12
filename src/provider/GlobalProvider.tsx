@@ -16,6 +16,7 @@ import { SearchLaboratoryProvider } from './SearchLaboratoryProvider'
 import { SearchPublicityProvider } from './SearchPublicityProvider'
 import { ShopProvider } from './ShopProvider'
 import { LoaderProvider } from './LoaderProvider'
+import { AudioProvider } from './AudioProvider'
 
 type GlobalContextType = {
   darkMode: boolean
@@ -47,6 +48,7 @@ export const GlobalProvider = ({ children }: BaseProviderProps) => {
     LoaderProvider,
     ViewportProvider,
     L10nProvider,
+    AudioProvider,
     PricesProvider, // PricesProvider should be before GameProvider to ensure prices are available
     FeedbackProvider,
     GameProvider,

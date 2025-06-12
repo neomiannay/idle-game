@@ -9,7 +9,11 @@
     "COMPLEX": "Formuler",
     "SALE": "Répandre",
     "BUY": "Acheter",
-    "TARGET": "Cibler"
+    "ACTIVATE_SOUND": {
+      "TITLE": "Activer le son",
+      "CANCEL": "Annuler",
+      "CONFIRM": "Activer"
+    }
   },
   "UNITS": {
     "ACTIF": {
@@ -62,22 +66,22 @@
   },
   "UPGRADES": {
     "LEVEL1": "Niveau 2",
-    "LEVEL1_DESC": "Passer la production au niveau 2",
+    "LEVEL1_DESC": "Passer la production au niveau 3",
     "LEVEL2": "Niveau 3",
-    "LEVEL2_DESC": "Passer la production au niveau 3",
+    "LEVEL2_DESC": "Passer la production au niveau 4",
     "LEVEL3": "Niveau 4",
-    "LEVEL3_DESC": "Passer la production au niveau 4",
+    "LEVEL3_DESC": "Passer la production au niveau 5",
     "LEVEL4": "Niveau 5",
-    "LEVEL4_DESC": "Passer la production au niveau 5",
+    "LEVEL4_DESC": "Passer la production au niveau 6",
     "LEVEL5": "Niveau 6",
-    "LEVEL5_DESC": "Passer la production au niveau 6",
+    "LEVEL5_DESC": "Passer la production au niveau 7",
     "LEVEL6": "Niveau 7",
-    "LEVEL6_DESC": "Passer la production au niveau 7",
+    "LEVEL6_DESC": "Passer la production au niveau 8",
     "AUTOPROD": "Formulation\nautomatisée"
   },
   "PRICES": {
-    "PRODUCTION": "Coût de production",
-    "SELLING": "Prix de vente"
+    "PRODUCTION": "Coût",
+    "SELLING": "Prix"
   },
   "UI": {
     "UNIT_PRODUCTION": "Afficher la production /s",

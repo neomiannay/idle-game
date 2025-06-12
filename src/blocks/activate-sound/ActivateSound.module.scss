@@ -1,0 +1,40 @@
+.wrapper {
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  background: var(--color-overlay);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: rem(10);
+}
+
+.title {
+  color: var(--fill-20);
+  font-size: rem(16);
+  font-stretch: normal;
+  font-variation-settings: 'wght' 600, 'wdth' 0;
+  letter-spacing: -0.02em;
+
+  width: grid(2, 0);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.buttons {
+  display: flex;
+  gap: var(--grid-gutter);
+
+  & > * {
+    max-width: grid(1, 1);
+  }
+}

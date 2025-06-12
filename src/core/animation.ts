@@ -35,7 +35,17 @@ export const appear = {
 export const fadeAppear = (available: boolean = true) => ({
   variants: {
     initial: ({ invert = false } = {}) => ({ y: invert ? '-30%' : '30%', opacity: 0 }),
-    animate: { y: '0%', opacity: available ? 1 : 0.4 }
+    animate: { y: '0%', opacity: available ? 1 : 0.4 },
+    exit: ({ invert = false } = {}) => ({ y: invert ? '30%' : '-30%', opacity: 0 })
+  } as Variants,
+  transition: baseTransition
+})
+
+export const simpleFadeAppear = () => ({
+  variants: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 }
   } as Variants,
   transition: baseTransition
 })
