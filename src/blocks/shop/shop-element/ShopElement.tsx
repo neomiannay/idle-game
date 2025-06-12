@@ -93,10 +93,9 @@ const ShopElement = ({ className, elementId, element, unitId, type }: ShopElemen
     const unit = getUnit(unitId)
 
     if (isUpgrade && unitId !== EGameUnit.COMPLEX) {
-      const currentValueByAction = unit?.valueByAction?.get() || 0
       const newValueByAction = (element as UpgradeType).valueByAction
       const unitName = `UNITS.${unitId.toString().toUpperCase()}`
-      return `${currentValueByAction} ${l10n(conjugate(unitName, currentValueByAction))}/clic => ${newValueByAction} ${l10n(conjugate(unitName, newValueByAction))}/clic`
+      return `+${newValueByAction} ${l10n(conjugate(unitName, newValueByAction))}/clic`
     } else if (unitId !== EGameUnit.COMPLEX) {
       const item = element as ItemType
       const unitName = `UNITS.${item.cost.unitId.toString().toUpperCase()}`
