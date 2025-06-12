@@ -12,7 +12,6 @@ import { useSectorsProviderContext } from 'provider/SectorsProvider'
 import Background from 'blocks/background/Background'
 import { useLoaderContext } from 'provider/LoaderProvider'
 import ActivateSound from 'blocks/activate-sound/ActivateSound'
-import Button from 'components/button/Button'
 import { useL10n } from 'provider/L10nProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
 import EndScreen from 'blocks/end-screen/EndScreen'
@@ -39,24 +38,6 @@ function Root ({ className }: RootProps) {
         [styles.loading]: isLoading
       }) }
     >
-      <Button // TODO: move to EndScreen component
-        action={ l10n('BUTTONS.NEW_GAME') }
-        variant='simple'
-        className={ styles.newGame }
-        onClick={ () => {
-          localStorage.clear()
-          window.location.reload()
-        } }
-      />
-
-      <a
-        className={ classNames(styles.newGame, styles.creditsLink) }
-        href='https://www.notion.so/Sources-207ca43dc6968043b395d6fd8a2c0282'
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <Button action={ l10n('BUTTONS.CREDITS_LINK') } variant='simple' />
-      </a>
 
       { isLoading || !isBackgroundLoaded ? (
         <Loading />

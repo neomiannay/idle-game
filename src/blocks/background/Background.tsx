@@ -12,15 +12,13 @@ import { useMotionValueEvent, useSpring } from 'motion/react'
 import { animate } from 'motion'
 import { useGlobalContext } from 'provider/GlobalProvider'
 import { EGameUnit } from 'types/store'
+import { BENEFITS_GOAL, BENEFITS_START_STEP } from 'data/constants'
 
 import styles from './Background.module.scss'
 
-const BENEFITS_END_STEP = 6_200_000_000
-const BENEFITS_START_STEP = 500
-
 function getProgressFromMoney (
   money: number,
-  maxMoney = BENEFITS_END_STEP,
+  maxMoney = BENEFITS_GOAL,
   base = 1.25
 ) {
   const ratio = money / maxMoney
@@ -63,7 +61,7 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement | null {
   }
 
   const handleBenefitsChange = (value: number) => {
-    if (!input || value > BENEFITS_END_STEP) return
+    if (!input || value > BENEFITS_GOAL) return
     const sprVal = progressSpring.get()
 
     // let res = (value / BENEFITS_START_STEP) * 100
@@ -80,7 +78,7 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement | null {
       })
     } else if (sprVal >= 200) {
       const startValue = value - BENEFITS_START_STEP
-      const endValue = BENEFITS_END_STEP - BENEFITS_START_STEP
+      const endValue = BENEFITS_GOAL - BENEFITS_START_STEP
 
       res = 200 + getProgressFromMoney(startValue, endValue)
     }

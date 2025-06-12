@@ -3,10 +3,12 @@ import React, { PropsWithChildren } from 'react'
 import classNames from 'classnames'
 import { motion } from 'motion/react'
 import AdaptativeText from 'components/adaptative-text/AdaptativeText'
-import { baseVariants, fadeAppear, fadeAppearDelayed, stagger } from 'core/animation'
+import { baseVariants, fadeAppear, stagger } from 'core/animation'
 import { BENEFITS_GOAL } from 'data/constants'
 import { useLoaderContext } from 'provider/LoaderProvider'
 import GradientText from 'components/gradient-text/GradientText'
+import Button from 'components/button/Button'
+import { useL10n } from 'provider/L10nProvider'
 
 import styles from './EndScreen.module.scss'
 
@@ -15,6 +17,7 @@ type EndScreenProps = PropsWithChildren<{
 }>;
 
 const EndScreen = ({ className, ...props }: EndScreenProps) => {
+  const l10n = useL10n()
   const { resources } = useLoaderContext()
   const pot = resources.pot as HTMLImageElement
 
@@ -28,12 +31,12 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
       className={ classNames(styles.wrapper, className) }
       { ...props }
     >
-      <div className={ styles.container }>
-        <motion.div
-          className={ styles.titleContainer }
-          { ...baseVariants }
-          { ...stagger(0.3, 0.4) }
-        >
+      <motion.div
+        className={ styles.container }
+        { ...baseVariants }
+        { ...stagger(0.1, 0.4) }
+      >
+        <div className={ styles.titleContainer }>
           <motion.div { ...fadeAppear() } custom={{ invert: true }}>
             <AdaptativeText className={ classNames(styles.title) }>
               Félicitations
@@ -64,36 +67,66 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
               </span>
             </AdaptativeText>
           </motion.div>
-        </motion.div>
-        <motion.div
+        </div>
+
+        <div
           className={ styles.content }
-          { ...baseVariants }
-          { ...fadeAppearDelayed(.25) }
         >
           <motion.div
             className={ classNames(styles.contentLeft, styles.contentText) }
-            { ...baseVariants }
-            { ...fadeAppearDelayed(.5) }
+            { ...stagger(0.1, 0.5) }
           >
-            <div><GradientText className={ styles.item } duration={ 3 }>+25%</GradientText> SUR LE PRIX pour le public “féminin”</div>
-            <div>COMPLEXE SUR-DILUÉ</div>
-            <div>promesses scientifiques fallacieuses</div>
-            <div>molécules chimiques non déclarée camouflée par le terme fragrance</div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>+25%</GradientText> SUR LE PRIX pour le public “féminin”</motion.div>
+            <motion.div { ...fadeAppear() }>COMPLEXE SUR-DILUÉ</motion.div>
+            <motion.div { ...fadeAppear() }>promesses scientifiques fallacieuses</motion.div>
+            <motion.div { ...fadeAppear() }>molécules chimiques non déclarée camouflée par le terme fragrance</motion.div>
           </motion.div>
-          <img src={ pot.src } alt='content' className={ styles.pot } />
+          <motion.img
+            src={ pot.src }
+            alt='content'
+            className={ styles.pot }
+            { ...fadeAppear() }
+          />
           <motion.div
             className={ classNames(styles.contentRight, styles.contentText) }
-            { ...baseVariants }
-            { ...fadeAppearDelayed(.5) }
+            { ...stagger(0.1, 0.5) }
           >
-            <div><GradientText className={ styles.item } duration={ 3 }>32</GradientText> - animaux souffrant et exploités</div>
-            <div><GradientText className={ styles.item } duration={ 3 }>8 000</GradientText> - enfants exploités dans les mines de mica</div>
-            <div><GradientText className={ styles.item } duration={ 3 }>9</GradientText> - actifs toxiques</div>
-            <div><GradientText className={ styles.item } duration={ 3 }>64</GradientText> - terrains destinés à l’agriculture détournés</div>
-            <div><GradientText className={ styles.item } duration={ 3 }>13</GradientText> - partenariats mensongers</div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>32</GradientText> - animaux souffrant et exploités</motion.div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>8 000</GradientText> - enfants exploités dans les mines de mica</motion.div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>9</GradientText> - actifs toxiques</motion.div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>64</GradientText> - terrains destinés à l’agriculture détournés</motion.div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>13</GradientText> - partenariats mensongers</motion.div>
           </motion.div>
+        </div>
+
+        <motion.div className={ styles.buttonsContainer } { ...stagger(0.1, 1) }>
+          <motion.a
+            href='https://www.notion.so/Sources-207ca43dc6968043b395d6fd8a2c0282'
+            target='_blank'
+            rel='noopener noreferrer'
+            { ...fadeAppear() }
+          >
+            <Button action={ l10n('BUTTONS.CREDITS_LINK') } variant='simple' />
+          </motion.a>
+          <Button
+            action={ l10n('BUTTONS.NEW_GAME') }
+            variant='simple'
+            onClick={ () => {
+              localStorage.clear()
+              window.location.reload()
+            } }
+            motionProps={ fadeAppear() }
+          />
+          <motion.a
+            href='https://bit.ly/4l5K78k'
+            target='_blank'
+            rel='noopener noreferrer'
+            { ...fadeAppear() }
+          >
+            <Button action={ l10n('BUTTONS.SHARE_SCORE') } variant='simple' />
+          </motion.a>
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   )
 }

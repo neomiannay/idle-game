@@ -88,7 +88,7 @@ export const AudioProvider = ({ children }: BaseProviderProps) => {
         click_fail: {
           light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_click_fail.wav`),
           dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_click_fail.wav`)
-        },
+        }
       }
     }
     setSounds(audioFiles)

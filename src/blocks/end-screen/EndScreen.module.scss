@@ -1,4 +1,5 @@
 .wrapper {
+  position: relative;
   height: 100vh;
   overflow: hidden;
   padding: var(--grid-margin);
@@ -114,4 +115,19 @@
 
 .item {
   display: inline-flex;
+}
+
+.buttonsContainer {
+  position: absolute;
+  bottom: var(--grid-margin);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: var(--grid-margin);
+
+  & > * {
+    width: fit-content;
+    height: fit-content;
+  }
 }
