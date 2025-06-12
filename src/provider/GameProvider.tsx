@@ -16,6 +16,7 @@ import { TSearchGameItemValue } from 'blocks/search-game/SearchGame'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { usePricesContext } from './PricesProvider'
+import { BENEFITS_GOAL } from 'data/constants'
 
 export type UnitMultiplierGetter = (unitId: EGameUnit) => number;
 
@@ -38,6 +39,7 @@ type GameProviderType = {
   isSaleSuccessful: () => boolean;
   hasEnoughUnits: (amountNeeded: number, unitNeeded: EGameUnit) => boolean;
   applyChoiceEffects: (effects: TSearchGameItemValue[]) => void;
+  isGameEnding: boolean
 };
 
 export const GameProviderContext = createContext<GameProviderType | null>(null)
@@ -343,6 +345,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
     })
   }
 
+  const isGameEnding = useMotionState(units.benefits.motionValue, (value) => value >= BENEFITS_GOAL)
+
   const contextValue = useMemo(
     () => ({
       units,
@@ -360,7 +364,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
       modifyUnitValue,
       isSaleSuccessful,
       hasEnoughUnits,
-      applyChoiceEffects
+      applyChoiceEffects,
+      isGameEnding
     }),
     [
       units,

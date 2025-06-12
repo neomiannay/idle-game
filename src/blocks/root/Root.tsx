@@ -5,8 +5,8 @@ import Shop from 'blocks/shop/Shop'
 import Meta from 'blocks/meta/Meta'
 import Header from 'blocks/header/Header'
 import Sectors from 'blocks/sectors/Sectors'
-import { AnimatePresence } from 'motion/react'
-import { baseVariants } from 'core/animation'
+import { AnimatePresence, motion } from 'motion/react'
+import { baseVariants, fade } from 'core/animation'
 import useTransitionType from 'hooks/useTransitionType'
 import { useSectorsProviderContext } from 'provider/SectorsProvider'
 import Background from 'blocks/background/Background'
@@ -14,6 +14,8 @@ import { useLoaderContext } from 'provider/LoaderProvider'
 import ActivateSound from 'blocks/activate-sound/ActivateSound'
 import Button from 'components/button/Button'
 import { useL10n } from 'provider/L10nProvider'
+import { useGameProviderContext } from 'provider/GameProvider'
+import EndScreen from 'blocks/end-screen/EndScreen'
 
 import styles from './Root.module.scss'
 import Loading from './components/loading/Loading'
@@ -25,6 +27,7 @@ function Root ({ className }: RootProps) {
   const l10n = useL10n()
   const { isLoading } = useLoaderContext()
   const { reactiveCurrentSector, sectors } = useSectorsProviderContext()
+  const { isGameEnding } = useGameProviderContext()
 
   const custom = { type: useTransitionType(reactiveCurrentSector, sectors) }
 
@@ -60,12 +63,25 @@ function Root ({ className }: RootProps) {
       ) : (
         <>
           <Meta />
-          <Header />
 
-          <AnimatePresence custom={ custom }>
-            <Sectors key='sectors' { ...baseVariants } />
+          <AnimatePresence mode='wait'>
+            { !isGameEnding ? (
+              <motion.div
+                { ...baseVariants }
+                { ...fade }
+              >
+                <Header />
+
+                <AnimatePresence custom={ custom }>
+                  <Sectors key='sectors' { ...baseVariants } />
+                </AnimatePresence>
+
+                <Shop />
+              </motion.div>
+            ) : (
+              <EndScreen />
+            ) }
           </AnimatePresence>
-
           { /* <button
               className={ classNames(styles.pauseButton, {
                 [styles.paused]: isPaused
@@ -77,8 +93,6 @@ function Root ({ className }: RootProps) {
             </button> */ }
 
           <ActivateSound />
-
-          <Shop />
         </>
       ) }
 

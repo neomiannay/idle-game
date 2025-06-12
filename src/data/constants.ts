@@ -21,3 +21,4 @@ export const SOUNDS = {
     ARROW: 'arrow',
   }
 }
+export const BENEFITS_GOAL = 5600
