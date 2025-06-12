@@ -61,7 +61,7 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement | null {
   }
 
   const handleBenefitsChange = (value: number) => {
-    if (!input || value > BENEFITS_GOAL) return
+    if (!input) return
     const sprVal = progressSpring.get()
 
     // let res = (value / BENEFITS_START_STEP) * 100
@@ -83,6 +83,7 @@ function Background ({ onLoad }: BackgroundProps): React.ReactElement | null {
       res = 200 + getProgressFromMoney(startValue, endValue)
     }
 
+    res = Math.min(res, 300)
     if (isTransitionning()) return
     if (sprVal >= 0) {
       progressSpring.set(res)

@@ -22,4 +22,4 @@ export const SOUNDS = {
   }
 }
 export const BENEFITS_GOAL = 6_400_000_000
-export const BENEFITS_START_STEP = 250
+export const BENEFITS_START_STEP = 100_000
