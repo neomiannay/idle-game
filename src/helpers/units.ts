@@ -1,5 +1,5 @@
 const UNITS = ['', 'k', 'M', 'B', 'T']
-export const DEFAULT_SCALE_FACTOR = 1.4
+export const DEFAULT_SCALE_FACTOR = 1.02
 
 /**
  * Format a number with units

@@ -12,9 +12,9 @@ import Items from 'blocks/elements/items/Items'
 import { AnimatePresence, motion } from 'framer-motion'
 import { baseVariants, fadeAppear } from 'core/animation'
 import { useAudioContext } from 'provider/AudioProvider'
+import { SOUNDS } from 'data/constants'
 
 import styles from './ActifSection.module.scss'
-import { SOUNDS } from 'data/constants'
 
 type ActifSectionProps = {
   className?: string;

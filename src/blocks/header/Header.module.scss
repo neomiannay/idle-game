@@ -34,6 +34,14 @@
   }
 }
 
+.sectors {
+  position: absolute;
+  top: var(--grid-margin);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
 .benefits {
   position: relative;
 }

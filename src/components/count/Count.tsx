@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import { conjugate, useL10n } from 'provider/L10nProvider'
 import { EGameUnit } from 'types/store'
 import { useGameProviderContext } from 'provider/GameProvider'
+import { formatValue } from 'helpers/units'
 
 import styles from './Count.module.scss'
 
@@ -42,7 +43,7 @@ const Count = ({ className, unitId, count, ...props }: CountProps) => {
       className={ classNames(styles.wrapper, className) } { ...props }
       style={{ alignItems }}
     >
-      <span className={ styles.count }>{ count }</span>
+      <span className={ styles.count }>{ formatValue(count) }</span>
       <span className={ styles.title }>{ l10n(conjugate(unitName, count)) }</span>
     </div>
   )

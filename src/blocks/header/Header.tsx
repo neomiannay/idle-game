@@ -93,9 +93,11 @@ const Header = ({ className }: HeaderProps) => {
                 </div>
               </motion.div>
 
-              <motion.div { ...fadeAppear() }>
-                <SectorsTab />
-              </motion.div>
+              <div className={ styles.sectors }>
+                <motion.div { ...fadeAppear() }>
+                  <SectorsTab />
+                </motion.div>
+              </div>
 
               <motion.div { ...fadeAppear() }>
                 <ReputationIndicator />

@@ -4,10 +4,10 @@ import classNames from 'classnames'
 import MaskText from 'components/mask-text/MaskText'
 import { motion, MotionProps, Variants } from 'motion/react'
 import { formatValue } from 'helpers/units'
-
-import styles from './Button.module.scss'
 import { SOUNDS } from 'data/constants'
 import { useAudioContext } from 'provider/AudioProvider'
+
+import styles from './Button.module.scss'
 
 type ButtonProps = PropsWithChildren<{
   className?: string

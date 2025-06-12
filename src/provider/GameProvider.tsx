@@ -13,7 +13,7 @@ import useMotionState from 'hooks/useMotionState'
 import { EGamePrice, EGameUnit, GameUnit } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
 import { TSearchGameItemValue } from 'blocks/search-game/SearchGame'
-import { BENEFITS_GOAL, STAGE_1 } from 'data/constants'
+import { BENEFITS_GOAL, STAGE_0_5, STAGE_1, STAGE_2 } from 'data/constants'
 import useKeydown from 'hooks/useKeydown'
 
 import { BaseProviderProps } from './GlobalProvider'
@@ -61,29 +61,65 @@ export function GameProvider ({ children }: BaseProviderProps) {
   // @ts-ignore
   window.give = (unitId: EGameUnit, value: number) => {
     const unit = getUnit(unitId)
-    if (!unit) return console.error('Unit not found, use :', Object.values(EGameUnit))
+    if (!unit) return console.error('Tu sais même pas bien tricher t\'es trop nul tiens la liste des unités :', Object.values(EGameUnit))
 
     unit.rawValue.add(value)
-    console.info(`Units added (${unitId})`, unit.rawValue.get())
+    console.info(`Bien joué GROS TRICHEUR, + ${value} dans le gosier pour ${unitId}`)
   }
 
   // @ts-ignore
   window.set = (unitId: EGameUnit, value: number) => {
     const unit = getUnit(unitId)
-    if (!unit) return console.error('Unit not found, use :', Object.values(EGameUnit))
+    if (!unit) return console.error('Tu sais même pas bien tricher t\'es trop nul tiens la liste des unités :', Object.values(EGameUnit))
 
     unit.motionValue.jump(value)
     unit.totalMotionValue.jump(value)
-    console.info(`Units set (${unitId})`, unit.rawValue.get())
+    console.info(`Bien joué GROS TRICHEUR, + ${value} dans le gosier pour ${unitId}`)
   }
 
   useKeydown(['A'], () => {
+    Object.values(STAGE_0_5).forEach((unit) => {
+      const computedUnit = getUnit(unit.NAME as EGameUnit)
+      if (computedUnit) {
+        computedUnit.motionValue.jump(unit.VALUE)
+        computedUnit.totalMotionValue.jump(unit.VALUE)
+        console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
+      }
+    })
+  })
+
+  useKeydown(['Z'], () => {
     Object.values(STAGE_1).forEach((unit) => {
       const computedUnit = getUnit(unit.NAME as EGameUnit)
       if (computedUnit) {
         computedUnit.motionValue.jump(unit.VALUE)
         computedUnit.totalMotionValue.jump(unit.VALUE)
-        console.info(`Units set (${unit.NAME})`, computedUnit.rawValue.get())
+        console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
+      }
+    })
+  })
+
+  // SMALL DEBUG
+  useKeydown(['W'], () => {
+    const actif = getUnit(EGameUnit.ACTIF)
+    if (actif) actif.rawValue.add(10000)
+  })
+  useKeydown(['X'], () => {
+    const complex = getUnit(EGameUnit.COMPLEX)
+    if (complex) complex.rawValue.add(10000)
+  })
+  useKeydown(['C'], () => {
+    const benefits = getUnit(EGameUnit.BENEFITS)
+    if (benefits) benefits.rawValue.add(10000)
+  })
+
+  useKeydown(['E'], () => {
+    Object.values(STAGE_2).forEach((unit) => {
+      const computedUnit = getUnit(unit.NAME as EGameUnit)
+      if (computedUnit) {
+        computedUnit.motionValue.jump(unit.VALUE)
+        computedUnit.totalMotionValue.jump(unit.VALUE)
+        console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
       }
     })
   })
@@ -274,7 +310,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
       if (!unit) return false
 
       if (value < 0) {
-        if(unitId !== EGameUnit.KARMA) {
+        if (unitId !== EGameUnit.KARMA) {
         // On vérifie qu'on peut soustraire (qu'on ne tombe pas en dessous de 0)
           const currentValue = unit.rawValue.get()
           if (currentValue + value < 0) return false

@@ -105,6 +105,8 @@ export interface GameState {
   tips?: TSearchGameItem[] | null
   rabbitPrice?: number | null | undefined
   killedRabbits?: number | null
+  /** Timestamp (in ms) representing the first time the player entered the experience */
+  startTime?: number | null
 }
 
 export type ElementType = 'item' | 'upgrade' | 'sector' | 'otherShopElement'

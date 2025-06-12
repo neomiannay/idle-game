@@ -7,14 +7,14 @@
         "unitId": "actif",
         "name": "UPGRADES.LEVEL1",
         "description": "UPGRADES.LEVEL1_DESC",
-        "valueByAction": 2,
+        "valueByAction": 5,
         "apparitionCondition": {
           "unitId": "actif",
           "value": 60
         },
         "cost": {
           "unitId": "actif",
-          "value": 100
+          "value": 40
         }
       },
       {
@@ -30,7 +30,7 @@
         },
         "cost": {
           "unitId": "actif",
-          "value": 1500
+          "value": 500
         }
       },
       {
@@ -46,7 +46,7 @@
         },
         "cost": {
           "unitId": "actif",
-          "value": 13000
+          "value": 10000
         }
       },
       {

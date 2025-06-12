@@ -9,7 +9,7 @@ import useElementPurchased from 'hooks/useElementPurchased'
 import useCanBuyElement from 'hooks/useCanBuyElement'
 import useItemCount from 'hooks/useItemCount'
 import Button from 'components/button/Button'
-import { getItemPrice } from 'helpers/units'
+import { formatValue, getItemPrice } from 'helpers/units'
 import MaskText from 'components/mask-text/MaskText'
 import { motion } from 'motion/react'
 import { baseVariants, fadeAppear, stagger } from 'core/animation'
@@ -98,7 +98,7 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
             { ...fadeAppear() }
           >
             <MaskText opened={ false } replayKey={ itemCount }>
-              { itemCount }
+              { formatValue(itemCount) }
             </MaskText>
           </motion.span>
         </div>

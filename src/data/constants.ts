@@ -26,10 +26,29 @@ export const BENEFITS_START_STEP = 100_000
 // export const BENEFITS_GOAL = 10_000
 // export const BENEFITS_START_STEP = 5_000
 
+export const STAGE_0_5 = {
+  ACTIF: {
+    NAME: 'actif',
+    VALUE: 1000
+  },
+  COMPLEX: {
+    NAME: 'complex',
+    VALUE: 730
+  },
+  SALE: {
+    NAME: 'sale',
+    VALUE: 500
+  },
+  BENEFITS: {
+    NAME: 'benefits',
+    VALUE: 30_000
+  }
+}
+
 export const STAGE_1 = { // TODO: change the values
   ACTIF: {
     NAME: 'actif',
-    VALUE: 15000
+    VALUE: 100_000
   },
   COMPLEX: {
     NAME: 'complex',
@@ -41,14 +60,37 @@ export const STAGE_1 = { // TODO: change the values
   },
   BENEFITS: {
     NAME: 'benefits',
-    VALUE: 90000
-  },
-  KARMA: {
-    NAME: 'karma',
-    VALUE: 80
+    VALUE: 80_000
   },
   REPUTATION: {
     NAME: 'reputation',
-    VALUE: 10
+    VALUE: 50
+  }
+}
+
+export const STAGE_2 = {
+  ACTIF: {
+    NAME: 'actif',
+    VALUE: 5_000_000
+  },
+  COMPLEX: {
+    NAME: 'complex',
+    VALUE: 730_000
+  },
+  SALE: {
+    NAME: 'sale',
+    VALUE: 15_500_000
+  },
+  BENEFITS: {
+    NAME: 'benefits',
+    VALUE: 6_199_900_000
+  },
+  KARMA: {
+    NAME: 'karma',
+    VALUE: 800
+  },
+  REPUTATION: {
+    NAME: 'reputation',
+    VALUE: 100
   }
 }

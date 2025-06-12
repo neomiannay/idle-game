@@ -25,9 +25,9 @@ export function useGamePersistence ({
     const gameState = onSave()
     try {
       localStorage.setItem(storageKey, JSON.stringify(gameState))
-      console.log('✨✨✨ Game state saved successfully')
+      // console.log('✨✨✨ Game state saved successfully')
     } catch (error) {
-      console.error('Error saving game state:', error)
+      // console.error('Error saving game state:', error)
     }
   }, [onSave, storageKey])
 
@@ -35,13 +35,13 @@ export function useGamePersistence ({
     if (!onLoad) return
 
     try {
-      console.log('🔍🔍🔍 Loading game state')
+      // console.log('🔍🔍🔍 Loading game state')
 
       const savedState = localStorage.getItem(storageKey)
       if (savedState) {
         const gameState = JSON.parse(savedState) as GameState
         onLoad(gameState)
-        console.log('✨✨✨ Game state loaded successfully')
+        // console.log('✨✨✨ Game state loaded successfully')
 
         // Calculate offline progress in seconds
         const offlineTime = (Date.now() - gameState.lastPlayedTime) / 1000
@@ -51,7 +51,7 @@ export function useGamePersistence ({
         }
       }
     } catch (error) {
-      console.error('Error loading game state:', error)
+      // console.error('Error loading game state:', error)
     }
 
     return { success: false, offlineTime: 0 }

@@ -150,6 +150,7 @@
   text-transform: uppercase;
   margin: 0;
   @include ellipsis(3, 1.16);
+  line-height: 1.40;
 }
 
 .bottom {

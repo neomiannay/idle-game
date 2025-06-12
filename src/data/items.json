@@ -14,7 +14,7 @@
         },
         "cost": {
           "unitId": "actif",
-          "value": 60
+          "value": 40
         }
       },
       {
@@ -23,14 +23,14 @@
         "unitId": "actif",
         "name": "ITEMS.LAND",
         "description": "ITEMS.LAND_DESC",
-        "unitByTime": 8,
+        "unitByTime": 15,
         "apparitionCondition": {
           "unitId": "actif",
           "value": 10
         },
         "cost": {
           "unitId": "actif",
-          "value": 450
+          "value": 200
         }
       },
       {
@@ -39,7 +39,7 @@
         "unitId": "actif",
         "name": "ITEMS.MINE",
         "description": "ITEMS.MINE_DESC",
-        "unitByTime": 32,
+        "unitByTime": 105,
         "apparitionCondition": {
           "unitId": "actif",
           "value": 10
@@ -73,7 +73,7 @@
         "unitId": "sale",
         "name": "ITEMS.TEENS",
         "description": "ITEMS.TEENS_DESC",
-        "unitByTime": 5,
+        "unitByTime": 12,
         "apparitionCondition": {
           "unitId": "benefits",
           "value": 3000
@@ -89,14 +89,14 @@
         "unitId": "sale",
         "name": "ITEMS.KIDS",
         "description": "ITEMS.KIDS_DESC",
-        "unitByTime": 10,
+        "unitByTime": 56,
         "apparitionCondition": {
           "unitId": "benefits",
           "value": 16000
         },
         "cost": {
           "unitId": "benefits",
-          "value": 20000
+          "value": 30000
         }
       }
     ]

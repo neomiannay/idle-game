@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useMemo } from 'react'
 
 import classNames from 'classnames'
 import { motion } from 'motion/react'
@@ -6,6 +6,7 @@ import AdaptativeText from 'components/adaptative-text/AdaptativeText'
 import { baseVariants, fadeAppear, stagger } from 'core/animation'
 import { BENEFITS_GOAL } from 'data/constants'
 import { useLoaderContext } from 'provider/LoaderProvider'
+import { useIterationContext } from 'provider/IterationProvider'
 import GradientText from 'components/gradient-text/GradientText'
 import Button from 'components/button/Button'
 import { useL10n } from 'provider/L10nProvider'
@@ -25,6 +26,7 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
   const { resources } = useLoaderContext()
   const { killedRabbits, complexComposition } = useSearchLaboratoryContext()
   const { getItemCount } = useInventoryContext()
+  const { startTime } = useIterationContext()
   const { getUnit } = useGameProviderContext()
   const pot = resources.pot as HTMLImageElement
 
@@ -37,6 +39,19 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
   const karmaCount = karma ? karma.motionValue.get() : 0
 
   const toxicActifsCount = complexComposition ? complexComposition.filter(actif => actif.toxic).length : 0
+
+  // Compute elapsed time in the desired format xxJ xxH xxM xxS
+  const elapsedTime = useMemo(() => {
+    const msDiff = Date.now() - startTime
+    const totalSeconds = Math.floor(msDiff / 1000)
+    const days = Math.floor(totalSeconds / 86400)
+    const hours = Math.floor((totalSeconds % 86400) / 3600)
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+    const seconds = totalSeconds % 60
+
+    const pad = (n: number) => n.toString().padStart(2, '0')
+    return `${pad(days)}J ${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`
+  }, [startTime])
 
   return (
     <div
@@ -61,7 +76,7 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
           >
             <AdaptativeText
               className={ styles.adpative }
-              innerText={ `vous avez généré ${benefits} en 3h 20m 10s` }
+              innerText={ `vous avez généré ${benefits} en ${elapsedTime}` }
             >
               <span>vous avez généré&nbsp;</span>
               <span className={ styles.benefitsWrapper }>
@@ -71,10 +86,10 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
               <span>&nbsp;en&nbsp;</span>
               <span className={ styles.benefitsWrapper }>
                 <span className={ classNames(styles.blur, styles.benefits) }>
-                  3h 20m 10s
+                  { elapsedTime }
                 </span>
                 <span className={ classNames(styles.base, styles.benefits) }>
-                  3h 20m 10s
+                  { elapsedTime }
                 </span>
               </span>
             </AdaptativeText>
@@ -88,7 +103,7 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
             className={ classNames(styles.contentLeft, styles.contentText) }
             { ...stagger(0.1, 0.5) }
           >
-            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>+25%</GradientText> SUR LE PRIX pour le public “féminin”</motion.div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>+25%</GradientText> SUR LE PRIX pour le public "féminin"</motion.div>
             <motion.div { ...fadeAppear() }>COMPLEXE SUR-DILUÉ</motion.div>
             <motion.div { ...fadeAppear() }>promesses scientifiques fallacieuses</motion.div>
             <motion.div { ...fadeAppear() }>molécules chimiques non déclarée camouflée par le terme fragrance</motion.div>

@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useCallback, useMemo, useEffect } from 'react'
+import React, { createContext, useContext, useCallback, useMemo, useEffect, useState } from 'react'
 
 import { useGameLoop } from 'hooks/useGameLoop'
-import { useGamePersistence } from 'hooks/useGamePersistence'
+import { useGamePersistence, getStorageKey } from 'hooks/useGamePersistence'
 import { floor } from 'lodash-es'
 import { EGamePrice, EGameUnit, EStatus, GameState, GameStateElement, GameStatePrice, GameStateUnit } from 'types/store'
 
@@ -20,6 +20,7 @@ type IterationContextType = {
   isPaused: boolean
   togglePause: () => void
   saveGameState: () => void
+  startTime: number
 }
 
 const IterationContext = createContext<IterationContextType | null>(null)
@@ -35,6 +36,21 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const { loadSectors, unlockedSectors } = useSectorsProviderContext()
   const { complexComposition, loadComplexComposition, rabbitPrice, killedRabbits, loadKilledRabbits } = useSearchLaboratoryContext()
   const { tips, loadTips } = useSearchPublicityContext()
+
+  const [startTime, setStartTime] = useState<number>(() => {
+    if (typeof window === 'undefined') return Date.now()
+
+    const storage = localStorage.getItem(getStorageKey())
+    if (storage) {
+      try {
+        const parsed = JSON.parse(storage) as GameState
+        if (parsed.startTime) return parsed.startTime
+      } catch (e) {
+        console.error('Error parsing saved game state', e)
+      }
+    }
+    return Date.now()
+  })
 
   // Fonction pour traiter un tick de jeu (production d'items)
   const processTick = useCallback((deltaTimeInSeconds: number) => {
@@ -83,6 +99,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const handleSaveState = useCallback(() => {
     return {
       lastPlayedTime: Date.now(),
+      startTime,
       darkMode,
       units: Object.entries(units).reduce((acc, [unitId, unit]) => {
         const unitData: GameStateUnit = {
@@ -173,7 +190,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
       rabbitPrice,
       killedRabbits
     }
-  }, [darkMode, units, getElementsForUnit, seenMessages, unlockedSectors, complexComposition, tips, prices, rabbitPrice])
+  }, [darkMode, units, getElementsForUnit, seenMessages, unlockedSectors, complexComposition, tips, prices, rabbitPrice, startTime])
 
   // Fonction pour charger l'état du jeu
   const handleLoadState = useCallback((gameState: GameState) => {
@@ -236,9 +253,12 @@ export function IterationProvider ({ children }: BaseProviderProps) {
     if (gameState.tips)
       loadTips(gameState.tips)
 
-    if(gameState.killedRabbits)
+    if (gameState.killedRabbits)
       loadKilledRabbits(gameState.killedRabbits)
 
+    // Charger la date de première visite ou l'initialiser si inexistante
+    if (gameState.startTime)
+      setStartTime(gameState.startTime)
 
     // Charger les prix
     if (gameState.prices) {
@@ -252,7 +272,7 @@ export function IterationProvider ({ children }: BaseProviderProps) {
 
     if (gameState.unlockedSectors)
       loadSectors(gameState.unlockedSectors)
-  }, [getUnit, loadElements, loadSectors])
+  }, [getUnit, loadElements, loadSectors, setStartTime])
 
   // Hook pour la persistance de l'état du jeu
   const { saveGameState, loadGameState } = useGamePersistence({
@@ -281,8 +301,9 @@ export function IterationProvider ({ children }: BaseProviderProps) {
   const contextValue = useMemo<IterationContextType>(() => ({
     isPaused,
     togglePause,
-    saveGameState
-  }), [isPaused, togglePause, saveGameState])
+    saveGameState,
+    startTime
+  }), [isPaused, togglePause, saveGameState, startTime])
 
   return (
     <IterationContext.Provider value={ contextValue }>
