@@ -3,9 +3,10 @@ import React, { PropsWithChildren } from 'react'
 import classNames from 'classnames'
 import { motion } from 'motion/react'
 import AdaptativeText from 'components/adaptative-text/AdaptativeText'
-import { baseVariants, fadeAppear, stagger } from 'core/animation'
+import { baseVariants, fadeAppear, fadeAppearDelayed, stagger } from 'core/animation'
 import { BENEFITS_GOAL } from 'data/constants'
 import { useLoaderContext } from 'provider/LoaderProvider'
+import GradientText from 'components/gradient-text/GradientText'
 
 import styles from './EndScreen.module.scss'
 
@@ -23,14 +24,16 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
   })
 
   return (
-    <div className={ styles.wrapper }>
-      <motion.div
-        className={ classNames(styles.container, className) }
-        { ...props }
-        { ...baseVariants }
-        { ...stagger(0.3, 0.4) }
-      >
-        <div className={ styles.titleContainer }>
+    <div
+      className={ classNames(styles.wrapper, className) }
+      { ...props }
+    >
+      <div className={ styles.container }>
+        <motion.div
+          className={ styles.titleContainer }
+          { ...baseVariants }
+          { ...stagger(0.3, 0.4) }
+        >
           <motion.div { ...fadeAppear() } custom={{ invert: true }}>
             <AdaptativeText className={ classNames(styles.title) }>
               Félicitations
@@ -61,24 +64,36 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
               </span>
             </AdaptativeText>
           </motion.div>
-        </div>
-        <div className={ styles.content }>
-          <div className={ classNames(styles.contentLeft, styles.contentText) }>
-            <div>+25% SUR LE PRIX pour le public “féminin”</div>
+        </motion.div>
+        <motion.div
+          className={ styles.content }
+          { ...baseVariants }
+          { ...fadeAppearDelayed(.25) }
+        >
+          <motion.div
+            className={ classNames(styles.contentLeft, styles.contentText) }
+            { ...baseVariants }
+            { ...fadeAppearDelayed(.5) }
+          >
+            <div><GradientText className={ styles.item } duration={ 3 }>+25%</GradientText> SUR LE PRIX pour le public “féminin”</div>
             <div>COMPLEXE SUR-DILUÉ</div>
             <div>promesses scientifiques fallacieuses</div>
             <div>molécules chimiques non déclarée camouflée par le terme fragrance</div>
-          </div>
+          </motion.div>
           <img src={ pot.src } alt='content' className={ styles.pot } />
-          <div className={ classNames(styles.contentRight, styles.contentText) }>
-            <div>[32] animaux souffrAnt et exploités</div>
-            <div>[8 000] enfants exploités dans les mines de mica</div>
-            <div>[9] actifs toxiques</div>
-            <div>[64] terrains destinés à l’agriculture détournés</div>
-            <div>[13] partenariats mensongers</div>
-          </div>
-        </div>
-      </motion.div>
+          <motion.div
+            className={ classNames(styles.contentRight, styles.contentText) }
+            { ...baseVariants }
+            { ...fadeAppearDelayed(.5) }
+          >
+            <div><GradientText className={ styles.item } duration={ 3 }>32</GradientText> - animaux souffrant et exploités</div>
+            <div><GradientText className={ styles.item } duration={ 3 }>8 000</GradientText> - enfants exploités dans les mines de mica</div>
+            <div><GradientText className={ styles.item } duration={ 3 }>9</GradientText> - actifs toxiques</div>
+            <div><GradientText className={ styles.item } duration={ 3 }>64</GradientText> - terrains destinés à l’agriculture détournés</div>
+            <div><GradientText className={ styles.item } duration={ 3 }>13</GradientText> - partenariats mensongers</div>
+          </motion.div>
+        </motion.div>
+      </div>
     </div>
   )
 }

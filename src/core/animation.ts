@@ -41,6 +41,15 @@ export const fadeAppear = (available: boolean = true) => ({
   transition: baseTransition
 })
 
+export const fadeAppearDelayed = (delay: number = 0) => ({
+  variants: {
+    initial: ({ invert = false } = {}) => ({ y: invert ? '-30%' : '30%', opacity: 0 }),
+    animate: { y: '0%', opacity: 1, transition: { delay, damping: 0 } },
+    exit: ({ invert = false } = {}) => ({ y: invert ? '30%' : '-30%', opacity: 0 })
+  } as Variants,
+  transition: baseTransition
+})
+
 export const simpleFadeAppear = () => ({
   variants: {
     initial: { opacity: 0 },
