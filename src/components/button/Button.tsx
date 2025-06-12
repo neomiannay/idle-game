@@ -6,6 +6,8 @@ import { motion, MotionProps, Variants } from 'motion/react'
 import { formatValue } from 'helpers/units'
 
 import styles from './Button.module.scss'
+import { SOUNDS } from 'data/constants'
+import { useAudioContext } from 'provider/AudioProvider'
 
 type ButtonProps = PropsWithChildren<{
   className?: string
@@ -25,6 +27,7 @@ type ButtonProps = PropsWithChildren<{
 const Button = ({ className, cost, action, disabled, variant = null, onClick, motionProps, onMouseEnter, onMouseLeave } : ButtonProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const [replayKey, setReplayKey] = useState(0)
+  const { playSound } = useAudioContext()
 
   const handleMouseEnter = () => {
     setIsHovered(true)
@@ -45,6 +48,7 @@ const Button = ({ className, cost, action, disabled, variant = null, onClick, mo
       onClick={ (e) => {
         onClick && onClick(e)
         setReplayKey((k) => k + 1)
+        playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_BASIC)
       } }
       onHoverStart={ handleMouseEnter }
       onHoverEnd={ handleMouseLeave }

@@ -20,6 +20,7 @@ export type TSearchGameItem = {
   disabled: boolean;
   name: string;
   description: string;
+  toxic?: boolean;
   acceptValues: TSearchGameItemValue[];
   declineValues: TSearchGameItemValue[];
 };

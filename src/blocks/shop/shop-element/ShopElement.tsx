@@ -52,8 +52,10 @@ const ShopElement = ({ className, elementId, element, unitId, type }: ShopElemen
   const isUpgrade = type === 'upgrade'
   const isSector = type === 'sector'
   const isOther = type === 'otherShopElement'
-  const rawUnitName = element.cost.unitId.toString().toUpperCase()
+  const rawUnitName = unitId.toString().toUpperCase()
   const unitName = `UNITS.${rawUnitName}`
+  const rawCostUnitName = element.cost.unitId.toString().toUpperCase()
+  const costUnitName = `UNITS.${rawCostUnitName}`
 
   const elementSector = () => {
     if (isItem) return `BUTTONS.${rawUnitName}`
@@ -90,15 +92,13 @@ const ShopElement = ({ className, elementId, element, unitId, type }: ShopElemen
   }
 
   const getEffectText = () => {
-    const unit = getUnit(unitId)
-
     if (isUpgrade && unitId !== EGameUnit.COMPLEX) {
       const newValueByAction = (element as UpgradeType).valueByAction
       const unitName = `UNITS.${unitId.toString().toUpperCase()}`
       return `+${newValueByAction} ${l10n(conjugate(unitName, newValueByAction))}/clic`
     } else if (unitId !== EGameUnit.COMPLEX) {
       const item = element as ItemType
-      const unitName = `UNITS.${item.cost.unitId.toString().toUpperCase()}`
+      const unitName = `UNITS.${unitId.toString().toUpperCase()}`
       return `${item.unitByTime} ${l10n(conjugate(unitName, item.unitByTime))}/s`
     }
   }
@@ -143,7 +143,7 @@ const ShopElement = ({ className, elementId, element, unitId, type }: ShopElemen
           </div>
           <div className={ styles.bottom }>
             <span className={ styles.cost }>
-              { element.cost.value } <span>({ l10n(conjugate(unitName, element.cost.value)) })</span>
+              { element.cost.value } <span>({ l10n(conjugate(costUnitName, element.cost.value)) })</span>
             </span>
             <span className={ styles.unitEffect }>
               { elementSector() && l10n(elementSector()) }

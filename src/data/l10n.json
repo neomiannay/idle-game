@@ -32,9 +32,9 @@
       "SINGULAR": "vente",
       "PLURAL": "ventes"
     },
-    "MONEY": {
-      "SINGULAR": "pépette",
-      "PLURAL": "pépettes"
+    "BENEFITS": {
+      "SINGULAR": "euro",
+      "PLURAL": "euros"
     },
     "FORMULATION": {
       "SINGULAR": "formulation",
@@ -53,7 +53,7 @@
     "LAND_DESC": "Initialement destiné à l’alimentation,\nun terrain racheté à prix d’or !",
     "MINE": "Mine de mica",
     "MINE_DESC": "Un lieu où les mineurs malgaches\nrécoltent l'éclat des cosmétiques",
-    "WOMEN": "Femmes de 25 à 45 ans",
+    "WOMEN": "Femmes (25-45 ans)",
     "WOMEN_DESC": "Vieillir n’est plus une obligation !\nC’est ce que vous leur dites",
     "TEENS": "Adolescents",
     "TEENS_DESC": "Boutons, complexes et angoisses..\nCette clientèle est très réceptive",

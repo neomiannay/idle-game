@@ -32,7 +32,7 @@ const ReputationIndicator = () => {
       <span className={ styles.title }>{ l10n('UNITS.REPUTATION') }</span>
       <div className={ styles.label }>
         <MaskText opened={ false } replayKey={ clampedValue }>
-          { label } - { clampedValue }%
+          { label } [{ clampedValue }%]
         </MaskText>
       </div>
     </div>

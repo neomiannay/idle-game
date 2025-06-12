@@ -303,7 +303,7 @@ export const InventoryProvider = ({ children }: BaseProviderProps) => {
     const count = getItemCount(unitId, id)
     const cost = getItemPrice(element.cost.value, count)
 
-    modifyUnitValue(unitId, -cost)
+    modifyUnitValue(element.cost.unitId, -cost)
 
     if (type === 'item') setItemPurchased(unitId, id)
     else if (type === 'upgrade') setUpgradePurchased(unitId, id)
