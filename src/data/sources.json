@@ -39,6 +39,11 @@
       "type": "img",
       "name": "influenceurBlur",
       "src": "/img/influenceurs/influenceurs_blur.png"
+    },
+    {
+      "type": "img",
+      "name": "pot",
+      "src": "/img/pot.png"
     }
   ]
 }
