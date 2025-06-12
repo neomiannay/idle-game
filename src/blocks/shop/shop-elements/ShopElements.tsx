@@ -8,10 +8,9 @@ type ShopElementsProps = {
   elements: Record<string, ItemType | UpgradeType | SectorType | OtherShopElementType>
   unitId: EGameUnit
   type: ElementType
-  onElementPurchased?: () => void
 }
 
-const ShopElements = ({ elements, unitId, type, onElementPurchased }: ShopElementsProps) => {
+const ShopElements = ({ elements, unitId, type }: ShopElementsProps) => {
   return (
     <React.Fragment key={ unitId }>
       { Object.entries(elements).map(([elementId, element]) => (
@@ -21,7 +20,6 @@ const ShopElements = ({ elements, unitId, type, onElementPurchased }: ShopElemen
           element={ element }
           unitId={ unitId }
           type={ type }
-          onBuyComplete={ onElementPurchased }
         />
       )) }
     </React.Fragment>
