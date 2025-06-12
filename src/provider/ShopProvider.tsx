@@ -23,27 +23,34 @@ export const ShopProvider = ({ children }: BaseProviderProps) => {
   const shopTitleRef = useRef<HTMLDivElement | null>(null)
   const motionWrapperHeight = useMotionValue(0)
   const shopTitleHeight = useMotionValue(0)
+  const [translateYValue, setTranslateYValue] = useState(0)
 
   useEffect(() => {
-    if (shopOpen) motionWrapperHeight.set(motionWrapperRef.current?.offsetHeight ?? 0)
+    if (motionWrapperRef.current) {
+      const wrapperHeight = motionWrapperRef.current.offsetHeight
+      motionWrapperHeight.set(wrapperHeight)
+
+      const titleHeight = shopTitleRef.current ? shopTitleRef.current.offsetHeight + MARGIN_BETWEEN_TITLE_AND_SHOP : 0
+      setTranslateYValue(-wrapperHeight + titleHeight)
+    }
   }, [shopOpen])
 
   useEffect(() => {
-    if (shopTitleRef.current) shopTitleHeight.set(shopTitleRef.current.offsetHeight + MARGIN_BETWEEN_TITLE_AND_SHOP)
-  }, [shopTitleRef.current])
+    if (shopTitleRef.current) {
+      const height = shopTitleRef.current.offsetHeight + MARGIN_BETWEEN_TITLE_AND_SHOP
+      shopTitleHeight.set(height)
+      setTranslateYValue(-motionWrapperHeight.get() + height)
+    }
+  }, [])
 
-  const translateYValue = useMemo(() => {
-    return -motionWrapperHeight.get() + shopTitleHeight.get()
-  }, [motionWrapperHeight.get(), shopTitleHeight.get()])
-
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     shopOpen,
     setShopOpen,
     motionWrapperHeight,
     motionWrapperRef,
     shopTitleRef,
     translateYValue
-  }
+  }), [shopOpen, translateYValue])
 
   return (
     <ShopProviderContext.Provider value={ contextValue }>

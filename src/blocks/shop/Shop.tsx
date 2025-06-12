@@ -56,8 +56,8 @@ const Shop = ({ className }: { className?: string }) => {
             { ...baseVariants }
             { ...fadeAppear() }
             { ...stagger(0.1, 0.4) }
-            onHoverStart={ () => setShopOpen(true) }
-            onHoverEnd={ () => setShopOpen(false) }
+            onMouseEnter={ () => setShopOpen(true) }
+            onMouseLeave={ () => setShopOpen(false) }
           >
             <ShopMainView
               className={ className }
