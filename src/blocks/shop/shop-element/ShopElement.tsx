@@ -17,6 +17,7 @@ import useItemCount from 'hooks/useItemCount'
 import styles from './ShopElement.module.scss'
 import { SOUNDS } from 'data/constants'
 import { useAudioContext } from 'provider/AudioProvider'
+import { useGameProviderContext } from 'provider/GameProvider'
 
 type ShopElementProps = {
   className?: string;
@@ -31,6 +32,8 @@ const ShopElement = ({ className, elementId, element, unitId, type }: ShopElemen
   const { buyElementFromShop, shouldDisplayElement } = useInventoryContext()
   const { setUnlockedSectors, unlockedSectors } = useSectorsProviderContext()
   const { playSound } = useAudioContext()
+  const { getUnit } = useGameProviderContext()
+
   const l10n = useL10n()
   const isPurchased = useElementPurchased(unitId, elementId, type)
   const count = useItemCount(unitId, elementId) || 1
@@ -87,12 +90,17 @@ const ShopElement = ({ className, elementId, element, unitId, type }: ShopElemen
   }
 
   const getEffectText = () => {
-    if (isUpgrade) {
-      const nextLevel = elementId.replace(/\d+/, (n) => String(Number(n) + 1))
-      return `${elementId.toUpperCase()} => ${nextLevel.toUpperCase()}`
-    } else {
+    const unit = getUnit(unitId)
+
+    if (isUpgrade && unitId !== EGameUnit.COMPLEX) {
+      const currentValueByAction = unit?.valueByAction?.get() || 0
+      const newValueByAction = (element as UpgradeType).valueByAction
+      const unitName = `UNITS.${unitId.toString().toUpperCase()}`
+      return `${currentValueByAction} ${l10n(conjugate(unitName, currentValueByAction))}/clic => ${newValueByAction} ${l10n(conjugate(unitName, newValueByAction))}/clic`
+    } else if (unitId !== EGameUnit.COMPLEX) {
       const item = element as ItemType
-      return `${item.unitByTime} ${item.cost.unitId}/s`
+      const unitName = `UNITS.${item.cost.unitId.toString().toUpperCase()}`
+      return `${item.unitByTime} ${l10n(conjugate(unitName, item.unitByTime))}/s`
     }
   }
 

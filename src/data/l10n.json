@@ -91,7 +91,7 @@
   "UI": {
     "UNIT_PRODUCTION": "Afficher la production /s",
     "PRODUCTION_COST": "Coût",
-    "PRODUCTION_DURATION": "Durée de formulation d'un complexe",
+    "PRODUCTION_DURATION": "Durée d'exécution d'une formulation",
     "SELLING": "Prix",
     "REPUTATION": "Réputation",
     "EXECUTED_QUANTITY": "Nombre de complexes créés par formulation",
@@ -143,8 +143,8 @@
   },
   "RABBIT_GAME": {
     "LAYOUT": {
-      "TITLE": "Lapin",
-      "DESCRIPTION": "Débloquer le gros machin.",
+      "TITLE": "Protocole de Draize",
+      "DESCRIPTION": "Partez à la conquête du marché chinois ! Pour cela, les autorités chinoises vous demandent de suivre ce protocole pour des raisons de sécurité.",
       "NAME": "Protocole de Draize",
       "LAUNCH": "Lancer",
       "NOT_ENOUGH_MONEY": "Pas assez de pépettes...",

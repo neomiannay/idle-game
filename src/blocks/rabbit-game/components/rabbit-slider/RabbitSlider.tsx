@@ -145,14 +145,14 @@ const RabbitSlider = ({
       { (isRabbitDead || life.get() === null) && rabbitPrice ? (
         <RabbitBtn
           price={ `${formatValue(rabbitPrice)} ${l10n('UNITS.EURO')}` }
-          label='exécuter le lapin'
+          label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
           onClick={handleBuy}
           disabled={ !canBuyRabbit }
         />
       ) : (
         <RabbitBtn
           price={ `${formatValue(testPrice)} ${l10n('UNITS.EURO')}` }
-          label='exécuter'
+          label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
           onClick={ () => handleStart(items[currentIndex]) }
           disabled={ !canBuyTest }
         />
