@@ -29,7 +29,6 @@ const LaboratorySector = ({ className, ...props } : LaboratorySectorProps) => {
         <SearchGame
           duration={ searchGameData.settings.duration }
           price={ searchGameData.settings.price }
-          efficiency={ searchGameData.settings.efficiency }
           layoutInfos={ searchGameData.layout }
           items={ searchGameData.items as SearchGameProps['items'] }
           sectorId={ EGameSector.LABORATORY }
