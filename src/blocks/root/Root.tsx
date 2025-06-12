@@ -12,6 +12,8 @@ import { useSectorsProviderContext } from 'provider/SectorsProvider'
 import Background from 'blocks/background/Background'
 import { useLoaderContext } from 'provider/LoaderProvider'
 import ActivateSound from 'blocks/activate-sound/ActivateSound'
+import Button from 'components/button/Button'
+import { useL10n } from 'provider/L10nProvider'
 
 import styles from './Root.module.scss'
 import Loading from './components/loading/Loading'
@@ -20,6 +22,7 @@ type RootProps = {
   className?: string;
 };
 function Root ({ className }: RootProps) {
+  const l10n = useL10n()
   const { isLoading } = useLoaderContext()
   const { reactiveCurrentSector, sectors } = useSectorsProviderContext()
 
@@ -33,6 +36,15 @@ function Root ({ className }: RootProps) {
         [styles.loading]: isLoading
       }) }
     >
+      <Button // TODO: move to EndScreen component
+        action={ l10n('BUTTONS.NEW_GAME') }
+        variant='simple'
+        className={ styles.newGame }
+        onClick={ () => {
+          localStorage.clear()
+          window.location.reload()
+        } }
+      />
       { isLoading || !isBackgroundLoaded ? (
         <Loading />
       ) : (

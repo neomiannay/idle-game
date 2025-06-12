@@ -5,6 +5,15 @@
   overflow: hidden;
 }
 
+.newGame { // TODO: move to EndScreen component
+  z-index: 100;
+  position: absolute;
+  top: rem(20);
+  left: rem(20);
+  width: fit-content;
+  height: fit-content;
+}
+
 .pauseButton {
   position: absolute;
   top: rem(20);
