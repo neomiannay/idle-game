@@ -18,11 +18,22 @@ type ButtonProps = PropsWithChildren<{
   action: string
   onClick?: () => void
   motionProps?: Variants | MotionProps
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
 } & ButtonHTMLAttributes<HTMLButtonElement>>
 
-const Button = ({ className, cost, action, disabled, variant = null, onClick, motionProps } : ButtonProps) => {
+const Button = ({ className, cost, action, disabled, variant = null, onClick, motionProps, onMouseEnter, onMouseLeave } : ButtonProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const [replayKey, setReplayKey] = useState(0)
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+    onMouseEnter?.()
+  }
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+    onMouseLeave?.()
+  }
 
   return (
     <motion.button
@@ -35,8 +46,8 @@ const Button = ({ className, cost, action, disabled, variant = null, onClick, mo
         onClick && onClick(e)
         setReplayKey((k) => k + 1)
       } }
-      onHoverStart={ () => setIsHovered(true) }
-      onHoverEnd={ () => setIsHovered(false) }
+      onHoverStart={ handleMouseEnter }
+      onHoverEnd={ handleMouseLeave }
       { ...motionProps }
     >
       { variant === 'variant' && (

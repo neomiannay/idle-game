@@ -13,6 +13,8 @@ import { getItemPrice } from 'helpers/units'
 import MaskText from 'components/mask-text/MaskText'
 import { motion } from 'motion/react'
 import { baseVariants, fadeAppear, stagger } from 'core/animation'
+import { useAudioContext } from 'provider/AudioProvider'
+import { SOUNDS } from 'data/constants'
 
 import styles from './Item.module.scss'
 
@@ -24,8 +26,8 @@ type ItemProps = {
 };
 
 const Item = ({ className, unitId, itemId, item }: ItemProps) => {
-  const { getElementsForUnit, getItemCount, buyElement } =
-    useInventoryContext()
+  const { getElementsForUnit, getItemCount, buyElement } = useInventoryContext()
+  const { playSound } = useAudioContext()
   const l10n = useL10n()
 
   const items = getElementsForUnit(unitId, 'item')
@@ -59,6 +61,11 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
   const costName = `(${l10n(conjugate(unitName, cost))})`
 
   const label = l10n((unitId === EGameUnit.SALE) ? 'BUTTONS.TARGET' : 'BUTTONS.BUY')
+
+  const handleClick = () => {
+    buyElement(unitId, itemId, 'item')
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.HOVER_BASIC)
+  }
 
   if (!isPurchased) return null
 
@@ -108,7 +115,7 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
       >
         <Button
           className={ styles.button }
-          onClick={ () => buyElement(unitId, itemId, 'item') }
+          onClick={ handleClick }
           disabled={ !canPurchase }
           cost={{
             value: cost,

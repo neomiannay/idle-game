@@ -16,7 +16,7 @@ import { EGameUnit } from 'types/store'
 import styles from './Background.module.scss'
 
 const BENEFITS_END_STEP = 6_200_000_000
-const BENEFITS_START_STEP = 1_000
+const BENEFITS_START_STEP = 500
 
 function getProgressFromMoney (
   money: number,

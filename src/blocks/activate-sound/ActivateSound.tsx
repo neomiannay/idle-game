@@ -8,7 +8,6 @@ import { baseTransition, baseVariants, fadeAppear, staggerWithExit } from 'core/
 import { SOUNDS } from 'data/constants'
 import { useL10n } from 'provider/L10nProvider'
 import AdaptativeText from 'components/adaptative-text/AdaptativeText'
-import { useGlobalContext } from 'provider/GlobalProvider'
 
 import styles from './ActivateSound.module.scss'
 
@@ -17,7 +16,6 @@ type ActivateSoundProps = PropsWithChildren<{
 }>
 
 const ActivateSound = ({ className, ...props } : ActivateSoundProps) => {
-  const { darkMode } = useGlobalContext()
   const { playSound, setAudioEnabled, audioEnabled } = useAudioContext()
   const l10n = useL10n()
 
@@ -27,12 +25,9 @@ const ActivateSound = ({ className, ...props } : ActivateSoundProps) => {
     setAudioEnabled(enabled)
   }
 
-  const category = SOUNDS.AMBIANCE.CATEGORY
-  const sound = darkMode ? SOUNDS.AMBIANCE.DARK_MAIN : SOUNDS.AMBIANCE.LIGHT_MAIN
-
   const handlePlaySound = useCallback(() => {
-    playSound(category, sound, true)
-  }, [playSound, category, sound])
+    playSound(SOUNDS.AMBIANCE.CATEGORY, SOUNDS.AMBIANCE.MAIN, true)
+  }, [playSound])
 
   useEffect(() => {
     if (audioEnabled === true) handlePlaySound()
