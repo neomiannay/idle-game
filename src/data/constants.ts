@@ -18,7 +18,7 @@ export const SOUNDS = {
     BUY_BASIC: 'buy_basic',
     BUY_SHOP: 'buy_shop',
     DISABLED: 'disabled',
-    ARROW: 'arrow',
+    ARROW: 'arrow'
   }
 }
 export const BENEFITS_GOAL = 6_400_000_000
