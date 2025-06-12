@@ -15,6 +15,7 @@
 
   &::after {
     content: '';
+    pointer-events: none;
     position: absolute;
     top: -100%;
     left: 90%;
