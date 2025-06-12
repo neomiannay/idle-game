@@ -25,6 +25,7 @@ const SearchListItem = ({ item, index, list }: SearchListItemProps) => {
       <Tooltip
         parent={ ref }
         disabled={ false }
+        className={ styles.tooltip }
       >
         <SearchListTooltip item={ item } />
       </Tooltip>

@@ -57,13 +57,17 @@ const SearchResults = ({
             { newItem.acceptValues
               .filter((value) => value.target !== EGameUnit.KARMA)
               .map((value, index) => (
-                <p key={ index }>
-                  { targetLabels[value.target] ?? value.target }: +
-                  { value.value.toString() }
-                  { value.target === EGameUnit.REPUTATION
-                    ? l10n('UNITS.PERCENT')
-                    : l10n('UNITS.EURO') }
-                </p>
+                <div key={ index }>
+                  <small>
+                    { targetLabels[value.target] ?? value.target }:
+                  </small>
+                  <p className={ styles.effectsValue }>
+                    +{ value.value.toString() }
+                    { value.target === EGameUnit.REPUTATION
+                      ? l10n('UNITS.PERCENT')
+                      : l10n('UNITS.EURO') }
+                  </p>
+                </div>
               )) }
           </div>
           <div className={ styles.choices }>

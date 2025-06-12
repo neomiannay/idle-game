@@ -1,6 +1,6 @@
 {
   "settings": {
-    "duration": 1000,
+    "duration": 60000,
     "price": 30,
     "efficiency": 100
   },

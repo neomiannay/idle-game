@@ -1,8 +1,19 @@
 .wrapper {
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--fill-10);
+  color: var(--fill-100);
   padding: rem(10);
   border-radius: rem(10);
-  width: rem(100);
-  height: rem(100);
+  width: 33vw;
+}
+
+.effects {
+  display: flex;
+  gap: rem(12);
+  font-size: rem(12);
+  margin: 0;
+
+  &Value {
+    margin: 0;
+    font-weight: 700;
+  }
 }
