@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import Count from 'components/count/Count'
 import Button from 'components/buy-button/BuyButton'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { useInventoryContext } from 'provider/InventoryProvider'
 import useMotionState from 'hooks/useMotionState'
 import { EGameUnit, EStatus } from 'types/store'
 import { useFeedbackContext } from 'provider/FeedbackProvider'
@@ -21,21 +20,19 @@ type SaleSectionProps = {
 
 const SaleSection = ({ className, unitId }: SaleSectionProps) => {
   const { getUnit, canBuyUnit, buyUnit, isSaleSuccessful } = useGameProviderContext()
-  const { getItemProduction } = useInventoryContext()
   const { feedback, setFeedback, triggerFeedback, setSuccessCount, setFailCount } = useFeedbackContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null
 
   const count = useMotionState(unit.motionValue, (value) => value)
-  const canBuy = canBuyUnit(unitId)
-  const productionPerSecond = getItemProduction(unitId)
 
   const rawUnitName = unitId.toString().toUpperCase()
-  const unitName = `UNITS.${rawUnitName}`
+
+  const reactiveCanBuy = useMotionState(unit.motionValue, () => canBuyUnit(unitId))
 
   const handleClick = () => {
-    if (!canBuy) return
+    if (!reactiveCanBuy) return
     if (isSaleSuccessful()) {
       buyUnit(unitId)
       triggerFeedback(EStatus.SUCCESS)
@@ -59,7 +56,7 @@ const SaleSection = ({ className, unitId }: SaleSectionProps) => {
         ) } */ }
       </div>
       <div className={ styles.buttonContainer }>
-        <Button title={ `BUTTONS.${rawUnitName}` } onClick={ handleClick } disabled={ !canBuy } />
+        <Button title={ `BUTTONS.${rawUnitName}` } onClick={ handleClick } disabled={ !reactiveCanBuy } />
         { feedback && (
           <SaleFeedback
             key={ feedback.key }

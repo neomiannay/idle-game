@@ -141,10 +141,6 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
             </span>
           </div>
           <Button
-            onClick={ () => improveValueByAction(
-              EGameUnit.COMPLEX,
-              EGameUnit.ACTIF
-            ) }
             disabled={ !reactiveCanPurshaseQuantity }
             variant='variant'
             cost={{
@@ -152,6 +148,10 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
               unit: l10n(costName)
             }}
             action='+1'
+            onClick={ () => improveValueByAction(
+              EGameUnit.COMPLEX,
+              EGameUnit.ACTIF
+            ) }
           />
         </div>
       </div>

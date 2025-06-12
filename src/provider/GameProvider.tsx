@@ -58,7 +58,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
   // @ts-ignore
   window.give = (unitId: EGameUnit, value: number) => {
     const unit = getUnit(unitId)
-    if (!unit) return console.error('Unit not found')
+    if (!unit) return console.error('Unit not found, use :', Object.values(EGameUnit))
+
     unit.rawValue.add(value)
     console.info(`Units added (${unitId})`, unit.rawValue.get())
   }
@@ -66,7 +67,8 @@ export function GameProvider ({ children }: BaseProviderProps) {
   // @ts-ignore
   window.set = (unitId: EGameUnit, value: number) => {
     const unit = getUnit(unitId)
-    if (!unit) return console.error('Unit not found')
+    if (!unit) return console.error('Unit not found, use :', Object.values(EGameUnit))
+
     unit.motionValue.jump(value)
     unit.totalMotionValue.jump(value)
     console.info(`Units set (${unitId})`, unit.rawValue.get())

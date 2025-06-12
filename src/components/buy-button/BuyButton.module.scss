@@ -28,6 +28,6 @@
 }
 
 .disabled {
-  color: var(--color-disabled);
-  filter: brightness(0.8);
+  opacity: 0.75;
+  pointer-events: none;
 }
