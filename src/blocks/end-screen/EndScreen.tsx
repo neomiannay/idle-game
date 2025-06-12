@@ -38,7 +38,18 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
           { ...fadeAppear() }
           custom={{ invert: true }}
         >
-          <AdaptativeText className={ styles.adpative }>vous avez généré 6 400 000 000,00 € en 3h 20m 10s</AdaptativeText>
+          <AdaptativeText className={ styles.adpative } innerText='vous avez généré 6 400 000 000,00 € en 3h 20m 10s'>
+            <span>vous avez généré&nbsp;</span>
+            <span className={ styles.benefitsWrapper }>
+              <span className={ classNames(styles.blur, styles.benefits) }>6 400 000 000,00 €</span>
+              <span className={ classNames(styles.base, styles.benefits) }>6 400 000 000,00 €</span>
+            </span>
+            <span>&nbsp;en&nbsp;</span>
+            <span className={ styles.benefitsWrapper }>
+              <span className={ classNames(styles.blur, styles.benefits) }>3h 20m 10s</span>
+              <span className={ classNames(styles.base, styles.benefits) }>3h 20m 10s</span>
+            </span>
+          </AdaptativeText>
         </motion.div>
       </div>
 

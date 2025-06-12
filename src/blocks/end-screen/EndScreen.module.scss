@@ -15,7 +15,7 @@
   @include apply(action2);
   letter-spacing: -0.02em;
   color: var(--fill-10);
-
+  margin-bottom: -3%;
 }
 
 .second {
@@ -28,6 +28,8 @@
   justify-content: center;
   gap: var(--grid-margin);
   color: var(--fill-10);
+  padding-left: .5%;
+  padding-right: .5%;
 }
 
 .adpative {
@@ -35,3 +37,26 @@
 }
 
 
+.benefits {
+  color: var(--color-money);
+  padding: 0 var(--grid-margin);
+
+  &Wrapper {
+    position: relative;
+    margin: 0 calc(var(--grid-margin) * -1);
+  }
+}
+
+.blur {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-clip: text;
+  filter: blur(0.35vw);
+  mask: linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 100%);
+}
+
+.base {
+  mask: linear-gradient(to top, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0.25) 100%);
+}

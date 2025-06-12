@@ -11,9 +11,10 @@ type AdaptativeTextProps = {
   className?: string
   tag?: ElementType
   children?: ReactNode
+  innerText?: string
 } & HTMLAttributes<HTMLDivElement>
 
-const AdaptativeText = ({ className, tag: Tag = 'span', children, ...props } : AdaptativeTextProps, outerRef?: any) => {
+const AdaptativeText = ({ className, tag: Tag = 'span', children, innerText, ...props } : AdaptativeTextProps, outerRef?: any) => {
   const { mq } = useViewportContext()
   const ref = outerRef || useRef<HTMLSpanElement>(null)
   const ruler = useRef<HTMLSpanElement>(null)
@@ -34,7 +35,7 @@ const AdaptativeText = ({ className, tag: Tag = 'span', children, ...props } : A
     ref.current.style.fontSize = Math.max(fontSize, minFontSize) + 'px'
   })
 
-  const rulerContent = useMemo(() => isString(children) ? children : children?.toString(), [children])
+  const rulerContent = useMemo(() => innerText || (isString(children) ? children : children?.toString()), [children, innerText])
 
   return (
     <>
