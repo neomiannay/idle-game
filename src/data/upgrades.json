@@ -10,11 +10,11 @@
         "valueByAction": 2,
         "apparitionCondition": {
           "unitId": "actif",
-          "value": 5
+          "value": 60
         },
         "cost": {
           "unitId": "actif",
-          "value": 5
+          "value": 100
         }
       },
       {
@@ -26,11 +26,75 @@
         "valueByAction": 8,
         "apparitionCondition": {
           "unitId": "actif",
-          "value": 100
+          "value": 1000
         },
         "cost": {
           "unitId": "actif",
-          "value": 400
+          "value": 1500
+        }
+      },
+      {
+        "_type": "upgrade",
+        "_id": "lvl3",
+        "unitId": "actif",
+        "name": "UPGRADES.LEVEL3",
+        "description": "UPGRADES.LEVEL3_DESC",
+        "valueByAction": 16,
+        "apparitionCondition": {
+          "unitId": "actif",
+          "value": 10000
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 13000
+        }
+      },
+      {
+        "_type": "upgrade",
+        "_id": "lvl4",
+        "unitId": "actif",
+        "name": "UPGRADES.LEVEL4",
+        "description": "UPGRADES.LEVEL4_DESC",
+        "valueByAction": 32,
+        "apparitionCondition": {
+          "unitId": "actif",
+          "value": 100000
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 250000
+        }
+      },
+      {
+        "_type": "upgrade",
+        "_id": "lvl5",
+        "unitId": "actif",
+        "name": "UPGRADES.LEVEL5",
+        "description": "UPGRADES.LEVEL5_DESC",
+        "valueByAction": 32,
+        "apparitionCondition": {
+          "unitId": "actif",
+          "value": 300000
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 500000
+        }
+      },
+      {
+        "_type": "upgrade",
+        "_id": "lvl6",
+        "unitId": "actif",
+        "name": "UPGRADES.LEVEL6",
+        "description": "UPGRADES.LEVEL6_DESC",
+        "valueByAction": 32,
+        "apparitionCondition": {
+          "unitId": "actif",
+          "value": 8000000
+        },
+        "cost": {
+          "unitId": "actif",
+          "value": 1000000
         }
       }
     ],

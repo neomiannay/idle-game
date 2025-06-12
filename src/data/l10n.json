@@ -48,17 +48,17 @@
   },
   "ITEMS": {
     "GARDEN": "Jardin floral",
-    "GARDEN_DESC": "Un joli jardin paisible où poussent\ndes espèces rares de fleurs",
+    "GARDEN_DESC": "Un joli jardin paisible où poussent des espèces rares de fleurs",
     "LAND": "Terrain agricole",
-    "LAND_DESC": "Initialement destiné à l’alimentation,\nun terrain racheté à prix d’or !",
+    "LAND_DESC": "Initialement destiné à l’alimentation, un terrain racheté à prix d’or !",
     "MINE": "Mine de mica",
-    "MINE_DESC": "Un lieu où les mineurs malgaches\nrécoltent l'éclat des cosmétiques",
+    "MINE_DESC": "Un lieu où les mineurs malgaches récoltent l'éclat des cosmétiques",
     "WOMEN": "Femmes (25-45 ans)",
-    "WOMEN_DESC": "Vieillir n’est plus une obligation !\nC’est ce que vous leur dites",
+    "WOMEN_DESC": "Vieillir n’est plus une obligation ! C’est ce que vous leur dites",
     "TEENS": "Adolescents",
-    "TEENS_DESC": "Boutons, complexes et angoisses..\nCette clientèle est très réceptive",
+    "TEENS_DESC": "Boutons, complexes et angoisses.. Cette clientèle est très réceptive",
     "KIDS": "Petites filles",
-    "KIDS_DESC": "Quoi de mieux que de prévenir\ndes signes de vieillesse à 8 ans ?"
+    "KIDS_DESC": "Quoi de mieux que de prévenir des signes de vieillesse à 8 ans ?"
   },
   "ACTIONS": {
     "BUY": "Acheter",
@@ -69,44 +69,41 @@
     "NOT_INCLUDE": "Ne pas inclure"
   },
   "UPGRADES": {
-    "LEVEL1": "Niveau 2",
-    "LEVEL1_DESC": "Passer la production au niveau 3",
-    "LEVEL2": "Niveau 3",
-    "LEVEL2_DESC": "Passer la production au niveau 4",
-    "LEVEL3": "Niveau 4",
-    "LEVEL3_DESC": "Passer la production au niveau 5",
-    "LEVEL4": "Niveau 5",
-    "LEVEL4_DESC": "Passer la production au niveau 6",
-    "LEVEL5": "Niveau 6",
-    "LEVEL5_DESC": "Passer la production au niveau 7",
-    "LEVEL6": "Niveau 7",
-    "LEVEL6_DESC": "Passer la production au niveau 8",
-    "AUTOPROD": "Formulation\nautomatisée",
-    "AUTOPROD_DESC": "C'est un switch en gros qui te permet de faire des productions automatiques."
+    "LEVEL1": "STAGIAIRE",
+    "LEVEL1_DESC": "Jeune et dynamique, il est à votre service pour multiplier la production",
+    "LEVEL2": "APPRENTI",
+    "LEVEL2_DESC": "En quête d'expérience, il se démène pour l'entreprise",
+    "LEVEL3": "INTÉRIMAIRE",
+    "LEVEL3_DESC": "Temporairement disponible, il sait de quoi il en retourne",
+    "LEVEL4": "CDD",
+    "LEVEL4_DESC": "Rapide, constant, productif, la personne qu'il vous faut",
+    "LEVEL5": "CDI",
+    "LEVEL5_DESC": "Un employé qui durera et évoluera au sein de l'entreprise",
+    "LEVEL6": "CHEF D'ENTREPRISE",
+    "LEVEL6_DESC": "Une aide pour gérer et piloter l'ensemble des ressources",
+    "AUTOPROD": "FORMULATION AUTOMATISÉE",
+    "AUTOPROD_DESC": "Une nouvelle technologie qui révolutionne le processus de formulation en l'automatisant"
   },
   "PRICES": {
-    "PRODUCTION": "Coût",
-    "SELLING": "Prix"
+    "PRODUCTION": "Coût de production",
+    "SELLING": "Prix de vente"
   },
   "UI": {
     "UNIT_PRODUCTION": "Afficher la production /s",
-    "PRODUCTION_COST": "Coût",
-    "PRODUCTION_DURATION": "Durée d'exécution d'une formulation",
-    "SELLING": "Prix",
+    "PRODUCTION_COST": "Coût de production",
+    "PRODUCTION_DURATION": "Durée de formulation d'un complexe",
+    "SELLING": "Prix de vente",
     "REPUTATION": "Réputation",
     "EXECUTED_QUANTITY": "Nombre de complexes créés par formulation",
     "AUTOMATIC_PRODUCTION": "Production automatique"
   },
-  "PACKS": {
-    "FRIEND_X10": "Pack Ami ×10 +2 bonus"
-  },
   "SEARCH_ACTIFS": {
     "LAYOUT": {
       "NAME": "Recherche d’actifs",
-      "ERROR": "AUCUN actif trouvé",
-      "TITLE": "Michael Scott",
+      "ERROR": "Aucun actif trouvé",
+      "TITLE": "MICHAEL DEVON",
       "SUBTITLE": "Scientifique Expert Quantique",
-      "DESCRIPTION": "Depuis tant d'années je décrypte les phénomènes photoniques, à l'échelle de l'infiniment petit, l'échelle quantique.",
+      "DESCRIPTION": "Depuis tant d'années il décrypte les phénomènes photoniques, à l'échelle de l'infiniment petit, l'échelle quantique.",
       "BUTTON_LABEL": "Lancer la recherche",
       "NEW": "Nouvel actif trouvé",
       "LIST": "Composition du complexe",
@@ -143,8 +140,8 @@
   },
   "RABBIT_GAME": {
     "LAYOUT": {
-      "TITLE": "Protocole de Draize",
-      "DESCRIPTION": "Partez à la conquête du marché chinois ! Pour cela, les autorités chinoises vous demandent de suivre ce protocole pour des raisons de sécurité.",
+      "TITLE": "Protocole de draize",
+      "DESCRIPTION": "Les autorités chinoises vous demandent de suivre un protocole sur vos actifs revandiquant une nouvelle efficacité pour des raisons de sécurité.",
       "NAME": "Protocole de Draize",
       "LAUNCH": "Lancer",
       "NOT_ENOUGH_MONEY": "Pas assez de pépettes...",
@@ -152,10 +149,10 @@
     },
     "TIPS": {
       "CLICK_0": "*caresse*",
-      "CLICK_1": "Essaye !",
-      "CLICK_2": "Teste-moi !",
-      "CLICK_3": "Caresse moi !",
-      "CLICK_4": "Expérimente !"
+      "CLICK_1": "ESSAYE !",
+      "CLICK_2": "TESTE-MOI !",
+      "CLICK_3": "CARESSE-MOI !",
+      "CLICK_4": "EXPÉRIMENTE !"
     },
     "ITEMS": {
       "SKIN_REACTION": "Réaction cutanée",
@@ -173,16 +170,17 @@
   "SEARCH_TIPS": {
     "LAYOUT": {
       "NAME": "Stratégie commerciale",
-      "TITLE": "Elèphe Antivre",
-      "SUBTITLE": "Experte en stratégie commerciale et optimisation budgétaire",
-      "DESCRIPTION": "Je navigue à la confluence des flux budgétaires et des dynamiques commerciales, décryptant les oscillations des marchés émergents avec une précision quasi-quantique.",
+      "ERROR": "Aucune stratégie trouvée",
+      "TITLE": "ELĒPHE ANTIVRE",
+      "SUBTITLE": "Experte en stratégie commerciale et optimisation financière",
+      "DESCRIPTION": "Elle navigue à la confluence des flux budgétaires et des dynamiques commerciales, décryptant les oscillations des marchés émergents avec précision.",
       "BUTTON_LABEL": "Chercher une stratégie",
       "NEW": "Nouvelle stratégie trouvée",
-      "LIST": "Liste des stratégies",
+      "LIST": "Stratégies employées",
       "PROBABILITY": "Chance de trouver une stratégie",
       "DURATION": "Durée de la recherche",
       "IN_PROGRESS": "Recherche en cours...",
-      "DECLINE": "Refuser",
+      "DECLINE": "Ne pas appliquer",
       "ADD": "Appliquer"
     },
     "ITEMS": {
@@ -201,8 +199,8 @@
   "SECTORS": {
     "PRODUCTION": "Production",
     "LABORATORY": "Laboratoire",
-    "LABORATORY_DESC": "Laboratoire, c'est le laboratoire.",
+    "LABORATORY_DESC": "Un espace dédié à la recherche scientifique de nouveaux actifs à inclure au sein de la composition du complexe",
     "PUBLICITY": "Publicité",
-    "PUBLICITY_DESC": "Publicité, c'est la publicité."
+    "PUBLICITY_DESC": "Informer le plus grand nombre de personnes sur les bienfaits de nos produits et faire rayonner notre image de marque est une priorité"
   }
 }

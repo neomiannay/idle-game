@@ -9,11 +9,11 @@
         "description": "RABBIT_GAME.LAYOUT.DESCRIPTION",
         "apparitionCondition": {
           "unitId": "benefits",
-          "value": 100
+          "value": 100000
         },
         "cost": {
-          "unitId": "actif",
-          "value": 100
+          "unitId": "benefits",
+          "value": 100000
         }
       }
     ]

@@ -9,11 +9,11 @@
         "description": "SECTORS.LABORATORY_DESC",
         "apparitionCondition": {
           "unitId": "sale",
-          "value": 1
+          "value": 60
         },
         "cost": {
-          "unitId": "actif",
-          "value": 1000
+          "unitId": "benefits",
+          "value": 10000
         }
       },
       {
@@ -24,11 +24,11 @@
         "description": "SECTORS.PUBLICITY_DESC",
         "apparitionCondition": {
           "unitId": "sale",
-          "value": 2
+          "value": 60
         },
         "cost": {
-          "unitId": "actif",
-          "value": 1
+          "unitId": "benefits",
+          "value": 10000
         }
       }
     ]

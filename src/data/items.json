@@ -10,11 +10,11 @@
         "unitByTime": 1,
         "apparitionCondition": {
           "unitId": "actif",
-          "value": 5
+          "value": 10
         },
         "cost": {
           "unitId": "actif",
-          "value": 10
+          "value": 60
         }
       },
       {
@@ -23,14 +23,14 @@
         "unitId": "actif",
         "name": "ITEMS.LAND",
         "description": "ITEMS.LAND_DESC",
-        "unitByTime": 5,
+        "unitByTime": 8,
         "apparitionCondition": {
           "unitId": "actif",
           "value": 10
         },
         "cost": {
           "unitId": "actif",
-          "value": 20
+          "value": 450
         }
       },
       {
@@ -39,14 +39,14 @@
         "unitId": "actif",
         "name": "ITEMS.MINE",
         "description": "ITEMS.MINE_DESC",
-        "unitByTime": 10,
+        "unitByTime": 32,
         "apparitionCondition": {
           "unitId": "actif",
           "value": 10
         },
         "cost": {
           "unitId": "actif",
-          "value": 20
+          "value": 1200
         }
       }
     ],
@@ -63,7 +63,7 @@
           "value": 5
         },
         "cost": {
-          "unitId": "actif",
+          "unitId": "benefits",
           "value": 100
         }
       },
@@ -75,12 +75,12 @@
         "description": "ITEMS.TEENS_DESC",
         "unitByTime": 5,
         "apparitionCondition": {
-          "unitId": "sale",
-          "value": 10
+          "unitId": "benefits",
+          "value": 3000
         },
         "cost": {
-          "unitId": "actif",
-          "value": 2000
+          "unitId": "benefits",
+          "value": 4000
         }
       },
       {
@@ -91,12 +91,12 @@
         "description": "ITEMS.KIDS_DESC",
         "unitByTime": 10,
         "apparitionCondition": {
-          "unitId": "sale",
-          "value": 10
+          "unitId": "benefits",
+          "value": 16000
         },
         "cost": {
-          "unitId": "actif",
-          "value": 2000
+          "unitId": "benefits",
+          "value": 20000
         }
       }
     ]
