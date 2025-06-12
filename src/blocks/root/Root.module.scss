@@ -8,10 +8,15 @@
 .newGame { // TODO: move to EndScreen component
   z-index: 100;
   position: absolute;
-  top: rem(20);
-  left: rem(20);
+  top: var(--grid-margin);
+  left: var(--grid-margin);
   width: fit-content;
   height: fit-content;
+}
+
+.creditsLink { // TODO: move to EndScreen component
+  left: unset;
+  right: var(--grid-margin);
 }
 
 .pauseButton {

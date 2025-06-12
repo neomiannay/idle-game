@@ -15,7 +15,8 @@
       "CANCEL": "Annuler",
       "CONFIRM": "Activer"
     },
-    "NEW_GAME": "Nouvelle partie"
+    "NEW_GAME": "Nouvelle partie",
+    "CREDITS_LINK": "Crédits"
   },
   "UNITS": {
     "ACTIF": {

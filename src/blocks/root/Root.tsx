@@ -45,6 +45,16 @@ function Root ({ className }: RootProps) {
           window.location.reload()
         } }
       />
+
+      <a
+        className={ classNames(styles.newGame, styles.creditsLink) }
+        href='https://www.notion.so/Sources-207ca43dc6968043b395d6fd8a2c0282'
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <Button action={ l10n('BUTTONS.CREDITS_LINK') } variant='simple' />
+      </a>
+
       { isLoading || !isBackgroundLoaded ? (
         <Loading />
       ) : (
