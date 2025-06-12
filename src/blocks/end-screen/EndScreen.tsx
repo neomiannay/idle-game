@@ -14,6 +14,7 @@ import { useInventoryContext } from 'provider/InventoryProvider'
 import { EGameUnit } from 'types/store'
 
 import styles from './EndScreen.module.scss'
+import { useGameProviderContext } from 'provider/GameProvider'
 
 type EndScreenProps = PropsWithChildren<{
   className?: string;
@@ -24,12 +25,16 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
   const { resources } = useLoaderContext()
   const { killedRabbits, complexComposition } = useSearchLaboratoryContext()
   const { getItemCount } = useInventoryContext()
+  const { getUnit } = useGameProviderContext()
   const pot = resources.pot as HTMLImageElement
 
   const benefits = BENEFITS_GOAL.toLocaleString('fr-FR', {
     style: 'currency',
     currency: 'EUR'
   })
+
+  const karma = getUnit(EGameUnit.KARMA)
+  const karmaCount = karma ? karma.motionValue.get() : 0
 
   const toxicActifsCount = complexComposition ? complexComposition.filter(actif => actif.toxic).length : 0
 
@@ -88,6 +93,7 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
             <motion.div { ...fadeAppear() }>promesses scientifiques fallacieuses</motion.div>
             <motion.div { ...fadeAppear() }>molécules chimiques non déclarée camouflée par le terme fragrance</motion.div>
             <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>{ getItemCount(EGameUnit.SALE, 'kids') }</GradientText> - milliers de peaux de petites filles endommagées</motion.div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>{ getItemCount(EGameUnit.SALE, 'teens') }</GradientText> - milliers d'adolescentes complexées</motion.div>
           </motion.div>
           <motion.img
             src={ pot.src }
@@ -103,8 +109,8 @@ const EndScreen = ({ className, ...props }: EndScreenProps) => {
             <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>{ getItemCount(EGameUnit.ACTIF, 'land') }</GradientText> - enfants exploités dans les mines de mica</motion.div>
             <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>{ toxicActifsCount }</GradientText> - actifs toxiques</motion.div>
             <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>{ getItemCount(EGameUnit.ACTIF, 'garden') }</GradientText> - terrains destinés à l’agriculture détournés</motion.div>
-            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>{ getItemCount(EGameUnit.SALE, 'teens') }</GradientText> - milliers d'adolescentes complexées</motion.div>
             <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>13</GradientText> - partenariats mensongers</motion.div>
+            <motion.div { ...fadeAppear() }><GradientText className={ styles.item } duration={ 3 }>{karmaCount}</GradientText> - Votre score éthique</motion.div>
           </motion.div>
         </div>
 

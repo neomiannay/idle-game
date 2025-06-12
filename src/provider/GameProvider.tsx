@@ -274,10 +274,14 @@ export function GameProvider ({ children }: BaseProviderProps) {
       if (!unit) return false
 
       if (value < 0) {
+        if(unitId !== EGameUnit.KARMA) {
         // On vérifie qu'on peut soustraire (qu'on ne tombe pas en dessous de 0)
-        const currentValue = unit.rawValue.get()
-        if (currentValue + value < 0) return false
-        return unit.rawValue.subtract(Math.abs(value))
+          const currentValue = unit.rawValue.get()
+          if (currentValue + value < 0) return false
+          return unit.rawValue.subtract(Math.abs(value))
+        } else if (unitId === EGameUnit.KARMA) {
+          return unit.rawValue.add(value)
+        }
       } else if (value > 0) {
         return unit.rawValue.add(value)
       }
