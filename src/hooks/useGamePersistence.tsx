@@ -16,7 +16,7 @@ export const getStorageKey = () => {
 export function useGamePersistence ({
   onLoad,
   onSave,
-  autoSaveInterval = 6000, // Save every minute by default
+  autoSaveInterval = 60000, // Save every minute by default
   storageKey = getStorageKey()
 }: PersistenceOptions) {
   const saveGameState = useCallback(() => {
