@@ -23,6 +23,8 @@ $rem-reference: 1px;
   --transparent-dark-16: rgba(191, 228, 211, 0.16);
   --transparent-dark-24: rgba(191, 228, 211, 0.24);
   --transparent-light-40: rgb(147, 240, 197);
+  --transparent-fill-40-50: rgba(136, 170, 154, 0.5);
+  --transparent-fill-40-0: rgba(136, 170, 154, 0.0);
 
   --purple-transparent-24: rgba(113, 182, 160, 0.78);
   --purple-transparent-count: linear-gradient(0deg, var(--purple-transparent-24) 0%, var(--purple-transparent-24) 100%), linear-gradient(287deg, rgba(0, 2, 119, 0.00) -5.89%, rgba(145, 180, 116, 0.12) 47.54%, rgba(165, 179, 144, 0.14) 65.24%, rgba(210, 177, 206, 0.18) 74.25%, rgba(224, 217, 226, 0.22) 82.57%, rgba(232, 240, 238, 0.24) 100.96%);
@@ -64,7 +66,7 @@ $rem-reference: 1px;
   --fill-10: #250635;
   --fill-20: #36074e;
   --fill-30: #4b285d;
-  --fill-40: #614d6b;
+  --fill-40: rgb(97, 77, 107);
   --fill-60: #a792b1;
   --fill-100: #ffffff;
 
@@ -73,6 +75,8 @@ $rem-reference: 1px;
   --transparent-dark-24: #2506351e;
   --transparent-dark-50: #04070680;
   --transparent-light-40: #D193F0;
+  --transparent-fill-40-50: rgba(97, 77, 107, 0.5);
+  --transparent-fill-40-0: rgba(97, 77, 107, 0.0);
 
   --purple-transparent-24: rgba(28, 28, 66, 0.24);
   --purple-transparent-count: linear-gradient(0deg, var(--purple-transparent-24) 0%, var(--purple-transparent-24) 100%), linear-gradient(287deg, rgba(0, 2, 119, 0.00) -5.89%, rgba(145, 180, 116, 0.12) 47.54%, rgba(165, 179, 144, 0.14) 65.24%, rgba(210, 177, 206, 0.18) 74.25%, rgba(224, 217, 226, 0.22) 82.57%, rgba(232, 240, 238, 0.24) 100.96%);
@@ -114,6 +118,13 @@ $rem-reference: 1px;
   --shop-item-gold-background: linear-gradient(287deg, rgba(252, 250, 243, 0.60) 0%, rgba(241, 231, 204, 0.60) 30.42%, rgba(236, 224, 192, 0.60) 49.99%, rgba(249, 242, 222, 0.60) 77.66%, rgba(219, 205, 166, 0.60) 100%), rgba(255, 255, 255, 0.60);
   --shop-item-gold-background-hover: linear-gradient(287deg, #F8F1DE 0%, #F0E1B7 30.42%, #ECE0C0 49.99%, #F9F2DE 77.66%, #DBCDA6 100%), rgba(255, 255, 255, 0.60);
 
+  --gradient-swoosh: linear-gradient(
+    120deg,
+    var(--transparent-fill-40-0) 40%,
+    var(--transparent-fill-40-50) 47.5%,
+    var(--transparent-fill-40-50) 52.5%,
+    var(--transparent-fill-40-0) 60%
+  );
 
   /* SHORTCUTS */
   --color-main: var(--color-black);

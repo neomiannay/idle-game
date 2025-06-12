@@ -171,6 +171,20 @@ $action2-font-size: rem(64);
   }
 }
 
+%swoosh {
+  @include rule {
+    background: var(--gradient-swoosh);
+    background-clip: text;
+    background-size: 200% 100%;
+    background-position: -25% 0;
+
+    &:hover {
+      background-position: 125% 0;
+      transition: background-position 0.35s ease-in-out;
+    }
+  }
+}
+
 %button-text {
   @include rule {
     font-size: rem(16);

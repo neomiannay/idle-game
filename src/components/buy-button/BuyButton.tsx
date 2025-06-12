@@ -20,7 +20,7 @@ const BuyButton = ({ className, title, disabled, ...props }: BuyButtonProps) => 
         [styles.disabled]: disabled
       }) } { ...props }
     >
-      { l10n(title) }
+      <div className={ styles.swoosh }>{ l10n(title) }</div>
     </button>
   )
 }

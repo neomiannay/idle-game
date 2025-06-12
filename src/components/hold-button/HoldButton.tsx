@@ -89,7 +89,9 @@ const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode, value }) 
         >
           { l10n(label) }
         </div>
-        <div className={ styles.startColor }>{ l10n(label) }</div>
+        <div className={ styles.startColor }>
+          <div className={ styles.swoosh }>{ l10n(label) }</div>
+        </div>
       </div>
     </div>
   )

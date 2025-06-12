@@ -13,18 +13,8 @@
     }
   }
 
-  &::after {
-    content: '';
-    pointer-events: none;
-    position: absolute;
-    top: -100%;
-    left: 90%;
-    height: rem(200);
-    width: rem(150);
-    background: var(--gradient-white);
-    transform: rotate(-60deg);
-    aspect-ratio: 21 / 10;
-    transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  .swoosh {
+    @include apply(swoosh);
   }
 }
 
