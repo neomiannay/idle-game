@@ -22,16 +22,16 @@ type ShopElementProps = {
   element: ItemType | UpgradeType | SectorType | OtherShopElementType;
   unitId: EGameUnit;
   type: ElementType;
-  onBuyComplete?: () => void;
 };
 
-const ShopElement = ({ className, elementId, element, unitId, type, onBuyComplete }: ShopElementProps) => {
-  const { shopOpen, translateYValue } = useShopProviderContext()
+const ShopElement = ({ className, elementId, element, unitId, type }: ShopElementProps) => {
+  const { translateYValue } = useShopProviderContext()
   const { buyElementFromShop, shouldDisplayElement } = useInventoryContext()
   const { setUnlockedSectors, unlockedSectors } = useSectorsProviderContext()
   const l10n = useL10n()
   const isPurchased = useElementPurchased(unitId, elementId, type)
-  const count = useItemCount(unitId, elementId)
+  const count = useItemCount(unitId, elementId) || 1
+
   const canPurchase = useCanBuyElement(unitId, elementId, type, count)
   const shouldDisplay = shouldDisplayElement(unitId, elementId, type)
   const sequentiallyPurchasable = useSequentialPurchaseState(
@@ -91,9 +91,6 @@ const ShopElement = ({ className, elementId, element, unitId, type, onBuyComplet
       const item = element as ItemType
       return `${item.unitByTime} ${item.cost.unitId}/s`
     }
-
-    // const upgrade = element as UpgradeType
-    // return `${upgrade.valueByAction} ${upgrade.cost.unitId}/s`
   }
 
   const handleSectorClick = () => {
@@ -106,7 +103,6 @@ const ShopElement = ({ className, elementId, element, unitId, type, onBuyComplet
   const handleBuyClick = () => {
     buyElementFromShop(unitId, elementId, type)
     handleSectorClick()
-    onBuyComplete?.()
   }
 
   return (

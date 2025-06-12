@@ -107,5 +107,5 @@ export const timeToHHMMSS = (duration: number) => {
  * @returns The price
  */
 export const getItemPrice = (base: number, count: number, factor: number = DEFAULT_SCALE_FACTOR) => {
-  return Math.round(base * Math.pow(count, factor))
+  return Math.round(base * Math.pow(count || 1, factor))
 }
