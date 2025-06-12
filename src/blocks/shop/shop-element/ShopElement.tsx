@@ -118,7 +118,7 @@ const ShopElement = ({ className, elementId, element, unitId, type, onBuyComplet
       <motion.button
         className={ classNames(styles.container, {
           [styles.unavailable]: !sequentiallyPurchasable || !canPurchase,
-          [styles.isSector]: isSector
+          [styles.isSector]: isSector || isOther
         }) }
         { ...baseVariants }
         { ...fadeAppear() }

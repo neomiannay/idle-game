@@ -24,7 +24,7 @@ export const AudioContext = createContext<AudioContextType | null>(null)
 let context: AudioContextType
 
 export const AudioProvider = ({ children }: BaseProviderProps) => {
-  const [audioEnabled, setAudioEnabled] = useState<boolean | null>(null)
+  const [audioEnabled, setAudioEnabled] = useState<boolean | null>(true) // TODO: Change to null PROD
   const [sounds, setSounds] = useState<AudioFiles>({})
 
   useEffect(() => {
