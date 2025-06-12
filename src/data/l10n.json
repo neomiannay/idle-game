@@ -12,8 +12,8 @@
     "TARGET": "Cibler",
     "ACTIVATE_SOUND": {
       "TITLE": "Activer le son",
-      "CANCEL": "Annuler",
-      "CONFIRM": "Activer"
+      "CANCEL": "Non",
+      "CONFIRM": "Oui"
     },
     "NEW_GAME": "Nouvelle partie",
     "CREDITS_LINK": "En savoir plus",
