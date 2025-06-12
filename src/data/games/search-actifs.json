@@ -21,32 +21,6 @@
     {
       "id": "search-actif-1",
       "disabled": true,
-      "name": "SEARCH_ACTIFS.ITEMS.TRICLOSAN",
-      "description": "SEARCH_ACTIFS.ITEMS.TRICLOSAN_DESC",
-      "acceptValues": [
-        {
-          "value": 0.01,
-          "target": "production"
-        },
-        {
-          "value": 1,
-          "target": "selling"
-        },
-        {
-          "value": -40,
-          "target": "karma"
-        }
-      ],
-      "declineValues": [
-        {
-          "value": -40,
-          "target": "karma"
-        }
-      ]
-    },
-    {
-      "id": "search-actif-2",
-      "disabled": true,
       "name": "SEARCH_ACTIFS.ITEMS.OXYBENZONE",
       "description": "SEARCH_ACTIFS.ITEMS.OXYBENZONE_DESC",
       "acceptValues": [
@@ -66,6 +40,32 @@
       "declineValues": [
         {
           "value": 40,
+          "target": "karma"
+        }
+      ]
+    },
+    {
+      "id": "search-actif-2",
+      "disabled": true,
+      "name": "SEARCH_ACTIFS.ITEMS.TRICLOSAN",
+      "description": "SEARCH_ACTIFS.ITEMS.TRICLOSAN_DESC",
+      "acceptValues": [
+        {
+          "value": 0.01,
+          "target": "production"
+        },
+        {
+          "value": 1,
+          "target": "selling"
+        },
+        {
+          "value": -40,
+          "target": "karma"
+        }
+      ],
+      "declineValues": [
+        {
+          "value": -40,
           "target": "karma"
         }
       ]

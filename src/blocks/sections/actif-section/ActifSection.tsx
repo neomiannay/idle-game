@@ -37,8 +37,8 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
 
   const handleClick = () => {
     if (!canBuy) return
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.CLICK_BASIC)
     buyUnit(unitId)
-    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.CLICK_2)
   }
 
   return (

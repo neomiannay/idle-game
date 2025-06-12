@@ -64,9 +64,11 @@ const SearchStart = ({
     modifyUnitValue(price.unit, -price.value)
     playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.CLICK_BASIC)
 
-    const randomItem =
-      filteredItems[Math.floor(Math.random() * filteredItems.length)]
-    setNewItem(randomItem)
+    // const randomItem =
+    //   filteredItems[Math.floor(Math.random() * filteredItems.length)]
+    // setNewItem(randomItem)
+    const firstItem = filteredItems[0]
+    setNewItem(firstItem)
   }
 
   const disabled = !hasEnoughUnits(price.value, price.unit)

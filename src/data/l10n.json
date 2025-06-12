@@ -114,10 +114,10 @@
       "ADD": "INCLURE"
     },
     "ITEMS": {
-      "TRICLOSAN": "TRICLOSAN",
-      "TRICLOSAN_DESC": "Agent antibactérien puissant qui élimine les bactéries indésirables. Sensation de propreté absolue et fraîcheur durable. Peau désinfectée en profondeur. Protection antimicrobienne longue durée. Perturbateur endocrinien suspecté d'altérer les hormones œstrogènes et de dérégler la fonction thyroïdienne.",
       "OXYBENZONE": "OXYBENZONE",
       "OXYBENZONE_DESC": "Filtre UV performant qui protège votre peau des rayons UVA et UVB. Stabilise les formules contre la dégradation solaire. Protection solaire efficace et durable. Présent dans la majorité de vos cosmétiques quotidiens. Perturbateur endocrinien suspecté, irritant cutané avéré, photo-allergisant confirmé, cancérigène potentiel et toxique pour les écosystèmes marins.",
+      "TRICLOSAN": "TRICLOSAN",
+      "TRICLOSAN_DESC": "Agent antibactérien puissant qui élimine les bactéries indésirables. Sensation de propreté absolue et fraîcheur durable. Peau désinfectée en profondeur. Protection antimicrobienne longue durée. Perturbateur endocrinien suspecté d'altérer les hormones œstrogènes et de dérégler la fonction thyroïdienne.",
       "ALOE_VERA": "ALOE VERA",
       "ALOE_VERA_DESC": "Actif hydratant naturel aux propriétés apaisantes reconnues. Soulage les irritations et les coups de soleil. Texture gel rafraîchissante qui pénètre rapidement. Répare et régénère l'épiderme en douceur.",
       "POLYMETHYL_METHACRYLATE": "POLYMETHYL METHACRYLATE",
