@@ -9,6 +9,15 @@ export const SOUNDS = {
   ACTIONS: {
     CATEGORY: 'actions',
     HOVER_BASIC: 'hover_basic',
-    CLICK_BASIC: 'click_basic'
+    CLICK_BASIC: 'click_basic',
+    CLICK_2: 'click_2',
+    CLICK_SUCCESS: 'click_success',
+    CLICK_FAIL: 'click_fail',
+    HOLD: 'hold',
+    HOLD_END: 'hold_end',
+    BUY_BASIC: 'buy_basic',
+    BUY_SHOP: 'buy_shop',
+    DISABLED: 'disabled',
+    ARROW: 'arrow',
   }
 }

@@ -12,6 +12,8 @@ import Upgrades from 'blocks/elements/upgrades/Upgrades'
 import Items from 'blocks/elements/items/Items'
 
 import styles from './SaleSection.module.scss'
+import { useAudioContext } from 'provider/AudioProvider'
+import { SOUNDS } from 'data/constants'
 
 type SaleSectionProps = {
   className?: string;
@@ -21,6 +23,7 @@ type SaleSectionProps = {
 const SaleSection = ({ className, unitId }: SaleSectionProps) => {
   const { getUnit, canBuyUnit, buyUnit, isSaleSuccessful } = useGameProviderContext()
   const { feedback, setFeedback, triggerFeedback, setSuccessCount, setFailCount } = useFeedbackContext()
+  const { playSound } = useAudioContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null
@@ -38,10 +41,12 @@ const SaleSection = ({ className, unitId }: SaleSectionProps) => {
       triggerFeedback(EStatus.SUCCESS)
       setSuccessCount(1)
       setFailCount(0)
+      playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.CLICK_SUCCESS)
     } else {
       triggerFeedback(EStatus.FAIL)
       setSuccessCount(0)
       setFailCount(1)
+      playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.CLICK_FAIL)
     }
   }
 

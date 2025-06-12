@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import { formatValue } from 'helpers/units'
 import { useL10n } from 'provider/L10nProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
-import { BUY_RABBIT_ITEM_ID, RABBIT_LIFE } from 'data/constants'
+import { BUY_RABBIT_ITEM_ID, RABBIT_LIFE, SOUNDS } from 'data/constants'
 import { clamp } from 'lodash-es'
 
 import rabbits from 'data/games/rabbits.json'
@@ -17,6 +17,7 @@ import RabbitSliderCard from '../rabbit-slider-card/RabbitSliderCard'
 
 import styles from './RabbitSlider.module.scss'
 import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
+import { useAudioContext } from 'provider/AudioProvider'
 
 export type TRabbitSliderItemValue = {
   value: number;
@@ -63,9 +64,11 @@ const RabbitSlider = ({
   const { hasEnoughUnits, modifyUnitValue, applyChoiceEffects } =
     useGameProviderContext()
   const { setKilledRabbits } = useSearchLaboratoryContext()
+  const { playSound } = useAudioContext()
 
   const nextSlide = () => {
     setCurrentDir('right')
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.ARROW)
     requestAnimationFrame(() => {
       setCurrentIndex((p) => ((p ?? 0) + 1) % items.length)
     })
@@ -73,6 +76,7 @@ const RabbitSlider = ({
 
   const prevSlide = () => {
     setCurrentDir('left')
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.ARROW)
     requestAnimationFrame(() => {
       setCurrentIndex((p) => ((p ?? 0) - 1 + items.length) % items.length)
     })
@@ -95,6 +99,7 @@ const RabbitSlider = ({
       modifyUnitValue(EGameUnit.BENEFITS, -rabbitPrice)
       life.set(RABBIT_LIFE)
       setCurrentExp(items[0])
+      playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_SHOP)
     }
 
   }
@@ -104,6 +109,7 @@ const RabbitSlider = ({
 
     modifyUnitValue(EGameUnit.BENEFITS, -testPrice)
     applyChoiceEffects(exp.values)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_SHOP)
 
     setCurrentExp(exp)
 

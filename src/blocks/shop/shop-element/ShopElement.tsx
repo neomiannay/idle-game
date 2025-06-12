@@ -15,6 +15,8 @@ import { bezier } from 'helpers/easing'
 import useItemCount from 'hooks/useItemCount'
 
 import styles from './ShopElement.module.scss'
+import { SOUNDS } from 'data/constants'
+import { useAudioContext } from 'provider/AudioProvider'
 
 type ShopElementProps = {
   className?: string;
@@ -28,6 +30,7 @@ const ShopElement = ({ className, elementId, element, unitId, type }: ShopElemen
   const { translateYValue } = useShopProviderContext()
   const { buyElementFromShop, shouldDisplayElement } = useInventoryContext()
   const { setUnlockedSectors, unlockedSectors } = useSectorsProviderContext()
+  const { playSound } = useAudioContext()
   const l10n = useL10n()
   const isPurchased = useElementPurchased(unitId, elementId, type)
   const count = useItemCount(unitId, elementId) || 1
@@ -103,6 +106,7 @@ const ShopElement = ({ className, elementId, element, unitId, type }: ShopElemen
   const handleBuyClick = () => {
     buyElementFromShop(unitId, elementId, type)
     handleSectorClick()
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_SHOP)
   }
 
   return (

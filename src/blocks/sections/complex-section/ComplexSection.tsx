@@ -14,6 +14,8 @@ import { getItemPrice } from 'helpers/units'
 import MaskText from 'components/mask-text/MaskText'
 
 import styles from './ComplexSection.module.scss'
+import { SOUNDS } from 'data/constants'
+import { useAudioContext } from 'provider/AudioProvider'
 
 type ComplexSectionProps = {
   className?: string;
@@ -26,6 +28,7 @@ const DEFAULT_TIME_PRICE = 56
 const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   const l10n = useL10n()
   const { getUnit, hasEnoughUnits, modifyUnitValue, updateUnitDuration, updateValueByAction, complexAutoMode, setComplexAutoMode } = useGameProviderContext()
+  const { playSound } = useAudioContext()
 
   const unit = getUnit(unitId)
   if (!unit) return null
@@ -56,6 +59,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
     if (!canPurchaseTime(reactiveTimeCost, EGameUnit.ACTIF)) return
     updateUnitDuration(EGameUnit.COMPLEX, DEFAULT_SUBSTRACTION_VALUE)
     modifyUnitValue(EGameUnit.ACTIF, -reactiveTimeCost)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_BASIC)
   }
 
   const improveValueByAction = (
@@ -67,6 +71,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
     if (!unit) return
 
     updateValueByAction(unitId, 1, quantityCost)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_BASIC)
   }
 
   const costName = `UNITS.${unit.costUnitId?.toString().toUpperCase()}.PLURAL`

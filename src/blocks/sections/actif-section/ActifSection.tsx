@@ -14,6 +14,7 @@ import { baseVariants, fadeAppear } from 'core/animation'
 import { useAudioContext } from 'provider/AudioProvider'
 
 import styles from './ActifSection.module.scss'
+import { SOUNDS } from 'data/constants'
 
 type ActifSectionProps = {
   className?: string;
@@ -37,6 +38,7 @@ const ActifSection = ({ className, unitId }: ActifSectionProps) => {
   const handleClick = () => {
     if (!canBuy) return
     buyUnit(unitId)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.CLICK_2)
   }
 
   return (

@@ -49,10 +49,46 @@ export const AudioProvider = ({ children }: BaseProviderProps) => {
           light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_hover_basic.mp3`),
           dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_hover_basic.mp3`)
         },
+        hold: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_hold.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_hold.wav`)
+        },
+        hold_end: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_hold_end.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_hold_end.wav`)
+        },
+        buy_shop: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_buy_shop.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_buy_shop.wav`)
+        },
+        buy_basic: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_buy_basic.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_buy_basic.wav`)
+        },
         click_basic: {
-          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_click_basic.mp3`),
-          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_click_basic.mp3`)
-        }
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_click_basic.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_click_basic.wav`)
+        },
+        disabled: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/disabled.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/disabled.wav`)
+        },
+        arrow: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/arrow.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/arrow.wav`)
+        },
+        click_2: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_click_2.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_click_2.wav`)
+        },
+        click_success: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_click_success.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_click_success.wav`)
+        },
+        click_fail: {
+          light: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/light_click_fail.wav`),
+          dark: new Audio(`fx/${SOUNDS.ACTIONS.CATEGORY}/dark_click_fail.wav`)
+        },
       }
     }
     setSounds(audioFiles)

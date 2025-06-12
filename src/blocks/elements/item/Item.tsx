@@ -64,7 +64,7 @@ const Item = ({ className, unitId, itemId, item }: ItemProps) => {
 
   const handleClick = () => {
     buyElement(unitId, itemId, 'item')
-    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.HOVER_BASIC)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_BASIC)
   }
 
   if (!isPurchased) return null

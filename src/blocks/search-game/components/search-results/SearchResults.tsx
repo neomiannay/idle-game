@@ -9,6 +9,8 @@ import {
 import { useGameProviderContext } from 'provider/GameProvider'
 
 import styles from './SearchResults.module.scss'
+import { SOUNDS } from 'data/constants'
+import { useAudioContext } from 'provider/AudioProvider'
 
 export type SearchResultsProps = {
   newItem: TSearchGameItem | null;
@@ -24,6 +26,7 @@ const SearchResults = ({
   saveNewItem
 }: SearchResultsProps) => {
   const { applyChoiceEffects } = useGameProviderContext()
+  const { playSound } = useAudioContext()
   const l10n = useL10n()
 
   const handleChoice = (choice: EChoice) => {
@@ -34,6 +37,8 @@ const SearchResults = ({
 
     if (itemEffects)
       applyChoiceEffects(itemEffects)
+
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.ARROW)
 
     if (newItem && choice === EChoice.ACCEPT) saveNewItem(newItem)
 

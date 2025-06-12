@@ -7,6 +7,8 @@ import { EGameUnit } from 'types/store'
 import useMotionState from 'hooks/useMotionState'
 
 import styles from './HoldButton.module.scss'
+import { SOUNDS } from 'data/constants'
+import { useAudioContext } from 'provider/AudioProvider'
 
 interface HoldButtonProps {
   className?: string;
@@ -18,6 +20,8 @@ interface HoldButtonProps {
 const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode, value }) => {
   const l10n = useL10n()
   const { getUnit, buyUnit, canBuyUnit } = useGameProviderContext()
+    const { playSound } = useAudioContext()
+
   const activeUnit = getUnit(EGameUnit.ACTIF)
   const duration = getUnit(EGameUnit.COMPLEX)?.duration?.get() ?? 5000
 
@@ -33,6 +37,7 @@ const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode, value }) 
 
   const handleClick = () => {
     if (!canBuy || isAnimating || !canAfford) return
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.HOLD)
 
     setProgress(20)
     setIsAnimating(true)
@@ -53,6 +58,7 @@ const HoldButton: FC<HoldButtonProps> = ({ className, label, autoMode, value }) 
         setTimeout(() => {
           buyUnit(EGameUnit.COMPLEX)
           setIsAnimating(false)
+          playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.HOLD_END)
           setTimeout(() => setProgress(100), 200)
         }, 50)
       } else {

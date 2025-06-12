@@ -9,6 +9,8 @@ import Button from 'components/button/Button'
 import { useL10n } from 'provider/L10nProvider'
 
 import styles from './SearchStart.module.scss'
+import { SOUNDS } from 'data/constants'
+import { useAudioContext } from 'provider/AudioProvider'
 
 export type SearchStartProps = {
   isError: boolean;
@@ -39,6 +41,7 @@ const SearchStart = ({
   const { hasEnoughUnits, modifyUnitValue } = useGameProviderContext()
   const { complexComposition } = useSearchLaboratoryContext()
   const { tips } = useSearchPublicityContext()
+  const { playSound } = useAudioContext()
   const l10n = useL10n()
 
   let filteredItems: TSearchGameItem[] = items
@@ -59,6 +62,7 @@ const SearchStart = ({
     setSearchState(1)
     startProgress(duration)
     modifyUnitValue(price.unit, -price.value)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.CLICK_BASIC)
 
     const randomItem =
       filteredItems[Math.floor(Math.random() * filteredItems.length)]
