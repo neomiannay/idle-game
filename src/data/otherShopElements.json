@@ -5,8 +5,8 @@
         "_type": "otherShopElement",
         "_id": "rabbitGame",
         "sectorId": "laboratory",
-        "name": "Lapin",
-        "description": "Débloquer le gros machin.",
+        "name": "RABBIT_GAME.LAYOUT.TITLE",
+        "description": "RABBIT_GAME.LAYOUT.DESCRIPTION",
         "apparitionCondition": {
           "unitId": "benefits",
           "value": 100

@@ -40,7 +40,7 @@
         "_id": "autoprod",
         "unitId": "complex",
         "name": "UPGRADES.AUTOPROD",
-        "description": "C'est un switch en gros qui te permet de faire des productions automatiques.",
+        "description": "UPGRADES.AUTOPROD_DESC",
         "valueByAction": 0,
         "apparitionCondition": {
           "unitId": "complex",

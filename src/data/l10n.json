@@ -78,7 +78,8 @@
     "LEVEL5_DESC": "Passer la production au niveau 7",
     "LEVEL6": "Niveau 7",
     "LEVEL6_DESC": "Passer la production au niveau 8",
-    "AUTOPROD": "Formulation\nautomatisée"
+    "AUTOPROD": "Formulation\nautomatisée",
+    "AUTOPROD_DESC": "C'est un switch en gros qui te permet de faire des productions automatiques."
   },
   "PRICES": {
     "PRODUCTION": "Coût",
@@ -139,6 +140,8 @@
   },
   "RABBIT_GAME": {
     "LAYOUT": {
+      "TITLE": "Lapin",
+      "DESCRIPTION": "Débloquer le gros machin.",
       "NAME": "Protocole de Draize",
       "LAUNCH": "Lancer",
       "NOT_ENOUGH_MONEY": "Pas assez de pépettes...",
@@ -195,6 +198,8 @@
   "SECTORS": {
     "PRODUCTION": "Production",
     "LABORATORY": "Laboratoire",
-    "PUBLICITY": "Publicité"
+    "LABORATORY_DESC": "Laboratoire, c'est le laboratoire.",
+    "PUBLICITY": "Publicité",
+    "PUBLICITY_DESC": "Publicité, c'est la publicité."
   }
 }

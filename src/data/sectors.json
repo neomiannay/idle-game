@@ -5,8 +5,8 @@
         "_type": "sector",
         "_id": "laboratory",
         "unitId": "sale",
-        "name": "Laboratoire",
-        "description": "Laboratoire, c'est le laboratoire.",
+        "name": "SECTORS.LABORATORY",
+        "description": "SECTORS.LABORATORY_DESC",
         "apparitionCondition": {
           "unitId": "sale",
           "value": 1
@@ -20,8 +20,8 @@
         "_type": "sector",
         "_id": "publicity",
         "unitId": "sale",
-        "name": "Publicité",
-        "description": "Publicité, c'est la publicité.",
+        "name": "SECTORS.PUBLICITY",
+        "description": "SECTORS.PUBLICITY_DESC",
         "apparitionCondition": {
           "unitId": "sale",
           "value": 2
