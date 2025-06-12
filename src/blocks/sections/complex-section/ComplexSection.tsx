@@ -12,10 +12,10 @@ import { useUpgradePurchased } from 'hooks/useUpgradePurchased'
 import Button from 'components/button/Button'
 import { getItemPrice } from 'helpers/units'
 import MaskText from 'components/mask-text/MaskText'
-
-import styles from './ComplexSection.module.scss'
 import { SOUNDS } from 'data/constants'
 import { useAudioContext } from 'provider/AudioProvider'
+
+import styles from './ComplexSection.module.scss'
 
 type ComplexSectionProps = {
   className?: string;
@@ -74,6 +74,11 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
     playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_BASIC)
   }
 
+  const handleAutoSwitch = () => {
+    setComplexAutoMode(prev => !prev)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.HOVER_BASIC)
+  }
+
   const costName = `UNITS.${unit.costUnitId?.toString().toUpperCase()}.PLURAL`
   const isUpgradePurchased = useUpgradePurchased(unitId, 'autoprod')
 
@@ -87,15 +92,12 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
   const getActifUnit = getUnit(EGameUnit.ACTIF)
   if (!getActifUnit) return null
 
-  const reactiveTimeCost = useMotionState(unit.motionValue, () => getItemPrice(
-    DEFAULT_TIME_PRICE,
-    timeCount(unit.duration?.get() ?? 1) || 1
+  const reactiveTimeCost = useMotionState(
+    unit.motionValue,
+    () => getItemPrice(DEFAULT_TIME_PRICE, timeCount(unit.duration?.get() ?? 1) || 1)
   )
-  )
-  const reactiveCanPurchaseTime = useMotionState(getActifUnit.motionValue, () => canPurchaseTime(reactiveTimeCost, EGameUnit.ACTIF)
-  )
-  const reactiveHasEnoughUnits = useMotionState(getActifUnit.motionValue, () => hasEnoughUnits(reactiveTimeCost, EGameUnit.ACTIF)
-  )
+  const reactiveCanPurchaseTime = useMotionState(getActifUnit.motionValue, () => canPurchaseTime(reactiveTimeCost, EGameUnit.ACTIF))
+  const reactiveHasEnoughUnits = useMotionState(getActifUnit.motionValue, () => hasEnoughUnits(reactiveTimeCost, EGameUnit.ACTIF))
   const reactiveCanPurshaseQuantity = useMotionState(getActifUnit.motionValue, () => hasEnoughUnits(quantityCost, EGameUnit.ACTIF))
 
   return (
@@ -163,7 +165,7 @@ const ComplexSection = ({ className, unitId }: ComplexSectionProps) => {
       { isUpgradePurchased && (
         <AutoSwitch
           value={ complexAutoMode }
-          onToggle={ () => setComplexAutoMode(prev => !prev) }
+          onToggle={ handleAutoSwitch }
         />
       ) }
     </div>

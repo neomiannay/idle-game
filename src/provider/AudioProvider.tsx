@@ -29,6 +29,16 @@ let context: AudioContextType
 
 const FADE_DURATION = 3
 
+// Default volumes per theme & category
+// SFX (actions, UI, ...)
+const DEFAULT_SFX_VOLUME_LIGHT = 0.7
+const DEFAULT_SFX_VOLUME_DARK = 0.5
+// Ambiance (background loop)
+const DEFAULT_AMBIANCE_VOLUME_LIGHT = 1
+const DEFAULT_AMBIANCE_VOLUME_DARK = 1
+// Pitch variation range
+const PITCH_VARIATION_RANGE = 0.2
+
 export const AudioProvider = ({ children }: BaseProviderProps) => {
   const { darkMode } = useGlobalContext()
 
@@ -92,6 +102,18 @@ export const AudioProvider = ({ children }: BaseProviderProps) => {
       }
     }
     setSounds(audioFiles)
+
+    // Apply default volumes for each theme on creation
+    Object.entries(audioFiles).forEach(([categoryKey, category]) => {
+      const isAmbiance = categoryKey === SOUNDS.AMBIANCE.CATEGORY
+      const lightVolume = isAmbiance ? DEFAULT_AMBIANCE_VOLUME_LIGHT : DEFAULT_SFX_VOLUME_LIGHT
+      const darkVolume = isAmbiance ? DEFAULT_AMBIANCE_VOLUME_DARK : DEFAULT_SFX_VOLUME_DARK
+
+      Object.values(category).forEach(sound => {
+        sound.light.volume = lightVolume
+        sound.dark.volume = darkVolume
+      })
+    })
   }, [])
 
   // Fonction pour récupérer le son en fonction du thème
@@ -121,6 +143,10 @@ export const AudioProvider = ({ children }: BaseProviderProps) => {
   // Fonction pour jouer un son
   const playSound = (category: string, name: string, loop = false) => {
     const sound = getThemeSound(category, name)
+    const isAmbiance = category === SOUNDS.AMBIANCE.CATEGORY
+    const targetVolume = isAmbiance
+      ? (darkMode ? DEFAULT_AMBIANCE_VOLUME_DARK : DEFAULT_AMBIANCE_VOLUME_LIGHT)
+      : (darkMode ? DEFAULT_SFX_VOLUME_DARK : DEFAULT_SFX_VOLUME_LIGHT)
     if (audioEnabled && sound) {
       // Spécifique à l'ambiance principale : crossfade quand on change de thème
       if (category === SOUNDS.AMBIANCE.CATEGORY && name === SOUNDS.AMBIANCE.MAIN) {
@@ -129,11 +155,11 @@ export const AudioProvider = ({ children }: BaseProviderProps) => {
           sound.volume = 0
           sound.loop = true
           sound.play()
-          fadeVolume(previous, previous.volume ?? 1, 0, FADE_DURATION)
-          fadeVolume(sound, 0, 1, FADE_DURATION)
+          fadeVolume(previous, previous.volume ?? targetVolume, 0, FADE_DURATION)
+          fadeVolume(sound, 0, targetVolume, FADE_DURATION)
         } else if (previous == null) {
           sound.loop = loop
-          sound.volume = 1
+          sound.volume = targetVolume
           sound.play()
         }
         currentAmbianceRef.current = sound
@@ -146,12 +172,10 @@ export const AudioProvider = ({ children }: BaseProviderProps) => {
         sound.currentTime = 0
         sound.play()
       } else {
-        // Sons ponctuels (clics, hover, etc.) : on veut pouvoir les déclencher en rafale.
-        // On clone l'élément audio pour permettre la superposition.
         const instance = sound.cloneNode(true) as HTMLAudioElement
         instance.volume = sound.volume
+        instance.playbackRate = 1 + (Math.random() - 0.5) * PITCH_VARIATION_RANGE
         instance.play()
-        // Évite les fuites mémoire : on retire l'instance quand elle est terminée.
         instance.addEventListener('ended', () => {
           instance.remove()
         })

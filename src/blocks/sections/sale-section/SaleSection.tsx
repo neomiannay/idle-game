@@ -10,10 +10,10 @@ import { useFeedbackContext } from 'provider/FeedbackProvider'
 import SaleFeedback from 'components/sale-feedback/SaleFeedback'
 import Upgrades from 'blocks/elements/upgrades/Upgrades'
 import Items from 'blocks/elements/items/Items'
-
-import styles from './SaleSection.module.scss'
 import { useAudioContext } from 'provider/AudioProvider'
 import { SOUNDS } from 'data/constants'
+
+import styles from './SaleSection.module.scss'
 
 type SaleSectionProps = {
   className?: string;

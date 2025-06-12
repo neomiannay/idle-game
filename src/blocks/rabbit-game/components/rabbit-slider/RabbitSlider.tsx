@@ -9,6 +9,8 @@ import { useL10n } from 'provider/L10nProvider'
 import { useGameProviderContext } from 'provider/GameProvider'
 import { BUY_RABBIT_ITEM_ID, RABBIT_LIFE, SOUNDS } from 'data/constants'
 import { clamp } from 'lodash-es'
+import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
+import { useAudioContext } from 'provider/AudioProvider'
 
 import rabbits from 'data/games/rabbits.json'
 
@@ -16,8 +18,6 @@ import RabbitBtn from '../rabbit/components/rabbit-btn/RabbitBtn'
 import RabbitSliderCard from '../rabbit-slider-card/RabbitSliderCard'
 
 import styles from './RabbitSlider.module.scss'
-import { useSearchLaboratoryContext } from 'provider/SearchLaboratoryProvider'
-import { useAudioContext } from 'provider/AudioProvider'
 
 export type TRabbitSliderItemValue = {
   value: number;
@@ -68,7 +68,7 @@ const RabbitSlider = ({
 
   const nextSlide = () => {
     setCurrentDir('right')
-    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.ARROW)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.HOVER_BASIC)
     requestAnimationFrame(() => {
       setCurrentIndex((p) => ((p ?? 0) + 1) % items.length)
     })
@@ -76,7 +76,7 @@ const RabbitSlider = ({
 
   const prevSlide = () => {
     setCurrentDir('left')
-    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.ARROW)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.HOVER_BASIC)
     requestAnimationFrame(() => {
       setCurrentIndex((p) => ((p ?? 0) - 1 + items.length) % items.length)
     })
@@ -101,7 +101,6 @@ const RabbitSlider = ({
       setCurrentExp(items[0])
       playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_SHOP)
     }
-
   }
 
   const handleStart = (exp: TRabbitSliderItem) => {
@@ -109,7 +108,7 @@ const RabbitSlider = ({
 
     modifyUnitValue(EGameUnit.BENEFITS, -testPrice)
     applyChoiceEffects(exp.values)
-    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.BUY_SHOP)
+    playSound(SOUNDS.ACTIONS.CATEGORY, SOUNDS.ACTIONS.ARROW)
 
     setCurrentExp(exp)
 
@@ -122,7 +121,6 @@ const RabbitSlider = ({
       // Update life value directly
       life.set(clamp(lifeValue, 0, RABBIT_LIFE))
     }
-
   }
 
   const canBuyRabbit =
@@ -146,7 +144,7 @@ const RabbitSlider = ({
         <RabbitBtn
           price={ `${formatValue(rabbitPrice)} ${l10n('UNITS.EURO')}` }
           label={ l10n('RABBIT_GAME.LAYOUT.LAUNCH') }
-          onClick={handleBuy}
+          onClick={ handleBuy }
           disabled={ !canBuyRabbit }
         />
       ) : (

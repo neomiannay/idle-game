@@ -22,8 +22,6 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
   const { getElementsForUnit } = useInventoryContext()
   const { shopTitleRef, translateYValue, shopOpen } = useShopProviderContext()
 
-  console.log('translateYValue', translateYValue)
-
   const l10n = useL10n()
 
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -37,10 +35,6 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
     [0, 1],
     [0, translateYValue]
   )
-
-  // animatedTranslateY.on('change', (value) => {
-  //   console.log('value', value)
-  // })
 
   const translateYCssVar = useMotionTemplate`${animatedTranslateY}px`
 
@@ -78,8 +72,6 @@ const ShopMainView = ({ className, motionWrapperRef, ...props }: ShopMainViewPro
     if (!hasAnimated) return 'animate'
     return shopOpen ? 'hover' : 'normal'
   }
-
-  // const titleProps = conditionalAnimation(shopOpen, fadeAppear)
 
   return (
     <>
