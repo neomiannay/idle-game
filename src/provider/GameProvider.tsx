@@ -13,10 +13,11 @@ import useMotionState from 'hooks/useMotionState'
 import { EGamePrice, EGameUnit, GameUnit } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
 import { TSearchGameItemValue } from 'blocks/search-game/SearchGame'
+import { BENEFITS_GOAL, STAGE_1 } from 'data/constants'
+import useKeydown from 'hooks/useKeydown'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { usePricesContext } from './PricesProvider'
-import { BENEFITS_GOAL } from 'data/constants'
 
 export type UnitMultiplierGetter = (unitId: EGameUnit) => number;
 
@@ -75,6 +76,17 @@ export function GameProvider ({ children }: BaseProviderProps) {
     unit.totalMotionValue.jump(value)
     console.info(`Units set (${unitId})`, unit.rawValue.get())
   }
+
+  useKeydown(['A'], () => {
+    Object.values(STAGE_1).forEach((unit) => {
+      const computedUnit = getUnit(unit.NAME as EGameUnit)
+      if (computedUnit) {
+        computedUnit.motionValue.jump(unit.VALUE)
+        computedUnit.totalMotionValue.jump(unit.VALUE)
+        console.info(`Units set (${unit.NAME})`, computedUnit.rawValue.get())
+      }
+    })
+  })
 
   // Purchase conditions
   const canBuyActif = true

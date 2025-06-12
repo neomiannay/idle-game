@@ -21,7 +21,34 @@ export const SOUNDS = {
     ARROW: 'arrow'
   }
 }
-// export const BENEFITS_GOAL = 6_200_000_000
-// export const BENEFITS_START_STEP = 100_000
-export const BENEFITS_GOAL = 10_000
-export const BENEFITS_START_STEP = 5_000
+export const BENEFITS_GOAL = 6_200_000_000
+export const BENEFITS_START_STEP = 100_000
+// export const BENEFITS_GOAL = 10_000
+// export const BENEFITS_START_STEP = 5_000
+
+export const STAGE_1 = { // TODO: change the values
+  ACTIF: {
+    NAME: 'actif',
+    VALUE: 15000
+  },
+  COMPLEX: {
+    NAME: 'complex',
+    VALUE: 7300
+  },
+  SALE: {
+    NAME: 'sale',
+    VALUE: 5000
+  },
+  BENEFITS: {
+    NAME: 'benefits',
+    VALUE: 90000
+  },
+  KARMA: {
+    NAME: 'karma',
+    VALUE: 80
+  },
+  REPUTATION: {
+    NAME: 'reputation',
+    VALUE: 10
+  }
+}
