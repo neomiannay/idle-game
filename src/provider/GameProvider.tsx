@@ -13,8 +13,7 @@ import useMotionState from 'hooks/useMotionState'
 import { EGamePrice, EGameUnit, GameUnit } from 'types/store'
 import { useUnitMotionValue } from 'hooks/useUnitMotionValue'
 import { TSearchGameItemValue } from 'blocks/search-game/SearchGame'
-import { BENEFITS_GOAL, STAGE_0_5, STAGE_1, STAGE_2 } from 'data/constants'
-import useKeydown from 'hooks/useKeydown'
+import { BENEFITS_GOAL } from 'data/constants'
 
 import { BaseProviderProps } from './GlobalProvider'
 import { usePricesContext } from './PricesProvider'
@@ -77,52 +76,52 @@ export function GameProvider ({ children }: BaseProviderProps) {
     console.info(`Bien joué GROS TRICHEUR, + ${value} dans le gosier pour ${unitId}`)
   }
 
-  useKeydown(['A'], () => {
-    Object.values(STAGE_0_5).forEach((unit) => {
-      const computedUnit = getUnit(unit.NAME as EGameUnit)
-      if (computedUnit) {
-        computedUnit.motionValue.jump(unit.VALUE)
-        computedUnit.totalMotionValue.jump(unit.VALUE)
-        console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
-      }
-    })
-  })
+  // useKeydown(['A'], () => {
+  //   Object.values(STAGE_0_5).forEach((unit) => {
+  //     const computedUnit = getUnit(unit.NAME as EGameUnit)
+  //     if (computedUnit) {
+  //       computedUnit.motionValue.jump(unit.VALUE)
+  //       computedUnit.totalMotionValue.jump(unit.VALUE)
+  //       console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
+  //     }
+  //   })
+  // })
 
-  useKeydown(['Z'], () => {
-    Object.values(STAGE_1).forEach((unit) => {
-      const computedUnit = getUnit(unit.NAME as EGameUnit)
-      if (computedUnit) {
-        computedUnit.motionValue.jump(unit.VALUE)
-        computedUnit.totalMotionValue.jump(unit.VALUE)
-        console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
-      }
-    })
-  })
+  // useKeydown(['Z'], () => {
+  //   Object.values(STAGE_1).forEach((unit) => {
+  //     const computedUnit = getUnit(unit.NAME as EGameUnit)
+  //     if (computedUnit) {
+  //       computedUnit.motionValue.jump(unit.VALUE)
+  //       computedUnit.totalMotionValue.jump(unit.VALUE)
+  //       console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
+  //     }
+  //   })
+  // })
 
   // SMALL DEBUG
-  useKeydown(['W'], () => {
-    const actif = getUnit(EGameUnit.ACTIF)
-    if (actif) actif.rawValue.add(10000)
-  })
-  useKeydown(['X'], () => {
-    const complex = getUnit(EGameUnit.COMPLEX)
-    if (complex) complex.rawValue.add(10000)
-  })
-  useKeydown(['C'], () => {
-    const benefits = getUnit(EGameUnit.BENEFITS)
-    if (benefits) benefits.rawValue.add(5000)
-  })
+  // useKeydown(['W'], () => {
+  //   const actif = getUnit(EGameUnit.ACTIF)
+  //   if (actif) actif.rawValue.add(10000)
+  // })
+  // useKeydown(['X'], () => {
+  //   const complex = getUnit(EGameUnit.COMPLEX)
+  //   if (complex) complex.rawValue.add(10000)
+  // })
+  // useKeydown(['C'], () => {
+  //   const benefits = getUnit(EGameUnit.BENEFITS)
+  //   if (benefits) benefits.rawValue.add(5000)
+  // })
 
-  useKeydown(['E'], () => {
-    Object.values(STAGE_2).forEach((unit) => {
-      const computedUnit = getUnit(unit.NAME as EGameUnit)
-      if (computedUnit) {
-        computedUnit.motionValue.jump(unit.VALUE)
-        computedUnit.totalMotionValue.jump(unit.VALUE)
-        console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
-      }
-    })
-  })
+  // useKeydown(['E'], () => {
+  //   Object.values(STAGE_2).forEach((unit) => {
+  //     const computedUnit = getUnit(unit.NAME as EGameUnit)
+  //     if (computedUnit) {
+  //       computedUnit.motionValue.jump(unit.VALUE)
+  //       computedUnit.totalMotionValue.jump(unit.VALUE)
+  //       console.info(`Bien joué GROS TRICHEUR, + ${unit.VALUE} dans le gosier pour ${unit.NAME}`)
+  //     }
+  //   })
+  // })
 
   // Purchase conditions
   const canBuyActif = true
