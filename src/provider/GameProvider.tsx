@@ -110,7 +110,7 @@ export function GameProvider ({ children }: BaseProviderProps) {
   })
   useKeydown(['C'], () => {
     const benefits = getUnit(EGameUnit.BENEFITS)
-    if (benefits) benefits.rawValue.add(10000)
+    if (benefits) benefits.rawValue.add(5000)
   })
 
   useKeydown(['E'], () => {

@@ -83,7 +83,7 @@ export const STAGE_2 = {
   },
   BENEFITS: {
     NAME: 'benefits',
-    VALUE: 6_199_900_000
+    VALUE: 6_199_800_000
   },
   KARMA: {
     NAME: 'karma',
